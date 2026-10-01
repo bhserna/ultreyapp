@@ -7,12 +7,19 @@
     <p class="schedule__intro">Consulta las actividades y horarios del encuentro.</p>
   </header>
 
+  <nav class="schedule__days" aria-label="Días del programa">
+    <% @days.each do |day| %>
+      <%= link_to day, root_path(day: day),
+            class: "schedule__tab#{' schedule__tab--active' if day == @selected_day}",
+            aria: { current: ("page" if day == @selected_day) } %>
+    <% end %>
+  </nav>
+
   <div class="schedule__table-wrapper">
     <table class="schedule__table">
-      <caption class="visually-hidden">Programa de actividades de Ultreya 2026</caption>
+      <caption class="visually-hidden">Programa de actividades para <%= @selected_day %></caption>
       <thead>
         <tr>
-          <th scope="col">Día</th>
           <th scope="col">Hora Inicio</th>
           <th scope="col">Hora Fin</th>
           <th scope="col">Duración</th>
@@ -22,7 +29,6 @@
       <tbody>
         <% @schedule_entries.each do |schedule_entry| %>
           <tr>
-            <td class="schedule__day"><%= schedule_entry.fetch("day") %></td>
             <td class="schedule__time"><%= schedule_entry["start_time"].presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry["end_time"].presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry["duration"].presence || "—" %></td>

@@ -1,15 +1,7 @@
-# Ver programa
+# Ver programa por días
 
-Tomando la información de este [programa](https://github.com/bhserna/ultreya/blob/main/output/programa_ultreya_2026_final.csv)
+En lugar de tener todos los entries en una lista,
+quiero ver un tab para cada día y al darle click ver las
+actividades de cada día.
 
-Quiero en el home ver:
-
-- Día
-- Hora Inicio
-- Hora Fin
-- Duración
-- Actividad
-
-## Requisitos técnicos
-
-- Guardar esta información en un yml
+Ya no sería necesaria la columna día.

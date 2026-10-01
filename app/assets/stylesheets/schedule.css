@@ -23,6 +23,38 @@
     color: #5c6878;
   }
 
+  .schedule__days {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    overflow-x: auto;
+  }
+
+  .schedule__tab {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background: #e8eef5;
+    color: #385473;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .schedule__tab:hover {
+    background: #dce7f1;
+  }
+
+  .schedule__tab:focus-visible {
+    outline: 2px solid #385473;
+    outline-offset: 2px;
+  }
+
+  .schedule__tab--active,
+  .schedule__tab--active:hover {
+    background: #385473;
+    color: #fff;
+  }
+
   .schedule__table-wrapper {
     overflow-x: auto;
     border: 1px solid #dce3eb;
@@ -33,7 +65,7 @@
 
   .schedule__table {
     width: 100%;
-    min-width: 760px;
+    min-width: 640px;
     border-collapse: collapse;
     text-align: left;
   }
@@ -62,13 +94,8 @@
     background: #f8fafc;
   }
 
-  .schedule__day,
   .schedule__time {
     white-space: nowrap;
-  }
-
-  .schedule__day {
-    font-weight: 600;
   }
 
   .schedule__activity {
