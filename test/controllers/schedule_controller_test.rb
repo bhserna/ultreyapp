@@ -9,16 +9,18 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav[aria-label='Días del programa'] a", count: 3
     assert_select "nav a[aria-current='page']", text: "Sábado 14"
     assert_select "nav a[href=?]", root_path(day: "Domingo 15"), text: "Domingo 15"
-    assert_select "thead th", count: 4
+    assert_select "thead th", count: 5
     assert_select "thead th:nth-child(1)", text: "Hora Inicio"
     assert_select "thead th:nth-child(2)", text: "Hora Fin"
     assert_select "thead th:nth-child(3)", text: "Duración"
     assert_select "thead th:nth-child(4)", text: "Actividad"
+    assert_select "thead th:nth-child(5)", text: "Preguntas"
 
     assert_select "tbody tr", count: 2
     assert_select "tbody tr:first-child" do
       assert_select "td:nth-child(1)", text: "—"
       assert_select "td:nth-child(4)", text: "Recepción de Diócesis"
+      assert_select "td:nth-child(5) a[href=?]", schedule_entry_path(1), text: "Ver preguntas"
     end
   end
 

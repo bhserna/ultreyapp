@@ -10,4 +10,8 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   root "schedule#index"
+
+  resources :schedule_entries, only: :show do
+    resources :questions, only: %i[index create edit update destroy]
+  end
 end

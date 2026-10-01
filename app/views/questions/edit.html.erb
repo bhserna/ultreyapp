@@ -1,0 +1,18 @@
+<% content_for :title, "Editar pregunta · #{@schedule_entry.activity}" %>
+
+<main class="questions">
+  <%= link_to "← Volver a las preguntas", schedule_entry_questions_path(@schedule_entry.id), class: "questions__back" %>
+
+  <header class="questions__header">
+    <p class="questions__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
+    <h1>Editar pregunta</h1>
+  </header>
+
+  <section class="questions__section">
+    <%= turbo_frame_tag dom_id(@question) do %>
+      <%= render "form", question: @question,
+            url: schedule_entry_question_path(@schedule_entry.id, @question), method: :patch,
+            submit_label: "Guardar cambios", cancel_url: schedule_entry_questions_path(@schedule_entry.id) %>
+    <% end %>
+  </section>
+</main>

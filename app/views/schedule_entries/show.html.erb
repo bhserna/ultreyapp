@@ -1,0 +1,19 @@
+<% content_for :title, "Preguntas · #{@schedule_entry.activity}" %>
+
+<main class="questions">
+  <%= link_to "← Volver al programa", root_path(day: @schedule_entry.day), class: "questions__back" %>
+
+  <header class="questions__header">
+    <p class="questions__eyebrow"><%= @schedule_entry.day %></p>
+    <h1><%= @schedule_entry.activity %></h1>
+    <dl class="questions__details">
+      <div><dt>Inicio</dt><dd><%= @schedule_entry.start_time.presence || "—" %></dd></div>
+      <div><dt>Fin</dt><dd><%= @schedule_entry.end_time.presence || "—" %></dd></div>
+      <div><dt>Duración</dt><dd><%= @schedule_entry.duration.presence || "—" %></dd></div>
+    </dl>
+  </header>
+
+  <%= turbo_frame_tag "questions", src: schedule_entry_questions_path(@schedule_entry.id) do %>
+    <p class="questions__empty">Cargando preguntas…</p>
+  <% end %>
+</main>

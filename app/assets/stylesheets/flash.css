@@ -1,0 +1,18 @@
+@layer components {
+  .flash {
+    width: min(1200px, calc(100% - 2.5rem));
+    margin: 1rem auto 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.4rem;
+  }
+
+  .flash--notice {
+    background: #e7f4eb;
+    color: #225a37;
+  }
+
+  .flash--alert {
+    background: #fbe9e9;
+    color: #8f2a2a;
+  }
+}

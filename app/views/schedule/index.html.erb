@@ -4,7 +4,6 @@
   <header class="schedule__header">
     <p class="schedule__eyebrow">Ultreya 2026</p>
     <h1>Programa</h1>
-    <p class="schedule__intro">Consulta las actividades y horarios del encuentro.</p>
   </header>
 
   <nav class="schedule__days" aria-label="Días del programa">
@@ -24,15 +23,17 @@
           <th scope="col">Hora Fin</th>
           <th scope="col">Duración</th>
           <th scope="col">Actividad</th>
+          <th scope="col">Preguntas</th>
         </tr>
       </thead>
       <tbody>
         <% @schedule_entries.each do |schedule_entry| %>
           <tr>
-            <td class="schedule__time"><%= schedule_entry["start_time"].presence || "—" %></td>
-            <td class="schedule__time"><%= schedule_entry["end_time"].presence || "—" %></td>
-            <td class="schedule__time"><%= schedule_entry["duration"].presence || "—" %></td>
-            <td class="schedule__activity"><%= schedule_entry.fetch("activity") %></td>
+            <td class="schedule__time"><%= schedule_entry.start_time.presence || "—" %></td>
+            <td class="schedule__time"><%= schedule_entry.end_time.presence || "—" %></td>
+            <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
+            <td class="schedule__activity"><%= schedule_entry.activity %></td>
+            <td><%= link_to "Ver preguntas", schedule_entry_path(schedule_entry.id), class: "schedule__questions-link" %></td>
           </tr>
         <% end %>
       </tbody>

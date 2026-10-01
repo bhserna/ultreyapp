@@ -1,0 +1,49 @@
+<% content_for :title, "Preguntas · #{@schedule_entry.activity}" %>
+
+<main class="questions">
+  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "questions__back" %>
+
+  <header class="questions__header">
+    <p class="questions__eyebrow"><%= @schedule_entry.day %></p>
+    <h1><%= @schedule_entry.activity %></h1>
+  </header>
+
+  <%= turbo_frame_tag "questions" do %>
+    <section class="questions__section" aria-labelledby="questions-heading">
+      <h2 id="questions-heading">Preguntas</h2>
+
+      <% if @questions.any? %>
+        <ul class="questions__list">
+          <% @questions.each do |question| %>
+            <li class="questions__item">
+              <%= turbo_frame_tag dom_id(question) do %>
+                <p><%= question.body %></p>
+                <div class="questions__actions">
+                  <%= link_to "Editar", edit_schedule_entry_question_path(@schedule_entry.id, question) %>
+                  <%= button_to "Eliminar", schedule_entry_question_path(@schedule_entry.id, question), method: :delete,
+                        form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } } %>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="questions__empty">Todavía no hay preguntas para esta actividad.</p>
+      <% end %>
+
+      <div class="questions__new" data-controller="question-form">
+        <button type="button" class="questions__new-button" data-action="question-form#show"
+                data-question-form-target="trigger" aria-controls="new-question-form"
+                aria-expanded="false">
+          Nueva pregunta
+        </button>
+
+        <div id="new-question-form" class="questions__new-form" data-question-form-target="panel" hidden>
+          <%= render "form", question: @question,
+                url: schedule_entry_questions_path(@schedule_entry.id), method: :post,
+                submit_label: "Guardar pregunta", cancel_action: "question-form#hide" %>
+        </div>
+      </div>
+    </section>
+  <% end %>
+</main>

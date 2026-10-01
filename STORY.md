@@ -1,7 +1,11 @@
-# Ver programa por días
+# Preguntas por actividad
 
-En lugar de tener todos los entries en una lista,
-quiero ver un tab para cada día y al darle click ver las
-actividades de cada día.
+Quiero poder ver una nueva sección de preguntas.
 
-Ya no sería necesaria la columna día.
+Desde la fila de una actividad quiero ver un botton link a ver las preguntas de cada actividad.
+
+Sería una nueva página con:
+
+- La información de la actividad
+- Una sección para poder crear preguntas, por ahora solo la pregunta (sin respuesta)
+- Debe permitirme editar y eliminarlas

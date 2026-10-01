@@ -1,0 +1,12 @@
+<%= form_with model: question, url: url, method: method, class: "questions__form" do |form| %>
+  <%= form.label :body, question.new_record? ? "Nueva pregunta" : "Pregunta" %>
+  <%= form.text_area :body, rows: 3, required: true %>
+  <div class="questions__form-actions">
+    <%= form.submit submit_label %>
+    <% if local_assigns[:cancel_action] %>
+      <%= button_tag "Cancelar", type: "button", class: "questions__cancel", data: { action: cancel_action } %>
+    <% elsif local_assigns[:cancel_url] %>
+      <%= link_to "Cancelar", cancel_url, class: "questions__cancel" %>
+    <% end %>
+  </div>
+<% end %>
