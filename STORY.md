@@ -1,5 +1,5 @@
-# Ver comisiones en cada actividad
+# Filtrar actividades por comisión
 
-En la lista de actividades, quiero poder ver la comisión o comisiones del [documento](https://github.com/bhserna/ultreya/blob/main/output/programa_ultreya_2026_final.csv)
+Quiero ver tener un select arriba en la lista que me permita filtrar por comisión las actividades.
 
-Quiero que si la activdad tiene varias comisiones, se guarden por separado en el yml
+También quiero poder dar click en una comisión y que filtre la lista automáticamente.

@@ -6,13 +6,25 @@
     <h1>Programa</h1>
   </header>
 
-  <nav class="schedule__days" aria-label="Días del programa">
-    <% @days.each do |day| %>
-      <%= link_to day, root_path(day: day),
-            class: "schedule__tab#{' schedule__tab--active' if day == @selected_day}",
-            aria: { current: ("page" if day == @selected_day) } %>
+  <div class="schedule__toolbar">
+    <nav class="schedule__days" aria-label="Días del programa">
+      <% @days.each do |day| %>
+        <%= link_to day, root_path(day: day, commission: @selected_commission),
+              class: "schedule__tab#{' schedule__tab--active' if day == @selected_day}",
+              aria: { current: ("page" if day == @selected_day) } %>
+      <% end %>
+    </nav>
+
+    <%= form_with url: root_path, method: :get, class: "schedule__filter",
+          data: { controller: "schedule-filter" } do %>
+      <%= hidden_field_tag :day, @selected_day %>
+      <%= label_tag :commission, "Comisión", class: "visually-hidden" %>
+      <%= select_tag :commission,
+            options_for_select([["Todas las comisiones", ""]] + @commissions.map { |commission| [commission, commission] }, @selected_commission),
+            data: { action: "change->schedule-filter#submit" } %>
+      <%= submit_tag "Filtrar", data: { schedule_filter_target: "submit" } %>
     <% end %>
-  </nav>
+  </div>
 
   <div class="schedule__table-wrapper">
     <table class="schedule__table">
@@ -38,7 +50,7 @@
               <% if schedule_entry.commissions.any? %>
                 <ul class="schedule__commissions">
                   <% schedule_entry.commissions.each do |commission| %>
-                    <li><%= commission %></li>
+                    <li><%= link_to commission, root_path(day: @selected_day, commission: commission) %></li>
                   <% end %>
                 </ul>
               <% else %>
@@ -47,6 +59,9 @@
             </td>
             <td><%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %></td>
           </tr>
+        <% end %>
+        <% if @schedule_entries.empty? %>
+          <tr><td colspan="6">No hay actividades de esta comisión para <%= @selected_day %>.</td></tr>
         <% end %>
       </tbody>
     </table>

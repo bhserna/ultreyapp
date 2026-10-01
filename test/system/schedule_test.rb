@@ -6,7 +6,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
     within("tr", text: "Recepción de Diócesis") do
       assert_selector "td:nth-child(5) li", text: "AC"
-      assert_selector "td:nth-child(5) li", text: "Hosp"
+      assert_selector "td:nth-child(5) li", text: "Hospitalidad"
     end
 
     click_link "Domingo 15"
@@ -22,5 +22,60 @@ class ScheduleTest < ApplicationSystemTestCase
       assert_selector "td:nth-child(5)", text: "—"
       assert_no_selector "td:nth-child(5) li"
     end
+  end
+
+  test "filters by selecting a commission and keeps it when changing days" do
+    visit root_path
+
+    select "Marketing", from: "Comisión"
+    assert_text "No hay actividades de esta comisión para Sábado 14."
+
+    click_link "Domingo 15"
+    assert_selector "tbody tr", count: 1
+    assert_selector "tbody tr td:nth-child(4)", text: "Instalación de stands"
+    assert_equal "Marketing", find("#commission").value
+
+    select "Todas las comisiones", from: "Comisión"
+    assert_selector "tbody tr", minimum: 2
+  end
+
+  test "filters when clicking a commission in the table" do
+    visit root_path(day: "Domingo 15")
+
+    within("tr", text: "Entrada a la Arena") do
+      click_link "AC"
+    end
+
+    assert_selector "tbody tr", count: 1
+    assert_selector "tbody tr td:nth-child(4)", text: "Entrada a la Arena"
+    assert_equal "AC", find("#commission").value
+
+    click_link "Sábado 14"
+    assert_selector "tbody tr", count: 2
+  end
+
+  test "places the filter beside day tabs and wraps it on narrow screens" do
+    visit root_path
+
+    wide = toolbar_positions
+    assert_in_delta wide["daysTop"], wide["filterTop"], 1
+
+    page.driver.browser.manage.window.resize_to(390, 900)
+    narrow = toolbar_positions
+    assert_operator narrow["filterTop"], :>=, narrow["daysBottom"]
+  ensure
+    page.driver.browser.manage.window.resize_to(1400, 900)
+  end
+
+  private
+
+  def toolbar_positions
+    evaluate_script(<<~JAVASCRIPT)
+      (() => {
+        const days = document.querySelector(".schedule__days").getBoundingClientRect()
+        const filter = document.querySelector(".schedule__filter").getBoundingClientRect()
+        return { daysTop: days.top, daysBottom: days.bottom, filterTop: filter.top }
+      })()
+    JAVASCRIPT
   end
 end

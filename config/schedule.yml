@@ -7,7 +7,7 @@
   activity: Recepción de Diócesis
   commissions:
     - AC
-    - Hosp
+    - Hospitalidad
 - id: 2
   day: Sábado 14
   start_time:
