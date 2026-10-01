@@ -1,9 +1,5 @@
-# Subir documentos a actividad
+# Ver comisiones en cada actividad
 
-En la página de una actividad quiero poder "Subir documentos"
+En la lista de actividades, quiero poder ver la comisión o comisiones del [documento](https://github.com/bhserna/ultreya/blob/main/output/programa_ultreya_2026_final.csv)
 
-Me gustaría poder arrastrar documentos y que se agreguen a una lista.
-
-Después quiero poder borrarlos si es necesario.
-
-Me gustaría poder distinguir claramente el formato del documento.
+Quiero que si la activdad tiene varias comisiones, se guarden por separado en el yml

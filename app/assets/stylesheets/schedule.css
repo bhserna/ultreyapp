@@ -97,6 +97,16 @@
     min-width: 18rem;
   }
 
+  .schedule__commissions {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .schedule__commissions li + li {
+    margin-top: 0.25rem;
+  }
+
   .schedule__resources-link {
     display: inline-block;
     padding: 0.45rem 0.75rem;
