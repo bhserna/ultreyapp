@@ -1,5 +1,7 @@
-# Links a comisiones en detalle de actividad
+# Estatus de preguntas y documentos
 
-En la página del detalle de una actividad quiero ver las comisiones relacionadas.
+En el listado de actividades me gustaría poder ver de forma discreta:
 
-Cada una de esas comisiones debe ser un link al listado de actividades con la comisión filtrada y el día de la actividad.
+- Cuantas preguntas tiene
+- Cuantas tiene contestadas
+- Cuantos documentos hay

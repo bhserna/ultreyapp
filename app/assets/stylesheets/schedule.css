@@ -153,4 +153,12 @@
     outline: 2px solid #385473;
     outline-offset: 2px;
   }
+
+  .schedule__resource-status {
+    display: block;
+    margin-top: 0.35rem;
+    color: #5c6878;
+    font-size: 0.75rem;
+    line-height: 1.4;
+  }
 }

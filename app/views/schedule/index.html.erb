@@ -47,7 +47,15 @@
             <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
             <td class="schedule__activity"><%= schedule_entry.activity %></td>
             <td><%= commission_links(schedule_entry) %></td>
-            <td><%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %></td>
+            <td>
+              <% resource_counts = @resource_counts.fetch(schedule_entry.id) %>
+              <%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
+              <small class="schedule__resource-status">
+                Preguntas <%= resource_counts[:questions] %> ·
+                Contestadas <%= resource_counts[:answered] %> ·
+                Documentos <%= resource_counts[:documents] %>
+              </small>
+            </td>
           </tr>
         <% end %>
         <% if @schedule_entries.empty? %>

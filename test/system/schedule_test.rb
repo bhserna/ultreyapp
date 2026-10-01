@@ -84,6 +84,24 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "tbody tr td:nth-child(4)", text: "Recepción de Diócesis"
   end
 
+  test "shows resource counts beside each activity" do
+    Question.create!(schedule_entry_id: 1, body: "Pendiente")
+    Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
+    File.open(Rails.root.join("test/fixtures/files/agenda.txt")) do |file|
+      Document.create!(schedule_entry_id: 1, file: { io: file, filename: "agenda.txt", content_type: "text/plain" })
+    end
+
+    visit root_path
+
+    within("tr", text: "Recepción de Diócesis") do
+      assert_selector ".schedule__resource-status", text: "Preguntas 2 · Contestadas 1 · Documentos 1"
+    end
+
+    within("tr", text: "Entrega de Kits") do
+      assert_selector ".schedule__resource-status", text: "Preguntas 0 · Contestadas 0 · Documentos 0"
+    end
+  end
+
   private
 
   def toolbar_positions

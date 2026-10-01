@@ -8,5 +8,7 @@ class ScheduleController < ApplicationController
     @schedule_entries = entries.select do |entry|
       entry.day == @selected_day && (@selected_commission.nil? || entry.commissions.include?(@selected_commission))
     end
+
+    @resource_counts = ScheduleEntry.resource_counts_for(@schedule_entries)
   end
 end

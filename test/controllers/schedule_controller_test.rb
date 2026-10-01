@@ -67,4 +67,29 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "tbody tr td[colspan='6']", text: /No hay actividades de esta comisión/
     assert_select "tbody tr td:nth-child(4)", count: 0
   end
+
+  test "shows question, answered question, and document counts for each activity" do
+    Question.create!(schedule_entry_id: 1, body: "Pendiente")
+    Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
+    Question.create!(schedule_entry_id: 1, body: "Sin contenido", answer: "  \n  ")
+    Document.create!(
+      schedule_entry_id: 1,
+      file: fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")
+    )
+
+    get root_url
+
+    assert_response :success
+    assert_select "tbody tr:first-child .schedule__resource-status",
+                  text: /Preguntas 3\s*·\s*Contestadas 1\s*·\s*Documentos 1/
+    assert_select "tbody tr:nth-child(2) .schedule__resource-status",
+                  text: /Preguntas 0\s*·\s*Contestadas 0\s*·\s*Documentos 0/
+
+    get root_url(day: "Domingo 15", commission: "Marketing")
+
+    assert_response :success
+    assert_select "tbody tr", count: 1
+    assert_select "tbody tr .schedule__resource-status",
+                  text: /Preguntas 0\s*·\s*Contestadas 0\s*·\s*Documentos 0/
+  end
 end

@@ -11,6 +11,10 @@ class ScheduleEntry
     all.find { |entry| entry.id.to_s == id.to_s } || raise(ActiveRecord::RecordNotFound, "Schedule entry not found")
   end
 
+  def self.resource_counts_for(entries)
+    ResourceCounts.for_entries(entries)
+  end
+
   def initialize(attributes)
     ATTRIBUTES.each { |attribute| instance_variable_set("@#{attribute}", attributes.fetch(attribute)) }
   end
