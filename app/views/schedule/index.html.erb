@@ -1,0 +1,35 @@
+<% content_for :title, "Programa Ultreya 2026" %>
+
+<main class="schedule">
+  <header class="schedule__header">
+    <p class="schedule__eyebrow">Ultreya 2026</p>
+    <h1>Programa</h1>
+    <p class="schedule__intro">Consulta las actividades y horarios del encuentro.</p>
+  </header>
+
+  <div class="schedule__table-wrapper">
+    <table class="schedule__table">
+      <caption class="visually-hidden">Programa de actividades de Ultreya 2026</caption>
+      <thead>
+        <tr>
+          <th scope="col">Día</th>
+          <th scope="col">Hora Inicio</th>
+          <th scope="col">Hora Fin</th>
+          <th scope="col">Duración</th>
+          <th scope="col">Actividad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @schedule_entries.each do |schedule_entry| %>
+          <tr>
+            <td class="schedule__day"><%= schedule_entry.fetch("day") %></td>
+            <td class="schedule__time"><%= schedule_entry["start_time"].presence || "—" %></td>
+            <td class="schedule__time"><%= schedule_entry["end_time"].presence || "—" %></td>
+            <td class="schedule__time"><%= schedule_entry["duration"].presence || "—" %></td>
+            <td class="schedule__activity"><%= schedule_entry.fetch("activity") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</main>

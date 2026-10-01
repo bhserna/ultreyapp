@@ -1,0 +1,246 @@
+---
+- day: Sábado 14
+  start_time:
+  end_time:
+  duration:
+  activity: Recepción de Diócesis
+- day: Sábado 14
+  start_time:
+  end_time:
+  duration:
+  activity: Entrega de Kits
+- day: Domingo 15
+  start_time: '01:30'
+  end_time: '08:00'
+  duration: '6:30'
+  activity: Instalación de stands
+- day: Domingo 15
+  start_time:
+  end_time:
+  duration:
+  activity: Instalación de capilla Santísimo
+- day: Domingo 15
+  start_time: '07:00'
+  end_time: '09:00'
+  duration: '2:00'
+  activity: Desfile por diócesis
+- day: Domingo 15
+  start_time: '09:00'
+  end_time: '10:00'
+  duration: '1:00'
+  activity: Entrada a la Arena
+- day: Domingo 15
+  start_time: '10:00'
+  end_time: '10:05'
+  duration: '0:05'
+  activity: Video histórico Ultreyas MTY 1998-2026
+- day: Domingo 15
+  start_time: '10:05'
+  end_time: '10:20'
+  duration: '0:15'
+  activity: Grupo Folclórico
+- day: Domingo 15
+  start_time: '10:20'
+  end_time: '10:50'
+  duration: '0:30'
+  activity: Presentación Maestros de Ceremonia y Autoridades
+- day: Domingo 15
+  start_time: '10:50'
+  end_time: '10:55'
+  duration: '0:05'
+  activity: Palabras de bienvenida - Presidente Nacional
+- day: Domingo 15
+  start_time: '10:55'
+  end_time: '11:00'
+  duration: '0:05'
+  activity: Palabras de bienvenida - Presidente Diocesano
+- day: Domingo 15
+  start_time: '11:00'
+  end_time: '11:05'
+  duration: '0:05'
+  activity: Palabras de bienvenida
+- day: Domingo 15
+  start_time: '10:50'
+  end_time: '11:50'
+  duration: '1:00'
+  activity: Presentación del Santísimo y Entronización Virgen del Roble
+- day: Domingo 15
+  start_time: '11:50'
+  end_time: '12:00'
+  duration: '0:10'
+  activity: Canto de Colores
+- day: Domingo 15
+  start_time: '12:00'
+  end_time: '12:45'
+  duration: '0:45'
+  activity: Tema 1
+- day: Domingo 15
+  start_time: '12:45'
+  end_time: '12:50'
+  duration: '0:05'
+  activity: Agradecimiento Tema 1
+- day: Domingo 15
+  start_time: '12:45'
+  end_time: '14:05'
+  duration: '1:20'
+  activity: Comida y descanso
+- day: Domingo 15
+  start_time: '14:05'
+  end_time: '14:15'
+  duration: '0:10'
+  activity: Video MCC Monterrey
+- day: Domingo 15
+  start_time: '14:05'
+  end_time: '15:50'
+  duration: '1:45'
+  activity: Eucaristía
+- day: Domingo 15
+  start_time: '15:50'
+  end_time: '16:15'
+  duration: '0:25'
+  activity: Vivencia 1
+- day: Domingo 15
+  start_time: '16:15'
+  end_time: '16:20'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 1
+- day: Domingo 15
+  start_time: '16:15'
+  end_time: '16:40'
+  duration: '0:25'
+  activity: Animación
+- day: Domingo 15
+  start_time: '16:40'
+  end_time: '17:05'
+  duration: '0:25'
+  activity: Vivencia 2
+- day: Domingo 15
+  start_time: '17:05'
+  end_time: '17:10'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 2
+- day: Domingo 15
+  start_time: '17:05'
+  end_time: '17:15'
+  duration: '0:10'
+  activity: Video MCC Monterrey
+- day: Domingo 15
+  start_time: '17:15'
+  end_time: '18:00'
+  duration: '0:45'
+  activity: Tema 2
+- day: Domingo 15
+  start_time: '18:00'
+  end_time: '18:05'
+  duration: '0:05'
+  activity: Agradecimiento Tema 2
+- day: Domingo 15
+  start_time: '18:00'
+  end_time: '18:20'
+  duration: '0:20'
+  activity: Animación
+- day: Domingo 15
+  start_time: '18:20'
+  end_time: '18:45'
+  duration: '0:25'
+  activity: Vivencia 3
+- day: Domingo 15
+  start_time: '18:45'
+  end_time: '18:50'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 3
+- day: Domingo 15
+  start_time: '18:45'
+  end_time: '19:00'
+  duration: '0:15'
+  activity: Indicaciones y cierre del día
+- day: Domingo 15
+  start_time: '19:00'
+  end_time:
+  duration:
+  activity: Regreso a las parroquias y lugar de hospedaje
+- day: Lunes 16
+  start_time: '08:00'
+  end_time: '08:30'
+  duration: '0:30'
+  activity: Llegada y música instrumental
+- day: Lunes 16
+  start_time: '08:30'
+  end_time: '08:50'
+  duration: '0:20'
+  activity: Oraciones de la mañana
+- day: Lunes 16
+  start_time: '08:50'
+  end_time: '09:45'
+  duration: '0:55'
+  activity: Rosario
+- day: Lunes 16
+  start_time: '09:45'
+  end_time: '10:10'
+  duration: '0:25'
+  activity: Vivencia 4
+- day: Lunes 16
+  start_time: '10:10'
+  end_time: '10:15'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 4
+- day: Lunes 16
+  start_time: '10:10'
+  end_time: '10:55'
+  duration: '0:45'
+  activity: Tema 3
+- day: Lunes 16
+  start_time: '10:55'
+  end_time: '11:00'
+  duration: '0:05'
+  activity: Agradecimiento Tema 3
+- day: Lunes 16
+  start_time: '10:55'
+  end_time: '11:25'
+  duration: '0:30'
+  activity: Intercambio y cantos
+- day: Lunes 16
+  start_time: '11:25'
+  end_time: '11:50'
+  duration: '0:25'
+  activity: Vivencia 5
+- day: Lunes 16
+  start_time: '11:50'
+  end_time: '11:55'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 5
+- day: Lunes 16
+  start_time: '11:50'
+  end_time: '12:25'
+  duration: '0:35'
+  activity: Vivencia 6
+- day: Lunes 16
+  start_time: '12:25'
+  end_time: '12:30'
+  duration: '0:05'
+  activity: Agradecimiento Vivencia 6
+- day: Lunes 16
+  start_time: '12:25'
+  end_time: '13:00'
+  duration: '0:35'
+  activity: Palabras y oración por asesores eclesiásticos
+- day: Lunes 16
+  start_time: '13:00'
+  end_time: '14:30'
+  duration: '1:30'
+  activity: Eucaristía
+- day: Lunes 16
+  start_time: '14:30'
+  end_time: '14:50'
+  duration: '0:20'
+  activity: Agradecimientos generales y clausura
+- day: Lunes 16
+  start_time: '14:50'
+  end_time: '15:00'
+  duration: '0:30'
+  activity: Entrega de comida y salida
+- day: Lunes 16
+  start_time: '15:00'
+  end_time: '18:00'
+  duration: '3:00'
+  activity: Desmontaje

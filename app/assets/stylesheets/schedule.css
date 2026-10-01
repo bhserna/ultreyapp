@@ -1,0 +1,77 @@
+@layer components {
+  .schedule {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .schedule__header {
+    margin-bottom: 2rem;
+  }
+
+  .schedule__eyebrow {
+    margin: 0 0 0.5rem;
+    color: #426b95;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .schedule__intro {
+    margin: 0.75rem 0 0;
+    color: #5c6878;
+  }
+
+  .schedule__table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #dce3eb;
+    border-radius: 0.75rem;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(35, 48, 68, 0.05);
+  }
+
+  .schedule__table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    text-align: left;
+  }
+
+  .schedule__table th,
+  .schedule__table td {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid #e9edf2;
+    vertical-align: top;
+  }
+
+  .schedule__table th {
+    background: #edf3f8;
+    color: #385473;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .schedule__table tr:last-child td {
+    border-bottom: 0;
+  }
+
+  .schedule__table tbody tr:hover {
+    background: #f8fafc;
+  }
+
+  .schedule__day,
+  .schedule__time {
+    white-space: nowrap;
+  }
+
+  .schedule__day {
+    font-weight: 600;
+  }
+
+  .schedule__activity {
+    min-width: 18rem;
+  }
+}
