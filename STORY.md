@@ -1,5 +1,5 @@
-# Filtrar actividades por comisión
+# Links a comisiones en detalle de actividad
 
-Quiero ver tener un select arriba en la lista que me permita filtrar por comisión las actividades.
+En la página del detalle de una actividad quiero ver las comisiones relacionadas.
 
-También quiero poder dar click en una comisión y que filtre la lista automáticamente.
+Cada una de esas comisiones debe ser un link al listado de actividades con la comisión filtrada y el día de la actividad.

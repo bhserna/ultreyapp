@@ -46,17 +46,7 @@
             <td class="schedule__time"><%= schedule_entry.end_time.presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
             <td class="schedule__activity"><%= schedule_entry.activity %></td>
-            <td>
-              <% if schedule_entry.commissions.any? %>
-                <ul class="schedule__commissions">
-                  <% schedule_entry.commissions.each do |commission| %>
-                    <li><%= link_to commission, root_path(day: @selected_day, commission: commission) %></li>
-                  <% end %>
-                </ul>
-              <% else %>
-                —
-              <% end %>
-            </td>
+            <td><%= commission_links(schedule_entry) %></td>
             <td><%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %></td>
           </tr>
         <% end %>

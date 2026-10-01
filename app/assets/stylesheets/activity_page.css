@@ -36,6 +36,29 @@
     font-size: 1.25rem;
   }
 
+  .activity-page__details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    margin: 1rem 0 0;
+  }
+
+  .activity-page__details > div {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+
+  .activity-page__details dt {
+    color: #5c6878;
+    font-size: 0.8rem;
+  }
+
+  .activity-page__details dd {
+    margin: 0;
+    font-weight: 600;
+  }
+
   .activity-page__action {
     padding: 0;
     border: 0;

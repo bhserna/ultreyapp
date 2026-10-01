@@ -5,22 +5,20 @@ class ScheduleTest < ApplicationSystemTestCase
     visit root_path
 
     within("tr", text: "Recepción de Diócesis") do
-      assert_selector "td:nth-child(5) li", text: "AC"
-      assert_selector "td:nth-child(5) li", text: "Hospitalidad"
+      assert_selector "td:nth-child(5) .commission-links", text: "AC, Hospitalidad"
     end
 
     click_link "Domingo 15"
 
     within("tr", text: "Entrada a la Arena") do
-      assert_selector "td:nth-child(5) li", text: "Desfile"
-      assert_selector "td:nth-child(5) li", text: "AC"
+      assert_selector "td:nth-child(5) .commission-links", text: "Desfile, AC"
     end
 
     click_link "Lunes 16"
 
     within("tr", text: "Desmontaje") do
       assert_selector "td:nth-child(5)", text: "—"
-      assert_no_selector "td:nth-child(5) li"
+      assert_no_selector "td:nth-child(5) .commission-links"
     end
   end
 
@@ -65,6 +63,25 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_operator narrow["filterTop"], :>=, narrow["daysBottom"]
   ensure
     page.driver.browser.manage.window.resize_to(1400, 900)
+  end
+
+  test "filters the activity list from a commission link on the detail page" do
+    visit root_path
+
+    within("tr", text: "Recepción de Diócesis") do
+      click_link "Preguntas y documentos"
+    end
+
+    within(".activity-page__details") do
+      assert_selector ".commission-links", text: "AC, Hospitalidad"
+      assert_link "AC", href: root_path(day: "Sábado 14", commission: "AC")
+      click_link "Hospitalidad"
+    end
+
+    assert_selector "nav a[aria-current='page']", text: "Sábado 14"
+    assert_equal "Hospitalidad", find("#commission").value
+    assert_selector "tbody tr", count: 1
+    assert_selector "tbody tr td:nth-child(4)", text: "Recepción de Diócesis"
   end
 
   private

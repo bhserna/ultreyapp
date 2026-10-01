@@ -1,0 +1,10 @@
+@layer components {
+  .commission-links a {
+    color: #385473;
+  }
+
+  .commission-links a:focus-visible {
+    outline: 2px solid #385473;
+    outline-offset: 2px;
+  }
+}

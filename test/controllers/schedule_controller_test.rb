@@ -22,8 +22,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "tbody tr:first-child" do
       assert_select "td:nth-child(1)", text: "—"
       assert_select "td:nth-child(4)", text: "Recepción de Diócesis"
-      assert_select "td:nth-child(5) li", text: "AC"
-      assert_select "td:nth-child(5) li", text: "Hospitalidad"
+      assert_select "td:nth-child(5) .commission-links", text: "AC, Hospitalidad"
       assert_select "td:nth-child(6) a[href=?]", schedule_entry_path(1), text: "Preguntas y documentos"
     end
   end
@@ -38,7 +37,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
       assert_select "td:nth-child(2)", text: "08:00"
       assert_select "td:nth-child(3)", text: "6:30"
       assert_select "td:nth-child(4)", text: "Instalación de stands"
-      assert_select "td:nth-child(5) li", text: "Marketing"
+      assert_select "td:nth-child(5) .commission-links", text: "Marketing"
     end
     assert_select "tbody td", text: "Recepción de Diócesis", count: 0
   end

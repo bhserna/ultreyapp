@@ -6,10 +6,11 @@
   <header class="activity-page__header">
     <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
     <h1><%= @schedule_entry.activity %></h1>
-    <dl class="questions__details">
+    <dl class="activity-page__details">
       <div><dt>Inicio</dt><dd><%= @schedule_entry.start_time.presence || "—" %></dd></div>
       <div><dt>Fin</dt><dd><%= @schedule_entry.end_time.presence || "—" %></dd></div>
       <div><dt>Duración</dt><dd><%= @schedule_entry.duration.presence || "—" %></dd></div>
+      <div><dt>Comisiones</dt><dd><%= commission_links(@schedule_entry) %></dd></div>
     </dl>
   </header>
 
