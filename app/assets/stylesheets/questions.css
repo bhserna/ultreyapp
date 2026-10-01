@@ -1,41 +1,4 @@
 @layer components {
-  .questions {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: clamp(1.25rem, 4vw, 3rem);
-  }
-
-  .questions__back {
-    color: #385473;
-    font-weight: 600;
-  }
-
-  .questions__header {
-    margin: 2rem 0;
-  }
-
-  .questions__eyebrow {
-    margin: 0 0 0.5rem;
-    color: #426b95;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .questions__section {
-    margin-bottom: 1.5rem;
-    padding: 1.5rem;
-    border: 1px solid #dce3eb;
-    border-radius: 0.75rem;
-    background: #fff;
-  }
-
-  .questions__section h2 {
-    margin: 0 0 1.25rem;
-    font-size: 1.25rem;
-  }
-
   .questions__details {
     display: flex;
     flex-wrap: wrap;
@@ -105,19 +68,10 @@
     gap: 1rem;
   }
 
-  .questions__actions a,
-  .questions__actions button {
+  .questions__actions a {
     color: #385473;
     font: inherit;
     font-weight: 600;
-  }
-
-  .questions__actions button {
-    padding: 0;
-    border: 0;
-    background: none;
-    cursor: pointer;
-    text-decoration: underline;
   }
 
   .questions__empty {

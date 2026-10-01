@@ -1,11 +1,9 @@
-# Responder preguntas
+# Subir documentos a actividad
 
-Quiero poder agregar una respuesta a cada pregunta.
+En la página de una actividad quiero poder "Subir documentos"
 
-Me imagino un botón o link de "Responder", que abra un campo de texto simple estilado con el helper simple_format.
+Me gustaría poder arrastrar documentos y que se agreguen a una lista.
 
-La respuesta debe poder editarse también.
+Después quiero poder borrarlos si es necesario.
 
-En la edición podría haber un botón de "Cancelar".
-
-Me gustaría que fuera ahí en línea también.
+Me gustaría poder distinguir claramente el formato del documento.

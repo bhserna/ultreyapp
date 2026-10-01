@@ -14,13 +14,13 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "thead th:nth-child(2)", text: "Hora Fin"
     assert_select "thead th:nth-child(3)", text: "Duración"
     assert_select "thead th:nth-child(4)", text: "Actividad"
-    assert_select "thead th:nth-child(5)", text: "Preguntas"
+    assert_select "thead th:nth-child(5) .visually-hidden", text: "Preguntas y documentos"
 
     assert_select "tbody tr", count: 2
     assert_select "tbody tr:first-child" do
       assert_select "td:nth-child(1)", text: "—"
       assert_select "td:nth-child(4)", text: "Recepción de Diócesis"
-      assert_select "td:nth-child(5) a[href=?]", schedule_entry_path(1), text: "Ver preguntas"
+      assert_select "td:nth-child(5) a[href=?]", schedule_entry_path(1), text: "Preguntas y documentos"
     end
   end
 

@@ -6,7 +6,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Instalación de stands"
-    assert_select ".questions__eyebrow", text: "Domingo 15"
+    assert_select ".activity-page__eyebrow", text: "Domingo 15"
     assert_select ".questions__details dd", text: "01:30"
     assert_select ".questions__details dt", text: "Día", count: 0
     assert_select "turbo-frame#questions[src=?]", schedule_entry_questions_path(3)

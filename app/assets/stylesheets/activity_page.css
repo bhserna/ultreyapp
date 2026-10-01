@@ -1,0 +1,49 @@
+@layer components {
+  .activity-page {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .activity-page__back {
+    color: #385473;
+    font-weight: 600;
+  }
+
+  .activity-page__header {
+    margin: 2rem 0;
+  }
+
+  .activity-page__eyebrow {
+    margin: 0 0 0.5rem;
+    color: #426b95;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .activity-page__section {
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #dce3eb;
+    border-radius: 0.75rem;
+    background: #fff;
+  }
+
+  .activity-page__section h2 {
+    margin: 0 0 1.25rem;
+    font-size: 1.25rem;
+  }
+
+  .activity-page__action {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #385473;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+}

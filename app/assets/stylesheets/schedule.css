@@ -97,7 +97,7 @@
     min-width: 18rem;
   }
 
-  .schedule__questions-link {
+  .schedule__resources-link {
     display: inline-block;
     padding: 0.45rem 0.75rem;
     border-radius: 0.4rem;
@@ -109,11 +109,11 @@
     white-space: nowrap;
   }
 
-  .schedule__questions-link:hover {
+  .schedule__resources-link:hover {
     background: #dce7f1;
   }
 
-  .schedule__questions-link:focus-visible {
+  .schedule__resources-link:focus-visible {
     outline: 2px solid #385473;
     outline-offset: 2px;
   }

@@ -23,7 +23,7 @@
           <th scope="col">Hora Fin</th>
           <th scope="col">Duración</th>
           <th scope="col">Actividad</th>
-          <th scope="col">Preguntas</th>
+          <th scope="col"><span class="visually-hidden">Preguntas y documentos</span></th>
         </tr>
       </thead>
       <tbody>
@@ -33,7 +33,7 @@
             <td class="schedule__time"><%= schedule_entry.end_time.presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
             <td class="schedule__activity"><%= schedule_entry.activity %></td>
-            <td><%= link_to "Ver preguntas", schedule_entry_path(schedule_entry.id), class: "schedule__questions-link" %></td>
+            <td><%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %></td>
           </tr>
         <% end %>
       </tbody>

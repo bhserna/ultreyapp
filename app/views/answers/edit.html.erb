@@ -1,14 +1,14 @@
 <% content_for :title, "Responder · #{@schedule_entry.activity}" %>
 
-<main class="questions">
-  <%= link_to "← Volver a las preguntas", schedule_entry_questions_path(@schedule_entry.id), class: "questions__back" %>
+<main class="activity-page">
+  <%= link_to "← Volver a las preguntas", schedule_entry_questions_path(@schedule_entry.id), class: "activity-page__back" %>
 
-  <header class="questions__header">
-    <p class="questions__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
+  <header class="activity-page__header">
+    <p class="activity-page__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
     <h1><%= @question.answer.present? ? "Editar respuesta" : "Responder" %></h1>
   </header>
 
-  <section class="questions__section">
+  <section class="activity-page__section">
     <%= turbo_frame_tag dom_id(@question) do %>
       <p class="questions__body"><%= @question.body %></p>
 

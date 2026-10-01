@@ -1,15 +1,15 @@
 <% content_for :title, "Preguntas · #{@schedule_entry.activity}" %>
 
-<main class="questions">
-  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "questions__back" %>
+<main class="activity-page">
+  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "activity-page__back" %>
 
-  <header class="questions__header">
-    <p class="questions__eyebrow"><%= @schedule_entry.day %></p>
+  <header class="activity-page__header">
+    <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
     <h1><%= @schedule_entry.activity %></h1>
   </header>
 
   <%= turbo_frame_tag "questions" do %>
-    <section class="questions__section" aria-labelledby="questions-heading">
+    <section class="activity-page__section" aria-labelledby="questions-heading">
       <h2 id="questions-heading">Preguntas</h2>
 
       <% if @questions.any? %>
@@ -26,7 +26,8 @@
                   <%= link_to question.answer.present? ? "Editar respuesta" : "Responder",
                         edit_schedule_entry_question_answer_path(@schedule_entry.id, question) %>
                   <%= button_to "Eliminar", schedule_entry_question_path(@schedule_entry.id, question), method: :delete,
-                        form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } } %>
+                        form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } },
+                        class: "activity-page__action" %>
                 </div>
               <% end %>
             </li>

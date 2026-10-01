@@ -1,0 +1,47 @@
+<% content_for :title, "Documentos · #{@schedule_entry.activity}" %>
+
+<main class="activity-page">
+  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "activity-page__back" %>
+
+  <header class="activity-page__header">
+    <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
+    <h1><%= @schedule_entry.activity %></h1>
+  </header>
+
+  <%= turbo_frame_tag "documents" do %>
+    <section class="activity-page__section" aria-labelledby="documents-heading">
+      <h2 id="documents-heading">Documentos</h2>
+
+      <%= form_with url: schedule_entry_documents_path(@schedule_entry.id), multipart: true,
+            class: "documents__dropzone",
+            data: { controller: "document-dropzone",
+                    action: "dragover->document-dropzone#dragOver dragleave->document-dropzone#dragLeave drop->document-dropzone#drop turbo:submit-end->document-dropzone#submitEnd" } do %>
+        <label for="document-files">Arrastra documentos aquí o selecciónalos</label>
+        <%= file_field_tag "files[]", id: "document-files", multiple: true, required: true,
+              data: { document_dropzone_target: "input", action: "change->document-dropzone#upload" } %>
+        <p role="status" data-document-dropzone-target="status">Puedes seleccionar varios archivos a la vez.</p>
+      <% end %>
+
+      <% if @documents.any? %>
+        <ul class="documents__list">
+          <% @documents.each do |document| %>
+            <li class="documents__item">
+              <span class="documents__format" data-format="<%= document.format_label.downcase %>"><%= document.format_label %></span>
+              <div class="documents__file">
+                <%= link_to document.file.filename.to_s,
+                      rails_blob_path(document.file, disposition: "attachment"),
+                      data: { turbo: false } %>
+                <span><%= number_to_human_size(document.file.blob.byte_size) %></span>
+              </div>
+              <%= button_to "Eliminar", schedule_entry_document_path(@schedule_entry.id, document),
+                    method: :delete, form: { data: { turbo_frame: "documents", turbo_confirm: "¿Eliminar este documento?" } },
+                    class: "activity-page__action" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="documents__empty">Todavía no hay documentos para esta actividad.</p>
+      <% end %>
+    </section>
+  <% end %>
+</main>

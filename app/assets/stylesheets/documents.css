@@ -1,0 +1,132 @@
+@layer components {
+  .documents__dropzone {
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    border: 2px dashed #aebac8;
+    border-radius: 0.6rem;
+    background: #f8fafc;
+  }
+
+  .documents__dropzone--active,
+  .documents__dropzone:focus-within {
+    border-color: #385473;
+    background: #edf3f8;
+  }
+
+  .documents__dropzone label {
+    font-weight: 700;
+  }
+
+  .documents__dropzone input {
+    max-width: 100%;
+    font: inherit;
+  }
+
+  .documents__dropzone input::file-selector-button {
+    margin-right: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #aebac8;
+    border-radius: 0.4rem;
+    background: #fff;
+    color: #385473;
+    font: inherit;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .documents__dropzone p {
+    margin: 0;
+    color: #5c6878;
+    font-size: 0.875rem;
+  }
+
+  .documents__list {
+    display: grid;
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .documents__item {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #e9edf2;
+  }
+
+  .documents__item:first-child {
+    padding-top: 0;
+  }
+
+  .documents__item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .documents__format {
+    min-width: 4rem;
+    padding: 0.35rem 0.5rem;
+    border-radius: 0.35rem;
+    background: #e8eef5;
+    color: #385473;
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-align: center;
+  }
+
+  .documents__format[data-format="pdf"] {
+    background: #fbe9e9;
+    color: #8f2a2a;
+  }
+
+  .documents__format[data-format="doc"],
+  .documents__format[data-format="docx"] {
+    background: #e5effb;
+    color: #295788;
+  }
+
+  .documents__format[data-format="xls"],
+  .documents__format[data-format="xlsx"],
+  .documents__format[data-format="csv"] {
+    background: #e7f4eb;
+    color: #225a37;
+  }
+
+  .documents__format[data-format="ppt"],
+  .documents__format[data-format="pptx"] {
+    background: #fff0df;
+    color: #8a501d;
+  }
+
+  .documents__file {
+    display: grid;
+    gap: 0.2rem;
+    flex: 1 1 12rem;
+    min-width: 0;
+  }
+
+  .documents__file a {
+    color: #385473;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+  }
+
+  .documents__file span {
+    color: #5c6878;
+    font-size: 0.8rem;
+  }
+
+  .documents__item form {
+    margin-left: auto;
+  }
+
+  .documents__empty {
+    margin: 0;
+    color: #5c6878;
+  }
+}
