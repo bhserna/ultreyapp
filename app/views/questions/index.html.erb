@@ -17,9 +17,14 @@
           <% @questions.each do |question| %>
             <li class="questions__item">
               <%= turbo_frame_tag dom_id(question) do %>
-                <p><%= question.body %></p>
+                <p class="questions__body"><%= question.body %></p>
+                <% if question.answer.present? %>
+                  <div class="questions__answer"><%= simple_format(question.answer) %></div>
+                <% end %>
                 <div class="questions__actions">
                   <%= link_to "Editar", edit_schedule_entry_question_path(@schedule_entry.id, question) %>
+                  <%= link_to question.answer.present? ? "Editar respuesta" : "Responder",
+                        edit_schedule_entry_question_answer_path(@schedule_entry.id, question) %>
                   <%= button_to "Eliminar", schedule_entry_question_path(@schedule_entry.id, question), method: :delete,
                         form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } } %>
                 </div>

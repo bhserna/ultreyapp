@@ -1,0 +1,28 @@
+<% content_for :title, "Responder · #{@schedule_entry.activity}" %>
+
+<main class="questions">
+  <%= link_to "← Volver a las preguntas", schedule_entry_questions_path(@schedule_entry.id), class: "questions__back" %>
+
+  <header class="questions__header">
+    <p class="questions__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
+    <h1><%= @question.answer.present? ? "Editar respuesta" : "Responder" %></h1>
+  </header>
+
+  <section class="questions__section">
+    <%= turbo_frame_tag dom_id(@question) do %>
+      <p class="questions__body"><%= @question.body %></p>
+
+      <%= form_with model: @question,
+            url: schedule_entry_question_answer_path(@schedule_entry.id, @question),
+            method: :patch, class: "questions__form" do |form| %>
+        <%= form.label :answer, "Respuesta" %>
+        <%= form.text_area :answer, rows: 1, required: true, class: "questions__answer-input",
+              data: { controller: "autosize", action: "input->autosize#resize" } %>
+        <div class="questions__form-actions">
+          <%= form.submit "Guardar respuesta" %>
+          <%= link_to "Cancelar", schedule_entry_questions_path(@schedule_entry.id), class: "questions__cancel" %>
+        </div>
+      <% end %>
+    <% end %>
+  </section>
+</main>

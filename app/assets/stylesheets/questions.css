@@ -77,10 +77,26 @@
     border-bottom: 0;
   }
 
-  .questions__item p {
+  .questions__body {
     margin: 0 0 0.75rem;
     white-space: pre-wrap;
     overflow-wrap: anywhere;
+  }
+
+  .questions__answer {
+    margin: 0 0 0.75rem;
+    padding-left: 0.75rem;
+    border-left: 3px solid #dce3eb;
+    color: #435064;
+  }
+
+  .questions__answer p {
+    margin: 0 0 0.5rem;
+    overflow-wrap: anywhere;
+  }
+
+  .questions__answer p:last-child {
+    margin-bottom: 0;
   }
 
   .questions__actions {
@@ -158,6 +174,12 @@
     border-radius: 0.4rem;
     font: inherit;
     resize: vertical;
+  }
+
+  .questions__form .questions__answer-input {
+    min-height: 3rem;
+    overflow-y: hidden;
+    resize: none;
   }
 
   .questions__new-button,

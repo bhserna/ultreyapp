@@ -1,11 +1,11 @@
-# Preguntas por actividad
+# Responder preguntas
 
-Quiero poder ver una nueva sección de preguntas.
+Quiero poder agregar una respuesta a cada pregunta.
 
-Desde la fila de una actividad quiero ver un botton link a ver las preguntas de cada actividad.
+Me imagino un botón o link de "Responder", que abra un campo de texto simple estilado con el helper simple_format.
 
-Sería una nueva página con:
+La respuesta debe poder editarse también.
 
-- La información de la actividad
-- Una sección para poder crear preguntas, por ahora solo la pregunta (sin respuesta)
-- Debe permitirme editar y eliminarlas
+En la edición podría haber un botón de "Cancelar".
+
+Me gustaría que fuera ahí en línea también.
