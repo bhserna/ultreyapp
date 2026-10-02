@@ -31,7 +31,7 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
 
-  config.middleware.insert_before ActionDispatch::Static, BasicAuthentication
+  config.middleware.insert_before ActionDispatch::Static, BasicAuthentication unless ENV["SECRET_KEY_BASE_DUMMY"] == "1"
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
