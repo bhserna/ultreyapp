@@ -30,6 +30,12 @@ class BasicAuthenticationTest < ActiveSupport::TestCase
     assert_equal 200, @request.get("/up").status
   end
 
+  test "requires configured credentials at startup" do
+    assert_raises(RuntimeError) do
+      BasicAuthentication.new(->(_environment) { [ 200, {}, [] ] }, username: "", password: "")
+    end
+  end
+
   private
 
   def authorization(username, password)
