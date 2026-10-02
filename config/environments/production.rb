@@ -1,4 +1,5 @@
 require "active_support/core_ext/integer/time"
+require_relative "../../lib/basic_authentication"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
@@ -29,6 +30,12 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
+
+  username = Rails.application.credentials.dig(:basic_auth, :username)
+  password = Rails.application.credentials.dig(:basic_auth, :password)
+  raise "Basic authentication credentials are missing" if username.blank? || password.blank?
+
+  config.middleware.insert_before ActionDispatch::Static, BasicAuthentication, username: username, password: password
 
   # Skip http-to-https redirect for the default health check endpoint.
   # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
