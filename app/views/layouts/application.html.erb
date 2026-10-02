@@ -18,11 +18,17 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%= stylesheet_link_tag "application", "base", "activity_page", "commission_links", "schedule", "questions", "documents", "flash", "utilities", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "base", "site_nav", "activity_page", "commission_links", "schedule", "questions", "documents", "flash", "utilities", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
+    <% general_questions_page = %w[questions answers].include?(controller_name) && @schedule_entry.nil? %>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <%= link_to "Programa", root_path, aria: { current: ("page" unless general_questions_page) } %>
+      <%= link_to "Preguntas generales", questions_path, aria: { current: ("page" if general_questions_page) } %>
+    </nav>
+
     <% flash.each do |type, message| %>
       <% next if message.blank? %>
       <div class="flash flash--<%= type == "alert" ? "alert" : "notice" %>" role="<%= type == "alert" ? "alert" : "status" %>">

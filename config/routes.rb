@@ -11,9 +11,11 @@ Rails.application.routes.draw do
 
   root "schedule#index"
 
+  resources :questions, only: %i[index create]
+
   resources :schedule_entries, only: :show do
     resources :documents, only: %i[index create destroy]
-    resources :questions, only: %i[index create edit update destroy] do
+    resources :questions, only: %i[index create edit update destroy], shallow: true do
       resource :answer, only: %i[edit update]
     end
   end

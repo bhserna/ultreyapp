@@ -27,17 +27,18 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     assert_select ".questions__item", text: /¿Quién participa\?/
     assert_select "turbo-frame#question_#{question.id}"
 
-    get edit_schedule_entry_question_url(3, question)
+    get edit_question_url(question)
     assert_response :success
     assert_select "turbo-frame#question_#{question.id}"
     assert_select "textarea", text: "¿Quién participa?"
+    assert_select ".site-nav a[aria-current='page']", text: "Programa"
 
-    patch schedule_entry_question_url(3, question), params: { question: { body: "¿Quién coordina?" } }
+    patch question_url(question), params: { question: { body: "¿Quién coordina?" } }
     assert_redirected_to schedule_entry_questions_url(3)
     assert_equal "¿Quién coordina?", question.reload.body
 
     assert_difference("Question.count", -1) do
-      delete schedule_entry_question_url(3, question)
+      delete question_url(question)
     end
     assert_redirected_to schedule_entry_questions_url(3)
   end
@@ -47,7 +48,38 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     get schedule_entry_questions_url(4)
     assert_select ".questions__item", count: 0
 
-    get edit_schedule_entry_question_url(4, question)
-    assert_response :not_found
+    get schedule_entry_questions_url(3)
+    assert_select ".questions__item a[href=?]", edit_question_path(question), text: "Editar"
+    assert_select ".questions__item a[href=?]", edit_question_answer_path(question), text: "Responder"
+    assert_select ".questions__item form[action=?]", question_path(question)
+  end
+
+  test "keeps general questions separate from activity questions" do
+    general_question = Question.create!(body: "Pregunta general")
+    activity_question = Question.create!(schedule_entry_id: 3, body: "Pregunta de la actividad")
+
+    get questions_url
+    assert_response :success
+    assert_select ".questions__item", text: /Pregunta general/, count: 1
+    assert_select ".questions__item", text: /Pregunta de la actividad/, count: 0
+
+    get schedule_entry_questions_url(3)
+    assert_select ".questions__item", text: /Pregunta general/, count: 0
+    assert_select ".questions__item", text: /Pregunta de la actividad/, count: 1
+
+    get edit_question_url(activity_question)
+    assert_response :success
+    assert_select ".activity-page__eyebrow", text: /Instalación de stands/
+    assert_select ".site-nav a[aria-current='page']", text: "Programa"
+
+    get edit_question_url(general_question)
+    assert_response :success
+    assert_select ".activity-page__eyebrow", count: 0
+    assert_select ".site-nav a[aria-current='page']", text: "Preguntas generales"
+
+    patch question_answer_url(activity_question), params: { question: { answer: "Respuesta de la actividad" } }
+    assert_redirected_to schedule_entry_questions_url(3)
+    patch question_answer_url(general_question), params: { question: { answer: "Respuesta general" } }
+    assert_redirected_to questions_url
   end
 end

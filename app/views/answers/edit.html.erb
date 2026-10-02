@@ -1,10 +1,12 @@
-<% content_for :title, "Responder · #{@schedule_entry.activity}" %>
+<% content_for :title, @schedule_entry ? "Responder · #{@schedule_entry.activity}" : "Responder pregunta general" %>
 
 <main class="activity-page">
-  <%= link_to "← Volver a las preguntas", schedule_entry_questions_path(@schedule_entry.id), class: "activity-page__back" %>
+  <%= link_to "← Volver a las preguntas", questions_path_maybe_for(@schedule_entry), class: "activity-page__back" %>
 
   <header class="activity-page__header">
-    <p class="activity-page__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
+    <% if @schedule_entry %>
+      <p class="activity-page__eyebrow"><%= @schedule_entry.day %> · <%= @schedule_entry.activity %></p>
+    <% end %>
     <h1><%= @question.answer.present? ? "Editar respuesta" : "Responder" %></h1>
   </header>
 
@@ -13,14 +15,14 @@
       <p class="questions__body"><%= @question.body %></p>
 
       <%= form_with model: @question,
-            url: schedule_entry_question_answer_path(@schedule_entry.id, @question),
+            url: question_answer_path(@question),
             method: :patch, class: "questions__form" do |form| %>
         <%= form.label :answer, "Respuesta" %>
         <%= form.text_area :answer, rows: 1, required: true, class: "questions__answer-input",
               data: { controller: "autosize", action: "input->autosize#resize" } %>
         <div class="questions__form-actions">
           <%= form.submit "Guardar respuesta" %>
-          <%= link_to "Cancelar", schedule_entry_questions_path(@schedule_entry.id), class: "questions__cancel" %>
+          <%= link_to "Cancelar", questions_path_maybe_for(@schedule_entry), class: "questions__cancel" %>
         </div>
       <% end %>
     <% end %>
