@@ -31,6 +31,7 @@
       <caption class="visually-hidden">Programa de actividades para <%= @selected_day %></caption>
       <thead>
         <tr>
+          <th scope="col">Acto</th>
           <th scope="col">Hora Inicio</th>
           <th scope="col">Hora Fin</th>
           <th scope="col">Duración</th>
@@ -42,6 +43,7 @@
       <tbody>
         <% @schedule_entries.each do |schedule_entry| %>
           <tr>
+            <td class="schedule__time"><%= schedule_entry.act_number || "—" %></td>
             <td class="schedule__time"><%= schedule_entry.start_time.presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry.end_time.presence || "—" %></td>
             <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
@@ -59,7 +61,7 @@
           </tr>
         <% end %>
         <% if @schedule_entries.empty? %>
-          <tr><td colspan="6">No hay actividades de esta comisión para <%= @selected_day %>.</td></tr>
+          <tr><td colspan="7">No hay actividades de esta comisión para <%= @selected_day %>.</td></tr>
         <% end %>
       </tbody>
     </table>

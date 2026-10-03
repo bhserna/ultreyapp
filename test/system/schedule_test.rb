@@ -5,20 +5,20 @@ class ScheduleTest < ApplicationSystemTestCase
     visit root_path
 
     within("tr", text: "Recepción de Diócesis") do
-      assert_selector "td:nth-child(5) .commission-links", text: "AC, Hospitalidad"
+      assert_selector "td:nth-child(6) .commission-links", text: "AC, Hospitalidad"
     end
 
     click_link "Domingo 15"
 
     within("tr", text: "Entrada a la Arena") do
-      assert_selector "td:nth-child(5) .commission-links", text: "Desfile, AC"
+      assert_selector "td:nth-child(6) .commission-links", text: "Desfile, AC"
     end
 
     click_link "Lunes 16"
 
     within("tr", text: "Desmontaje") do
-      assert_selector "td:nth-child(5)", text: "—"
-      assert_no_selector "td:nth-child(5) .commission-links"
+      assert_selector "td:nth-child(6)", text: "—"
+      assert_no_selector "td:nth-child(6) .commission-links"
     end
   end
 
@@ -26,15 +26,17 @@ class ScheduleTest < ApplicationSystemTestCase
     visit root_path(day: "Domingo 15")
 
     within("tr", text: "Entronización de Nuestra Señora del Roble") do
-      assert_selector "td:nth-child(1)", text: "10:50"
-      assert_selector "td:nth-child(2)", text: "11:50"
+      assert_selector "td:nth-child(1)", text: "4"
+      assert_selector "td:nth-child(2)", text: "10:50"
+      assert_selector "td:nth-child(3)", text: "11:50"
     end
 
     click_link "Lunes 16"
 
     within("tr", text: "Entrega de alimentos y salida") do
-      assert_selector "td:nth-child(1)", text: "14:30"
-      assert_selector "td:nth-child(2)", text: "15:00"
+      assert_selector "td:nth-child(1)", text: "27"
+      assert_selector "td:nth-child(2)", text: "14:30"
+      assert_selector "td:nth-child(3)", text: "15:00"
       assert_selector ".commission-links", text: "Logística, Seguridad"
     end
   end
@@ -47,7 +49,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
     click_link "Domingo 15"
     assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(4)", text: "Instalación de stands"
+    assert_selector "tbody tr td:nth-child(5)", text: "Instalación de stands"
     assert_equal "Marketing", find("#commission").value
 
     select "Todas las comisiones", from: "Comisión"
@@ -62,7 +64,7 @@ class ScheduleTest < ApplicationSystemTestCase
     end
 
     assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(4)", text: "Entrada a la Arena"
+    assert_selector "tbody tr td:nth-child(5)", text: "Entrada a la Arena"
     assert_equal "AC", find("#commission").value
 
     click_link "Sábado 14"
@@ -98,7 +100,7 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "nav a[aria-current='page']", text: "Sábado 14"
     assert_equal "Hospitalidad", find("#commission").value
     assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(4)", text: "Recepción de Diócesis"
+    assert_selector "tbody tr td:nth-child(5)", text: "Recepción de Diócesis"
   end
 
   test "shows resource counts beside each activity" do
