@@ -22,6 +22,23 @@ class ScheduleTest < ApplicationSystemTestCase
     end
   end
 
+  test "shows the official schedule times on both days" do
+    visit root_path(day: "Domingo 15")
+
+    within("tr", text: "Entronización de Nuestra Señora del Roble") do
+      assert_selector "td:nth-child(1)", text: "10:50"
+      assert_selector "td:nth-child(2)", text: "11:50"
+    end
+
+    click_link "Lunes 16"
+
+    within("tr", text: "Entrega de alimentos y salida") do
+      assert_selector "td:nth-child(1)", text: "14:30"
+      assert_selector "td:nth-child(2)", text: "15:00"
+      assert_selector ".commission-links", text: "Logística, Seguridad"
+    end
+  end
+
   test "filters by selecting a commission and keeps it when changing days" do
     visit root_path
 

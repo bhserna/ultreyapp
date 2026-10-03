@@ -1,5 +1,5 @@
 class ScheduleEntry
-  ATTRIBUTES = %w[id day start_time end_time duration activity commissions].freeze
+  ATTRIBUTES = %w[id act_number day start_time end_time duration activity commissions].freeze
 
   attr_reader(*ATTRIBUTES)
 

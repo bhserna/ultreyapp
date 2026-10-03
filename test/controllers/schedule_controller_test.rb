@@ -47,7 +47,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "nav a[aria-current='page']", text: "Lunes 16"
-    assert_select "tbody tr:first-child td:nth-child(4)", text: "Llegada y música instrumental"
+    assert_select "tbody tr:first-child td:nth-child(4)", text: "Inicio, bienvenida y animación"
     assert_select "tbody td", text: "Instalación de stands", count: 0
   end
 
