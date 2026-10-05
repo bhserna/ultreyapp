@@ -1,7 +1,7 @@
 <% content_for :title, @schedule_entry ? "Editar pregunta · #{@schedule_entry.activity}" : "Editar pregunta general" %>
 
 <main class="activity-page">
-  <%= link_to "← Volver a las preguntas", questions_path_maybe_for(@schedule_entry), class: "activity-page__back" %>
+  <%= link_to "← Volver a las preguntas", questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic), class: "activity-page__back" %>
 
   <header class="activity-page__header">
     <% if @schedule_entry %>
@@ -14,7 +14,7 @@
     <%= turbo_frame_tag dom_id(@question) do %>
       <%= render "form", question: @question,
             url: question_path(@question), method: :patch,
-            submit_label: "Guardar cambios", cancel_url: questions_path_maybe_for(@schedule_entry) %>
+            submit_label: "Guardar cambios", cancel_url: questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic) %>
     <% end %>
   </section>
 </main>

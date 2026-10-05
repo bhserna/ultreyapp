@@ -1,0 +1,34 @@
+<% content_for :title, "Editar temas" %>
+
+<main class="activity-page">
+  <%= link_to "← Volver a las preguntas generales", questions_path, class: "activity-page__back" %>
+
+  <header class="activity-page__header">
+    <h1>Editar temas</h1>
+  </header>
+
+  <section class="activity-page__section" aria-labelledby="topics-list-heading">
+    <h2 id="topics-list-heading">Temas</h2>
+
+    <% if @topics.any? %>
+      <ul class="topics__management-list">
+        <% @topics.each do |topic| %>
+          <li class="topics__management-item">
+            <%= render "topic", topic: topic %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="questions__empty">Todavía no hay temas.</p>
+    <% end %>
+
+    <div class="questions__new" data-controller="form-toggle">
+      <button type="button" class="questions__new-button" data-action="form-toggle#show"
+              data-form-toggle-target="trigger" aria-controls="new-topic-form" aria-expanded="false">Nuevo tema</button>
+      <div id="new-topic-form" class="questions__new-form" data-form-toggle-target="panel" hidden>
+        <%= render "form", topic: @topic, url: topics_path, method: :post,
+              submit_label: "Guardar tema", cancel_action: "form-toggle#hide" %>
+      </div>
+    </div>
+  </section>
+</main>

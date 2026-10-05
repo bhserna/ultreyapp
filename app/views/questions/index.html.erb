@@ -1,6 +1,6 @@
 <% content_for :title, @schedule_entry ? "Preguntas · #{@schedule_entry.activity}" : "Preguntas generales" %>
 
-<main class="activity-page">
+<main class="activity-page<%= " activity-page--wide" unless @schedule_entry %>">
   <% if @schedule_entry %>
     <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "activity-page__back" %>
   <% end %>
@@ -11,6 +11,26 @@
     <% end %>
     <h1><%= @schedule_entry ? @schedule_entry.activity : "Preguntas generales" %></h1>
   </header>
+
+  <div class="<%= "questions-layout" unless @schedule_entry %>">
+  <% unless @schedule_entry %>
+    <aside class="topics" aria-labelledby="topics-heading">
+      <div class="topics__header">
+        <h2 id="topics-heading">Temas</h2>
+        <%= link_to "Editar", topics_path %>
+      </div>
+      <nav aria-label="Temas de preguntas">
+        <ul class="topics__list">
+          <li><%= link_to "Sin tema", questions_path, class: "topics__tab", aria: { current: ("page" unless @topic) } %></li>
+          <% @topics.each do |topic| %>
+            <li>
+              <%= link_to topic.name, questions_path(topic_id: topic.id), class: "topics__tab", aria: { current: ("page" if @topic == topic) } %>
+            </li>
+          <% end %>
+        </ul>
+      </nav>
+    </aside>
+  <% end %>
 
   <%= turbo_frame_tag "questions" do %>
     <section class="activity-page__section" aria-labelledby="questions-heading">
@@ -38,22 +58,23 @@
           <% end %>
         </ul>
       <% else %>
-        <p class="questions__empty"><%= @schedule_entry ? "Todavía no hay preguntas para esta actividad." : "Todavía no hay preguntas generales." %></p>
+        <p class="questions__empty"><%= @schedule_entry ? "Todavía no hay preguntas para esta actividad." : (@topic ? "Todavía no hay preguntas para este tema." : "Todavía no hay preguntas generales sin tema.") %></p>
       <% end %>
 
-      <div class="questions__new" data-controller="question-form">
-        <button type="button" class="questions__new-button" data-action="question-form#show"
-                data-question-form-target="trigger" aria-controls="new-question-form"
+      <div class="questions__new" data-controller="form-toggle">
+        <button type="button" class="questions__new-button" data-action="form-toggle#show"
+                data-form-toggle-target="trigger" aria-controls="new-question-form"
                 aria-expanded="false">
           Nueva pregunta
         </button>
 
-        <div id="new-question-form" class="questions__new-form" data-question-form-target="panel" hidden>
+        <div id="new-question-form" class="questions__new-form" data-form-toggle-target="panel" hidden>
           <%= render "form", question: @question,
-                url: questions_path_maybe_for(@schedule_entry), method: :post,
-                submit_label: "Guardar pregunta", cancel_action: "question-form#hide" %>
+                url: questions_collection_path(schedule_entry: @schedule_entry, topic: @topic), method: :post,
+                submit_label: "Guardar pregunta", cancel_action: "form-toggle#hide" %>
         </div>
       </div>
     </section>
   <% end %>
+  </div>
 </main>

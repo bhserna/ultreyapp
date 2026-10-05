@@ -7,7 +7,7 @@ export default class extends Controller {
     this.triggerTarget.hidden = true
     this.triggerTarget.setAttribute("aria-expanded", "true")
     this.panelTarget.hidden = false
-    this.panelTarget.querySelector("textarea")?.focus()
+    this.panelTarget.querySelector("textarea, input")?.focus()
   }
 
   hide() {

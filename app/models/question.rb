@@ -1,4 +1,6 @@
 class Question < ApplicationRecord
+  belongs_to :topic, optional: true
+
   validates :body, presence: true
 
   def schedule_entry

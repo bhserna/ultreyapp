@@ -1,0 +1,79 @@
+@layer components {
+  .topics {
+    padding: 1.25rem;
+    border: 1px solid #dce3eb;
+    border-radius: 0.75rem;
+    background: #fff;
+  }
+
+  .topics__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .topics h2 {
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  .topics__header a {
+    color: #385473;
+    font-weight: 600;
+  }
+
+  .topics__list {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics__tab {
+    display: block;
+    padding: 0.9rem 0.5rem;
+    border-radius: 0.4rem;
+    color: #385473;
+    font-weight: 600;
+    overflow-wrap: anywhere;
+    text-decoration: none;
+  }
+
+  .topics__tab:hover {
+    background: #f0f4f8;
+  }
+
+  .topics__tab[aria-current="page"] {
+    background: #dce7f1;
+  }
+
+  .topics__tab[aria-current="page"]:hover {
+    background: #d2e1ef;
+  }
+
+  .topics__management-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .topics__management-item {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #e9edf2;
+  }
+
+  .topics__management-item:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+  }
+
+  .topics__name {
+    margin: 0 0 0.75rem;
+    overflow-wrap: anywhere;
+  }
+}

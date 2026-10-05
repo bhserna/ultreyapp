@@ -1,4 +1,21 @@
 @layer components {
+  .questions-layout {
+    display: grid;
+    grid-template-columns: minmax(220px, 280px) minmax(0, 1fr);
+    align-items: start;
+    gap: 1.25rem;
+  }
+
+  .questions-layout .activity-page__section {
+    min-width: 0;
+  }
+
+  @media (max-width: 650px) {
+    .questions-layout {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
   .questions__list {
     display: grid;
     gap: 1rem;
@@ -98,7 +115,8 @@
     font-weight: 600;
   }
 
-  .questions__form textarea {
+  .questions__form textarea,
+  .questions__form input[type="text"] {
     width: 100%;
     padding: 0.75rem;
     border: 1px solid #aebac8;
@@ -126,6 +144,7 @@
   }
 
   .questions__form textarea:focus-visible,
+  .questions__form input[type="text"]:focus-visible,
   .questions__new-button:focus-visible,
   .questions__form input[type="submit"]:focus-visible,
   .questions__cancel:focus-visible {

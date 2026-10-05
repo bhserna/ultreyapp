@@ -6,7 +6,7 @@ class AnswersController < ApplicationController
 
   def update
     @question.update!(answer_params)
-    redirect_to helpers.questions_path_maybe_for(@schedule_entry), status: :see_other
+    redirect_to helpers.questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic), status: :see_other
   end
 
   private

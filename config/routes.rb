@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   root "schedule#index"
 
   resources :questions, only: %i[index create]
+  resources :topics, only: %i[index create edit update destroy]
 
   resources :schedule_entries, only: :show do
     resources :documents, only: %i[index create destroy]

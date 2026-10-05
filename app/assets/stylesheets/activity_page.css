@@ -5,6 +5,10 @@
     padding: clamp(1.25rem, 4vw, 3rem);
   }
 
+  .activity-page--wide {
+    max-width: 1200px;
+  }
+
   .activity-page__back {
     color: #385473;
     font-weight: 600;

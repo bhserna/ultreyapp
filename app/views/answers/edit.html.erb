@@ -1,7 +1,7 @@
 <% content_for :title, @schedule_entry ? "Responder · #{@schedule_entry.activity}" : "Responder pregunta general" %>
 
 <main class="activity-page">
-  <%= link_to "← Volver a las preguntas", questions_path_maybe_for(@schedule_entry), class: "activity-page__back" %>
+  <%= link_to "← Volver a las preguntas", questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic), class: "activity-page__back" %>
 
   <header class="activity-page__header">
     <% if @schedule_entry %>
@@ -22,7 +22,7 @@
               data: { controller: "autosize", action: "input->autosize#resize" } %>
         <div class="questions__form-actions">
           <%= form.submit "Guardar respuesta" %>
-          <%= link_to "Cancelar", questions_path_maybe_for(@schedule_entry), class: "questions__cancel" %>
+          <%= link_to "Cancelar", questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic), class: "questions__cancel" %>
         </div>
       <% end %>
     <% end %>

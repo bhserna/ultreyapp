@@ -1,0 +1,16 @@
+<% content_for :title, "Editar tema" %>
+
+<main class="activity-page">
+  <%= link_to "← Volver a los temas", topics_path, class: "activity-page__back" %>
+
+  <header class="activity-page__header">
+    <h1>Editar tema</h1>
+  </header>
+
+  <section class="activity-page__section">
+    <%= turbo_frame_tag dom_id(@topic) do %>
+      <%= render "form", topic: @topic, url: topic_path(@topic), method: :patch,
+            submit_label: "Guardar cambios", cancel_url: topics_path %>
+    <% end %>
+  </section>
+</main>
