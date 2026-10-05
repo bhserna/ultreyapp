@@ -1,0 +1,756 @@
+source:
+  title: Ultreya Nacional 2026 - Documentos de seguimiento
+  updated_at: '2026-07-08'
+schedule_entries:
+- id: 1
+  act: Recepción de Diócesis
+  questions: []
+- id: 2
+  act: Entrega de Kits
+  questions: []
+- id: 3
+  act: Instalación de stands
+  questions: []
+- id: 4
+  act: Instalación de la capilla del Santísimo
+  questions: []
+- id: 5
+  act: Desfile por diócesis
+  source_block: Desfile por diócesis y entrada a la arena
+  questions:
+  - question: ¿Quién coordina el desfile y quién da a escenario la señal de inicio?
+    answer: null
+  - question: ¿Cuál es la ruta de acceso y cómo entran quienes no desfilan?
+    answer: null
+  - question: ¿Habrá acomodo por diócesis y quién lo dirige?
+    answer: null
+  - question: ¿Cuál es el acceso y acomodo para personas con discapacidad?
+    answer: null
+  - question: ¿Qué música se usará, quién la aprueba y quién entrega los archivos?
+    answer: null
+  - question: '¿Cómo se reproducirá el contenido: laptop, USB u otro sistema?'
+    answer: null
+- id: 6
+  act: Entrada a la Arena
+  source_block: Desfile por diócesis y entrada a la arena
+  questions:
+  - question: ¿A qué hora se abren las puertas, con cuántas personas puede iniciar el programa y cuánto retraso
+      es tolerable?
+    answer: null
+  - question: ¿Cuál es la ruta de acceso y cómo entran quienes no desfilan?
+    answer: null
+  - question: ¿Habrá acomodo por diócesis y quién lo dirige?
+    answer: null
+  - question: ¿Cuál es el acceso y acomodo para personas con discapacidad?
+    answer: null
+  - question: ¿Habrá entrega de kits? ¿Dónde y a cargo de quién?
+    answer: null
+  - question: ¿Qué música se usará, quién la aprueba y quién entrega los archivos?
+    answer: null
+  - question: '¿Cómo se reproducirá el contenido: laptop, USB u otro sistema?'
+    answer: null
+- id: 7
+  act: Video histórico Ultreyas MTY 1998-2026
+  source_block: Video histórico de Ultreyas
+  questions:
+  - question: ¿Quién produce y entrega la versión final del video?
+    answer: null
+  - question: ¿Cuál es la señal exacta y el momento para reproducirlo?
+    answer: null
+  - question: ¿Cuánto se puede esperar antes de iniciar?
+    answer: null
+  - question: ¿Habrá primera, segunda y tercera llamada? ¿Quién las ejecuta?
+    answer: null
+  - question: ¿Qué formato, resolución y configuración de audio requiere la arena?
+    answer: null
+  - question: ¿Cómo se nombrarán y entregarán los archivos?
+    answer: null
+  - question: ¿Cuándo será la prueba técnica y qué respaldo habrá?
+    answer: null
+- id: 8
+  act: Grupo Folclórico
+  source_block: Grupos folclóricos
+  questions:
+  - question: ¿Cuántos grupos, participantes y canciones habrá? ¿Cuánto dura cada intervención?
+    answer: null
+  - question: ¿Quién presenta a cada grupo y cuál es el orden?
+    answer: null
+  - question: ¿Quién entrega la música y en qué formato?
+    answer: null
+  - question: ¿Qué requieren de audio, video, iluminación y escenografía?
+    answer: null
+  - question: ¿Necesitan camerinos, cuántos y para qué cambios de vestuario?
+    answer: null
+  - question: ¿A qué hora deben reportarse y dónde esperarán?
+    answer: null
+  - question: ¿Por dónde entran y salen del escenario?
+    answer: null
+  - question: ¿Tienen experiencia en escenario y habrá ensayo previo?
+    answer: null
+- id: 9
+  act: Presentación, saludos y palabras de autoridades
+  source_block: Maestros de ceremonia y autoridades
+  questions:
+  - question: ¿Quiénes serán los maestros de ceremonia y cuántas personas participan?
+    answer: null
+  - question: ¿Qué autoridades asistirán y cuáles intervendrán?
+    answer: null
+  - question: ¿Dónde estarán ubicadas y qué lugares se deben reservar?
+    answer: null
+  - question: ¿Cómo y cuándo entran y salen?
+    answer: null
+  - question: '¿Qué mobiliario y atención requieren: sillas, mesa, mantel, agua?'
+    answer: null
+  - question: ¿Cuántos micrófonos y de qué tipo se necesitan?
+    answer: null
+  - question: ¿Requieren atril/ambón, reloj, teleprompter o apuntador de oído?
+    answer: null
+  - question: ¿Existe un guion aprobado con orden, nombres, cargos y duración?
+    answer: null
+  - question: ¿Quién dará el tercer mensaje de bienvenida?
+    answer: null
+- id: 10
+  act: Palabras de bienvenida - Presidente Nacional
+  source_block: Mensajes de bienvenida
+  questions:
+  - question: ¿Cada participante conoce el tiempo disponible y tiene texto final?
+    answer: null
+  - question: ¿Usarán micrófono de mano, solapa o atril?
+    answer: null
+  - question: ¿Requieren podio/ambón, monitor de tiempo o teleprompter?
+    answer: null
+  - question: ¿Necesitan apoyo visual o algún elemento en el escenario?
+    answer: null
+  - question: ¿A qué hora y dónde deben reportarse?
+    answer: null
+- id: 11
+  act: Palabras de bienvenida - Presidente Diocesano
+  source_block: Mensajes de bienvenida
+  questions:
+  - question: ¿Cada participante conoce el tiempo disponible y tiene texto final?
+    answer: null
+  - question: ¿Usarán micrófono de mano, solapa o atril?
+    answer: null
+  - question: ¿Requieren podio/ambón, monitor de tiempo o teleprompter?
+    answer: null
+  - question: ¿Necesitan apoyo visual o algún elemento en el escenario?
+    answer: null
+  - question: ¿A qué hora y dónde deben reportarse?
+    answer: null
+- id: 12
+  act: Transición al momento solemne
+  questions: []
+- id: 13
+  act: Entronización de Nuestra Señora del Roble y presentación del Santísimo
+  source_block: Presentación del Santísimo y entronización
+  questions:
+  - question: ¿Cuál es el rito, quién lo coordina y cuántas personas participan?
+    answer: null
+  - question: ¿Cuál será el recorrido y quién acompaña cada elemento?
+    answer: null
+  - question: ¿Dónde se ubicarán la Virgen y el Santísimo dentro y fuera del escenario?
+    answer: Hilda, de Liturgia, indicó que siempre habrá un lugar para la Santísima Virgen en el escenario;
+      la ubicación exacta sigue sin definirse.
+  - question: ¿Qué objetos litúrgicos, incienso o mobiliario habrá?
+    answer: null
+  - question: ¿Qué debe retirarse o montarse y cuánto tiempo toma la transición?
+    answer: null
+  - question: ¿Qué música, video, iluminación y micrófonos se requieren?
+    answer: null
+  - question: ¿Quién coordina la iluminación con la arena y da cada señal?
+    answer: null
+- id: 14
+  act: Canto de Colores
+  source_block: Canto “De Colores”
+  questions:
+  - question: ¿Quién da la señal de inicio y cuál será?
+    answer: null
+  - question: ¿Quién canta y cuántas personas estarán en escena?
+    answer: null
+  - question: ¿Se proyectará la letra? ¿Quién entrega el archivo?
+    answer: null
+  - question: ¿Qué equipo de sonido necesitan y estará instalado previamente?
+    answer: null
+  - question: ¿A qué hora deben reportarse los participantes?
+    answer: null
+  - question: ¿Habrá pelotas, telas u otra dinámica de ambientación?
+    answer: null
+  - question: ¿El ambón es fijo o puede retirarse?
+    answer: null
+  - question: ¿Qué elementos deben desmontarse y cuáles montarse para Tema 1 durante este canto?
+    answer: null
+- id: 15
+  act: Tema 1
+  source_block: Tema 1
+  questions:
+  - question: ¿Quién es el ponente y quién será su enlace?
+    answer: null
+  - question: ¿Cuándo entregará el tema y cualquier presentación o video?
+    answer: null
+  - question: ¿Conoce la duración asignada?
+    answer: null
+  - question: ¿Qué micrófono, atril/podio, reloj o teleprompter requiere?
+    answer: null
+  - question: ¿Cómo se reproducirá su contenido y cuándo se probará?
+    answer: null
+  - question: ¿Con cuánta anticipación debe reportarse, dónde esperará y con quién se registra?
+    answer: null
+  - question: ¿Quién le indicará el tiempo restante durante la presentación?
+    answer: null
+- id: 16
+  act: Agradecimiento Tema 1
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 17
+  act: Comida, bendición de alimentos y animación
+  source_block: Comida, descanso y bendición
+  questions:
+  - question: ¿Quién comunica las indicaciones para la comida?
+    answer: null
+  - question: ¿Quién da la bendición de los alimentos?
+    answer: null
+  - question: ¿Usarán micrófono y atril/podio?
+    answer: null
+  - question: ¿Qué música se escuchará, quién la define y cuánto dura?
+    answer: null
+  - question: ¿Será música en vivo o grabada? ¿Quién entrega los archivos?
+    answer: null
+  - question: ¿Qué señales marcan inicio, avisos y regreso al programa?
+    answer: null
+- id: 18
+  act: Preparación inmediata para la Eucaristía
+  source_block: Preparación y Eucaristía
+  questions:
+  - question: ¿Quién monta y desmonta el altar? ¿Dónde se guardan previamente y después los objetos?
+    answer: null
+  - question: ¿Cuánto tiempo real se necesita para preparar el escenario antes de la misa?
+    answer: null
+- id: 19
+  act: Eucaristía
+  source_block: Preparación y Eucaristía
+  questions:
+  - question: ¿Quién es el coordinador litúrgico operativo y quién da las señales a escenario?
+    answer: null
+  - question: ¿Cuál es el orden de las ofrendas, qué diócesis participan y quién recibe cada una?
+    answer: null
+  - question: ¿Dónde esperan los participantes con sus ofrendas y quién los acomoda?
+    answer: null
+  - question: ¿Quién monta y desmonta el altar? ¿Dónde se guardan previamente y después los objetos?
+    answer: null
+  - question: ¿Quiénes celebran, cuántos sacerdotes suben y cuántas sillas/lugares reservados necesitan?
+    answer: null
+  - question: ¿Cómo será la entrega de casullas?
+    answer: null
+  - question: ¿Quiénes leen y cantan? ¿Qué micrófonos y equipo requieren?
+    answer: null
+  - question: ¿Cómo será la logística de comunión, ministros y posible colecta?
+    answer: null
+  - question: ¿Se proyectarán cantos, lecturas y/o la celebración en vivo?
+    answer: null
+  - question: ¿Qué cámaras, señales, pantallas e iluminación se requieren?
+    answer: null
+  - question: ¿Cuánto tiempo real se necesita para preparar el escenario antes de la misa?
+    answer: null
+- id: 20
+  act: Vivencia 1
+  source_block: Vivencias 1, 2 y 3
+  questions:
+  - question: ¿Quién participa en cada vivencia y quién es su enlace?
+    answer: null
+  - question: ¿Qué micrófono, atril/podio y monitor de tiempo necesita?
+    answer: null
+  - question: ¿Cada participante conoce la duración asignada?
+    answer: null
+  - question: ¿Con cuánta anticipación debe reportarse y dónde esperará?
+    answer: null
+  - question: ¿Quién recibe al participante y lo entrega a escenario/audiovisual?
+    answer: null
+  - question: ¿Quién indicará el tiempo durante la intervención?
+    answer: null
+- id: 21
+  act: Agradecimiento Vivencia 1
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 22
+  act: Animación, Coro de Cursillos y Bendicam
+  questions: []
+- id: 23
+  act: Vivencia 2
+  source_block: Vivencias 1, 2 y 3
+  questions:
+  - question: ¿Quién participa en cada vivencia y quién es su enlace?
+    answer: null
+  - question: ¿Qué micrófono, atril/podio y monitor de tiempo necesita?
+    answer: null
+  - question: ¿Cada participante conoce la duración asignada?
+    answer: null
+  - question: ¿Con cuánta anticipación debe reportarse y dónde esperará?
+    answer: null
+  - question: ¿Quién recibe al participante y lo entrega a escenario/audiovisual?
+    answer: null
+  - question: ¿Quién indicará el tiempo durante la intervención?
+    answer: null
+- id: 24
+  act: Agradecimiento Vivencia 2
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 25
+  act: Video MCC Monterrey
+  source_block: Video MCC Monterrey
+  questions:
+  - question: ¿Quién produce y entrega la versión final?
+    answer: null
+  - question: ¿Cuál es el momento y la señal de reproducción?
+    answer: null
+  - question: ¿Qué formato, resolución, audio y duración tendrá?
+    answer: null
+  - question: ¿Cuándo se probará y cuál será el archivo de respaldo?
+    answer: null
+  - question: ¿Cómo se enlaza con la preparación de la Eucaristía?
+    answer: null
+- id: 26
+  act: Tema 2
+  questions: []
+- id: 27
+  act: Agradecimiento Tema 2
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 28
+  act: Animación, Coro de Cursillos y Bendicam
+  questions: []
+- id: 29
+  act: Vivencia 3
+  source_block: Vivencias 1, 2 y 3
+  questions:
+  - question: ¿Quién participa en cada vivencia y quién es su enlace?
+    answer: null
+  - question: ¿Qué micrófono, atril/podio y monitor de tiempo necesita?
+    answer: null
+  - question: ¿Cada participante conoce la duración asignada?
+    answer: null
+  - question: ¿Con cuánta anticipación debe reportarse y dónde esperará?
+    answer: null
+  - question: ¿Quién recibe al participante y lo entrega a escenario/audiovisual?
+    answer: null
+  - question: ¿Quién indicará el tiempo durante la intervención?
+    answer: null
+- id: 30
+  act: Agradecimiento Vivencia 3
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 31
+  act: Término, indicaciones y salida
+  questions: []
+- id: 32
+  act: Regreso a las parroquias y lugar de hospedaje
+  questions: []
+- id: 33
+  act: Inicio, bienvenida y animación
+  source_block: Llegada, música y oraciones de la mañana
+  questions:
+  - question: ¿Quién selecciona y entrega la música instrumental de llegada?
+    answer: null
+  - question: ¿Cuál será la señal para comenzar y cómo se convoca a los asistentes?
+    answer: null
+- id: 34
+  act: Oraciones de la mañana
+  source_block: Llegada, música y oraciones de la mañana
+  questions:
+  - question: ¿Quién dirige las oraciones de la mañana?
+    answer: null
+  - question: ¿Qué micrófono, atril, música o proyección requiere?
+    answer: null
+  - question: ¿Cuál será la señal para comenzar y cómo se convoca a los asistentes?
+    answer: null
+- id: 35
+  act: Rosario
+  source_block: Rosario
+  questions:
+  - question: ¿Quién coordina y quién dirige el Rosario?
+    answer: null
+  - question: ¿Qué personas participan en escenario y qué elementos requieren?
+    answer: null
+  - question: ¿Habrá canto en cada misterio?
+    answer: null
+  - question: ¿La música será en vivo o grabada?
+    answer: null
+  - question: ¿Qué debe proyectarse y quién entrega el contenido?
+    answer: null
+  - question: ¿Qué micrófonos, iluminación o apoyo audiovisual se necesita?
+    answer: null
+- id: 36
+  act: Vivencia 4
+  source_block: Vivencia 4, Tema 3, intercambio y cantos, Vivencia 5
+  questions:
+  - question: Confirmar nombres, enlaces, horarios de reporte y duración de Vivencias 4 y 5 y Tema 3.
+    answer: null
+  - question: Aplicar el estándar de micrófonos, atril, tiempo, presentaciones y entrega a escenario.
+    answer: null
+- id: 37
+  act: Agradecimiento Vivencia 4
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 38
+  act: Tema 3
+  source_block: Vivencia 4, Tema 3, intercambio y cantos, Vivencia 5
+  questions:
+  - question: Confirmar nombres, enlaces, horarios de reporte y duración de Vivencias 4 y 5 y Tema 3.
+    answer: null
+  - question: Aplicar el estándar de micrófonos, atril, tiempo, presentaciones y entrega a escenario.
+    answer: null
+- id: 39
+  act: Agradecimiento Tema 3
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 40
+  act: Animación e intercambio
+  source_block: Vivencia 4, Tema 3, intercambio y cantos, Vivencia 5
+  questions:
+  - question: ¿Quién dirige “Intercambio y cantos” y cuál es la dinámica exacta?
+    answer: null
+  - question: ¿Qué canciones, letras proyectadas, músicos, pistas y equipo se requieren?
+    answer: null
+  - question: ¿Qué montaje o movimiento de personas ocurre durante ese bloque?
+    answer: null
+- id: 41
+  act: Vivencia 5
+  source_block: Vivencia 4, Tema 3, intercambio y cantos, Vivencia 5
+  questions:
+  - question: Confirmar nombres, enlaces, horarios de reporte y duración de Vivencias 4 y 5 y Tema 3.
+    answer: null
+  - question: Aplicar el estándar de micrófonos, atril, tiempo, presentaciones y entrega a escenario.
+    answer: null
+- id: 42
+  act: Agradecimiento Vivencia 5
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 43
+  act: Vivencia 6
+  source_block: Vivencia 6 (ESP)
+  questions:
+  - question: ¿Qué significa “ESP” y qué diferencia operativa tiene esta vivencia?
+    answer: null
+  - question: ¿Quién participa y quién es su enlace?
+    answer: null
+  - question: ¿Requiere traducción, audio especial o contenido audiovisual distinto?
+    answer: null
+  - question: ¿Con cuánta anticipación se reporta y quién controla su tiempo?
+    answer: null
+- id: 44
+  act: Agradecimiento Vivencia 6
+  source_block: Agradecimiento de Tema 1
+  questions:
+  - question: ¿Quién da el agradecimiento y habrá palabras?
+    answer: null
+  - question: ¿Se entrega algún reconocimiento? ¿Quién lo proporciona y quién lo entrega?
+    answer: null
+  - question: ¿Dónde estarán resguardados y en qué orden los reconocimientos?
+    answer: null
+  - question: ¿Habrá fotografía oficial y quién la toma?
+    answer: null
+  - question: ¿Cuánto tiempo exacto tiene esta transición?
+    answer: null
+- id: 45
+  act: Agradecimiento a asesores eclesiásticos y oración especial
+  source_block: Reconocimiento a asesores eclesiásticos
+  questions:
+  - question: ¿Quiénes serán reconocidos, cuántos son y en qué orden intervienen?
+    answer: null
+  - question: ¿Quién da las palabras y quién hace la oración?
+    answer: null
+  - question: ¿Cuántos hablarán y qué duración tiene cada intervención?
+    answer: null
+  - question: ¿Dónde estarán ubicados y cómo entran y salen?
+    answer: null
+  - question: ¿Qué lugares, sillas, mesa, mantel y agua requieren?
+    answer: null
+  - question: ¿Cuántos micrófonos, de qué tipo, y si necesitan ambón o reloj?
+    answer: null
+  - question: ¿Qué se entrega, quién lo proporciona, quién lo entrega y dónde estará resguardado?
+    answer: null
+  - question: ¿Habrá fotografía oficial y cuál será la formación?
+    answer: null
+- id: 47
+  act: Agradecimientos generales y a patrocinadores
+  source_block: Agradecimientos, patrocinadores, clausura y salida
+  questions:
+  - question: ¿Quién conduce la clausura y cuál es el guion aprobado?
+    answer: null
+  - question: ¿A quiénes se agradece y en qué orden?
+    answer: null
+  - question: '¿Cómo se reconocerá a patrocinadores: lectura, logotipos, video o presencia en escenario?'
+    answer: null
+  - question: ¿Habrá entregas, fotografías o intervenciones?
+    answer: null
+  - question: ¿Cuál es la señal oficial de cierre y cuándo puede comenzar el desmontaje?
+    answer: null
+- id: 46
+  act: Misa y Canto de Colores con el Coro de Cursillos
+  source_block: Eucaristía
+  questions:
+  - question: ¿Cuántos minutos se agregarán antes para preparar altar, audio y participantes?
+    answer: null
+  - question: ¿Qué actividad se recorta o mueve para crear ese tiempo?
+    answer: null
+  - question: ¿La configuración será igual a la Eucaristía del domingo?
+    answer: null
+  - question: ¿Cambian celebrantes, ministros, lectores, coro, ofrendas o logística de comunión?
+    answer: null
+  - question: ¿Qué elementos permanecen montados para la clausura?
+    answer: null
+- id: 48
+  act: Entrega de alimentos y salida
+  source_block: Agradecimientos, patrocinadores, clausura y salida
+  questions:
+  - question: ¿Quién comunica las indicaciones de comida y salida?
+    answer: null
+  - question: ¿Cuál será el flujo de entrega de alimentos y desalojo?
+    answer: null
+  - question: ¿Qué música o contenido se proyecta durante la salida?
+    answer: null
+  - question: ¿Cuál es la señal oficial de cierre y cuándo puede comenzar el desmontaje?
+    answer: null
+- id: 49
+  act: Desmontaje
+  questions: []
+cross_cutting_questions:
+- topic: Responsable y señal de inicio
+  questions:
+  - question: ¿Quién autoriza el inicio de cada bloque?
+    answer: null
+  - question: ¿Cuánto puede retrasarse cada actividad?
+    answer: null
+  - question: ¿Cómo se comunicarán la primera, segunda y tercera llamada?
+    answer: null
+  - question: ¿Quién da la señal final a escenario y audiovisual?
+    answer: null
+- topic: Estándar audiovisual
+  questions:
+  - question: ¿Qué formatos y resoluciones deben tener los videos?
+    answer: null
+  - question: ¿Qué especificaciones deben cumplir los archivos de audio?
+    answer: null
+  - question: ¿Cómo deben nombrarse los archivos?
+    answer: null
+  - question: ¿Cuándo deben entregarse?
+    answer: null
+  - question: ¿Desde qué dispositivo se reproducirán?
+    answer: null
+  - question: ¿Cuándo se realizarán las pruebas?
+    answer: null
+  - question: ¿Qué respaldo habrá para cada archivo?
+    answer: null
+- topic: Flujo de participantes
+  questions:
+  - question: ¿Con cuánto tiempo de anticipación debe reportarse cada participante?
+    answer: null
+  - question: ¿Dónde debe esperar antes de su intervención?
+    answer: null
+  - question: ¿Quién lo recibe y acompaña?
+    answer: null
+  - question: ¿Por dónde entra y sale del escenario?
+    answer: null
+  - question: ¿El flujo será diferente para ponentes, grupos y autoridades?
+    answer: null
+- topic: Configuración del escenario
+  questions:
+  - question: ¿Cuál será la configuración base del escenario?
+    answer: null
+  - question: ¿Qué mobiliario estará disponible?
+    answer: null
+  - question: ¿Habrá atril o ambón?
+    answer: null
+  - question: ¿Qué tipos y cantidades de micrófonos estarán disponibles?
+    answer: null
+  - question: ¿Cómo se indicará el tiempo a los participantes?
+    answer: null
+  - question: ¿Habrá teleprompter?
+    answer: null
+  - question: ¿Cómo se manejará la iluminación?
+    answer: null
+  - question: ¿Cuánto tiempo se necesita para cada cambio de montaje?
+    answer: null
+- topic: Guion maestro
+  questions:
+  - question: ¿Quiénes serán los maestros de ceremonia?
+    answer: null
+  - question: ¿Quién prepara y aprueba el guion?
+    answer: null
+  - question: ¿Cuándo deben entregarse los textos y presentaciones?
+    answer: null
+  - question: ¿Cómo se realizarán los agradecimientos y las entregas?
+    answer: null
+  - question: ¿En qué momentos habrá fotografías?
+    answer: null
+  - question: ¿Quién será responsable de coordinar cada transición?
+    answer: null
+- topic: Comunicación operativa
+  questions:
+  - question: ¿Qué canal se utilizará durante el evento?
+    answer: null
+  - question: ¿Quién representará a programa, escenario, audiovisual, arena, liturgia y accesos?
+    answer: null
+  - question: ¿Cuál es el teléfono de cada responsable?
+    answer: null
+  - question: ¿Quién puede autorizar cambios en el minuto a minuto?
+    answer: null
+  - question: ¿Cómo se comunicarán las incidencias o retrasos?
+    answer: null
+general_questions:
+- topic: Medios de comunicación
+  questions:
+  - question: ¿Habrá medios de comunicación? ¿Cuáles y cuántas personas?
+    answer: null
+  - question: ¿Quién los atiende y quién autoriza entrevistas o grabaciones?
+    answer: null
+  - question: ¿Tendrán gafete o acreditación especial?
+    answer: null
+  - question: ¿Por dónde acceden y dónde se ubican?
+    answer: null
+  - question: ¿Qué zonas o momentos tienen restricciones de grabación?
+    answer: null
+- topic: Transmisión en vivo
+  questions:
+  - question: ¿La CEN transmitirá la Ultreya en vivo?
+    answer: No. La CEN no se encargará de la transmisión.
+  - question: ¿Quién es el productor y responsable técnico?
+    answer: null
+  - question: ¿En qué plataforma, con qué horarios y qué permisos?
+    answer: null
+  - question: ¿Qué señal de audio/video requiere y cómo se integra con la arena?
+    answer: null
+  - question: ¿Habrá grabación de respaldo y entrega posterior?
+    answer: null
+  - question: ¿Cómo se coordina la transmisión con el minuto a minuto y los contenidos protegidos?
+    answer: null
+  - question: ¿La Arena permite conectarse al circuito cerrado?
+    answer: Sí. La Arena confirmó que es posible conectarse al circuito cerrado; faltan las características
+      y el punto de entrega de la señal.
+  - question: ¿Quién opera la transmisión?
+    answer: null
+  - question: ¿Qué internet se usará?
+    answer: La Arena mencionó que se tendría que poner una antena para tener WiFi dedicado para la transmisión;
+      la solución concreta sigue sin definirse.
+  - question: ¿En qué redes se transmitiría?
+    answer: null
+  - question: ¿Habrá grabación de respaldo?
+    answer: null
+- topic: Coro y música
+  questions:
+  - question: ¿En qué momentos participa el coro y qué repertorio se solicita?
+    answer: Participará en una de las misas, pero todavía no se sabe en cuál; faltan otras intervenciones y
+      el repertorio.
+  - question: ¿En cuál Eucaristía cantará?
+    answer: null
+  - question: ¿Habrá otros coros o grupos de animación, incluido Jessed?
+    answer: Sí. Participarán Jessed y otras tres personas por separado; faltan sus momentos y la coordinación.
+  - question: ¿Qué equipo estará disponible y permanecerá fijo?
+    answer: Los instrumentos de todos los coros estarán montados todo el tiempo en el escenario; los micrófonos,
+      conexiones y demás equipo siguen sin definirse.
+  - question: ¿Cómo se comparte escenario/equipo con otros grupos?
+    answer: Los instrumentos de todos los coros estarán montados todo el tiempo en el escenario. Parece que
+      cada coro entrará y saldrá cuando le toque participar; falta confirmarlo.
+  - question: ¿Quién aprueba canciones y coordina ensayos?
+    answer: Emmanuel coordina los ensayos; todavía no se define quién aprueba las canciones.
+  - question: ¿El reclutamiento será mediante vocales y cuántas personas se requieren?
+    answer: Sí. Emmanuel redactará la convocatoria, los vocales identificarán a personas que animan cantos
+      en sus centros y le pasarán sus contactos. Emmanuel convocará a una reunión de integración y después
+      se definirá el calendario de ensayos. La cantidad de integrantes sigue sin definirse.
+  - question: ¿Se necesita vestuario especial?
+    answer: null
+  - question: ¿Cómo se conecta el coro al audio del evento?
+    answer: null
+- topic: Escenografía
+  questions:
+  - question: ¿Qué se mostrará en la pantalla frontal?
+    answer: Imágenes para ambientar los diferentes momentos de la Ultreya; falta definir el contenido concreto.
+  - question: ¿Quién prepara y entrega los materiales visuales?
+    answer: Marketing proporcionará la mayoría de las imágenes y preparará una carpeta para cada video con
+      su orden correspondiente.
+  - question: ¿Qué medidas tiene la pantalla?
+    answer: Aproximadamente 10 x 10 metros; falta confirmar la medida y la resolución reales.
+  - question: ¿Qué medidas tiene el escenario?
+    answer: Aproximadamente 18 x 12 metros; falta confirmar su orientación y distribución.
+  - question: ¿Dónde estará la Santísima Virgen?
+    answer: Hilda, de Liturgia, indicó que siempre habrá un lugar para la Santísima Virgen en el escenario;
+      la ubicación exacta sigue sin definirse.
