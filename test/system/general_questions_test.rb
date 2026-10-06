@@ -134,4 +134,21 @@ class GeneralQuestionsTest < ApplicationSystemTestCase
     assert_selector ".questions__item", text: "¿Dónde guardamos el material?"
     assert_nil Question.find_by!(body: "¿Dónde guardamos el material?").topic
   end
+
+  test "clears a blank answer on a general question" do
+    question = Question.create!(body: "¿Dónde nos reunimos?", answer: "En la sala principal.")
+
+    visit questions_path
+
+    within(".questions__item", text: question.body) do
+      click_link "Editar respuesta"
+    end
+    fill_in "Respuesta", with: "  \n  "
+    click_button "Guardar respuesta"
+
+    assert_current_path questions_path
+    assert_link "Responder"
+    assert_no_selector ".questions__answer"
+    assert_nil question.reload.answer
+  end
 end

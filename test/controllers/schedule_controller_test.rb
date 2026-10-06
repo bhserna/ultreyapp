@@ -75,7 +75,8 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
   test "shows question, answered question, and document counts for each activity" do
     Question.create!(schedule_entry_id: 1, body: "Pendiente")
     Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
-    Question.create!(schedule_entry_id: 1, body: "Sin contenido", answer: "  \n  ")
+    blank = Question.create!(schedule_entry_id: 1, body: "Sin contenido")
+    blank.update_column(:answer, "  \n  ")
     Document.create!(
       schedule_entry_id: 1,
       file: fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")

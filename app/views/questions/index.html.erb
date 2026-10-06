@@ -38,24 +38,7 @@
 
       <% if @questions.any? %>
         <ul class="questions__list">
-          <% @questions.each do |question| %>
-            <li class="questions__item">
-              <%= turbo_frame_tag dom_id(question) do %>
-                <p class="questions__body"><%= question.body %></p>
-                <% if question.answer.present? %>
-                  <div class="questions__answer"><%= simple_format(question.answer) %></div>
-                <% end %>
-                <div class="questions__actions">
-                  <%= link_to "Editar", edit_question_path(question) %>
-                  <%= link_to question.answer.present? ? "Editar respuesta" : "Responder",
-                        edit_question_answer_path(question) %>
-                  <%= button_to "Eliminar", question_path(question), method: :delete,
-                        form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } },
-                        class: "activity-page__action" %>
-                </div>
-              <% end %>
-            </li>
-          <% end %>
+          <%= render @questions %>
         </ul>
       <% else %>
         <p class="questions__empty"><%= @schedule_entry ? "Todavía no hay preguntas para esta actividad." : (@topic ? "Todavía no hay preguntas para este tema." : "Todavía no hay preguntas generales sin tema.") %></p>

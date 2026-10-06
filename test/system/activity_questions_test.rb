@@ -26,4 +26,21 @@ class ActivityQuestionsTest < ApplicationSystemTestCase
     assert_text "El equipo de coordinación."
     assert_equal 3, question.reload.schedule_entry_id
   end
+
+  test "clears a blank answer on an activity question" do
+    question = Question.create!(schedule_entry_id: 3, body: "¿Quién coordina?", answer: "El equipo de coordinación.")
+
+    visit schedule_entry_questions_path(3)
+
+    within(".questions__item", text: question.body) do
+      click_link "Editar respuesta"
+    end
+    fill_in "Respuesta", with: ""
+    click_button "Guardar respuesta"
+
+    assert_current_path schedule_entry_questions_path(3)
+    assert_link "Responder"
+    assert_no_selector ".questions__answer"
+    assert_nil question.reload.answer
+  end
 end

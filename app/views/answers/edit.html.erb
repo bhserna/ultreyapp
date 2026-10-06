@@ -18,7 +18,7 @@
             url: question_answer_path(@question),
             method: :patch, class: "questions__form" do |form| %>
         <%= form.label :answer, "Respuesta" %>
-        <%= form.text_area :answer, rows: 1, required: true, class: "questions__answer-input",
+        <%= form.text_area :answer, rows: 1, class: "questions__answer-input",
               data: { controller: "autosize", action: "input->autosize#resize" } %>
         <div class="questions__form-actions">
           <%= form.submit "Guardar respuesta" %>
