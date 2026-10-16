@@ -1,15 +1,15 @@
 <% content_for :title, "Documentos · #{@schedule_entry.activity}" %>
 
-<main class="activity-page">
-  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "activity-page__back" %>
+<main class="page">
+  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "page__back" %>
 
-  <header class="activity-page__header">
-    <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @schedule_entry.day %></p>
     <h1><%= @schedule_entry.activity %></h1>
   </header>
 
   <%= turbo_frame_tag "documents" do %>
-    <section class="activity-page__section" aria-labelledby="documents-heading">
+    <section class="page__section" aria-labelledby="documents-heading">
       <h2 id="documents-heading">Documentos</h2>
 
       <%= form_with url: schedule_entry_documents_path(@schedule_entry.id), multipart: true,
@@ -35,7 +35,7 @@
               </div>
               <%= button_to "Eliminar", schedule_entry_document_path(@schedule_entry.id, document),
                     method: :delete, form: { data: { turbo_frame: "documents", turbo_confirm: "¿Eliminar este documento?" } },
-                    class: "activity-page__action" %>
+                    class: "page__action" %>
             </li>
           <% end %>
         </ul>

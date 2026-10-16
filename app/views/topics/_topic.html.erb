@@ -4,6 +4,6 @@
     <%= link_to "Editar", edit_topic_path(topic), aria: { label: "Editar tema #{topic.name}" } %>
     <%= button_to "Eliminar", topic_path(topic), method: :delete,
           form: { data: { turbo_confirm: "¿Eliminar el tema #{topic.name}? Sus preguntas quedarán sin tema.", turbo_frame: "_top" } },
-          aria: { label: "Eliminar tema #{topic.name}" }, class: "activity-page__action" %>
+          aria: { label: "Eliminar tema #{topic.name}" }, class: "page__action" %>
   </div>
 <% end %>

@@ -10,7 +10,7 @@ class GeneralQuestionsTest < ApplicationSystemTestCase
     end
 
     assert_selector "h1", text: "Preguntas generales"
-    assert_selector "main.activity-page--wide"
+    assert_selector "main.page.page--wide"
     assert_selector ".site-nav a[aria-current='page']", text: "Preguntas generales"
     assert_text "Todavía no hay preguntas generales sin tema."
 
@@ -59,7 +59,7 @@ class GeneralQuestionsTest < ApplicationSystemTestCase
     end
 
     assert_current_path topics_path
-    assert_selector "main.activity-page:not(.activity-page--wide)"
+    assert_selector "main.page:not(.page--wide)"
     assert_text "Todavía no hay temas."
     click_button "Nuevo tema"
     assert_selector "input[name='topic[name]'][required]"

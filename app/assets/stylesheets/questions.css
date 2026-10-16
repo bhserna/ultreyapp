@@ -6,10 +6,6 @@
     gap: 1.25rem;
   }
 
-  .questions-layout .activity-page__section {
-    min-width: 0;
-  }
-
   @media (max-width: 650px) {
     .questions-layout {
       grid-template-columns: minmax(0, 1fr);

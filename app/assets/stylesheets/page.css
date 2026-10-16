@@ -1,24 +1,28 @@
 @layer components {
-  .activity-page {
+  .page {
     max-width: 800px;
     margin: 0 auto;
     padding: clamp(1.25rem, 4vw, 3rem);
   }
 
-  .activity-page--wide {
+  .page--wide {
     max-width: 1200px;
   }
 
-  .activity-page__back {
+  .page__back {
     color: #385473;
     font-weight: 600;
   }
 
-  .activity-page__header {
+  .page__header {
     margin: 2rem 0;
   }
 
-  .activity-page__eyebrow {
+  .page__header--flush {
+    margin-top: 0;
+  }
+
+  .page__eyebrow {
     margin: 0 0 0.5rem;
     color: #426b95;
     font-size: 0.8rem;
@@ -27,7 +31,7 @@
     text-transform: uppercase;
   }
 
-  .activity-page__section {
+  .page__section {
     margin-bottom: 1.5rem;
     padding: 1.5rem;
     border: 1px solid #dce3eb;
@@ -35,35 +39,35 @@
     background: #fff;
   }
 
-  .activity-page__section h2 {
+  .page__section h2 {
     margin: 0 0 1.25rem;
     font-size: 1.25rem;
   }
 
-  .activity-page__details {
+  .page__details {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem 1.5rem;
     margin: 1rem 0 0;
   }
 
-  .activity-page__details > div {
+  .page__details > div {
     display: flex;
     align-items: baseline;
     gap: 0.4rem;
   }
 
-  .activity-page__details dt {
+  .page__details dt {
     color: #5c6878;
     font-size: 0.8rem;
   }
 
-  .activity-page__details dd {
+  .page__details dd {
     margin: 0;
     font-weight: 600;
   }
 
-  .activity-page__action {
+  .page__action {
     padding: 0;
     border: 0;
     background: none;

@@ -6,9 +6,9 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Instalación de stands"
-    assert_select ".activity-page__eyebrow", text: "Domingo 15"
-    assert_select ".activity-page__details dd", text: "01:30"
-    assert_select ".activity-page__details dt", text: "Día", count: 0
+    assert_select ".page__eyebrow", text: "Domingo 15"
+    assert_select ".page__details dd", text: "01:30"
+    assert_select ".page__details dt", text: "Día", count: 0
     assert_select "turbo-frame#questions[src=?]", schedule_entry_questions_path(3)
 
     get schedule_entry_questions_url(3)
@@ -69,12 +69,12 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     get edit_question_url(activity_question)
     assert_response :success
-    assert_select ".activity-page__eyebrow", text: /Instalación de stands/
+    assert_select ".page__eyebrow", text: /Instalación de stands/
     assert_select ".site-nav a[aria-current='page']", text: "Programa"
 
     get edit_question_url(general_question)
     assert_response :success
-    assert_select ".activity-page__eyebrow", count: 0
+    assert_select ".page__eyebrow", count: 0
     assert_select ".site-nav a[aria-current='page']", text: "Preguntas generales"
 
     patch question_answer_url(activity_question), params: { question: { answer: "Respuesta de la actividad" } }

@@ -1,13 +1,13 @@
 <% content_for :title, @schedule_entry ? "Preguntas · #{@schedule_entry.activity}" : "Preguntas generales" %>
 
-<main class="activity-page<%= " activity-page--wide" unless @schedule_entry %>">
+<main class="page<%= " page--wide" unless @schedule_entry %>">
   <% if @schedule_entry %>
-    <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "activity-page__back" %>
+    <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "page__back" %>
   <% end %>
 
-  <header class="activity-page__header">
+  <header class="page__header">
     <% if @schedule_entry %>
-      <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
+      <p class="page__eyebrow"><%= @schedule_entry.day %></p>
     <% end %>
     <h1><%= @schedule_entry ? @schedule_entry.activity : "Preguntas generales" %></h1>
   </header>
@@ -33,7 +33,7 @@
   <% end %>
 
   <%= turbo_frame_tag "questions" do %>
-    <section class="activity-page__section" aria-labelledby="questions-heading">
+    <section class="page__section" aria-labelledby="questions-heading">
       <h2 id="questions-heading">Preguntas</h2>
 
       <% if @questions.any? %>

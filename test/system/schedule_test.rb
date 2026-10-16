@@ -1,6 +1,23 @@
 require "application_system_test_case"
 
 class ScheduleTest < ApplicationSystemTestCase
+  test "shares the page layout while preserving schedule and activity styles" do
+    visit root_path
+
+    assert_selector "main.page.page--wide"
+    assert_selector ".page__header.page__header--flush"
+    assert_no_selector ".page__eyebrow"
+    assert_equal ["1200px", "0px", "32px"], page_layout_styles
+
+    within("tr", text: "Recepción de Diócesis") do
+      click_link "Preguntas y documentos"
+    end
+
+    assert_selector "main.page:not(.page--wide)"
+    assert_selector ".page__eyebrow", text: "SÁBADO 14"
+    assert_equal ["800px", "32px", "32px"], page_layout_styles
+  end
+
   test "shows each activity commission separately" do
     visit root_path
 
@@ -91,7 +108,7 @@ class ScheduleTest < ApplicationSystemTestCase
       click_link "Preguntas y documentos"
     end
 
-    within(".activity-page__details") do
+    within(".page__details") do
       assert_selector ".commission-links", text: "AC, Hospitalidad"
       assert_link "AC", href: root_path(day: "Sábado 14", commission: "AC")
       click_link "Hospitalidad"
@@ -122,6 +139,16 @@ class ScheduleTest < ApplicationSystemTestCase
   end
 
   private
+
+  def page_layout_styles
+    evaluate_script(<<~JAVASCRIPT)
+      (() => {
+        const container = getComputedStyle(document.querySelector("main.page"))
+        const header = getComputedStyle(document.querySelector(".page__header"))
+        return [container.maxWidth, header.marginTop, header.marginBottom]
+      })()
+    JAVASCRIPT
+  end
 
   def toolbar_positions
     evaluate_script(<<~JAVASCRIPT)

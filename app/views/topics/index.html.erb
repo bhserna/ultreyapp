@@ -1,13 +1,13 @@
 <% content_for :title, "Editar temas" %>
 
-<main class="activity-page">
-  <%= link_to "← Volver a las preguntas generales", questions_path, class: "activity-page__back" %>
+<main class="page">
+  <%= link_to "← Volver a las preguntas generales", questions_path, class: "page__back" %>
 
-  <header class="activity-page__header">
+  <header class="page__header">
     <h1>Editar temas</h1>
   </header>
 
-  <section class="activity-page__section" aria-labelledby="topics-list-heading">
+  <section class="page__section" aria-labelledby="topics-list-heading">
     <h2 id="topics-list-heading">Temas</h2>
 
     <% if @topics.any? %>

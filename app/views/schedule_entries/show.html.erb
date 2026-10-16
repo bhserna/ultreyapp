@@ -1,12 +1,12 @@
 <% content_for :title, "Preguntas y documentos · #{@schedule_entry.activity}" %>
 
-<main class="activity-page">
-  <%= link_to "← Volver al programa", root_path(day: @schedule_entry.day), class: "activity-page__back" %>
+<main class="page">
+  <%= link_to "← Volver al programa", root_path(day: @schedule_entry.day), class: "page__back" %>
 
-  <header class="activity-page__header">
-    <p class="activity-page__eyebrow"><%= @schedule_entry.day %></p>
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @schedule_entry.day %></p>
     <h1><%= @schedule_entry.activity %></h1>
-    <dl class="activity-page__details">
+    <dl class="page__details">
       <div><dt>Inicio</dt><dd><%= @schedule_entry.start_time.presence || "—" %></dd></div>
       <div><dt>Fin</dt><dd><%= @schedule_entry.end_time.presence || "—" %></dd></div>
       <div><dt>Duración</dt><dd><%= @schedule_entry.duration.presence || "—" %></dd></div>

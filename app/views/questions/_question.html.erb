@@ -10,7 +10,7 @@
             edit_question_answer_path(question) %>
       <%= button_to "Eliminar", question_path(question), method: :delete,
             form: { data: { turbo_confirm: "¿Eliminar esta pregunta?", turbo_frame: "questions" } },
-            class: "activity-page__action" %>
+            class: "page__action" %>
     </div>
   <% end %>
 </li>
