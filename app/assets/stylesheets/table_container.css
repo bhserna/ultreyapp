@@ -1,0 +1,9 @@
+@layer components {
+  .table-container {
+    overflow-x: auto;
+    border: 1px solid #dce3eb;
+    border-radius: 0.75rem;
+    background: #fff;
+    box-shadow: 0 8px 28px rgba(35, 48, 68, 0.05);
+  }
+}

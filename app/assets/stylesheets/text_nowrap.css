@@ -1,0 +1,5 @@
+@layer components {
+  .text-nowrap {
+    white-space: nowrap;
+  }
+}

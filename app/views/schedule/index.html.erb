@@ -5,16 +5,16 @@
     <h1>Programa</h1>
   </header>
 
-  <div class="schedule__toolbar">
-    <nav class="schedule__days" aria-label="Días del programa">
+  <div class="toolbar">
+    <nav class="tabs" aria-label="Días del programa">
       <% @days.each do |day| %>
         <%= link_to day, root_path(day: day, commission: @selected_commission),
-              class: "schedule__tab#{' schedule__tab--active' if day == @selected_day}",
+              class: "tabs__item#{' tabs__item--active' if day == @selected_day}",
               aria: { current: ("page" if day == @selected_day) } %>
       <% end %>
     </nav>
 
-    <%= form_with url: root_path, method: :get, class: "schedule__filter",
+    <%= form_with url: root_path, method: :get, class: "filter",
           data: { controller: "schedule-filter" } do %>
       <%= hidden_field_tag :day, @selected_day %>
       <%= label_tag :commission, "Comisión", class: "visually-hidden" %>
@@ -25,8 +25,8 @@
     <% end %>
   </div>
 
-  <div class="schedule__table-wrapper">
-    <table class="schedule__table">
+  <div class="table-container">
+    <table class="table">
       <caption class="visually-hidden">Programa de actividades para <%= @selected_day %></caption>
       <thead>
         <tr>
@@ -42,10 +42,10 @@
       <tbody>
         <% @schedule_entries.each do |schedule_entry| %>
           <tr>
-            <td class="schedule__time"><%= schedule_entry.act_number || "—" %></td>
-            <td class="schedule__time"><%= schedule_entry.start_time.presence || "—" %></td>
-            <td class="schedule__time"><%= schedule_entry.end_time.presence || "—" %></td>
-            <td class="schedule__time"><%= schedule_entry.duration.presence || "—" %></td>
+            <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
+            <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
+            <td class="text-nowrap"><%= schedule_entry.end_time.presence || "—" %></td>
+            <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
             <td class="schedule__activity"><%= schedule_entry.activity %></td>
             <td><%= commission_links(schedule_entry) %></td>
             <td>

@@ -153,8 +153,8 @@ class ScheduleTest < ApplicationSystemTestCase
   def toolbar_positions
     evaluate_script(<<~JAVASCRIPT)
       (() => {
-        const days = document.querySelector(".schedule__days").getBoundingClientRect()
-        const filter = document.querySelector(".schedule__filter").getBoundingClientRect()
+        const days = document.querySelector(".tabs").getBoundingClientRect()
+        const filter = document.querySelector(".filter").getBoundingClientRect()
         return { daysTop: days.top, daysBottom: days.bottom, filterTop: filter.top }
       })()
     JAVASCRIPT

@@ -1,0 +1,33 @@
+@layer components {
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-width: 100%;
+  }
+
+  .tabs__item {
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    background: #e8eef5;
+    color: #385473;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  .tabs__item:hover {
+    background: #dce7f1;
+  }
+
+  .tabs__item:focus-visible {
+    outline: 2px solid #385473;
+    outline-offset: 2px;
+  }
+
+  .tabs__item--active,
+  .tabs__item--active:hover {
+    background: #385473;
+    color: #fff;
+  }
+}
