@@ -7,19 +7,19 @@
 
   <div class="toolbar">
     <nav class="tabs" aria-label="Días del programa">
-      <% @days.each do |day| %>
-        <%= link_to day, root_path(day: day, commission: @selected_commission),
-              class: "tabs__item#{' tabs__item--active' if day == @selected_day}",
-              aria: { current: ("page" if day == @selected_day) } %>
+      <% @schedule.days.each do |day| %>
+        <%= link_to day, root_path(day: day, commission: @schedule.selected_commission),
+              class: "tabs__item#{' tabs__item--active' if day == @schedule.selected_day}",
+              aria: { current: ("page" if day == @schedule.selected_day) } %>
       <% end %>
     </nav>
 
     <%= form_with url: root_path, method: :get, class: "filter",
           data: { controller: "schedule-filter" } do %>
-      <%= hidden_field_tag :day, @selected_day %>
+      <%= hidden_field_tag :day, @schedule.selected_day %>
       <%= label_tag :commission, "Comisión", class: "visually-hidden" %>
       <%= select_tag :commission,
-            options_for_select([["Todas las comisiones", ""]] + @commissions.map { |commission| [commission, commission] }, @selected_commission),
+            options_for_select([["Todas las comisiones", ""]] + @schedule.commissions.map { |commission| [commission, commission] }, @schedule.selected_commission),
             data: { action: "change->schedule-filter#submit" } %>
       <%= submit_tag "Filtrar", data: { schedule_filter_target: "submit" } %>
     <% end %>
@@ -27,7 +27,7 @@
 
   <div class="table-container">
     <table class="table">
-      <caption class="visually-hidden">Programa de actividades para <%= @selected_day %></caption>
+      <caption class="visually-hidden">Programa de actividades para <%= @schedule.selected_day %></caption>
       <thead>
         <tr>
           <th scope="col">Acto</th>
@@ -40,7 +40,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @schedule_entries.each do |schedule_entry| %>
+        <% @schedule.entries.each do |schedule_entry| %>
           <tr>
             <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
             <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
@@ -49,7 +49,7 @@
             <td class="schedule__activity"><%= schedule_entry.activity %></td>
             <td><%= commission_links(schedule_entry) %></td>
             <td>
-              <% resource_counts = @resource_counts.fetch(schedule_entry.id) %>
+              <% resource_counts = @schedule.resource_counts.fetch(schedule_entry.id) %>
               <%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
               <small class="schedule__resource-status">
                 Preguntas <%= resource_counts[:questions] %> ·
@@ -59,8 +59,8 @@
             </td>
           </tr>
         <% end %>
-        <% if @schedule_entries.empty? %>
-          <tr><td colspan="7">No hay actividades de esta comisión para <%= @selected_day %>.</td></tr>
+        <% if @schedule.entries.empty? %>
+          <tr><td colspan="7">No hay actividades de esta comisión para <%= @schedule.selected_day %>.</td></tr>
         <% end %>
       </tbody>
     </table>
