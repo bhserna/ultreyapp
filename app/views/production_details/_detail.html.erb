@@ -1,0 +1,31 @@
+<section class="page__section" aria-labelledby="production-detail-heading">
+  <h2 id="production-detail-heading">Detalles de producción</h2>
+
+  <% if @production_detail %>
+    <% {
+      executors: "Ejecuta",
+      screen: "Pantalla",
+      audio: "Audio",
+      room_lighting: "Iluminación de sala",
+      stage_lighting: "Iluminación de escenario",
+      aisle_lighting: "Iluminación de pasillos",
+      requirements: "Requerimientos",
+      notes: "Notas",
+      radios: "Radios",
+      pending_confirmations: "Pendientes por confirmar"
+    }.each do |attribute, label| %>
+      <h3><%= label %></h3>
+      <%= simple_format(@production_detail.public_send(attribute).presence || "—") %>
+    <% end %>
+
+    <div class="questions__actions">
+      <%= link_to "Editar detalles de producción", edit_schedule_entry_production_detail_path(@schedule_entry.id) %>
+      <%= button_to "Eliminar detalles de producción", schedule_entry_production_detail_path(@schedule_entry.id),
+            method: :delete, class: "page__action",
+            form: { data: { turbo_confirm: "¿Eliminar los detalles de producción de esta actividad?" } } %>
+    </div>
+  <% else %>
+    <p>Todavía no hay detalles de producción para esta actividad.</p>
+    <%= link_to "Agregar detalles de producción", new_schedule_entry_production_detail_path(@schedule_entry.id), class: "page__action" %>
+  <% end %>
+</section>

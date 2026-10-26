@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :topics, only: %i[index create edit update destroy]
 
   resources :schedule_entries, only: :show do
+    resource :production_detail, only: %i[new create edit update destroy]
     resources :documents, only: %i[index create destroy]
     resources :questions, only: %i[index create edit update destroy], shallow: true do
       resource :answer, only: %i[edit update]

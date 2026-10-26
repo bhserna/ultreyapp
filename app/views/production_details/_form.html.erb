@@ -1,0 +1,35 @@
+<%= form_with model: @production_detail, url: schedule_entry_production_detail_path(@schedule_entry.id), class: "questions__form" do |form| %>
+  <% if @production_detail.errors.any? %>
+    <ul role="alert">
+      <% @production_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <%= form.label :executors, "Ejecuta" %>
+  <%= form.text_area :executors, rows: 2 %>
+  <%= form.label :screen, "Pantalla" %>
+  <%= form.text_area :screen, rows: 2 %>
+  <%= form.label :audio, "Audio" %>
+  <%= form.text_area :audio, rows: 2 %>
+  <%= form.label :room_lighting, "Iluminación de sala" %>
+  <%= form.text_area :room_lighting, rows: 2 %>
+  <%= form.label :stage_lighting, "Iluminación de escenario" %>
+  <%= form.text_area :stage_lighting, rows: 2 %>
+  <%= form.label :aisle_lighting, "Iluminación de pasillos" %>
+  <%= form.text_area :aisle_lighting, rows: 2 %>
+  <%= form.label :requirements, "Requerimientos" %>
+  <%= form.text_area :requirements, rows: 3 %>
+  <%= form.label :notes, "Notas" %>
+  <%= form.text_area :notes, rows: 3 %>
+  <%= form.label :radios, "Radios" %>
+  <%= form.text_area :radios, rows: 2 %>
+  <%= form.label :pending_confirmations, "Pendientes por confirmar" %>
+  <%= form.text_area :pending_confirmations, rows: 3 %>
+
+  <div class="questions__form-actions">
+    <%= form.submit "Guardar detalles de producción" %>
+    <%= link_to "Cancelar", schedule_entry_path(@schedule_entry.id), class: "questions__cancel" %>
+  </div>
+<% end %>

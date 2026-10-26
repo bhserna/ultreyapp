@@ -1,0 +1,14 @@
+<% content_for :title, "Agregar detalles de producción · #{@schedule_entry.activity}" %>
+
+<main class="page">
+  <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @schedule_entry.activity %></p>
+    <h1>Agregar detalles de producción</h1>
+  </header>
+
+  <section class="page__section">
+    <%= render "form" %>
+  </section>
+</main>

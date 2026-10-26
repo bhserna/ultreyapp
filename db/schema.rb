@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_05_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_06_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -44,6 +44,23 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_05_000000) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["schedule_entry_id"], name: "index_documents_on_schedule_entry_id"
+  end
+
+  create_table "production_details", force: :cascade do |t|
+    t.integer "schedule_entry_id", null: false
+    t.text "executors"
+    t.text "screen"
+    t.text "audio"
+    t.text "room_lighting"
+    t.text "stage_lighting"
+    t.text "aisle_lighting"
+    t.text "requirements"
+    t.text "notes"
+    t.text "radios"
+    t.text "pending_confirmations"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["schedule_entry_id"], name: "index_production_details_on_schedule_entry_id", unique: true
   end
 
   create_table "questions", force: :cascade do |t|

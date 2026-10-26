@@ -1,4 +1,4 @@
-<% content_for :title, "Preguntas y documentos · #{@schedule_entry.activity}" %>
+<% content_for :title, @schedule_entry.activity %>
 
 <main class="page">
   <%= link_to "← Volver al programa", root_path(day: @schedule_entry.day), class: "page__back" %>
@@ -13,6 +13,8 @@
       <div><dt>Comisiones</dt><dd><%= commission_links(@schedule_entry) %></dd></div>
     </dl>
   </header>
+
+  <%= render "production_details/detail" %>
 
   <%= turbo_frame_tag "questions", src: schedule_entry_questions_path(@schedule_entry.id) do %>
     <p class="questions__empty">Cargando preguntas…</p>
