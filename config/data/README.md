@@ -1,6 +1,6 @@
 # Event data
 
-The active files are `schedule.yml`, `questions.yml`, and `production_details.yml`. They are based on the first sheet of:
+The active files are `schedule.yml`, `questions.yml`, `production_details.yml`, and `preparations.yml`. They are based on the first sheet of:
 
 https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
 
@@ -12,6 +12,16 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 - IDs are preserved by act number when updating the source, even if titles, times, or row positions change. `source_row` / `source_rows` count the header as row 1.
 - Times are normalized to 24-hour format. Missing times and durations are not inferred; source wording is preserved.
 - `questions.yml` contains the 24 questions directly on these act rows, including the questions in the final notices' Notes cell. Questions from preparation or extra-activity rows are not assigned to acts. The previous complete question extraction remains in `previous/questions.yml`.
+
+## Preparations
+
+`preparations.yml` stores 17 dark-blue preparation headers and 23 light-blue action rows, stopping at the end of Monday 16. It is read directly by the app; no database import is needed. The program table interleaves acts and preparation summaries by start time, with blue preparation rows. Each preparation's start time is taken from its first action; if that action has no start time, the header time is retained. Undecided times remain text and sort last. This corrects the act 7 preparation to `12:30` instead of the header's `00:15`. Day and commission filters apply to both kinds of rows, using each preparation's own day and action commissions. Shared preparations appear only once in the table. Each preparation row links to its own detail page with action timings, responsibilities, technical information, questions, notes, material references, and links to related acts. Preparation content is not displayed on act detail pages. Orange conclusions are excluded, as is row 38 (times without an action description).
+
+- `schedule_entry_ids` supports shared preparations: acts 1 and 2 share a block; the act 7 block is shown for subacts 7.1–7.4.
+- The general pre-parade block has no act reference; it appears in the program and has its own detail page.
+- Original header text remains in `source_title`; action timings and durations are preserved. The preparation's start time follows its first action rather than an inconsistent header.
+- `source_title` and source rows preserve provenance. The Tema 2 block is linked to act 13 despite the source heading saying act 11. The heading for act 17 is displayed as Monday 16, correcting the source's Sunday 16; the actual preparation takes place on Sunday 15 at 19:00.
+- Action descriptions retain their multiline lists. Questions and material references remain within the preparation and are not imported as act questions or documents.
 
 ## Production details
 

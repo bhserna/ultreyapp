@@ -1,0 +1,63 @@
+<% content_for :title, @preparation.title %>
+
+<main class="page">
+  <%= link_to "← Volver al programa", root_path(day: @preparation.day), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @preparation.day %></p>
+    <h1><%= @preparation.title %></h1>
+    <dl class="page__details">
+      <div><dt>Inicio de preparación</dt><dd><%= @preparation.start_time.presence || "—" %></dd></div>
+      <div><dt>Comisiones</dt><dd><%= commission_links(@preparation) %></dd></div>
+    </dl>
+    <% if @schedule_entries.any? %>
+      <h2>Actos relacionados</h2>
+      <ul class="related-links">
+        <% @schedule_entries.each do |entry| %>
+          <li>
+            <%= link_to schedule_entry_path(entry.id) do %>
+              <span class="related-links__label">Acto <%= entry.act_number %></span>
+              <span class="related-links__title"><%= entry.activity %></span>
+              <span aria-hidden="true">→</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </header>
+
+  <% @preparation.actions.each do |action| %>
+    <section class="page__section">
+      <dl class="page__details">
+        <% { "start_time" => "Inicio de acción", "end_time" => "Fin de acción", "duration" => "Duración" }.each do |attribute, label| %>
+          <% if action.fetch(attribute).present? %>
+            <div><dt><%= label %></dt><dd><%= action.fetch(attribute) %></dd></div>
+          <% end %>
+        <% end %>
+      </dl>
+      <%= simple_format(action.fetch("description")) %>
+
+      <% {
+        "commission" => "Comisión",
+        "executors" => "Ejecuta",
+        "screen" => "Pantalla",
+        "audio" => "Audio",
+        "room_lighting" => "Iluminación de sala",
+        "stage_lighting" => "Iluminación de escenario",
+        "aisle_lighting" => "Iluminación de pasillos",
+        "requirements" => "Requerimientos",
+        "arena_questions" => "Preguntas para la Arena",
+        "general_questions" => "Dudas generales",
+        "notes" => "Notas",
+        "media_files" => "Videos o pistas",
+        "radios" => "Radios",
+        "pending_confirmations" => "Pendientes por confirmar"
+      }.each do |attribute, label| %>
+        <% if action.fetch(attribute).present? %>
+          <h3><%= label %></h3>
+          <%= simple_format(action.fetch(attribute)) %>
+        <% end %>
+      <% end %>
+    </section>
+  <% end %>
+</main>

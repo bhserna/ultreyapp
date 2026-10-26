@@ -1,0 +1,695 @@
+---
+source:
+  url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
+  sheet_gid: 1593648280
+  description: Encabezados azul fuerte y acciones celestes hasta el final de Lunes
+    16. Se excluyen conclusiones naranjas y la fila 38 sin descripción.
+  notes: Se conserva source_title. Tema 2 se vincula al acto 13 aunque el encabezado
+    dice 11; el bloque del acto 17 se titula lunes 16 aunque la fuente dice domingo
+    16. El inicio de cada preparación usa el inicio de su primera acción cuando existe;
+    de lo contrario conserva la hora del encabezado. Los horarios de las acciones se conservan.
+preparations:
+- id: 1
+  title: Actividades en la Arena previo a que llegue el desfile
+  source_title: Actividades en la Arena previo a que llegue el desfile
+  day: Domingo 15
+  start_time: Por definir con Programa
+  schedule_entry_ids: []
+  source_row: 19
+  actions:
+  - source_row: 20
+    start_time: Por definir con Programa
+    end_time: Por definir con Programa
+    duration:
+    description: Recepción de primeros invitados participantes y maestros de ceremonias
+    commission: Quién los recibe Programa o EyA?
+    executors: |-
+      Programa y EyA
+      Grupo Folclórico y Autoridades
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: "El Grupo Folclórico Necesitarán Camerino? \nPara cuantas personas?.
+      \nLos invitados en este caso las autoridades, donde permanecen antes de su participación?
+      y quienes son estas autoridades?\nEn qué horario están citados?"
+    notes: Los maestros de ceremonias son Irasema y Armando
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 21
+    start_time: '08:30'
+    end_time: Durante todo el evento
+    duration:
+    description: Apertura de Puertas para quienes no desfilan
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 22
+    start_time: '08:30'
+    end_time: '10:00'
+    duration:
+    description: Música Ambiental
+    commission: Programa
+    executors: EyA
+    screen: |-
+      Pantalla muestra video con nombre de cada diócesis e imagen principal.
+      Anillo proyecta mensaje de Bienvenidos
+    audio: Musica Ambiental
+    room_lighting: 60% y 70%
+    stage_lighting: Ambiental
+    aisle_lighting: 100%
+    requirements: Pista requerida
+    arena_questions:
+    general_questions: Programa - Quién decide la musica ambiental e imagenes que
+      se proyectan? Quién las proporciona?
+    notes:
+    media_files: Playlist pendiente
+    radios:
+    pending_confirmations:
+- id: 2
+  title: Preparación para el Acto 1 y 2
+  source_title: 9:45:00 a.m. Preparación para el Acto 1 y 2
+  day: Domingo 15
+  start_time: '09:45'
+  schedule_entry_ids:
+  - 1
+  - 2
+  source_row: 26
+  actions:
+  - source_row: 27
+    start_time: '09:45'
+    end_time: '10:00'
+    duration:
+    description: Tomar mobiliario de área de resguardo y prepararlo para el evento
+      de las autoridades
+    commission: EyA
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions: |-
+      Quién proporciona las sillas?
+      Y de dónde las podemos tomar?
+    general_questions: Programa - Se pondrán sillas para la presentación de autoridades?
+    notes: Tener disponibles 10 sillas
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 28
+    start_time: '09:45'
+    end_time:
+    duration:
+    description: "1. Tener listo el video Ultreyas y las imagenes que se proyectarán
+      durante el acto del grupo folklórico\n2. El grupo folclórico que participará
+      en el Acto 2 se prepara. Utilizará la entrada lateral asignada para estar listo
+      al finalizar el video. \n3. Tener lista la música del grupo folklórico (Pista
+      del popurri)."
+    commission: EyA
+    executors: EyA
+    screen: Utilizacion de Pantalla completa
+    audio:
+    room_lighting: La iluminación de la SALA se mantiene entre 15 y 20 %. Los pasillos
+      permanecen visibles.
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: 1. Que grupo es? cuantos partcipantes?                          2.
+      requieren camerino previamente?,                                        3. habrá
+      algún elemento extra en el escenario durante algun momento del bailable?                                  3.
+      Antes del evento por donde ingresan los participantes?Cual será la entrada  al
+      escenario? Cual será la señal de arranque del video?
+    notes:
+    media_files: |-
+      1. Video ultreyas
+      2. Pista Popurri
+    radios:
+    pending_confirmations:
+- id: 3
+  title: Preparación para el Acto 3
+  source_title: 10:00:00 a.m. Preparación para el Acto 3
+  day: Domingo 15
+  start_time: '10:00'
+  schedule_entry_ids:
+  - 3
+  source_row: 32
+  actions:
+  - source_row: 33
+    start_time: '10:00'
+    end_time: '10:20'
+    duration:
+    description: Preparar a los Maestros de ceremonia para salir al escenario
+    commission: Programa
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 34
+    start_time: '10:00'
+    end_time: '10:20'
+    duration:
+    description: "Preparar a las autoridades que participan en el acto 3, segun el
+      programa son: \n-Nestor Velázquez y Javier Ayala, \n(GOBIERNO, OBISPO, CAL,
+      MCC NACIONAL, MCC MTY)"
+    commission: Programa
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements: |-
+      -Micrófonos según corresponda.
+      -Atril disponible para los mensajes.
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 35
+    start_time: '10:00'
+    end_time: '10:20'
+    duration: 1-2 min
+    description: |-
+      Tomar mobiliario de área de resguardo y colocarlo en el asecenario.
+      Colocar el ambón del lado izquiero del escenario.
+    commission: EyA
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 4
+  title: Preparación para el Acto 4
+  source_title: 10:20:00 a.m. Preparación para el Acto 4
+  day: Domingo 15
+  start_time: '10:20'
+  schedule_entry_ids:
+  - 4
+  source_row: 37
+  actions:
+  - source_row: 39
+    start_time: '10:20'
+    end_time: '10:50'
+    duration:
+    description: "- Reunir al Padre Zalpa y los acólitos que participarán en la procesión\n-
+      Tener a Jeseed listo\n- Preparar imágen de la Stma. Virgen del Roble, con los
+      4 acólitos de cursillos, y tener todo listo para colocarla,se ubicará viendo
+      el escenario de frente estaría de lado derecho (Se pondrá sobre una base de
+      80 cm de altura y se quedará en las andas). \n- Al mismo tiempo se prepara la
+      custodia con el Stmo, en el lugar acorado. Validar que todos los ornamentos
+      litúrgicos esten listos, estos quedan a cargo de Liturgia."
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+  - source_row: 41
+    start_time: '10:50'
+    end_time:
+    duration:
+    description: maestros de ceremonias avanzan hacia la cruz y preparan al público
+      para el momento solemne. Esperamos la señal de los maestros de ceremonias, con
+      alguna frase o indicación para dar avance a la Virgen
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 5
+  title: Preparación para el Acto 5
+  source_title: 11:30:00 a.m. Preparación para el Acto 5
+  day: Domingo 15
+  start_time: '11:30'
+  schedule_entry_ids:
+  - 5
+  source_row: 43
+  actions:
+  - source_row: 44
+    start_time: '11:30'
+    end_time: '11:50'
+    duration:
+    description: El coro ARCOIRIS se prepara para estar listo, los instrumentos de
+      ambos estarán ya acomodados en el escenario. Con mucho silencio esperan a que
+      el acto solemne concluya. Cuando la iluminación esté centrada en la despedida
+      del Stmo. el coro entre de una manera discreta y se coloque en posición para
+      inmediatemente después de que se apague el reflector que guia al Stmo. se encienda
+      la pantalla con algun patron vistoso de colores, posteriormente se inicia con
+      el canto de colores.
+    commission: EyA
+    executors: Coro Arociris y EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 6
+  title: Preparación para el Acto 6 / Llamados a ser peregrinos de la esperanza en
+    los ambientes
+  source_title: 11:40:00 a.m. Preparación para el Acto 6 / Llamados a ser peregrinos
+    de la esperanza en los ambientes
+  day: Domingo 15
+  start_time: '11:40'
+  schedule_entry_ids:
+  - 6
+  source_row: 45
+  actions:
+  - source_row: 46
+    start_time: '11:40'
+    end_time: '12:00'
+    duration:
+    description: |-
+      - Tener listo al expositor (Monseñor Heriberto Cavazos) colocar micrófono manos libres.
+      - Prevenir a Néstor Velasquez y al fotógrafo para la entrega del reconocimiento.
+    commission: EyA
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: |-
+      Programa:
+      - Dónde estarán resguardados los reconocimientos?
+      - Quién los entrega y quién los resguarda?
+    notes: probar micrófono previamente, pero sin que el sonido de la prueba sea escuchado
+      por el público.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 7
+  title: Preparación para el Acto 7 / Comida / Bendición de alimentos / Animación
+  source_title: 12:15:00 a.m. Preparación para el Acto 7 / Comida / Bendición de alimentos
+    / Animación
+  day: Domingo 15
+  start_time: '12:30'
+  schedule_entry_ids:
+  - 7
+  - 8
+  - 9
+  - 10
+  source_row: 51
+  actions:
+  - source_row: 52
+    start_time: '12:30'
+    end_time: '12:45'
+    duration:
+    description: "1. Pedir a Mons. Zalpa, quien realizará la bendición, que esté listo.
+      \n2. Tener a Fabiola Núñez y Lolys Cepeda ya listas para su intervención.\n3.
+      Se informa que sacerdotes y diáconos tendrán un procedimiento diferente para
+      la comida, serán acompañados a un comedor reservado dentro de la Arena (Actividad
+      realizada por Tere Torres)"
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files: Programa - Quién proporciona las pistas de Fabiola?
+    radios:
+    pending_confirmations:
+- id: 8
+  title: Preparación para el Acto 8 / Misa / Coro Jessed)
+  source_title: 1:00:00 p.m. Preparación para el Acto 8 / Misa / Coro Jessed)
+  day: Domingo 15
+  start_time: '13:00'
+  schedule_entry_ids:
+  - 11
+  source_row: 56
+  actions:
+  - source_row: 57
+    start_time: '13:00'
+    end_time:
+    duration:
+    description: |-
+      1. 1:35pm Recordar a Tere sobre el regreso y preparación (Casullas) de los sacerdotes para la celebración de la Eucaristía.
+      2. Prepararse y colocarse las vestiduras correspondientes. Terminando la comida Liturgia entrega las casullas en el tunel hacia el escenario.
+      3. Verificar con Lolys y Victor (Ofrendas) que estén listos. (Nombres, diócesis, ofrenda, orden y recorrido)
+      4. Confirmar con el equipo de Liturgia el montaje del altar.
+      5. Liturgia prepara lo relacionado a Sacristía - Arlet (Altar, ambón y elementos necesarios).
+      6. Confirmar logística de Comunión y colecta. (Magda Villarreal responsable de logóstica de colecta).
+    commission: Liturgia
+    executors: Hilda, Tere, Arlet y EyA
+    screen: |-
+      1. Las cámaras procurarán mantener la atención en los maestros de ceremonias  y en el público para que el montaje se realice con la menor distracción posible.
+      2. Las pantallas comienzan a mostrar de manera discreta la hora de la Eucaristía
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 9
+  title: Preparación para el Acto 9 / Vivencia 1/ Agradecimiento
+  source_title: 3:35 p.m. Preparación para el Acto 9 / Vivencia 1/ Agradecimiento
+  day: Domingo 15
+  start_time: '15:35'
+  schedule_entry_ids:
+  - 12
+  source_row: 62
+  actions:
+  - source_row: 63
+    start_time: '15:35'
+    end_time:
+    duration:
+    description: |-
+      - Tener listo al expositor (Adalia Carolina Longoria) colocar micrófono manos libres.
+      - Prevenir a Padre Martín Castro y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con imagen y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 10
+  title: Preparación para el Acto 10 / Animación coro de Cursillos y Bendicam
+  source_title: 4:00 p.m. Preparación para el Acto 10 / Animación coro de Cursillos
+    y Bendicam
+  day: Domingo 15
+  start_time: '16:00'
+  schedule_entry_ids:
+  - 13
+  source_row: 66
+  actions:
+  - source_row: 67
+    start_time: '16:00'
+    end_time:
+    duration:
+    description: "- Tener prevenido al coro de cursillos y equipo de animación junto
+      con sus elementos."
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: |-
+      Tener listo audio de coro.
+      Tener listo equipo de animación junto con los elementos.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 11
+  title: Preparación para el Acto 11 / Vivencia 2/ Agradecimiento
+  source_title: 4:20 p.m. Preparación para el Acto 11 / Vivencia 2/ Agradecimiento
+  day: Domingo 15
+  start_time: '16:20'
+  schedule_entry_ids:
+  - 14
+  source_row: 69
+  actions:
+  - source_row: 70
+    start_time: '16:20'
+    end_time:
+    duration:
+    description: |-
+      - Tener listo al expositor (Abraham Moreno) colocar micrófono manos libres.
+      - Prevenir a Javier Ayala y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 12
+  title: Preparación para el Acto 12 / Proyección Video MCC
+  source_title: Preparación para el Acto 12 / Proyección Video MCC
+  day: Domingo 15
+  start_time: '16:50'
+  schedule_entry_ids:
+  - 15
+  source_row: 73
+  actions:
+  - source_row: 74
+    start_time: '16:50'
+    end_time: '17:05'
+    duration: '0:15'
+    description: Tener listo el video para proyectarlo
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 13
+  title: Preparación para el Acto 13 / Tema 2/ Agradecimiento
+  source_title: 4:55 p.m. Preparación para el Acto 11 / Tema 2/ Agradecimiento
+  day: Domingo 15
+  start_time: '16:55'
+  schedule_entry_ids:
+  - 16
+  source_row: 78
+  actions:
+  - source_row: 79
+    start_time: '16:55'
+    end_time: '17:15'
+    duration: '0:15'
+    description: |-
+      - Mantener prevenido a José Humberto Marroquín
+      - Tener listo el material de apoyo para la participación
+      - Preparar microfono del participante
+      - Mantener prevenido al padre Fernando Torres para la entrega del reconocimiento
+      - Mantener prevenido al fotógrafo
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 14
+  title: Preparación para el Acto 14 / Animación coro de Cursillos y Bendicam
+  source_title: 5:40 p.m. Preparación para el Acto 14 / Animación coro de Cursillos
+    y Bendicam
+  day: Domingo 15
+  start_time: '17:40'
+  schedule_entry_ids:
+  - 17
+  source_row: 82
+  actions:
+  - source_row: 83
+    start_time: '17:40'
+    end_time:
+    duration:
+    description: "- Tener prevenido al coro de cursillos y equipo de animación junto
+      con sus elementos."
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: |-
+      Tener listo audio de coro.
+      Tener listo equipo de animación junto con los elementos.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 15
+  title: Preparación para el Acto 15 / Vivencia 3, Empresario influyendo en mi ambiente/
+    Agradecimiento
+  source_title: 6:00 p.m. Preparación para el Acto 15 / Vivencia 3, Empresario influyendo
+    en mi ambiente/ Agradecimiento
+  day: Domingo 15
+  start_time: '18:00'
+  schedule_entry_ids:
+  - 18
+  source_row: 86
+  actions:
+  - source_row: 87
+    start_time: '18:00'
+    end_time:
+    duration:
+    description: |-
+      - Tener listo al expositor (Lázaro Tamez Guerra) colocar micrófono manos libres.
+      - Prevenir a Alvaro Martinez y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 16
+  title: Preparación para el Acto 16 / Avisos Finales
+  source_title: Preparación para el Acto 16 / Avisos Finales
+  day: Domingo 15
+  start_time: '18:25'
+  schedule_entry_ids:
+  - 19
+  source_row: 90
+  actions:
+  - source_row: 91
+    start_time: '18:25'
+    end_time: '18:45'
+    duration: '0:20'
+    description: |-
+      Mantener prevenida a la persona que dará el cierre del día
+      Tener listo el material que se proyectará en las pantallas
+      Tener listo el audio o musica que se reproducirá al final del día
+      Tener a la mano la información que se dará a los asistentes
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 17
+  title: Preparación para el lunes 16 / Acto 17
+  source_title: 7:00 p.m. Preparación para el domingo 16 / Acto 17
+  day: Domingo 15
+  start_time: '19:00'
+  schedule_entry_ids:
+  - 20
+  source_row: 94
+  actions:
+  - source_row: 95
+    start_time:
+    end_time:
+    duration:
+    description: Ubicar a la Virgen al centro del escenario con 2 reclinatorios y
+      un cirio
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:

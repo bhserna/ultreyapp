@@ -1,4 +1,13 @@
 @layer components {
+  .schedule__preparation {
+    background: #e1effa;
+    color: #284c70;
+  }
+
+  .schedule__preparation td:first-child {
+    font-weight: 600;
+  }
+
   .schedule__activity {
     min-width: 18rem;
   }

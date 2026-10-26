@@ -1,6 +1,34 @@
 require "application_system_test_case"
 
 class ScheduleTest < ApplicationSystemTestCase
+  test "interleaves preparations and acts in the table by start time" do
+    visit root_path(day: "Domingo 15")
+
+    assert_selector "tbody tr.schedule__act", count: 19
+    assert_selector "tbody tr.schedule__preparation", count: 17
+    assert_selector "tr[data-preparation-id='2']", count: 1
+    times = all("tbody tr td:nth-child(2)").map(&:text)
+    assert_equal times.sort, times
+    within("tr[data-preparation-id='2']") do
+      assert_selector "td:nth-child(1)", text: "Preparación"
+      assert_selector "td:nth-child(2)", text: "09:45"
+      assert_text "Preparación para el Acto 1 y 2"
+      assert_link "Ver detalle", href: preparation_path(2)
+    end
+    within("tr[data-preparation-id='7']") do
+      assert_selector "td:nth-child(2)", text: "12:30"
+      assert_no_text "00:15"
+    end
+    within("tr[data-preparation-id='12']") do
+      assert_selector "td:nth-child(2)", text: "16:50"
+    end
+    assert_equal "rgb(225, 239, 250)", evaluate_script("getComputedStyle(document.querySelector('tr.schedule__preparation')).backgroundColor")
+
+    click_link "Lunes 16"
+    assert_no_selector "tr.schedule__preparation"
+    assert_selector "tbody tr.schedule__act", count: 12
+  end
+
   test "shares the page layout while preserving schedule and activity styles" do
     visit root_path
 
@@ -63,7 +91,8 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_text "No hay actividades de esta comisión para Lunes 16."
 
     click_link "Domingo 15"
-    assert_selector "tbody tr", count: 1
+    assert_selector "tbody tr.schedule__act", count: 1
+    assert_selector "tbody tr.schedule__preparation", count: 4
     assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
     assert_equal "EyA", find("#commission").value
 
@@ -78,7 +107,8 @@ class ScheduleTest < ApplicationSystemTestCase
       click_link "EyA"
     end
 
-    assert_selector "tbody tr", count: 1
+    assert_selector "tbody tr.schedule__act", count: 1
+    assert_selector "tbody tr.schedule__preparation", count: 4
     assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
     assert_equal "EyA", find("#commission").value
 
@@ -106,7 +136,7 @@ class ScheduleTest < ApplicationSystemTestCase
       click_link "Ver detalle"
     end
 
-    within(".page__details") do
+    within(".page__header .page__details") do
       assert_selector ".commission-links", text: "Programa"
       assert_link "Programa", href: root_path(day: "Domingo 15", commission: "Programa")
       click_link "Programa"
@@ -114,7 +144,8 @@ class ScheduleTest < ApplicationSystemTestCase
 
     assert_selector "nav a[aria-current='page']", text: "Domingo 15"
     assert_equal "Programa", find("#commission").value
-    assert_selector "tbody tr", count: 16
+    assert_selector "tbody tr.schedule__act", count: 16
+    assert_selector "tbody tr.schedule__preparation", count: 2
     assert_selector "tbody tr td:nth-child(5)", text: /Proyección Video Inicio/
   end
 

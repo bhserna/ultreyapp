@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :questions, only: %i[index create]
   resources :topics, only: %i[index create edit update destroy]
+  resources :preparations, only: :show
 
   resources :schedule_entries, only: :show do
     resource :production_detail, only: %i[new create edit update destroy]

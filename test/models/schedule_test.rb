@@ -19,6 +19,33 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal (1..19).to_a, schedule.entries.map(&:id)
   end
 
+  test "interleaves preparations and acts by start time without duplicating shared preparations" do
+    schedule = Schedule.new(day: "Domingo 15", commission: nil)
+    rows = schedule.rows
+
+    assert_equal 36, rows.size
+    assert_equal 17, rows.count { |row| row.is_a?(Preparation) }
+    assert_equal rows.map(&:start_time).sort, rows.map(&:start_time)
+    assert_equal 1, rows.count { |row| row.is_a?(Preparation) && row.id == 2 }
+    assert_equal "09:45", rows.first.start_time
+    assert_equal "19:00", rows[-2].start_time
+    assert_equal "Por definir con Programa", rows.last.start_time
+    assert_equal "12:30", rows.find { |row| row.is_a?(Preparation) && row.id == 7 }.start_time
+    assert_equal "16:50", rows.find { |row| row.is_a?(Preparation) && row.id == 12 }.start_time
+
+    monday = Schedule.new(day: "Lunes 16", commission: nil)
+    assert_equal (20..31).to_a, monday.rows.map(&:id)
+    assert monday.rows.all? { |row| row.is_a?(ScheduleEntry) }
+  end
+
+  test "filters preparations by their own commission and day" do
+    schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
+
+    assert_equal [2, 3, 5, 6], schedule.rows.grep(Preparation).map(&:id)
+    assert_equal [5], schedule.rows.grep(ScheduleEntry).map(&:id)
+    assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
+  end
+
   test "filters entries by day and commission" do
     schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
 

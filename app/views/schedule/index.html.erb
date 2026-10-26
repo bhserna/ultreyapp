@@ -40,20 +40,34 @@
         </tr>
       </thead>
       <tbody>
-        <% @schedule.entries.each do |schedule_entry| %>
-          <tr>
-            <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
-            <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
-            <td class="text-nowrap"><%= schedule_entry.end_time.presence || "—" %></td>
-            <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
-            <td class="schedule__activity"><%= schedule_entry.activity %></td>
-            <td><%= commission_links(schedule_entry) %></td>
-            <td>
-              <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
-            </td>
-          </tr>
+        <% @schedule.rows.each do |schedule_entry| %>
+          <% if schedule_entry.is_a?(Preparation) %>
+            <tr class="schedule__preparation" data-preparation-id="<%= schedule_entry.id %>">
+              <td>Preparación</td>
+              <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
+              <td>—</td>
+              <td>—</td>
+              <td class="schedule__activity"><%= schedule_entry.title %></td>
+              <td><%= commission_links(schedule_entry) %></td>
+              <td>
+                <%= link_to "Ver detalle", preparation_path(schedule_entry.id), class: "schedule__resources-link" %>
+              </td>
+            </tr>
+          <% else %>
+            <tr class="schedule__act">
+              <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
+              <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
+              <td class="text-nowrap"><%= schedule_entry.end_time.presence || "—" %></td>
+              <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
+              <td class="schedule__activity"><%= schedule_entry.activity %></td>
+              <td><%= commission_links(schedule_entry) %></td>
+              <td>
+                <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-        <% if @schedule.entries.empty? %>
+        <% if @schedule.rows.empty? %>
           <tr><td colspan="7">No hay actividades de esta comisión para <%= @schedule.selected_day %>.</td></tr>
         <% end %>
       </tbody>

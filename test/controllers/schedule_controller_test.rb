@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ScheduleControllerTest < ActionDispatch::IntegrationTest
-  test "shows only Sunday acts by default" do
+  test "shows Sunday acts and preparations ordered by start time" do
     get root_url
 
     assert_response :success
@@ -18,8 +18,9 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "thead th:nth-child(5)", text: "Actividad"
     assert_select "thead th:nth-child(6)", text: "Comisión"
     assert_select "thead th:nth-child(7) .visually-hidden", text: "Preguntas y documentos"
-    assert_select "tbody tr", count: 19
-    assert_select "tbody tr:first-child" do
+    assert_select "tbody tr.schedule__act", count: 19
+    assert_select "tbody tr.schedule__preparation", count: 17
+    assert_select "tbody tr.schedule__act", text: /Proyección Video Inicio/ do
       assert_select "td:nth-child(1)", text: "1"
       assert_select "td:nth-child(2)", text: "10:00"
       assert_select "td:nth-child(3)", text: "10:05"
@@ -50,8 +51,9 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "select#commission option[selected][value='EyA']"
     assert_select "nav a[href=?]", root_path(day: "Lunes 16", commission: "EyA"), text: "Lunes 16"
-    assert_select "tbody tr", count: 1
-    assert_select "tbody tr td:nth-child(5)", text: "Canto de Colores"
+    assert_select "tbody tr.schedule__act", count: 1
+    assert_select "tbody tr.schedule__preparation", count: 4
+    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Canto de Colores"
     assert_select "tbody tr td:nth-child(6) a[href=?]", root_path(day: "Domingo 15", commission: "EyA"), text: "EyA"
 
     get root_url(day: "Lunes 16", commission: "EyA")
@@ -75,14 +77,14 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select ".schedule__resource-status", count: 0
-    assert_select "tbody tr:first-child a[href=?]", schedule_entry_path(1), text: "Ver detalle"
-    assert_select "tbody tr:nth-child(2) a[href=?]", schedule_entry_path(2), text: "Ver detalle"
+    assert_select "tbody tr.schedule__act a[href=?]", schedule_entry_path(1), text: "Ver detalle"
+    assert_select "tbody tr.schedule__act a[href=?]", schedule_entry_path(2), text: "Ver detalle"
     assert_no_match(/Preguntas \d+|Contestadas \d+|Documentos \d+/, response.body)
 
     get root_url(day: "Domingo 15", commission: "EyA")
 
     assert_response :success
-    assert_select "tbody tr", count: 1
+    assert_select "tbody tr.schedule__act", count: 1
     assert_select ".schedule__resource-status", count: 0
     assert_select "tbody tr a[href=?]", schedule_entry_path(5), text: "Ver detalle"
   end
