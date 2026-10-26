@@ -4,11 +4,11 @@ class DocumentsTest < ApplicationSystemTestCase
   test "uploads and deletes documents from an activity" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Instalación de stands") do
+    within("tr", text: "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 
-    assert_text "Instalación de stands"
+    assert_text "INICIO / Proyección Video Inicio"
 
     within("turbo-frame#documents") do
       attach_file "files[]", [

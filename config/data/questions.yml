@@ -1,120 +1,181 @@
+---
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
   sheet_gid: 1593648280
-  description: Preguntas explícitas de la primera hoja. Las filas corresponden al Excel (encabezado en fila 1).
+  description: Preguntas explícitas de los actos con número y celda amarilla en la
+    primera hoja. Las filas corresponden al Excel (encabezado en fila 1).
 schedule_entries:
-- id: 7
-  act: Video histórico Ultreyas MTY 1998-2026
-  source_rows: [29]
+- id: 1
+  act: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
+  source_rows:
+  - 29
   questions:
-  - question: ¿Se puede lograr el porcentaje de intensidad de iluminación solicitado?
-  - question: ¿Cómo se hace el cambio de iluminación dentro de la Arena?
-  - question: ¿Quién da la indicación para la proyección del video? (Programa)
-  - question: ¿La cruz permanece apagada o encendida? (Programa)
-- id: 8
-  act: Grupo Folclórico
-  source_rows: [28]
+  - question: "¿Se puede lograr el porcentaje de intensidad de iluminación solicitado?"
+  - question: "¿Cómo se hace el cambio de iluminación dentro de la Arena?"
+  - question: "¿Quién da la indicación para la proyección del video? (Programa)"
+  - question: "¿La cruz permanece apagada o encendida? (Programa)"
+- id: 2
+  act: Participación Gpo Folclórico
+  source_rows:
+  - 30
+  questions: []
+- id: 3
+  act: 'Presentación: saludos y palabras de autoridades'
+  source_rows:
+  - 36
   questions:
-  - question: ¿Qué grupo folclórico es?
-  - question: ¿Cuántos participantes tiene el grupo folclórico?
-  - question: ¿Requieren camerino previamente?
-  - question: ¿Habrá algún elemento extra en el escenario durante algún momento del bailable?
-  - question: ¿Por dónde ingresan los participantes antes del evento?
-  - question: ¿Cuál será la entrada al escenario?
-  - question: ¿Cuál será la señal de arranque del video?
-- id: 9
-  act: Presentación, saludos y palabras de autoridades
-  source_rows: [27, 36]
-  questions:
-  - question: ¿Quién proporciona las sillas? (Arena)
-  - question: ¿De dónde podemos tomar las sillas? (Arena)
-  - question: ¿Se pondrán sillas para la presentación de autoridades? (Programa)
-  - question: ¿Cuál es la lista definitiva y el orden de las nueve autoridades? (Programa)
-- id: 14
+  - question: "¿Cuál es la lista definitiva y el orden de las nueve autoridades? (Programa)"
+- id: 4
+  act: Presentación del Stmo y Entronización de la Virgen.
+  source_rows:
+  - 42
+  questions: []
+- id: 5
   act: Canto de Colores
-  source_rows: [47]
+  source_rows:
+  - 47
   questions:
-  - question: ¿Se pueden realizar tomas del público en general y/o enfocando a los asistentes? (Arena)
-  - question: ¿Habrá cañón de serpentinas? (Programa)
-  - question: ¿Quién es el proveedor del cañón de serpentinas? (Programa)
+  - question: "¿Se pueden realizar tomas del público en general y/o enfocando a los
+      asistentes? (Arena)"
+  - question: "¿Habrá cañón de serpentinas? (Programa)"
+  - question: "¿Quién es el proveedor del cañón de serpentinas? (Programa)"
+- id: 6
+  act: Tema 1 Llamados a ser peregrinos de la esperanza en los ambientes
+  source_rows:
+  - 49
+  questions:
+  - question: "¿Quién proporciona la presentación de apoyo al tema? (Programa)"
+- id: 7
+  act: Comida / Bendición de alimentos
+  source_rows:
+  - 53
+  questions:
+  - question: "¿Quién nos proporciona la presentación con los avisos que se proyectarán?
+      (Programa)"
+- id: 8
+  act: Fabiola Núñez interpreta tres canciones con pista
+  source_rows:
+  - 54
+  questions: []
+- id: 9
+  act: Lolys Cepeda - Popurrí musical
+  source_rows:
+  - 55
+  questions: []
+- id: 10
+  act: Preparación de escenario para misa / Avisos
+  source_rows:
+  - 58
+  questions:
+  - question: "¿Quién nos proporciona la presentación con los avisos que se proyectarán?
+      (Programa)"
+  - question: "¿Quién proporciona el playlist del audio ambiental durante los avisos?"
+- id: 11
+  act: |-
+    Misa / Coro Ministerio de Música Jessed
+    1. Entrada con el celebrante, concelebrantes, diáconos y ministros.
+  source_rows:
+  - 60
+  questions: []
+- id: 12
+  act: Vivencia 1/ Agradecimiento
+  source_rows:
+  - 61
+  questions: []
+- id: 13
+  act: Animación
+  source_rows:
+  - 62
+  questions: []
+- id: 14
+  act: Vivencia 2/ Agradecimiento
+  source_rows:
+  - 63
+  questions: []
 - id: 15
-  act: Tema 1
-  source_rows: [49]
-  questions:
-  - question: ¿Quién proporciona la presentación de apoyo al tema? (Programa)
+  act: Video MCC Monterrey
+  source_rows:
+  - 64
+  questions: []
 - id: 16
-  act: Agradecimiento Tema 1
-  source_rows: [46]
-  questions:
-  - question: ¿Dónde estarán resguardados los reconocimientos? (Programa)
-  - question: ¿Quién entrega los reconocimientos y quién los resguarda? (Programa)
+  act: Tema 2 / Agradecimiento
+  source_rows:
+  - 65
+  questions: []
 - id: 17
-  act: Comida, bendición de alimentos y animación
-  source_rows: [52, 53]
-  questions:
-  - question: ¿Quién proporciona las pistas de Fabiola? (Programa)
-  - question: ¿Quién nos proporciona la presentación con los avisos que se proyectarán? (Programa)
+  act: Animación
+  source_rows:
+  - 66
+  questions: []
 - id: 18
-  act: Preparación inmediata para la Eucaristía
-  source_rows: [58]
-  questions:
-  - question: ¿Quién nos proporciona la presentación con los avisos que se proyectarán? (Programa)
-  - question: ¿Quién proporciona el playlist del audio ambiental durante los avisos?
+  act: Vivencia 3/Agradecimiento
+  source_rows:
+  - 67
+  questions: []
+- id: 19
+  act: TERMINO/Indicaciones
+  source_rows:
+  - 68
+  questions: []
+- id: 20
+  act: INICIO / Bienvenida /Animación
+  source_rows:
+  - 69
+  questions: []
+- id: 21
+  act: Oraciones de la mañana
+  source_rows:
+  - 70
+  questions: []
+- id: 22
+  act: Rosario
+  source_rows:
+  - 71
+  questions: []
+- id: 23
+  act: Vivencia 4/Agradecimiento
+  source_rows:
+  - 72
+  questions: []
+- id: 24
+  act: Tema 3 /Agradecimiento
+  source_rows:
+  - 73
+  questions: []
+- id: 25
+  act: Animación
+  source_rows:
+  - 74
+  questions: []
+- id: 26
+  act: Vivencia 5/Agradecimiento
+  source_rows:
+  - 75
+  questions: []
+- id: 27
+  act: Vivencia 6/Agradecimiento
+  source_rows:
+  - 76
+  questions: []
+- id: 28
+  act: Agradecimientos Finales
+  source_rows:
+  - 77
+  questions: []
+- id: 29
+  act: Misa / Coro Cursillos
+  source_rows:
+  - 78
+  questions: []
+- id: 30
+  act: Comida
+  source_rows:
+  - 79
+  questions: []
+- id: 31
+  act: Desmontaje
+  source_rows:
+  - 80
+  questions: []
 cross_cutting_questions: []
-general_questions:
-- topic: Instalación de la cruz
-  source_rows: [9]
-  questions:
-  - question: ¿La cruz estará iluminada? (Tesorería)
-- topic: Prueba de sonido e iluminación
-  source_rows: [11]
-  questions:
-  - question: ¿A qué hora puede ser la prueba de sonido e iluminación? (Arena)
-- topic: Montaje de instrumentos del coro Jessed
-  source_rows: [12]
-  questions:
-  - question: ¿Se hará prueba de sonido (soundcheck) y en qué horario? (Arena)
-  - question: ¿Se instalará una tarima para los coros? (Arena)
-- topic: Montaje de instrumentos del coro de Colores
-  source_rows: [13]
-  questions:
-  - question: ¿Cuántos canales y micrófonos necesitan?
-  - question: ¿Se hará prueba de sonido (soundcheck) y en qué horario? (Arena)
-  - question: ¿Se instalará una tarima para los coros? (Arena)
-- topic: Personas de animación — Fabiola Núñez y Lolys Cepeda
-  source_rows: [14]
-  questions:
-  - question: ¿Cuántos canales y micrófonos necesitan?
-  - question: ¿Se hará prueba de sonido (soundcheck)? (Arena)
-- topic: Preparación para la transmisión en vivo
-  source_rows: [15]
-  questions:
-  - question: ¿Con qué anticipación puede preparar la infraestructura el proveedor de Internet? (Arena)
-  - question: ¿Con qué laptop o equipo se realizará la transmisión en vivo?
-  - question: ¿Con qué cuenta se va a transmitir en redes sociales? (Comunicación Diocesana)
-- topic: Recepción del fotógrafo
-  source_rows: [16]
-  questions:
-  - question: ¿Quién es el fotógrafo? (Programa)
-  - question: ¿En qué horario debemos esperar al fotógrafo? (Programa)
-  - question: ¿Cuáles son las intervenciones del fotógrafo? (Programa)
-- topic: Preparación de chisperos y cañón de serpentinas
-  source_rows: [17]
-  questions:
-  - question: ¿En qué minuto del video se da la cuenta regresiva para encender los chisperos? (Programa)
-  - question: ¿Quién es el proveedor y quién controla la activación de los chisperos? (Programa)
-  - question: ¿En qué horario debemos esperar la instalación? (Programa)
-- topic: Recepción de invitados, grupo folclórico, autoridades y maestros de ceremonias
-  source_rows: [20]
-  questions:
-  - question: ¿Quién los recibe, Programa o EyA?
-  - question: ¿El grupo folclórico necesitará camerino?
-  - question: ¿Para cuántas personas se necesita el camerino del grupo folclórico?
-  - question: ¿Dónde permanecen las autoridades antes de su participación?
-  - question: ¿Quiénes son estas autoridades?
-  - question: ¿En qué horario están citados?
-- topic: Música ambiental
-  source_rows: [22]
-  questions:
-  - question: ¿Quién decide la música ambiental e imágenes que se proyectan? (Programa)
-  - question: ¿Quién proporciona la música ambiental y las imágenes? (Programa)
+general_questions: []

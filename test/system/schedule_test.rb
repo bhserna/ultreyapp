@@ -9,27 +9,25 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_no_selector ".page__eyebrow"
     assert_equal ["1200px", "0px", "32px"], page_layout_styles
 
-    within("tr", text: "Recepción de Diócesis") do
+    within("tr", text: "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 
     assert_selector "main.page:not(.page--wide)"
-    assert_selector ".page__eyebrow", text: "SÁBADO 14"
+    assert_selector ".page__eyebrow", text: "DOMINGO 15"
     assert_equal ["800px", "32px", "32px"], page_layout_styles
   end
 
-  test "shows each activity commission separately" do
+  test "shows act commissions and excludes preparation and extra activities" do
     visit root_path
 
-    within("tr", text: "Recepción de Diócesis") do
-      assert_selector "td:nth-child(6) .commission-links", text: "AC, Hospitalidad"
+    within("tr", text: "Proyección Video Inicio") do
+      assert_selector "td:nth-child(6) .commission-links", text: "Programa"
     end
-
-    click_link "Domingo 15"
-
-    within("tr", text: "Entrada a la Arena") do
-      assert_selector "td:nth-child(6) .commission-links", text: "Desfile, AC"
-    end
+    assert_no_text "Recepción de Diócesis"
+    assert_no_text "Instalación de stands"
+    assert_no_text "Preparar a los Maestros de ceremonia"
+    assert_no_text "Escoltar al grupo folclórico a la salida"
 
     click_link "Lunes 16"
 
@@ -42,7 +40,7 @@ class ScheduleTest < ApplicationSystemTestCase
   test "shows the official schedule times on both days" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Entronización de Nuestra Señora del Roble") do
+    within("tr", text: "Presentación del Stmo y Entronización de la Virgen.") do
       assert_selector "td:nth-child(1)", text: "4"
       assert_selector "td:nth-child(2)", text: "10:50"
       assert_selector "td:nth-child(3)", text: "11:50"
@@ -50,24 +48,24 @@ class ScheduleTest < ApplicationSystemTestCase
 
     click_link "Lunes 16"
 
-    within("tr", text: "Entrega de alimentos y salida") do
+    within("tr", text: "Comida") do
       assert_selector "td:nth-child(1)", text: "27"
       assert_selector "td:nth-child(2)", text: "14:30"
       assert_selector "td:nth-child(3)", text: "15:00"
-      assert_selector ".commission-links", text: "Logística, Seguridad"
+      assert_selector "td:nth-child(6)", text: "—"
     end
   end
 
   test "filters by selecting a commission and keeps it when changing days" do
-    visit root_path
+    visit root_path(day: "Lunes 16")
 
-    select "Marketing", from: "Comisión"
-    assert_text "No hay actividades de esta comisión para Sábado 14."
+    select "EyA", from: "Comisión"
+    assert_text "No hay actividades de esta comisión para Lunes 16."
 
     click_link "Domingo 15"
     assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(5)", text: "Instalación de stands"
-    assert_equal "Marketing", find("#commission").value
+    assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
+    assert_equal "EyA", find("#commission").value
 
     select "Todas las comisiones", from: "Comisión"
     assert_selector "tbody tr", minimum: 2
@@ -76,16 +74,16 @@ class ScheduleTest < ApplicationSystemTestCase
   test "filters when clicking a commission in the table" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Entrada a la Arena") do
-      click_link "AC"
+    within("tr", text: "Canto de Colores") do
+      click_link "EyA"
     end
 
     assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(5)", text: "Entrada a la Arena"
-    assert_equal "AC", find("#commission").value
+    assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
+    assert_equal "EyA", find("#commission").value
 
-    click_link "Sábado 14"
-    assert_selector "tbody tr", count: 2
+    click_link "Lunes 16"
+    assert_text "No hay actividades de esta comisión para Lunes 16."
   end
 
   test "places the filter beside day tabs and wraps it on narrow screens" do
@@ -104,20 +102,20 @@ class ScheduleTest < ApplicationSystemTestCase
   test "filters the activity list from a commission link on the detail page" do
     visit root_path
 
-    within("tr", text: "Recepción de Diócesis") do
+    within("tr", text: "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 
     within(".page__details") do
-      assert_selector ".commission-links", text: "AC, Hospitalidad"
-      assert_link "AC", href: root_path(day: "Sábado 14", commission: "AC")
-      click_link "Hospitalidad"
+      assert_selector ".commission-links", text: "Programa"
+      assert_link "Programa", href: root_path(day: "Domingo 15", commission: "Programa")
+      click_link "Programa"
     end
 
-    assert_selector "nav a[aria-current='page']", text: "Sábado 14"
-    assert_equal "Hospitalidad", find("#commission").value
-    assert_selector "tbody tr", count: 1
-    assert_selector "tbody tr td:nth-child(5)", text: "Recepción de Diócesis"
+    assert_selector "nav a[aria-current='page']", text: "Domingo 15"
+    assert_equal "Programa", find("#commission").value
+    assert_selector "tbody tr", count: 16
+    assert_selector "tbody tr td:nth-child(5)", text: /Proyección Video Inicio/
   end
 
   test "shows resource counts beside each activity" do
@@ -129,11 +127,11 @@ class ScheduleTest < ApplicationSystemTestCase
 
     visit root_path
 
-    within("tr", text: "Recepción de Diócesis") do
+    within("tr", text: "Proyección Video Inicio") do
       assert_selector ".schedule__resource-status", text: "Preguntas 2 · Contestadas 1 · Documentos 1"
     end
 
-    within("tr", text: "Entrega de Kits") do
+    within("tr", text: "Participación Gpo Folclórico") do
       assert_selector ".schedule__resource-status", text: "Preguntas 0 · Contestadas 0 · Documentos 0"
     end
   end
