@@ -5,7 +5,7 @@ class DocumentsTest < ApplicationSystemTestCase
     visit root_path(day: "Domingo 15")
 
     within("tr", text: "Instalación de stands") do
-      click_link "Preguntas y documentos"
+      click_link "Ver detalle"
     end
 
     assert_text "Instalación de stands"

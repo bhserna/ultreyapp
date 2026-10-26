@@ -25,7 +25,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
       assert_select "td:nth-child(2)", text: "—"
       assert_select "td:nth-child(5)", text: "Recepción de Diócesis"
       assert_select "td:nth-child(6) .commission-links", text: "AC, Hospitalidad"
-      assert_select "td:nth-child(7) a[href=?]", schedule_entry_path(1), text: "Preguntas y documentos"
+      assert_select "td:nth-child(7) a[href=?]", schedule_entry_path(1), text: "Ver detalle"
     end
   end
 

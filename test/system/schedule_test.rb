@@ -10,7 +10,7 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_equal ["1200px", "0px", "32px"], page_layout_styles
 
     within("tr", text: "Recepción de Diócesis") do
-      click_link "Preguntas y documentos"
+      click_link "Ver detalle"
     end
 
     assert_selector "main.page:not(.page--wide)"
@@ -105,7 +105,7 @@ class ScheduleTest < ApplicationSystemTestCase
     visit root_path
 
     within("tr", text: "Recepción de Diócesis") do
-      click_link "Preguntas y documentos"
+      click_link "Ver detalle"
     end
 
     within(".page__details") do

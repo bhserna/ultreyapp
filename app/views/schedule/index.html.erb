@@ -50,7 +50,7 @@
             <td><%= commission_links(schedule_entry) %></td>
             <td>
               <% resource_counts = @schedule.resource_counts.fetch(schedule_entry.id) %>
-              <%= link_to "Preguntas y documentos", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
+              <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
               <small class="schedule__resource-status">
                 Preguntas <%= resource_counts[:questions] %> ·
                 Contestadas <%= resource_counts[:answered] %> ·
