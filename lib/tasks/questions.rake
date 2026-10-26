@@ -1,7 +1,7 @@
 namespace :questions do
-  desc "Replace all questions and topics with those in config/follow_up_questions.yml"
+  desc "Replace all questions and topics with those in config/data/follow_up_questions.yml"
   task import: :environment do
-    path = ENV.fetch("QUESTIONS_FILE", Rails.root.join("config/follow_up_questions.yml").to_s)
+    path = ENV.fetch("QUESTIONS_FILE", Rails.root.join("config/data/follow_up_questions.yml").to_s)
     source = YAML.safe_load_file(path)
 
     ActiveRecord::Base.transaction do

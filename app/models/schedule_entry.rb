@@ -4,7 +4,7 @@ class ScheduleEntry
   attr_reader(*ATTRIBUTES)
 
   def self.all
-    YAML.safe_load_file(Rails.root.join("config/schedule.yml")).map { |attributes| new(attributes) }
+    YAML.safe_load_file(Rails.root.join("config/data/schedule.yml")).map { |attributes| new(attributes) }
   end
 
   def self.find(id)
