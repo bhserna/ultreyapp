@@ -61,7 +61,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "tbody tr td:nth-child(5)", count: 0
   end
 
-  test "shows question, answered question, and document counts for each act" do
+  test "keeps detail links without resource counts for each act" do
     Question.create!(schedule_entry_id: 1, body: "Pendiente")
     Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
     blank = Question.create!(schedule_entry_id: 1, body: "Sin contenido")
@@ -74,16 +74,16 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     get root_url
 
     assert_response :success
-    assert_select "tbody tr:first-child .schedule__resource-status",
-                  text: /Preguntas 3\s*·\s*Contestadas 1\s*·\s*Documentos 1/
-    assert_select "tbody tr:nth-child(2) .schedule__resource-status",
-                  text: /Preguntas 0\s*·\s*Contestadas 0\s*·\s*Documentos 0/
+    assert_select ".schedule__resource-status", count: 0
+    assert_select "tbody tr:first-child a[href=?]", schedule_entry_path(1), text: "Ver detalle"
+    assert_select "tbody tr:nth-child(2) a[href=?]", schedule_entry_path(2), text: "Ver detalle"
+    assert_no_match(/Preguntas \d+|Contestadas \d+|Documentos \d+/, response.body)
 
     get root_url(day: "Domingo 15", commission: "EyA")
 
     assert_response :success
     assert_select "tbody tr", count: 1
-    assert_select "tbody tr .schedule__resource-status",
-                  text: /Preguntas 0\s*·\s*Contestadas 0\s*·\s*Documentos 0/
+    assert_select ".schedule__resource-status", count: 0
+    assert_select "tbody tr a[href=?]", schedule_entry_path(5), text: "Ver detalle"
   end
 end

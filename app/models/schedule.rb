@@ -26,10 +26,6 @@ class Schedule
     end
   end
 
-  def resource_counts
-    @resource_counts ||= ScheduleEntry.resource_counts_for(entries)
-  end
-
   private
     def all_entries
       @all_entries ||= ScheduleEntry.all

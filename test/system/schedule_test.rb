@@ -118,7 +118,7 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "tbody tr td:nth-child(5)", text: /Proyección Video Inicio/
   end
 
-  test "shows resource counts beside each activity" do
+  test "keeps access to resources without showing counts beside each activity" do
     Question.create!(schedule_entry_id: 1, body: "Pendiente")
     Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
     File.open(Rails.root.join("test/fixtures/files/agenda.txt")) do |file|
@@ -127,13 +127,17 @@ class ScheduleTest < ApplicationSystemTestCase
 
     visit root_path
 
-    within("tr", text: "Proyección Video Inicio") do
-      assert_selector ".schedule__resource-status", text: "Preguntas 2 · Contestadas 1 · Documentos 1"
-    end
+    assert_no_selector ".schedule__resource-status"
+    assert_no_text "Preguntas 2"
+    assert_no_text "Contestadas 1"
+    assert_no_text "Documentos 1"
 
-    within("tr", text: "Participación Gpo Folclórico") do
-      assert_selector ".schedule__resource-status", text: "Preguntas 0 · Contestadas 0 · Documentos 0"
+    within("tr", text: "Proyección Video Inicio") do
+      click_link "Ver detalle"
     end
+    assert_text "Pendiente"
+    assert_text "Contestada"
+    assert_text "agenda.txt"
   end
 
   private

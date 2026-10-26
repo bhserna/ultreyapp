@@ -25,7 +25,6 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal "Domingo 15", schedule.selected_day
     assert_equal "EyA", schedule.selected_commission
     assert_equal [5], schedule.entries.map(&:id)
-    assert_equal [5], schedule.resource_counts.keys
   end
 
   test "keeps a valid commission even when it has no entries on the selected day" do
@@ -33,6 +32,5 @@ class ScheduleModelTest < ActiveSupport::TestCase
 
     assert_equal "EyA", schedule.selected_commission
     assert_empty schedule.entries
-    assert_empty schedule.resource_counts
   end
 end
