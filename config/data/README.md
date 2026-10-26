@@ -6,18 +6,18 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 
 ## Current version
 
-- Include only rows with an act number and a yellow Act cell, verified in the XLSX export (the CSV does not retain colors).
+- Include only rows with an act number and a yellow Act cell, verified in the XLSX export (the CSV does not retain colors). Stop at the end of the Monday 16 block, currently row 111 (teardown); exclude any later scratch blocks.
 - Blue preparation rows, beige extra activities, and unnumbered rows are excluded for now.
 - There are 31 entries: acts 1–28, with act 7 represented by subacts `7.1`–`7.4`. Act 28 (teardown) has a yellow Act cell and is included.
-- IDs are consecutive in spreadsheet row order. `source_row` / `source_rows` count the header as row 1.
+- IDs are preserved by act number when updating the source, even if titles, times, or row positions change. `source_row` / `source_rows` count the header as row 1.
 - Times are normalized to 24-hour format. Missing times and durations are not inferred; source wording is preserved.
-- `questions.yml` contains only the 12 questions directly on these act rows. Questions from preparation or extra-activity rows are not assigned to acts. The previous complete question extraction remains in `previous/questions.yml`.
+- `questions.yml` contains the 24 questions directly on these act rows, including the questions in the final notices' Notes cell. Questions from preparation or extra-activity rows are not assigned to acts. The previous complete question extraction remains in `previous/questions.yml`.
 
 ## Production details
 
-`production_details.yml` contains the ten production fields for the current numbered acts, linked by `schedule_entry_id`. It preserves source wording and line breaks, with blank cells represented as `null`. It excludes preparation, extra activities, questions, and the media-files column. Acts with all ten fields empty are omitted (18 acts currently have production data).
+`production_details.yml` contains the ten production fields for the current numbered acts, linked by `schedule_entry_id`. It preserves source wording and line breaks, with blank cells represented as `null`. It excludes preparation, extra activities, questions, and the media-files column. Acts with all ten fields empty are omitted (19 acts currently have production data).
 
-The spreadsheet has changed since the schedule extraction: rows have moved, and some acts are repeated later with their production information filled in. Entries were matched by act number and activity, not the old row number. `source_row` records the row supplying the production data in the latest extraction.
+The three active YAML files use the same current source rows. No production data is taken from repeated acts or preparation blocks outside the selected range. The current Monday acts have no production content; no details are imported for them. An older detail omitted from the new YAML is not deleted by the import task, so previously imported content for those acts must be reviewed separately.
 
 ```sh
 bin/rails production_details:import

@@ -115,32 +115,36 @@
   act_number: 9
   day: Domingo 15
   start_time: '15:50'
-  end_time: '16:15'
-  duration: '0:25'
-  activity: Vivencia 1/ Agradecimiento
+  end_time: '16:20'
+  duration: '0:30'
+  activity: |-
+    Vivencia 1 - Esperanza en la enfermedad
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 61
+  source_row: 64
 - id: 13
   act_number: 10
   day: Domingo 15
-  start_time: '16:15'
+  start_time: '16:20'
   end_time: '16:40'
-  duration: '0:25'
-  activity: Animación
+  duration: '0:20'
+  activity: Animación Coro de Cursillos/ Bendicam
   commissions:
   - Programa
-  source_row: 62
+  source_row: 68
 - id: 14
   act_number: 11
   day: Domingo 15
   start_time: '16:40'
   end_time: '17:05'
-  duration: '0:25'
-  activity: Vivencia 2/ Agradecimiento
+  duration: 25 min
+  activity: |-
+    Vivencia 2 - Perseverancia como dirigente después de muchos años
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 63
+  source_row: 71
 - id: 15
   act_number: 12
   day: Domingo 15
@@ -150,37 +154,39 @@
   activity: Video MCC Monterrey
   commissions:
   - Programa
-  source_row: 64
+  source_row: 76
 - id: 16
   act_number: 13
   day: Domingo 15
   start_time: '17:15'
   end_time: '18:00'
   duration: '0:45'
-  activity: Tema 2 / Agradecimiento
+  activity: "Tema 2 - \nPresentación / Tema / Agradecimiento"
   commissions:
   - Programa
-  source_row: 65
+  source_row: 80
 - id: 17
   act_number: 14
   day: Domingo 15
   start_time: '18:00'
   end_time: '18:20'
   duration: '0:20'
-  activity: Animación
+  activity: Animación Coro de Cursillos/ Bendicam
   commissions:
   - Programa
-  source_row: 66
+  source_row: 84
 - id: 18
   act_number: 15
   day: Domingo 15
   start_time: '18:20'
   end_time: '18:45'
-  duration: '0:25'
-  activity: Vivencia 3/Agradecimiento
+  duration: 25 min
+  activity: |-
+    Vivencia 3 - Empresario infliyendo en mi abiente
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 67
+  source_row: 88
 - id: 19
   act_number: 16
   day: Domingo 15
@@ -190,7 +196,7 @@
   activity: TERMINO/Indicaciones
   commissions:
   - Programa
-  source_row: 68
+  source_row: 92
 - id: 20
   act_number: 17
   day: Lunes 16
@@ -200,7 +206,7 @@
   activity: INICIO / Bienvenida /Animación
   commissions:
   - Programa
-  source_row: 69
+  source_row: 100
 - id: 21
   act_number: 18
   day: Lunes 16
@@ -210,7 +216,7 @@
   activity: Oraciones de la mañana
   commissions:
   - Liturgia
-  source_row: 70
+  source_row: 101
 - id: 22
   act_number: 19
   day: Lunes 16
@@ -220,7 +226,7 @@
   activity: Rosario
   commissions:
   - Liturgia
-  source_row: 71
+  source_row: 102
 - id: 23
   act_number: 20
   day: Lunes 16
@@ -230,7 +236,7 @@
   activity: Vivencia 4/Agradecimiento
   commissions:
   - Programa
-  source_row: 72
+  source_row: 103
 - id: 24
   act_number: 21
   day: Lunes 16
@@ -240,7 +246,7 @@
   activity: Tema 3 /Agradecimiento
   commissions:
   - Programa
-  source_row: 73
+  source_row: 104
 - id: 25
   act_number: 22
   day: Lunes 16
@@ -250,7 +256,7 @@
   activity: Animación
   commissions:
   - Programa
-  source_row: 74
+  source_row: 105
 - id: 26
   act_number: 23
   day: Lunes 16
@@ -260,7 +266,7 @@
   activity: Vivencia 5/Agradecimiento
   commissions:
   - Programa
-  source_row: 75
+  source_row: 106
 - id: 27
   act_number: 24
   day: Lunes 16
@@ -270,7 +276,7 @@
   activity: Vivencia 6/Agradecimiento
   commissions:
   - Programa
-  source_row: 76
+  source_row: 107
 - id: 28
   act_number: 25
   day: Lunes 16
@@ -280,7 +286,7 @@
   activity: Agradecimientos Finales
   commissions:
   - Programa
-  source_row: 77
+  source_row: 108
 - id: 29
   act_number: 26
   day: Lunes 16
@@ -290,7 +296,7 @@
   activity: Misa / Coro Cursillos
   commissions:
   - Liturgia
-  source_row: 78
+  source_row: 109
 - id: 30
   act_number: 27
   day: Lunes 16
@@ -299,7 +305,7 @@
   duration: '0:30'
   activity: Comida
   commissions: []
-  source_row: 79
+  source_row: 110
 - id: 31
   act_number: 28
   day: Lunes 16
@@ -308,4 +314,4 @@
   duration: '3:00'
   activity: Desmontaje
   commissions: []
-  source_row: 80
+  source_row: 111

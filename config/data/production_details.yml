@@ -2,8 +2,8 @@
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
   sheet_gid: 1593648280
-  description: Detalles de producción de los actos del programa actual. Se excluyen
-    preparación, actividades extra y actos sin datos de producción.
+  description: Primera hoja, hasta el final del bloque Lunes 16. Solo actos numerados
+    con celda amarilla. Filas contadas desde el encabezado en fila 1.
 production_details:
 - schedule_entry_id: 1
   activity: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
@@ -97,7 +97,7 @@ production_details:
   attributes:
     executors: EyA - Monseñor Heriberto Cavazos
     screen: 'Pantallas: Presentación que apoya al tema'
-    audio:
+    audio: Micrófono abierto de Monseñor Heriberto Cavazos
     room_lighting: Durante la exposición,La sala permanecerá con iluminación tenue
     stage_lighting: "Iluminación frontal estable sobre el expositor. \nPara la entrega
       del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral."
@@ -196,25 +196,68 @@ production_details:
       - Logistica de colecta a cargo de Magda Villarreal.
     radios:
     pending_confirmations:
-- schedule_entry_id: 14
-  activity: Vivencia 2/ Agradecimiento
-  source_row: 90
+- schedule_entry_id: 12
+  activity: |-
+    Vivencia 1 - Esperanza en la enfermedad
+    Presentación / Vivencia / Agradecimiento
+  source_row: 64
   attributes:
-    executors: Abraham Moreno / EyA
-    screen: Al inicio el nombre del participante y posteriormente imágen que no distraiga
-      la atención.
-    audio: Solo el microfono del participante (Abraham) estará activo
-    room_lighting: Sin iluminación
-    stage_lighting: Iluminación dirigida al participante durante su intervención y
-      a todo el escenario durante el agradecimiento
-    aisle_lighting: Necesaria por seguridad
+    executors: Adalia Carolina
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Caro abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable cobre el expositor
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
+    requirements:
+    notes: Al concluir el acto se entrega el reconocimiento por parte del Padre Martín
+      Castro y fotografía
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 13
+  activity: Animación Coro de Cursillos/ Bendicam
+  source_row: 68
+  attributes:
+    executors: Coro Arcoiris
+    screen: |-
+      - Letra de canciones pantalla principal
+      - Bendicam en la pantalla 360
+      - Anillo De colores
+    audio: Microfonía del coro activa
+    room_lighting: Suficiente para leer
+    stage_lighting:
+    aisle_lighting:
     requirements:
     notes:
     radios:
     pending_confirmations:
+- schedule_entry_id: 14
+  activity: |-
+    Vivencia 2 - Perseverancia como dirigente después de muchos años
+    Presentación / Vivencia / Agradecimiento
+  source_row: 71
+  attributes:
+    executors: Abraham Moreno
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Abraham abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable cobre el expositor
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
+    requirements:
+    notes: Al concluir el acto se entrega el reconocimiento por parte de Javier Ayala
+      y fotografía
+    radios:
+    pending_confirmations:
 - schedule_entry_id: 15
   activity: Video MCC Monterrey
-  source_row: 94
+  source_row: 76
   attributes:
     executors: EyA
     screen: Video MCC
@@ -227,75 +270,77 @@ production_details:
     radios:
     pending_confirmations:
 - schedule_entry_id: 16
-  activity: Tema 2 / Agradecimiento
-  source_row: 101
+  activity: "Tema 2 - \nPresentación / Tema / Agradecimiento"
+  source_row: 80
   attributes:
     executors: Jose Humberto Marroquin / EyA
-    screen: La presentación con información para apoyar el desarrollo del tema.
-    audio: Solo el microfono del participante (Jose Humberto) estará activo
+    screen: |-
+      -La presentación con información para apoyar el desarrollo del tema.
+      -Curriculum  y presentación
+    audio: Solo el microfono del participante (Jose Humberto) estará activo  Conductores
+      y micrófonos no usados cerrados.
     room_lighting: Sin iluminación
     stage_lighting: Iluminación dirigida al participante durante su intervención y
       a todo el escenario durante el agradecimiento
     aisle_lighting: Necesaria por seguridad
     requirements:
-    notes:
+    notes: Conductor pide a Pbro. Fernando Torres a que pase a entregar el reconocimiento
+      a Expositor y toma de fotografía, e invitan a cantar
     radios:
     pending_confirmations:
 - schedule_entry_id: 17
-  activity: Animación
-  source_row: 107
+  activity: Animación Coro de Cursillos/ Bendicam
+  source_row: 84
   attributes:
-    executors: Coro Arcoiris / EyA
-    screen: Coro y Bendicam
-    audio: Coro Arcoiris
-    room_lighting: Totalmente iluminada
-    stage_lighting: Iluminación dirigida al coro
-    aisle_lighting: Necesaria por seguridad
+    executors: Coro Arcoiris
+    screen: |-
+      - Letra de canciones pantalla principal
+      - Bendicam en la pantalla 360
+      - Anillo De colores
+    audio: Microfonía del coro activa
+    room_lighting: Suficiente para leer
+    stage_lighting:
+    aisle_lighting:
     requirements:
     notes:
     radios:
     pending_confirmations:
 - schedule_entry_id: 18
-  activity: Vivencia 3/Agradecimiento
-  source_row: 114
+  activity: |-
+    Vivencia 3 - Empresario infliyendo en mi abiente
+    Presentación / Vivencia / Agradecimiento
+  source_row: 88
   attributes:
-    executors: Lázaro Tamez / EyA
-    screen: Al inicio el nombre del participante y posteriormente imágen que no distraiga
-      la atención.
-    audio: Solo el microfono del participante (Lázaro) estará activo
-    room_lighting: Sin iluminación
-    stage_lighting: Iluminación dirigida al participante durante su intervención y
-      a todo el escenario durante el agradecimiento
-    aisle_lighting: Necesaria por seguridad
+    executors: Lázaro Tamez Guerra
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Lázarp abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable cobre el expositor
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
     requirements:
-    notes:
+    notes: Al concluir el acto se entrega el reconocimiento por parte de Alavaro Martinez
+      y fotografía
     radios:
     pending_confirmations:
 - schedule_entry_id: 19
   activity: TERMINO/Indicaciones
-  source_row: 120
+  source_row: 92
   attributes:
     executors: EyA
-    screen: Indicaciones del día
-    audio: Microfono del participante que da el cierre del día y audio o música
+    screen: |-
+      Indicaciones del día
+      Pantallas muestran cada aviso con tipografía grande
+    audio: Microfono del participante que da el cierre del día y audio o música al
+      final de las indicaciones
     room_lighting: Totalmente iluminada
     stage_lighting: Totalmente iluminado
     aisle_lighting: Totalmente iluminado
     requirements:
-    notes:
-    radios:
-    pending_confirmations:
-- schedule_entry_id: 21
-  activity: Oraciones de la mañana
-  source_row: 72
-  attributes:
-    executors: P FEr
-    screen:
-    audio:
-    room_lighting:
-    stage_lighting:
-    aisle_lighting:
-    requirements:
-    notes:
+    notes: Programa - Quién proporciona el material para proyectar y el playlist para
+      para reporoducir?
     radios:
     pending_confirmations:

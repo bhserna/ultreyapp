@@ -6,6 +6,8 @@ class ProductionDetailsTest < ApplicationSystemTestCase
     Rails.application.load_tasks unless Rake::Task.task_defined?("production_details:import")
     Rake::Task["production_details:import"].reenable
     capture_io { Rake::Task["production_details:import"].invoke }
+    Rake::Task["questions:import"].reenable
+    capture_io { Rake::Task["questions:import"].invoke }
 
     visit schedule_entry_path(1)
     assert_text "Video de Ultreyas y anillo proyecta Bienvenidos"
@@ -13,7 +15,10 @@ class ProductionDetailsTest < ApplicationSystemTestCase
     assert_link "Editar detalles de producción"
 
     visit schedule_entry_path(14)
-    assert_text "Abraham Moreno / EyA"
+    assert_text "Abraham Moreno"
+    assert_text "Perseverancia como dirigente después de muchos años"
+    assert_text "Al concluir el acto se entrega el reconocimiento por parte de Javier Ayala y fotografía"
+    assert_text "¿Quién proporciona la presentación con el nombre del expositor y título de la vivencia? (Programa)"
     assert_no_text "Video de Ultreyas y anillo proyecta Bienvenidos"
 
     visit schedule_entry_path(10)

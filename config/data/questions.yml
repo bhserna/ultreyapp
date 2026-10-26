@@ -2,8 +2,8 @@
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
   sheet_gid: 1593648280
-  description: Preguntas explícitas de los actos con número y celda amarilla en la
-    primera hoja. Las filas corresponden al Excel (encabezado en fila 1).
+  description: Primera hoja, hasta el final del bloque Lunes 16. Solo actos numerados
+    con celda amarilla. Filas contadas desde el encabezado en fila 1.
 schedule_entries:
 - id: 1
   act: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
@@ -78,104 +78,130 @@ schedule_entries:
   - 60
   questions: []
 - id: 12
-  act: Vivencia 1/ Agradecimiento
+  act: |-
+    Vivencia 1 - Esperanza en la enfermedad
+    Presentación / Vivencia / Agradecimiento
   source_rows:
-  - 61
-  questions: []
+  - 64
+  questions:
+  - question: "¿Quién proporciona la presentación con el nombre del expositor y título
+      de la vivencia? (Programa)"
 - id: 13
-  act: Animación
+  act: Animación Coro de Cursillos/ Bendicam
   source_rows:
-  - 62
-  questions: []
+  - 68
+  questions:
+  - question: "¿Quién proporciona la presentación con la letra de los cantos para
+      su proyección? (Programa)"
+  - question: "¿Hay necesidad de proyectar la letra de los cantos o solo se proyecta
+      la Bendicam en las pantallas? (Programa)"
 - id: 14
-  act: Vivencia 2/ Agradecimiento
+  act: |-
+    Vivencia 2 - Perseverancia como dirigente después de muchos años
+    Presentación / Vivencia / Agradecimiento
   source_rows:
-  - 63
-  questions: []
+  - 71
+  questions:
+  - question: "¿Quién proporciona la presentación con el nombre del expositor y título
+      de la vivencia? (Programa)"
 - id: 15
   act: Video MCC Monterrey
   source_rows:
-  - 64
-  questions: []
+  - 76
+  questions:
+  - question: "¿Quién proporciona el video? (Programa)"
 - id: 16
-  act: Tema 2 / Agradecimiento
+  act: "Tema 2 - \nPresentación / Tema / Agradecimiento"
   source_rows:
-  - 65
-  questions: []
+  - 80
+  questions:
+  - question: "¿En qué equipo se reproduce la información o presentación de apoyo
+      al tema: laptop de MCC o equipo de la Arena? (Arena)"
+  - question: "¿Quién proporciona la presentación y currículum para apoyo del Tema
+      2? (Programa)"
 - id: 17
-  act: Animación
+  act: Animación Coro de Cursillos/ Bendicam
   source_rows:
-  - 66
-  questions: []
+  - 84
+  questions:
+  - question: "¿Quién proporciona la presentación con la letra de los cantos para
+      su proyección? (Programa)"
+  - question: "¿Hay necesidad de proyectar la letra de los cantos o solo se proyecta
+      la Bendicam en las pantallas? (Programa)"
 - id: 18
-  act: Vivencia 3/Agradecimiento
+  act: |-
+    Vivencia 3 - Empresario infliyendo en mi abiente
+    Presentación / Vivencia / Agradecimiento
   source_rows:
-  - 67
-  questions: []
+  - 88
+  questions:
+  - question: "¿Quién proporciona la presentación de apoyo al tema? (Programa)"
 - id: 19
   act: TERMINO/Indicaciones
   source_rows:
-  - 68
-  questions: []
+  - 92
+  questions:
+  - question: "¿Quién proporciona el material para proyectar? (Programa)"
+  - question: "¿Quién proporciona el playlist para reproducir? (Programa)"
 - id: 20
   act: INICIO / Bienvenida /Animación
   source_rows:
-  - 69
+  - 100
   questions: []
 - id: 21
   act: Oraciones de la mañana
   source_rows:
-  - 70
+  - 101
   questions: []
 - id: 22
   act: Rosario
   source_rows:
-  - 71
+  - 102
   questions: []
 - id: 23
   act: Vivencia 4/Agradecimiento
   source_rows:
-  - 72
+  - 103
   questions: []
 - id: 24
   act: Tema 3 /Agradecimiento
   source_rows:
-  - 73
+  - 104
   questions: []
 - id: 25
   act: Animación
   source_rows:
-  - 74
+  - 105
   questions: []
 - id: 26
   act: Vivencia 5/Agradecimiento
   source_rows:
-  - 75
+  - 106
   questions: []
 - id: 27
   act: Vivencia 6/Agradecimiento
   source_rows:
-  - 76
+  - 107
   questions: []
 - id: 28
   act: Agradecimientos Finales
   source_rows:
-  - 77
+  - 108
   questions: []
 - id: 29
   act: Misa / Coro Cursillos
   source_rows:
-  - 78
+  - 109
   questions: []
 - id: 30
   act: Comida
   source_rows:
-  - 79
+  - 110
   questions: []
 - id: 31
   act: Desmontaje
   source_rows:
-  - 80
+  - 111
   questions: []
 cross_cutting_questions: []
 general_questions: []
