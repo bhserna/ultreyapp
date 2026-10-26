@@ -1,0 +1,301 @@
+---
+source:
+  url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
+  sheet_gid: 1593648280
+  description: Detalles de producción de los actos del programa actual. Se excluyen
+    preparación, actividades extra y actos sin datos de producción.
+production_details:
+- schedule_entry_id: 1
+  activity: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
+  source_row: 29
+  attributes:
+    executors: EyA
+    screen: Video de Ultreyas y anillo proyecta Bienvenidos
+    audio: Su audio se mantiene al nivel previamente aprobado y todos los micrófonos
+      permanecen cerrados.Se utiliza únicamente el audio del video
+    room_lighting: La iluminación de la SALA se mantiene entre 15 y 20 %.
+    stage_lighting:
+    aisle_lighting: Los pasillos permanecen visibles.
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 2
+  activity: Participación Gpo Folclórico
+  source_row: 30
+  attributes:
+    executors: EyA / Grupo Folclórico
+    screen: Imagenes proporcionadas para este acto y anillo proyecta Bienvenidos
+    audio: Popurrí de música de Nuevo León. Se utilizará la pista musical o los micrófonos
+      requeridos por el grupo.  adjuntar archivo de la pista  segun formato indicado
+    room_lighting: La iluminación de la sala se mantendrá entre 30 y 40 %, permitiendo
+      la participación y visibilidad del público.
+    stage_lighting: |-
+      amplia, alegre y uniforme
+      Se enfoca en bailarines
+    aisle_lighting:
+    requirements:
+    notes: El grupo ingresará directamente. Nadie lo     anuncia y sale por donde
+      ingresó.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 3
+  activity: 'Presentación: saludos y palabras de autoridades'
+  source_row: 36
+  attributes:
+    executors: "Presentación de maestros de ceremonias en el escenario. \nEllos dan
+      la bienvenida a las Autoridades que participan"
+    screen: Proyección del acto y el anillo proyecta Bienvenidos
+    audio: Durante la presentación de las autoridades estarán activos los micrófonos
+      inalámbricos de los maestros de ceremonias y el micrófono del atril
+    room_lighting: 25% - 30%
+    stage_lighting: "Durante la presentación de autoridades se mantendrá iluminación
+      suficiente. \nPara los mensajes se iluminará principalmente el atril"
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 4
+  activity: Presentación del Stmo y Entronización de la Virgen.
+  source_row: 42
+  attributes:
+    executors: "Padre Fernando y 4 Acólitos. \nJessed. \nEyA"
+    screen: Se proyecta el acto (Proyección en vivo) El anillo permanece apagado.
+    audio: Encender Microfono Padre Fer
+    room_lighting: Iluminación dirigida hacia el Santísimo y/o la Virgen
+    stage_lighting: |-
+      Se iluminan el recorrido de la virgen hasta su
+      entronización y el Santísimo.
+    aisle_lighting:
+    requirements:
+    notes: |-
+      - La procesión parte del túnel que esta atrás del escenario y sale por el lado izquierdo del escenario (Viéndolo de frente).
+      - No abra ninguna parada, suben directo hasta donde se entronizará la Virgen.
+      - Al terminar el acto con el Santísimo el Padre Fernando trasladara la parte alta de la custodia hacia atrás del escenario para dirigirse a la capilla del santísimo.
+      - No habrá letra de cantos.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 5
+  activity: Canto de Colores
+  source_row: 47
+  attributes:
+    executors: Coro Arcoiris
+    screen: Video en vivo de la gente cantando. Anillo de colores.
+    audio: Micrófonos del coro abiertos con volúmen recomendado por la arena
+    room_lighting: Luces de colores
+    stage_lighting: Solo la pantalla principal
+    aisle_lighting:
+    requirements: Cámaras en cancha enfocando la reacción del público
+    notes: Se utilizarán elementos de animación para los animadores que apoyan  al
+      coro.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 6
+  activity: Tema 1 Llamados a ser peregrinos de la esperanza en los ambientes
+  source_row: 49
+  attributes:
+    executors: EyA - Monseñor Heriberto Cavazos
+    screen: 'Pantallas: Presentación que apoya al tema'
+    audio:
+    room_lighting: Durante la exposición,La sala permanecerá con iluminación tenue
+    stage_lighting: "Iluminación frontal estable sobre el expositor. \nPara la entrega
+      del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral."
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 7
+  activity: Comida / Bendición de alimentos
+  source_row: 53
+  attributes:
+    executors: Arena - Padre Zalpa - EyA
+    screen: Avisos sobre comida y Eucaristía
+    audio: Microfono de conductores y sacerdote
+    room_lighting:
+    stage_lighting: Iluminación enfocada y con seguimiento a las participantes
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 8
+  activity: Fabiola Núñez interpreta tres canciones con pista
+  source_row: 54
+  attributes:
+    executors: Fabiola Núñez - EyA
+    screen: Las pantallas proyectan imágenes alternadas de Fabiola con vistas generales
+      del ambiente.
+    audio: Audio de las participantes
+    room_lighting: Sala iluminada de acuerdo a los requerimientos de las cámaras que
+      enfocan a la gente.
+    stage_lighting: Iluminación enfocada y con seguimiento a las participantes
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 9
+  activity: Lolys Cepeda - Popurrí musical
+  source_row: 55
+  attributes:
+    executors: Lolys Cepeda - EyA
+    screen: Las pantallas proyectan imágenes alternadas de Lolis con vistas generales
+      del ambiente.
+    audio: Audio de las participantes
+    room_lighting: Sala iluminada de acuerdo a los requerimientos de las cámaras que
+      enfocan a la gente.
+    stage_lighting: Iluminación enfocada y con seguimiento a las participantes
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 10
+  activity: Preparación de escenario para misa / Avisos
+  source_row: 58
+  attributes:
+    executors: EyA y Maestros de Ceremonias
+    screen: Las pantallas proyectan avisos
+    audio: Maestros de Ceremonias y Audio Ambiental
+    room_lighting: Luz que permita la salida e ingreso de los asistentes.
+    stage_lighting: Baja la intensidad de la luz para permitir el montaje, la luz
+      se enfoca en los maestros de ceremonias.
+    aisle_lighting:
+    requirements:
+    notes: |-
+      Llamados, mantener los micrófonos de los maestros de ceremonias abiertos.
+      - 1a llamada 1:47 pm
+      - 2a llamada 1:52 pm
+      - 3a llamada 1:57 pm
+      En la tercera llamada la musica ambiental y micrófonos de los maestros de ceremonia queda fuera y se pasa al audio de los micrófonos de la misa.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 11
+  activity: |-
+    Misa / Coro Ministerio de Música Jessed
+    1. Entrada con el celebrante, concelebrantes, diáconos y ministros.
+  source_row: 60
+  attributes:
+    executors: |-
+      Liturgia, Mons. Rogelio y de más sacerdotes, Ministerio de Música Jésed
+      EyA
+    screen: |-
+      - Pantallas 360 siguen la celebración
+      - Anillo apagado
+      - Pantalla proyecta altar - vitrales
+    audio: Configuración para misa y coro Jésed
+    room_lighting: Iluminación tenue
+    stage_lighting: Enfocada en la celebración
+    aisle_lighting: Iluminación necesaria durante comunión y ofrendas.
+    requirements:
+    notes: |-
+      - Los encargados de las ofrendas, estarán colocados en sus lugares correspondientes, desde en ingreso.
+      - 50 puntos de comunión, participan 50 sacerdotes y 50 láicos con señalización
+      - Logistica de colecta a cargo de Magda Villarreal.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 14
+  activity: Vivencia 2/ Agradecimiento
+  source_row: 90
+  attributes:
+    executors: Abraham Moreno / EyA
+    screen: Al inicio el nombre del participante y posteriormente imágen que no distraiga
+      la atención.
+    audio: Solo el microfono del participante (Abraham) estará activo
+    room_lighting: Sin iluminación
+    stage_lighting: Iluminación dirigida al participante durante su intervención y
+      a todo el escenario durante el agradecimiento
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 15
+  activity: Video MCC Monterrey
+  source_row: 94
+  attributes:
+    executors: EyA
+    screen: Video MCC
+    audio: Audio del video
+    room_lighting: Sin iluminación
+    stage_lighting: Sin iluminación
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 16
+  activity: Tema 2 / Agradecimiento
+  source_row: 101
+  attributes:
+    executors: Jose Humberto Marroquin / EyA
+    screen: La presentación con información para apoyar el desarrollo del tema.
+    audio: Solo el microfono del participante (Jose Humberto) estará activo
+    room_lighting: Sin iluminación
+    stage_lighting: Iluminación dirigida al participante durante su intervención y
+      a todo el escenario durante el agradecimiento
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 17
+  activity: Animación
+  source_row: 107
+  attributes:
+    executors: Coro Arcoiris / EyA
+    screen: Coro y Bendicam
+    audio: Coro Arcoiris
+    room_lighting: Totalmente iluminada
+    stage_lighting: Iluminación dirigida al coro
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 18
+  activity: Vivencia 3/Agradecimiento
+  source_row: 114
+  attributes:
+    executors: Lázaro Tamez / EyA
+    screen: Al inicio el nombre del participante y posteriormente imágen que no distraiga
+      la atención.
+    audio: Solo el microfono del participante (Lázaro) estará activo
+    room_lighting: Sin iluminación
+    stage_lighting: Iluminación dirigida al participante durante su intervención y
+      a todo el escenario durante el agradecimiento
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 19
+  activity: TERMINO/Indicaciones
+  source_row: 120
+  attributes:
+    executors: EyA
+    screen: Indicaciones del día
+    audio: Microfono del participante que da el cierre del día y audio o música
+    room_lighting: Totalmente iluminada
+    stage_lighting: Totalmente iluminado
+    aisle_lighting: Totalmente iluminado
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 21
+  activity: Oraciones de la mañana
+  source_row: 72
+  attributes:
+    executors: P FEr
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:

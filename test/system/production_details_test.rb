@@ -1,6 +1,31 @@
 require "application_system_test_case"
+require "rake"
 
 class ProductionDetailsTest < ApplicationSystemTestCase
+  test "shows imported production details under their matching acts" do
+    Rails.application.load_tasks unless Rake::Task.task_defined?("production_details:import")
+    Rake::Task["production_details:import"].reenable
+    capture_io { Rake::Task["production_details:import"].invoke }
+
+    visit schedule_entry_path(1)
+    assert_text "Video de Ultreyas y anillo proyecta Bienvenidos"
+    assert_text "Los pasillos permanecen visibles."
+    assert_link "Editar detalles de producción"
+
+    visit schedule_entry_path(14)
+    assert_text "Abraham Moreno / EyA"
+    assert_no_text "Video de Ultreyas y anillo proyecta Bienvenidos"
+
+    visit schedule_entry_path(10)
+    assert_text "1a llamada 1:47 pm"
+    click_link "Editar detalles de producción"
+    assert_field "Ejecuta", with: "EyA y Maestros de Ceremonias"
+    assert_field "Pantalla", with: "Las pantallas proyectan avisos"
+
+    visit schedule_entry_path(31)
+    assert_text "Todavía no hay detalles de producción para esta actividad."
+  end
+
   test "creates reads edits and deletes production details from an activity" do
     visit schedule_entry_path(3)
     assert_text "Todavía no hay detalles de producción para esta actividad."
