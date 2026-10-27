@@ -25,8 +25,12 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_equal "rgb(225, 239, 250)", evaluate_script("getComputedStyle(document.querySelector('tr.schedule__preparation')).backgroundColor")
 
     click_link "Lunes 16"
-    assert_no_selector "tr.schedule__preparation"
+    assert_selector "tbody tr.schedule__preparation", count: 9
     assert_selector "tbody tr.schedule__act", count: 12
+    within("tr[data-preparation-id='18']") do
+      assert_selector "td:nth-child(2)", text: "07:40"
+      assert_link "Ver detalle", href: preparation_path(18)
+    end
   end
 
   test "shares the page layout while preserving schedule and activity styles" do
@@ -60,8 +64,7 @@ class ScheduleTest < ApplicationSystemTestCase
     click_link "Lunes 16"
 
     within("tr", text: "Desmontaje") do
-      assert_selector "td:nth-child(6)", text: "—"
-      assert_no_selector "td:nth-child(6) .commission-links"
+      assert_link "Todas las comisiones", href: root_path(day: "Lunes 16", commission: "Todas las comisiones")
     end
   end
 
@@ -78,9 +81,9 @@ class ScheduleTest < ApplicationSystemTestCase
 
     within("tr", text: "Comida") do
       assert_selector "td:nth-child(1)", text: "27"
-      assert_selector "td:nth-child(2)", text: "14:30"
+      assert_selector "td:nth-child(2)", text: "14:25"
       assert_selector "td:nth-child(3)", text: "15:00"
-      assert_selector "td:nth-child(6)", text: "—"
+      assert_selector "td:nth-child(6)", text: "Programa"
     end
   end
 
@@ -96,8 +99,22 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
     assert_equal "EyA", find("#commission").value
 
-    select "Todas las comisiones", from: "Comisión"
+    select "Sin filtro de comisión", from: "Comisión"
     assert_selector "tbody tr", minimum: 2
+  end
+
+  test "distinguishes the all-commissions responsibility from removing the filter" do
+    visit root_path(day: "Lunes 16")
+
+    select "Todas las comisiones", from: "Comisión"
+    assert_selector "tbody tr.schedule__act", count: 1
+    assert_no_selector "tbody tr.schedule__preparation"
+    assert_selector "tbody tr td:nth-child(5)", text: "Desmontaje"
+
+    select "Sin filtro de comisión", from: "Comisión"
+    assert_selector "tbody tr.schedule__act", count: 12
+    assert_selector "tbody tr.schedule__preparation", count: 9
+    assert_equal "", find("#commission").value
   end
 
   test "filters when clicking a commission in the table" do

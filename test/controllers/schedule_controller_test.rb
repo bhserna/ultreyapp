@@ -33,15 +33,17 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "tbody td", text: "Recepción de Diócesis", count: 0
   end
 
-  test "shows Monday acts when its tab is selected" do
+  test "shows Monday acts and preparations when its tab is selected" do
     get root_url(day: "Lunes 16")
 
     assert_response :success
     assert_select "nav a[aria-current='page']", text: "Lunes 16"
-    assert_select "tbody tr", count: 12
-    assert_select "tbody tr:first-child td:nth-child(1)", text: "17"
-    assert_select "tbody tr:first-child td:nth-child(5)", text: "INICIO / Bienvenida /Animación"
-    assert_select "tbody tr:last-child td:nth-child(1)", text: "28"
+    assert_select "tbody tr.schedule__act", count: 12
+    assert_select "tbody tr.schedule__preparation", count: 9
+    assert_select "tbody tr:first-child[data-preparation-id='18'] td:nth-child(2)", text: "07:40"
+    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "INICIO / Presentación de conductores / Bienvenida"
+    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Desmontaje"
+    assert_select "tbody tr:last-child[data-preparation-id='20'] td:nth-child(2)", text: "21:30"
     assert_select "tbody td", text: "Participación Gpo Folclórico", count: 0
   end
 

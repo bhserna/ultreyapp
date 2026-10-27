@@ -5,10 +5,13 @@ class PreparationTest < ActiveSupport::TestCase
     source = YAML.safe_load_file(Rails.root.join("config/data/preparations.yml"))
     preparations = Preparation.all
 
-    assert_equal 17, preparations.size
-    assert_equal 23, preparations.sum { |preparation| preparation.actions.size }
+    assert_equal (1..26).to_a, preparations.map(&:id)
+    assert_equal 32, preparations.sum { |preparation| preparation.actions.size }
+    by_sheet = source.fetch("preparations").group_by { |preparation| preparation.fetch("source_sheet") }
     assert_equal [19, 26, 32, 37, 43, 45, 51, 56, 62, 66, 69, 73, 78, 82, 86, 90, 94],
-      source.fetch("preparations").map { |preparation| preparation.fetch("source_row") }
+      by_sheet.fetch("1er, día 15 Nov").map { |preparation| preparation.fetch("source_row") }
+    assert_equal [3, 7, 11, 15, 19, 23, 27, 31, 35],
+      by_sheet.fetch("2do. día 16 Nov").map { |preparation| preparation.fetch("source_row") }
     assert preparations.flat_map(&:actions).all? { |action| action.fetch("description").present? }
     assert_not_includes preparations.flat_map(&:actions).map { |action| action.fetch("source_row") }, 38
     assert_empty preparations.first.schedule_entry_ids
@@ -34,6 +37,10 @@ class PreparationTest < ActiveSupport::TestCase
     assert_equal [7, 8, 9, 10], Preparation.find(7).schedule_entry_ids
     assert_equal [16], Preparation.find(13).schedule_entry_ids
     assert_equal [20], Preparation.find(17).schedule_entry_ids
+    assert_equal [20], Preparation.find(18).schedule_entry_ids
+    assert_equal [27], Preparation.find(24).schedule_entry_ids
+    assert_includes Preparation.find(24).title, "Acto 24 / Vivencia 6"
+    assert_equal [29], Preparation.find(26).schedule_entry_ids
     assert_raises(ActiveRecord::RecordNotFound) { Preparation.find(999) }
   end
 
@@ -57,5 +64,12 @@ class PreparationTest < ActiveSupport::TestCase
     assert_equal "19:00", next_day.start_time
     assert_nil next_day.actions.first.fetch("start_time")
     assert_includes next_day.actions.first.fetch("description"), "2 reclinatorios"
+
+    monday = Preparation.find(18)
+    assert_equal "Lunes 16", monday.day
+    assert_equal "07:40", monday.start_time
+    assert_nil monday.actions.first.fetch("start_time")
+    assert_equal "21:30", Preparation.find(20).start_time
+    assert_equal "11:05", Preparation.find(24).start_time
   end
 end

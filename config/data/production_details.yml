@@ -1,12 +1,16 @@
 ---
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
-  sheet_gid: 1593648280
-  description: Primera hoja, hasta el final del bloque Lunes 16. Solo actos numerados
-    con celda amarilla. Filas contadas desde el encabezado en fila 1.
+  sheets:
+  - 1er, día 15 Nov
+  - 2do. día 16 Nov
+  description: 'Dos hojas principales del programa: domingo 15 y lunes 16, hasta Desmontaje.
+    Se excluyen pestañas de trabajo por equipos. Filas contadas desde el encabezado
+    en fila 1.'
 production_details:
 - schedule_entry_id: 1
   activity: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
+  source_sheet: 1er, día 15 Nov
   source_row: 29
   attributes:
     executors: EyA
@@ -22,6 +26,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 2
   activity: Participación Gpo Folclórico
+  source_sheet: 1er, día 15 Nov
   source_row: 30
   attributes:
     executors: EyA / Grupo Folclórico
@@ -41,6 +46,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 3
   activity: 'Presentación: saludos y palabras de autoridades'
+  source_sheet: 1er, día 15 Nov
   source_row: 36
   attributes:
     executors: "Presentación de maestros de ceremonias en el escenario. \nEllos dan
@@ -58,6 +64,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 4
   activity: Presentación del Stmo y Entronización de la Virgen.
+  source_sheet: 1er, día 15 Nov
   source_row: 42
   attributes:
     executors: "Padre Fernando y 4 Acólitos. \nJessed. \nEyA"
@@ -78,6 +85,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 5
   activity: Canto de Colores
+  source_sheet: 1er, día 15 Nov
   source_row: 47
   attributes:
     executors: Coro Arcoiris
@@ -93,6 +101,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 6
   activity: Tema 1 Llamados a ser peregrinos de la esperanza en los ambientes
+  source_sheet: 1er, día 15 Nov
   source_row: 49
   attributes:
     executors: EyA - Monseñor Heriberto Cavazos
@@ -108,6 +117,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 7
   activity: Comida / Bendición de alimentos
+  source_sheet: 1er, día 15 Nov
   source_row: 53
   attributes:
     executors: Arena - Padre Zalpa - EyA
@@ -122,6 +132,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 8
   activity: Fabiola Núñez interpreta tres canciones con pista
+  source_sheet: 1er, día 15 Nov
   source_row: 54
   attributes:
     executors: Fabiola Núñez - EyA
@@ -138,6 +149,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 9
   activity: Lolys Cepeda - Popurrí musical
+  source_sheet: 1er, día 15 Nov
   source_row: 55
   attributes:
     executors: Lolys Cepeda - EyA
@@ -154,6 +166,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 10
   activity: Preparación de escenario para misa / Avisos
+  source_sheet: 1er, día 15 Nov
   source_row: 58
   attributes:
     executors: EyA y Maestros de Ceremonias
@@ -176,6 +189,7 @@ production_details:
   activity: |-
     Misa / Coro Ministerio de Música Jessed
     1. Entrada con el celebrante, concelebrantes, diáconos y ministros.
+  source_sheet: 1er, día 15 Nov
   source_row: 60
   attributes:
     executors: |-
@@ -200,6 +214,7 @@ production_details:
   activity: |-
     Vivencia 1 - Esperanza en la enfermedad
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_row: 64
   attributes:
     executors: Adalia Carolina
@@ -219,6 +234,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 13
   activity: Animación Coro de Cursillos/ Bendicam
+  source_sheet: 1er, día 15 Nov
   source_row: 68
   attributes:
     executors: Coro Arcoiris
@@ -238,6 +254,7 @@ production_details:
   activity: |-
     Vivencia 2 - Perseverancia como dirigente después de muchos años
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_row: 71
   attributes:
     executors: Abraham Moreno
@@ -257,6 +274,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 15
   activity: Video MCC Monterrey
+  source_sheet: 1er, día 15 Nov
   source_row: 76
   attributes:
     executors: EyA
@@ -271,6 +289,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 16
   activity: "Tema 2 - \nPresentación / Tema / Agradecimiento"
+  source_sheet: 1er, día 15 Nov
   source_row: 80
   attributes:
     executors: Jose Humberto Marroquin / EyA
@@ -290,6 +309,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 17
   activity: Animación Coro de Cursillos/ Bendicam
+  source_sheet: 1er, día 15 Nov
   source_row: 84
   attributes:
     executors: Coro Arcoiris
@@ -309,6 +329,7 @@ production_details:
   activity: |-
     Vivencia 3 - Empresario infliyendo en mi abiente
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_row: 88
   attributes:
     executors: Lázaro Tamez Guerra
@@ -328,6 +349,7 @@ production_details:
     pending_confirmations:
 - schedule_entry_id: 19
   activity: TERMINO/Indicaciones
+  source_sheet: 1er, día 15 Nov
   source_row: 92
   attributes:
     executors: EyA
@@ -342,5 +364,225 @@ production_details:
     requirements:
     notes: Programa - Quién proporciona el material para proyectar y el playlist para
       para reporoducir?
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 20
+  activity: INICIO / Presentación de conductores / Bienvenida
+  source_sheet: 2do. día 16 Nov
+  source_row: 5
+  attributes:
+    executors: MC
+    screen: |-
+      -Toma de los maestros de ceremonias
+      -Anillo de colores
+    audio:
+    room_lighting:
+    stage_lighting: "-Iluminación sobre conductores"
+    aisle_lighting:
+    requirements:
+    notes: MC Solo dan avisos necesario
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 21
+  activity: Oraciones de la mañana
+  source_sheet: 2do. día 16 Nov
+  source_row: 6
+  attributes:
+    executors: P. Fernando Torres F.
+    screen: |-
+      - Durante las oraciones de la mañana,Imagen del Divino Maestro.
+      - Posteriormente, presentación del ramillete
+    audio: |-
+      - Micrófonos MC cerrados.
+      - Microfono del P. Fernando abierto.
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 22
+  activity: Rosario
+  source_sheet: 2do. día 16 Nov
+  source_row: 9
+  attributes:
+    executors: Yola y Beba / 5 sacerdotes / Jeseed
+    screen: Proyectar imágenes religiosas referentes a los Misterios del Rosario
+    audio: Micrófono de participantes abierto
+    room_lighting: ilumincación básica por cuestiones de seguridad,
+    stage_lighting: |-
+      - Iluminación hacia la Virgen al centro del escenario.
+      - Enfoque al participante de cada misterio.
+      - Durante la presentación de Jeseed, escenario iluminado.
+    aisle_lighting: ilumincación básica por cuestiones de seguridad,
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 23
+  activity: |-
+    Vivencia 4 - Como me ha ayudado a vivir mi cursillo de jóven
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
+  source_row: 13
+  attributes:
+    executors: Daniela Serna
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Daniela abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable sobre el expositor.
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
+    requirements:
+    notes: Al concluir el acto se entrega el reconocimiento por parte de Nelly y fotografía
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 24
+  activity: "Tema 3 - \nPresentación / Tema / Agradecimiento"
+  source_sheet: 2do. día 16 Nov
+  source_row: 17
+  attributes:
+    executors: Pbro. Jose Juan Montalvo / EyA
+    screen: "-La presentación con información para apoyar el desarrollo del tema."
+    audio: Solo el microfono del participante (Pbro. Jose Juan Montalvo) estará activo  Conductores
+      y micrófonos no usados cerrados.
+    room_lighting: Sin iluminación
+    stage_lighting: Iluminación dirigida al participante durante su intervención y
+      a todo el escenario durante el agradecimiento
+    aisle_lighting: Necesaria por seguridad
+    requirements:
+    notes: Conductor pide a Pbro. Martin Castro a que pase a entregar el reconocimiento
+      a Expositor y toma de fotografía.
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 25
+  activity: Animación Salvador Amor / Bendicam
+  source_sheet: 2do. día 16 Nov
+  source_row: 21
+  attributes:
+    executors: Salvador Amor - Coro de Cursillos
+    screen: |-
+      - Letra de canciones pantalla principal
+      - Bendicam en la pantalla 360
+      - Anillo De colores
+    audio: Microfonía del coro activa
+    room_lighting: Suficiente para leer
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    notes: "- Inicia con pista de Salvador Amor (6 Min) y concluye el Coro de Cursillos."
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 26
+  activity: |-
+    Vivencia 5 - Vocación al sacerdocio despupués de vivir el cursillo
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
+  source_row: 25
+  attributes:
+    executors: Pbro. Hector Leal Cárdenas
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Pbro Héctor abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable cobre el expositor
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
+    requirements:
+    notes: Al concluir el acto se entrega el reconocimiento por parte de Javier Ayala
+      y fotografía
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 27
+  activity: |-
+    Vivencia 6, Sacerdocio vivido a la luz del carisma de cursillos
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
+  source_row: 29
+  attributes:
+    executors: Pbro. Fernando Torres Fuentes
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Pbro Fernando abierto
+      - Micrófonos maestros de ceremonias abiertos al momento de la entrega de reconocimientos
+    room_lighting: Iluminación tenue
+    stage_lighting: |-
+      Iluminación frontal estable cobre el expositor
+      Para la entrega del reconocimiento y la fotografía luz de entrega y trancisión a escena neutral.
+    aisle_lighting:
+    requirements:
+    notes: Al concluir el acto se entrega el reconocimiento por parte de Néstor Velasquez
+      y fotografía
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 28
+  activity: Palabras de Presidente Mundial / Agradecimientos Finales
+  source_sheet: 2do. día 16 Nov
+  source_row: 33
+  attributes:
+    executors: Presidente Mundial / Adbel Martinez
+    screen: Camaras tomas amplias, sin primeros planos invasivos
+    audio: |-
+      - Micrófono Presidente Mundial / Adbel Martinez abierto
+      - Micrófonos maestros de ceremonias abiertos para dar indicaciones finales.
+    room_lighting: Iluminación tenue
+    stage_lighting: Iluminación sobre el participante
+    aisle_lighting:
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 29
+  activity: Misa / Coro de Cursillos
+  source_sheet: 2do. día 16 Nov
+  source_row: 37
+  attributes:
+    executors: Liturgia, Pbro Celebrante y de más sacerdotes, Coro de Cursillos
+    screen: |-
+      - Pantallas 360 siguen la celebración
+      - Anillo apagado
+      - Pantalla proyecta altar - vitrales
+    audio: Configuración para misa y coro de cursillos
+    room_lighting: Luz que permita la salida e ingreso de los asistentes.
+    stage_lighting: Iluminación tenue
+    aisle_lighting: Enfocada en la celebración
+    requirements: Iluminación necesaria durante comunión y ofrendas.
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 30
+  activity: Entrega de Comida y Salida
+  source_sheet: 2do. día 16 Nov
+  source_row: 39
+  attributes:
+    executors: EyA
+    screen: Pantallas proyectan mensaje de despedida o logo Ultreya
+    audio: Musica ambiental
+    room_lighting: Luz que permita la salida de los asistentes.
+    stage_lighting: Iluminación para desmontar
+    aisle_lighting: Luz que permita la salida de los asistentes.
+    requirements:
+    notes:
+    radios:
+    pending_confirmations:
+- schedule_entry_id: 31
+  activity: Desmontaje
+  source_sheet: 2do. día 16 Nov
+  source_row: 40
+  attributes:
+    executors: Todas las comisiones
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    notes:
     radios:
     pending_confirmations:

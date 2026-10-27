@@ -34,8 +34,12 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal "16:50", rows.find { |row| row.is_a?(Preparation) && row.id == 12 }.start_time
 
     monday = Schedule.new(day: "Lunes 16", commission: nil)
-    assert_equal (20..31).to_a, monday.rows.map(&:id)
-    assert monday.rows.all? { |row| row.is_a?(ScheduleEntry) }
+    assert_equal (20..31).to_a, monday.rows.grep(ScheduleEntry).map(&:id)
+    assert_equal 9, monday.rows.grep(Preparation).size
+    assert_equal "07:40", monday.rows.first.start_time
+    assert_equal 18, monday.rows.first.id
+    assert_equal "21:30", monday.rows.last.start_time
+    assert_equal 20, monday.rows.last.id
   end
 
   test "filters preparations by their own commission and day" do

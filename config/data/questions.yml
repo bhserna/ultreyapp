@@ -1,12 +1,16 @@
 ---
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
-  sheet_gid: 1593648280
-  description: Primera hoja, hasta el final del bloque Lunes 16. Solo actos numerados
-    con celda amarilla. Filas contadas desde el encabezado en fila 1.
+  sheets:
+  - 1er, día 15 Nov
+  - 2do. día 16 Nov
+  description: 'Dos hojas principales del programa: domingo 15 y lunes 16, hasta Desmontaje.
+    Se excluyen pestañas de trabajo por equipos. Filas contadas desde el encabezado
+    en fila 1.'
 schedule_entries:
 - id: 1
   act: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 29
   questions:
@@ -16,22 +20,26 @@ schedule_entries:
   - question: "¿La cruz permanece apagada o encendida? (Programa)"
 - id: 2
   act: Participación Gpo Folclórico
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 30
   questions: []
 - id: 3
   act: 'Presentación: saludos y palabras de autoridades'
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 36
   questions:
   - question: "¿Cuál es la lista definitiva y el orden de las nueve autoridades? (Programa)"
 - id: 4
   act: Presentación del Stmo y Entronización de la Virgen.
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 42
   questions: []
 - id: 5
   act: Canto de Colores
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 47
   questions:
@@ -41,12 +49,14 @@ schedule_entries:
   - question: "¿Quién es el proveedor del cañón de serpentinas? (Programa)"
 - id: 6
   act: Tema 1 Llamados a ser peregrinos de la esperanza en los ambientes
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 49
   questions:
   - question: "¿Quién proporciona la presentación de apoyo al tema? (Programa)"
 - id: 7
   act: Comida / Bendición de alimentos
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 53
   questions:
@@ -54,16 +64,19 @@ schedule_entries:
       (Programa)"
 - id: 8
   act: Fabiola Núñez interpreta tres canciones con pista
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 54
   questions: []
 - id: 9
   act: Lolys Cepeda - Popurrí musical
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 55
   questions: []
 - id: 10
   act: Preparación de escenario para misa / Avisos
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 58
   questions:
@@ -74,6 +87,7 @@ schedule_entries:
   act: |-
     Misa / Coro Ministerio de Música Jessed
     1. Entrada con el celebrante, concelebrantes, diáconos y ministros.
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 60
   questions: []
@@ -81,6 +95,7 @@ schedule_entries:
   act: |-
     Vivencia 1 - Esperanza en la enfermedad
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 64
   questions:
@@ -88,6 +103,7 @@ schedule_entries:
       de la vivencia? (Programa)"
 - id: 13
   act: Animación Coro de Cursillos/ Bendicam
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 68
   questions:
@@ -99,6 +115,7 @@ schedule_entries:
   act: |-
     Vivencia 2 - Perseverancia como dirigente después de muchos años
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 71
   questions:
@@ -106,12 +123,14 @@ schedule_entries:
       de la vivencia? (Programa)"
 - id: 15
   act: Video MCC Monterrey
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 76
   questions:
   - question: "¿Quién proporciona el video? (Programa)"
 - id: 16
   act: "Tema 2 - \nPresentación / Tema / Agradecimiento"
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 80
   questions:
@@ -121,6 +140,7 @@ schedule_entries:
       2? (Programa)"
 - id: 17
   act: Animación Coro de Cursillos/ Bendicam
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 84
   questions:
@@ -132,76 +152,116 @@ schedule_entries:
   act: |-
     Vivencia 3 - Empresario infliyendo en mi abiente
     Presentación / Vivencia / Agradecimiento
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 88
   questions:
   - question: "¿Quién proporciona la presentación de apoyo al tema? (Programa)"
 - id: 19
   act: TERMINO/Indicaciones
+  source_sheet: 1er, día 15 Nov
   source_rows:
   - 92
   questions:
   - question: "¿Quién proporciona el material para proyectar? (Programa)"
   - question: "¿Quién proporciona el playlist para reproducir? (Programa)"
 - id: 20
-  act: INICIO / Bienvenida /Animación
+  act: INICIO / Presentación de conductores / Bienvenida
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 100
+  - 5
   questions: []
 - id: 21
   act: Oraciones de la mañana
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 101
-  questions: []
+  - 6
+  questions:
+  - question: "¿Quién proporciona la imagen del Divino Maestro y la diapositiva del
+      ramillete? (Liturgia)"
 - id: 22
   act: Rosario
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 102
-  questions: []
+  - 9
+  questions:
+  - question: "¿Yola y Beba proporcionan las imágenes que se proyectarán en cada misterio?
+      (Liturgia)"
 - id: 23
-  act: Vivencia 4/Agradecimiento
+  act: |-
+    Vivencia 4 - Como me ha ayudado a vivir mi cursillo de jóven
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 103
-  questions: []
+  - 13
+  questions:
+  - question: "¿Quién proporciona la presentación con el nombre del expositor y título
+      de la vivencia? (Programa)"
 - id: 24
-  act: Tema 3 /Agradecimiento
+  act: "Tema 3 - \nPresentación / Tema / Agradecimiento"
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 104
-  questions: []
+  - 17
+  questions:
+  - question: "¿Quién proporciona la presentación y currículum para apoyo del Tema
+      3? (Programa)"
 - id: 25
-  act: Animación
+  act: Animación Salvador Amor / Bendicam
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 105
-  questions: []
+  - 21
+  questions:
+  - question: "¿Quién proporciona la pista de Salvador Amor? (Programa)"
+  - question: "¿Quién proporciona la presentación con la letra de los cantos para
+      su proyección? (Programa)"
+  - question: "¿Hay necesidad de proyectar la letra de los cantos o solo se proyecta
+      la Bendicam en las pantallas? (Programa)"
 - id: 26
-  act: Vivencia 5/Agradecimiento
+  act: |-
+    Vivencia 5 - Vocación al sacerdocio despupués de vivir el cursillo
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 106
-  questions: []
+  - 25
+  questions:
+  - question: "¿Quién proporciona la presentación con el nombre del expositor y título
+      de la vivencia? (Programa)"
 - id: 27
-  act: Vivencia 6/Agradecimiento
+  act: |-
+    Vivencia 6, Sacerdocio vivido a la luz del carisma de cursillos
+    Presentación / Vivencia / Agradecimiento
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 107
-  questions: []
+  - 29
+  questions:
+  - question: "¿Quién proporciona la presentación con el nombre del expositor y título
+      de la vivencia? (Programa)"
 - id: 28
-  act: Agradecimientos Finales
+  act: Palabras de Presidente Mundial / Agradecimientos Finales
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 108
+  - 33
   questions: []
 - id: 29
-  act: Misa / Coro Cursillos
+  act: Misa / Coro de Cursillos
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 109
-  questions: []
+  - 37
+  questions:
+  - question: "¿Cuál es el nombre del presbítero celebrante? (Programa)"
 - id: 30
-  act: Comida
+  act: Entrega de Comida y Salida
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 110
-  questions: []
+  - 39
+  questions:
+  - question: "¿Qué imagen se proyectará para la despedida? (Programa)"
+  - question: "¿Qué playlist se reproducirá para la despedida? (Programa)"
 - id: 31
   act: Desmontaje
+  source_sheet: 2do. día 16 Nov
   source_rows:
-  - 111
+  - 40
   questions: []
 cross_cutting_questions: []
 general_questions: []

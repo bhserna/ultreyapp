@@ -27,8 +27,14 @@ class ProductionDetailsTest < ApplicationSystemTestCase
     assert_field "Ejecuta", with: "EyA y Maestros de Ceremonias"
     assert_field "Pantalla", with: "Las pantallas proyectan avisos"
 
+    visit schedule_entry_path(23)
+    assert_text "Daniela Serna"
+    assert_text "¿Quién proporciona la presentación con el nombre del expositor y título de la vivencia? (Programa)"
+    assert_text "Al concluir el acto se entrega el reconocimiento por parte de Nelly y fotografía"
+    assert_no_text "Abraham Moreno"
+
     visit schedule_entry_path(31)
-    assert_text "Todavía no hay detalles de producción para esta actividad."
+    within("section[aria-labelledby='production-detail-heading']") { assert_text "Todas las comisiones" }
   end
 
   test "creates reads edits and deletes production details from an activity" do

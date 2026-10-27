@@ -8,6 +8,7 @@
   activity: INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 29
 - id: 2
   act_number: 2
@@ -18,6 +19,7 @@
   activity: Participación Gpo Folclórico
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 30
 - id: 3
   act_number: 3
@@ -28,6 +30,7 @@
   activity: 'Presentación: saludos y palabras de autoridades'
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 36
 - id: 4
   act_number: 4
@@ -38,6 +41,7 @@
   activity: Presentación del Stmo y Entronización de la Virgen.
   commissions:
   - Liturgia
+  source_sheet: 1er, día 15 Nov
   source_row: 42
 - id: 5
   act_number: 5
@@ -48,6 +52,7 @@
   activity: Canto de Colores
   commissions:
   - EyA
+  source_sheet: 1er, día 15 Nov
   source_row: 47
 - id: 6
   act_number: 6
@@ -58,6 +63,7 @@
   activity: Tema 1 Llamados a ser peregrinos de la esperanza en los ambientes
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 49
 - id: 7
   act_number: '7.1'
@@ -68,6 +74,7 @@
   activity: Comida / Bendición de alimentos
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 53
 - id: 8
   act_number: '7.2'
@@ -78,6 +85,7 @@
   activity: Fabiola Núñez interpreta tres canciones con pista
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 54
 - id: 9
   act_number: '7.3'
@@ -88,6 +96,7 @@
   activity: Lolys Cepeda - Popurrí musical
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 55
 - id: 10
   act_number: '7.4'
@@ -98,6 +107,7 @@
   activity: Preparación de escenario para misa / Avisos
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 58
 - id: 11
   act_number: 8
@@ -110,6 +120,7 @@
     1. Entrada con el celebrante, concelebrantes, diáconos y ministros.
   commissions:
   - Liturgia
+  source_sheet: 1er, día 15 Nov
   source_row: 60
 - id: 12
   act_number: 9
@@ -122,6 +133,7 @@
     Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 64
 - id: 13
   act_number: 10
@@ -132,6 +144,7 @@
   activity: Animación Coro de Cursillos/ Bendicam
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 68
 - id: 14
   act_number: 11
@@ -144,6 +157,7 @@
     Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 71
 - id: 15
   act_number: 12
@@ -154,6 +168,7 @@
   activity: Video MCC Monterrey
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 76
 - id: 16
   act_number: 13
@@ -164,6 +179,7 @@
   activity: "Tema 2 - \nPresentación / Tema / Agradecimiento"
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 80
 - id: 17
   act_number: 14
@@ -174,6 +190,7 @@
   activity: Animación Coro de Cursillos/ Bendicam
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 84
 - id: 18
   act_number: 15
@@ -186,6 +203,7 @@
     Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 88
 - id: 19
   act_number: 16
@@ -196,17 +214,19 @@
   activity: TERMINO/Indicaciones
   commissions:
   - Programa
+  source_sheet: 1er, día 15 Nov
   source_row: 92
 - id: 20
   act_number: 17
   day: Lunes 16
-  start_time: '08:00'
-  end_time: '08:30'
-  duration: '0:30'
-  activity: INICIO / Bienvenida /Animación
+  start_time: '08:30'
+  end_time: '08:35'
+  duration: '0:05'
+  activity: INICIO / Presentación de conductores / Bienvenida
   commissions:
   - Programa
-  source_row: 100
+  source_sheet: 2do. día 16 Nov
+  source_row: 5
 - id: 21
   act_number: 18
   day: Lunes 16
@@ -216,7 +236,8 @@
   activity: Oraciones de la mañana
   commissions:
   - Liturgia
-  source_row: 101
+  source_sheet: 2do. día 16 Nov
+  source_row: 6
 - id: 22
   act_number: 19
   day: Lunes 16
@@ -226,86 +247,102 @@
   activity: Rosario
   commissions:
   - Liturgia
-  source_row: 102
+  source_sheet: 2do. día 16 Nov
+  source_row: 9
 - id: 23
   act_number: 20
   day: Lunes 16
-  start_time: '09:45'
-  end_time: '10:10'
-  duration: '0:25'
-  activity: Vivencia 4/Agradecimiento
+  start_time: '09:50'
+  end_time: '10:15'
+  duration: 25 min
+  activity: |-
+    Vivencia 4 - Como me ha ayudado a vivir mi cursillo de jóven
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 103
+  source_sheet: 2do. día 16 Nov
+  source_row: 13
 - id: 24
   act_number: 21
   day: Lunes 16
-  start_time: '10:10'
-  end_time: '10:55'
-  duration: '0:45'
-  activity: Tema 3 /Agradecimiento
+  start_time: '10:15'
+  end_time: '11:00'
+  duration:
+  activity: "Tema 3 - \nPresentación / Tema / Agradecimiento"
   commissions:
   - Programa
-  source_row: 104
+  source_sheet: 2do. día 16 Nov
+  source_row: 17
 - id: 25
   act_number: 22
   day: Lunes 16
-  start_time: '10:55'
+  start_time: '11:00'
   end_time: '11:25'
-  duration: '0:30'
-  activity: Animación
+  duration: '0:25'
+  activity: Animación Salvador Amor / Bendicam
   commissions:
   - Programa
-  source_row: 105
+  source_sheet: 2do. día 16 Nov
+  source_row: 21
 - id: 26
   act_number: 23
   day: Lunes 16
   start_time: '11:25'
   end_time: '11:50'
-  duration: '0:25'
-  activity: Vivencia 5/Agradecimiento
+  duration: 25 min
+  activity: |-
+    Vivencia 5 - Vocación al sacerdocio despupués de vivir el cursillo
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 106
+  source_sheet: 2do. día 16 Nov
+  source_row: 25
 - id: 27
   act_number: 24
   day: Lunes 16
   start_time: '11:50'
-  end_time: '12:25'
-  duration: '0:35'
-  activity: Vivencia 6/Agradecimiento
+  end_time: '12:27'
+  duration: 37 min
+  activity: |-
+    Vivencia 6, Sacerdocio vivido a la luz del carisma de cursillos
+    Presentación / Vivencia / Agradecimiento
   commissions:
   - Programa
-  source_row: 107
+  source_sheet: 2do. día 16 Nov
+  source_row: 29
 - id: 28
   act_number: 25
   day: Lunes 16
-  start_time: '12:25'
+  start_time: '12:27'
   end_time: '13:00'
-  duration: '0:35'
-  activity: Agradecimientos Finales
+  duration: 33 min
+  activity: Palabras de Presidente Mundial / Agradecimientos Finales
   commissions:
   - Programa
-  source_row: 108
+  source_sheet: 2do. día 16 Nov
+  source_row: 33
 - id: 29
   act_number: 26
   day: Lunes 16
   start_time: '13:00'
-  end_time: '14:30'
-  duration: '1:30'
-  activity: Misa / Coro Cursillos
+  end_time: '14:25'
+  duration: '1:25'
+  activity: Misa / Coro de Cursillos
   commissions:
-  - Liturgia
-  source_row: 109
+  - Programa
+  source_sheet: 2do. día 16 Nov
+  source_row: 37
 - id: 30
   act_number: 27
   day: Lunes 16
-  start_time: '14:30'
+  start_time: '14:25'
   end_time: '15:00'
-  duration: '0:30'
-  activity: Comida
-  commissions: []
-  source_row: 110
+  duration: 35 min
+  activity: Entrega de Comida y Salida
+  commissions:
+  - Programa
+  source_sheet: 2do. día 16 Nov
+  source_row: 39
 - id: 31
   act_number: 28
   day: Lunes 16
@@ -313,5 +350,7 @@
   end_time: '18:00'
   duration: '3:00'
   activity: Desmontaje
-  commissions: []
-  source_row: 111
+  commissions:
+  - Todas las comisiones
+  source_sheet: 2do. día 16 Nov
+  source_row: 40

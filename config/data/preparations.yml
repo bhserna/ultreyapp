@@ -1,13 +1,19 @@
 ---
 source:
   url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
-  sheet_gid: 1593648280
-  description: Encabezados azul fuerte y acciones celestes hasta el final de Lunes
-    16. Se excluyen conclusiones naranjas y la fila 38 sin descripción.
-  notes: Se conserva source_title. Tema 2 se vincula al acto 13 aunque el encabezado
-    dice 11; el bloque del acto 17 se titula lunes 16 aunque la fuente dice domingo
-    16. El inicio de cada preparación usa el inicio de su primera acción cuando existe;
-    de lo contrario conserva la hora del encabezado. Los horarios de las acciones se conservan.
+  sheets:
+  - 1er, día 15 Nov
+  - 2do. día 16 Nov
+  description: 'Dos hojas principales del programa: domingo 15 y lunes 16, hasta Desmontaje.
+    Se excluyen pestañas de trabajo por equipos. Filas contadas desde el encabezado
+    en fila 1.'
+  notes: Se usan encabezados azul fuerte y acciones celestes; se excluyen filas sin
+    descripción y conclusiones naranjas. source_title conserva el original. Tema 2
+    corresponde al acto 13 aunque dice 11; Vivencia 6 corresponde al 24 aunque dice
+    23. La preparación del domingo para el acto 17 corresponde al lunes 16. El inicio
+    usa la primera acción y, si falta, el encabezado. Se conservan inconsistencias
+    de origen, incluida la acción del lunes para Vivencia 4 a las 21:30 y el participante
+    de Tema 3 copiado de Tema 2.
 preparations:
 - id: 1
   title: Actividades en la Arena previo a que llegue el desfile
@@ -15,6 +21,7 @@ preparations:
   day: Domingo 15
   start_time: Por definir con Programa
   schedule_entry_ids: []
+  source_sheet: 1er, día 15 Nov
   source_row: 19
   actions:
   - source_row: 20
@@ -89,6 +96,7 @@ preparations:
   schedule_entry_ids:
   - 1
   - 2
+  source_sheet: 1er, día 15 Nov
   source_row: 26
   actions:
   - source_row: 27
@@ -150,6 +158,7 @@ preparations:
   start_time: '10:00'
   schedule_entry_ids:
   - 3
+  source_sheet: 1er, día 15 Nov
   source_row: 32
   actions:
   - source_row: 33
@@ -222,6 +231,7 @@ preparations:
   start_time: '10:20'
   schedule_entry_ids:
   - 4
+  source_sheet: 1er, día 15 Nov
   source_row: 37
   actions:
   - source_row: 39
@@ -277,6 +287,7 @@ preparations:
   start_time: '11:30'
   schedule_entry_ids:
   - 5
+  source_sheet: 1er, día 15 Nov
   source_row: 43
   actions:
   - source_row: 44
@@ -313,6 +324,7 @@ preparations:
   start_time: '11:40'
   schedule_entry_ids:
   - 6
+  source_sheet: 1er, día 15 Nov
   source_row: 45
   actions:
   - source_row: 46
@@ -351,6 +363,7 @@ preparations:
   - 8
   - 9
   - 10
+  source_sheet: 1er, día 15 Nov
   source_row: 51
   actions:
   - source_row: 52
@@ -383,6 +396,7 @@ preparations:
   start_time: '13:00'
   schedule_entry_ids:
   - 11
+  source_sheet: 1er, día 15 Nov
   source_row: 56
   actions:
   - source_row: 57
@@ -419,6 +433,7 @@ preparations:
   start_time: '15:35'
   schedule_entry_ids:
   - 12
+  source_sheet: 1er, día 15 Nov
   source_row: 62
   actions:
   - source_row: 63
@@ -451,6 +466,7 @@ preparations:
   start_time: '16:00'
   schedule_entry_ids:
   - 13
+  source_sheet: 1er, día 15 Nov
   source_row: 66
   actions:
   - source_row: 67
@@ -482,6 +498,7 @@ preparations:
   start_time: '16:20'
   schedule_entry_ids:
   - 14
+  source_sheet: 1er, día 15 Nov
   source_row: 69
   actions:
   - source_row: 70
@@ -513,6 +530,7 @@ preparations:
   start_time: '16:50'
   schedule_entry_ids:
   - 15
+  source_sheet: 1er, día 15 Nov
   source_row: 73
   actions:
   - source_row: 74
@@ -541,6 +559,7 @@ preparations:
   start_time: '16:55'
   schedule_entry_ids:
   - 16
+  source_sheet: 1er, día 15 Nov
   source_row: 78
   actions:
   - source_row: 79
@@ -575,6 +594,7 @@ preparations:
   start_time: '17:40'
   schedule_entry_ids:
   - 17
+  source_sheet: 1er, día 15 Nov
   source_row: 82
   actions:
   - source_row: 83
@@ -608,6 +628,7 @@ preparations:
   start_time: '18:00'
   schedule_entry_ids:
   - 18
+  source_sheet: 1er, día 15 Nov
   source_row: 86
   actions:
   - source_row: 87
@@ -639,6 +660,7 @@ preparations:
   start_time: '18:25'
   schedule_entry_ids:
   - 19
+  source_sheet: 1er, día 15 Nov
   source_row: 90
   actions:
   - source_row: 91
@@ -671,6 +693,7 @@ preparations:
   start_time: '19:00'
   schedule_entry_ids:
   - 20
+  source_sheet: 1er, día 15 Nov
   source_row: 94
   actions:
   - source_row: 95
@@ -682,6 +705,303 @@ preparations:
     commission:
     executors:
     screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 18
+  title: Preparación  del Acto 17 / INICIO / Bienvenida
+  source_title: 7:40 a.m. Preparación  del Acto 17 / INICIO / Bienvenida
+  day: Lunes 16
+  start_time: '07:40'
+  schedule_entry_ids:
+  - 20
+  source_sheet: 2do. día 16 Nov
+  source_row: 3
+  actions:
+  - source_row: 4
+    start_time:
+    end_time:
+    duration:
+    description: "Tener listo:\n- Maestros de Ceremonias \n- Padre Fernando (oraciones
+      de la mañana)\n- Ramillete espiritual (presentación)"
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 19
+  title: Preparación  del Acto 19 / Rosario
+  source_title: 8:30 a.m. Preparación  del Acto 19 / Rosario
+  day: Lunes 16
+  start_time: '08:30'
+  schedule_entry_ids:
+  - 22
+  source_sheet: 2do. día 16 Nov
+  source_row: 7
+  actions:
+  - source_row: 8
+    start_time: '08:30'
+    end_time:
+    duration:
+    description: |-
+      - Tener listas las personas que participan en el rosario
+      -  Coro Jeseed
+      (ya quedo listo el reclinatorio un día antes)
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 20
+  title: Preparación para el Acto 20 / Vivencia 4/ Agradecimiento
+  source_title: 9:30 a.m. Preparación para el Acto 20 / Vivencia 4/ Agradecimiento
+  day: Lunes 16
+  start_time: '21:30'
+  schedule_entry_ids:
+  - 23
+  source_sheet: 2do. día 16 Nov
+  source_row: 11
+  actions:
+  - source_row: 12
+    start_time: '21:30'
+    end_time:
+    duration:
+    description: |-
+      - Tener listo al expositor (Daniela Serna) colocar micrófono manos libres.
+      - Prevenir a Nelly (Vicepresidenta de Cursillos) y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 21
+  title: Preparación para el Acto 21 / Tema 3/ Agradecimiento
+  source_title: 9:50 a.m. Preparación para el Acto 21 / Tema 3/ Agradecimiento
+  day: Lunes 16
+  start_time: '09:55'
+  schedule_entry_ids:
+  - 24
+  source_sheet: 2do. día 16 Nov
+  source_row: 15
+  actions:
+  - source_row: 16
+    start_time: '09:55'
+    end_time: '10:15'
+    duration:
+    description: |-
+      - Mantener prevenido a José Humberto Marroquín
+      - Tener listo el material de apoyo para la participación
+      - Preparar microfono del participante
+      - Mantener prevenido al padre Fernando Torres para la entrega del reconocimiento
+      - Mantener prevenido al fotógrafo
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 22
+  title: Preparación para el Acto 22 / Intercambio y Animación - Salvador Amor y Bendicam
+  source_title: 10:40 a.m. Preparación para el Acto 22 / Intercambio y Animación -
+    Salvador Amor y Bendicam
+  day: Lunes 16
+  start_time: '10:40'
+  schedule_entry_ids:
+  - 25
+  source_sheet: 2do. día 16 Nov
+  source_row: 19
+  actions:
+  - source_row: 20
+    start_time: '10:40'
+    end_time:
+    duration:
+    description: |-
+      - Tener prevenido al coro de cursillos y equipo de animación junto con sus elementos.
+      - Tener prevenido a Salvador Amor.
+      - Prevenir a Maestros de Ceremonias con indicaciones del Intercambio
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: |-
+      Tener listo audio de coro.
+      Tener listo equipo de animación junto con los elementos.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 23
+  title: Preparación para el Acto 23 / Vivencia 5, Vocación al sacerdocio después
+    de vivir el cursillo / Agradecimiento
+  source_title: 11:05 a.m. Preparación para el Acto 23 / Vivencia 5, Vocación al sacerdocio
+    después de vivir el cursillo / Agradecimiento
+  day: Lunes 16
+  start_time: '11:05'
+  schedule_entry_ids:
+  - 26
+  source_sheet: 2do. día 16 Nov
+  source_row: 23
+  actions:
+  - source_row: 24
+    start_time: '11:05'
+    end_time: '11:25'
+    duration:
+    description: |-
+      - Tener listo al expositor (Pbro. Hector Leal Cárdenas) colocar micrófono manos libres.
+      - Prevenir a Javier Ayala y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 24
+  title: Preparación para el Acto 24 / Vivencia 6, Sacerdocio vivido a la luz del
+    carisma de cursillos / Agradecimiento
+  source_title: 11:30 a.m. Preparación para el Acto 23 / Vivencia 6, Sacerdocio vivido
+    a la luz del carisma de cursillos / Agradecimiento
+  day: Lunes 16
+  start_time: '11:05'
+  schedule_entry_ids:
+  - 27
+  source_sheet: 2do. día 16 Nov
+  source_row: 27
+  actions:
+  - source_row: 28
+    start_time: '11:05'
+    end_time: '11:25'
+    duration:
+    description: |-
+      - Tener listo al expositor (Pbro. Fernando Torres) colocar micrófono manos libres.
+      - Prevenir a Néstor Velasquez y al fotógrafo para la entrega del reconocimiento.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 25
+  title: Preparación para el Acto 25 / Palabras del Presidente Mundial
+  source_title: 12:07 p.m. Preparación para el Acto 25 / Palabras del Presidente Mundial
+  day: Lunes 16
+  start_time: '12:07'
+  schedule_entry_ids:
+  - 28
+  source_sheet: 2do. día 16 Nov
+  source_row: 31
+  actions:
+  - source_row: 32
+    start_time: '12:07'
+    end_time: '12:27'
+    duration:
+    description: |-
+      - Tener listo al expositor (Presidente Mundial) colocar micrófono manos libres.
+      - Prevenir a Adbel Martinez Coordinador de la Ultreya.
+      - Preparar el archivo con el nombre del exposotor y nombre del tema de la vivencia
+    commission:
+    executors:
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Tener listo miocrófono.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 26
+  title: Preparación para el Acto 26 / Misa - Coro de Cursillos
+  source_title: '12:40: p.m. Preparación para el Acto 26 / Misa - Coro de Cursillos'
+  day: Lunes 16
+  start_time: '12:40'
+  schedule_entry_ids:
+  - 29
+  source_sheet: 2do. día 16 Nov
+  source_row: 35
+  actions:
+  - source_row: 36
+    start_time: '12:40'
+    end_time: '13:00'
+    duration:
+    description: |-
+      1. Confirmar con el equipo de Liturgia el montaje del altar.
+      2. Liturgia prepara lo relacionado a Sacristía - Arlet (Altar, ambón y elementos necesarios).
+      3. Confirmar logística de Comunión y colecta. (Magda Villarreal responsable de logóstica de colecta).
+    commission: Liturgia
+    executors: Hilda, Tere, Arlet y EyA
+    screen: |-
+      1. Las cámaras procurarán mantener la atención en los maestros de ceremonias  y en el público para que el montaje se realice con la menor distracción posible.
+      2. Las pantallas comienzan a mostrar de manera discreta la hora de la Eucaristía
     audio:
     room_lighting:
     stage_lighting:

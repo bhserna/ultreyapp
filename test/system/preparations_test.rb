@@ -68,6 +68,30 @@ class PreparationsTest < ApplicationSystemTestCase
     assert_text "Detalles de producción"
   end
 
+  test "opens Monday preparations with their action details and corrected act links" do
+    visit root_path(day: "Lunes 16")
+    within("tr[data-preparation-id='24']") { click_link "Ver detalle" }
+
+    assert_current_path preparation_path(24)
+    assert_selector "h1", text: "Acto 24 / Vivencia 6"
+    assert_selector ".page__eyebrow", text: "LUNES 16"
+    assert_text "11:05"
+    assert_text "Tener listo al expositor (Pbro. Fernando Torres)"
+    assert_text "Néstor Velasquez"
+    assert_link href: schedule_entry_path(27)
+    assert_no_link href: schedule_entry_path(26)
+
+    click_link "← Volver al programa"
+    assert_current_path root_path(day: "Lunes 16")
+    within("tr[data-preparation-id='26']") { click_link "Ver detalle" }
+
+    assert_text "12:40"
+    assert_text "Liturgia prepara lo relacionado a Sacristía"
+    assert_text "Las pantallas comienzan a mostrar de manera discreta la hora de la Eucaristía"
+    assert_link href: schedule_entry_path(29)
+    assert_no_text "Acción 1"
+  end
+
   test "shows independent preparations and links corrected act references" do
     visit preparation_path(1)
     assert_selector "h1", text: "Actividades en la Arena previo a que llegue el desfile"

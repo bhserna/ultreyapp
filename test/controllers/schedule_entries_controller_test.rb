@@ -15,12 +15,11 @@ class ScheduleEntriesControllerTest < ActionDispatch::IntegrationTest
     assert_select ".page__details a[href=?]", root_path(day: "Lunes 16", commission: "Liturgia"), text: "Liturgia"
   end
 
-  test "shows a placeholder when the act has no commission" do
+  test "links teardown to all commissions as specified by the source" do
     get schedule_entry_url(31)
 
     assert_response :success
     assert_select ".page__details dt", text: "Comisiones"
-    assert_select ".page__details dd", text: "—"
-    assert_select ".page__details .commission-links", count: 0
+    assert_select ".page__details a[href=?]", root_path(day: "Lunes 16", commission: "Todas las comisiones"), text: "Todas las comisiones"
   end
 end

@@ -19,7 +19,7 @@
       <%= hidden_field_tag :day, @schedule.selected_day %>
       <%= label_tag :commission, "Comisión", class: "visually-hidden" %>
       <%= select_tag :commission,
-            options_for_select([["Todas las comisiones", ""]] + @schedule.commissions.map { |commission| [commission, commission] }, @schedule.selected_commission),
+            options_for_select([["Sin filtro de comisión", ""]] + @schedule.commissions.map { |commission| [commission, commission] }, @schedule.selected_commission),
             data: { action: "change->schedule-filter#submit" } %>
       <%= submit_tag "Filtrar", data: { schedule_filter_target: "submit" } %>
     <% end %>
