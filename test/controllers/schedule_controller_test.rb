@@ -3,7 +3,8 @@ require_relative "../support/response_html_assertions"
 
 class ScheduleControllerTest < ActionDispatch::IntegrationTest
   include ResponseHtmlAssertions
-  test "shows Sunday acts and preparations ordered by start time" do
+
+  test "shows Sunday table columns and activity details" do
     get root_url
 
     assert_response :success
@@ -44,11 +45,94 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav a[aria-current='page']", text: "Lunes 16"
     assert_select "tbody tr.schedule__act", count: 12
     assert_select "tbody tr.schedule__preparation", count: 9
-    assert_select "tbody[data-phase='program'] tr[data-preparation-id='18'] td:nth-child(2)", text: "07:40"
+    within(:schedule_preparation, 18) do
+      assert_selector :schedule_cell, :start_time, exact_text: "07:40"
+      assert_selector :link, "Ver detalle", href: preparation_path(18)
+    end
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "INICIO / Presentación de conductores / Bienvenida"
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Desmontaje"
     assert_select "tbody tr:last-child[data-preparation-id='20'] td:nth-child(2)", text: "21:30"
     assert_select "tbody td", text: "Participación Gpo Folclórico", count: 0
+  end
+
+  test "renders schedule rows in the phases and order provided by the model on both days" do
+    [ "Domingo 15", "Lunes 16" ].each do |day|
+      get root_url(day: day)
+      assert_response :success
+      rows_by_phase = Schedule.new(day: day, commission: nil).rows.group_by(&:phase)
+
+      within("table") do |table|
+        assert_equal rows_by_phase.keys, table.all(:schedule_phase).map { |phase| phase["data-phase"] }
+      end
+      rows_by_phase.each do |phase, rows|
+        within(:schedule_phase, phase) do |section|
+          assert_selector "th[scope='rowgroup']", exact_text: Schedule::PHASES.fetch(phase)
+          expected_paths = rows.map do |row|
+            case row
+            when Preparation then preparation_path(row.id)
+            when OperationalActivity then operational_activity_path(row.id)
+            else schedule_entry_path(row.id)
+            end
+          end
+          rendered_paths = section.all(:schedule_row).map { |row| row.find(:link, "Ver detalle")[:href] }
+
+          assert_equal expected_paths, rendered_paths, "Rows in #{phase} for #{day}"
+        end
+      end
+    end
+  end
+
+  test "shows preparation start times without confusing them with action durations" do
+    get root_url(day: "Domingo 15")
+
+    within(:schedule_preparation, 2) do
+      assert_selector :schedule_cell, :act_number, exact_text: "Preparación"
+      assert_selector :schedule_cell, :activity, exact_text: "Preparación para el Acto 1 y 2"
+      assert_selector :schedule_cell, :start_time, exact_text: "09:45"
+      assert_selector :link, "Ver detalle", href: preparation_path(2)
+    end
+    within(:schedule_preparation, 7) do
+      assert_selector :schedule_cell, :start_time, exact_text: "12:30"
+      assert_no_selector :schedule_cell, :duration, text: "00:15"
+    end
+    within(:schedule_preparation, 12) do
+      assert_selector :schedule_cell, :start_time, exact_text: "16:50"
+    end
+  end
+
+  test "uses dashes for undecided times in the schedule table" do
+    get root_url(day: "Domingo 15")
+
+    assert_no_selector :schedule_cell, :start_time, text: "Por definir"
+    assert_no_selector :schedule_cell, :end_time, text: "Por definir"
+    within(:schedule_operation, 7) do
+      assert_selector :schedule_cell, :start_time, exact_text: "—"
+      assert_selector :schedule_cell, :end_time, exact_text: "08:00"
+    end
+    within(:schedule_operation, 12) do
+      assert_selector :schedule_cell, :start_time, exact_text: "—"
+      assert_selector :schedule_cell, :end_time, exact_text: "—"
+    end
+    within(:schedule_preparation, 1) do
+      assert_selector :schedule_cell, :start_time, exact_text: "—"
+    end
+  end
+
+  test "renders only phases that contain rows after filtering by activity type" do
+    examples = [
+      [ "Sábado 14", "operations", [ "pre_event" ] ],
+      [ "Sábado 14", "acts", [] ],
+      [ "Domingo 15", "acts", [ "program" ] ],
+      [ "Domingo 15", "preparations", [ "before_parade", "program" ] ]
+    ]
+
+    examples.each do |day, row_type, expected_phases|
+      get root_url(day: day, row_type: row_type)
+
+      within("table") do |table|
+        assert_equal expected_phases, table.all(:schedule_phase).map { |phase| phase["data-phase"] }, "Phases for #{row_type} on #{day}"
+      end
+    end
   end
 
   test "shows the official schedule times on both days" do
@@ -78,6 +162,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav a[href=?]", root_path(day: "Lunes 16", commission: "EyA"), text: "Lunes 16"
     assert_select "tbody tr.schedule__act", count: 1
     assert_select "tbody tr.schedule__preparation", count: 4
+    assert_selector :schedule_operation, count: 4
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Canto de Colores"
     assert_select "tbody tr td:nth-child(6) a[href=?]", root_path(day: "Domingo 15", commission: "EyA"), text: "EyA"
 
@@ -86,6 +171,13 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "tbody tr td[colspan='7']", text: /No hay actividades de esta comisión/
     assert_select "tbody tr td:nth-child(5)", count: 0
+  end
+
+  test "renders the acts and preparations assigned to the program commission" do
+    get root_url(day: "Domingo 15", commission: "Programa")
+
+    assert_selector :schedule_act, count: 16
+    assert_selector :schedule_preparation, count: 2
   end
 
   test "preserves type filters in day and commission links" do

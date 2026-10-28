@@ -1,37 +1,11 @@
 require "application_system_test_case"
 
 class ScheduleTest < ApplicationSystemTestCase
-  test "interleaves preparations and acts in the table by start time" do
+  test "distinguishes preparations with a blue row background" do
     visit root_path(day: "Domingo 15")
 
-    assert_selector :schedule_act, count: 19
-    assert_selector :schedule_preparation, count: 17
-    assert_selector :schedule_preparation, 2, count: 1
-    assert_selector :schedule_operation, count: 11
-    times = all(:schedule_cell, :start_time).map(&:text).grep(/\A\d{2}:\d{2}\z/)
-    assert_equal times.sort, times
-    within(:schedule_preparation, 2) do
-      assert_selector :schedule_cell, :act_number, text: "Preparación"
-      assert_selector :schedule_cell, :start_time, text: "09:45"
-      assert_text "Preparación para el Acto 1 y 2"
-      assert_link "Ver detalle", href: preparation_path(2)
-    end
-    within(:schedule_preparation, 7) do
-      assert_selector :schedule_cell, :start_time, text: "12:30"
-      assert_no_text "00:15"
-    end
-    within(:schedule_preparation, 12) do
-      assert_selector :schedule_cell, :start_time, text: "16:50"
-    end
+    assert_selector :schedule_preparation, 2
     assert_equal "rgb(225, 239, 250)", evaluate_script("getComputedStyle(document.querySelector('tr.schedule__preparation')).backgroundColor")
-
-    click_link "Lunes 16"
-    assert_selector :schedule_preparation, count: 9
-    assert_selector :schedule_act, count: 12
-    within(:schedule_preparation, 18) do
-      assert_selector :schedule_cell, :start_time, text: "07:40"
-      assert_link "Ver detalle", href: preparation_path(18)
-    end
   end
 
   test "shares the page layout while preserving schedule and activity styles" do
@@ -82,14 +56,12 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_text "No hay actividades de esta comisión para Lunes 16."
 
     click_link "Domingo 15"
-    assert_selector :schedule_act, count: 1
-    assert_selector :schedule_preparation, count: 4
-    assert_selector :schedule_cell, :activity, text: "Canto de Colores"
+    assert_selector :schedule_act, "Canto de Colores"
+    assert_no_selector :schedule_act, "Proyección Video Inicio"
     assert_select "Comisión", selected: "EyA"
-    assert_selector :schedule_operation, count: 4
 
     select "Sin filtro de comisión", from: "Comisión"
-    assert_selector "tbody tr", minimum: 2
+    assert_selector :schedule_act, "Proyección Video Inicio"
   end
 
   test "distinguishes the all-commissions responsibility from removing the filter" do
@@ -101,8 +73,8 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector :schedule_cell, :activity, text: "Desmontaje"
 
     select "Sin filtro de comisión", from: "Comisión"
-    assert_selector :schedule_act, count: 12
-    assert_selector :schedule_preparation, count: 9
+    assert_selector :schedule_preparation, 18
+    assert_selector :schedule_act, "Comida"
     assert_select "Comisión", selected: "Sin filtro de comisión"
   end
 
@@ -113,9 +85,8 @@ class ScheduleTest < ApplicationSystemTestCase
       click_link "EyA"
     end
 
-    assert_selector :schedule_act, count: 1
-    assert_selector :schedule_preparation, count: 4
-    assert_selector :schedule_cell, :activity, text: "Canto de Colores"
+    assert_selector :schedule_act, "Canto de Colores"
+    assert_no_selector :schedule_act, "Proyección Video Inicio"
     assert_select "Comisión", selected: "EyA"
 
     click_link "Lunes 16"
@@ -151,9 +122,8 @@ class ScheduleTest < ApplicationSystemTestCase
 
     assert_selector "nav a[aria-current='page']", text: "Domingo 15"
     assert_select "Comisión", selected: "Programa"
-    assert_selector :schedule_act, count: 16
-    assert_selector :schedule_preparation, count: 2
-    assert_selector :schedule_cell, :activity, text: /Proyección Video Inicio/
+    assert_selector :schedule_act, "Proyección Video Inicio"
+    assert_no_selector :schedule_act, "Canto de Colores"
   end
 
   test "keeps access to resources without showing counts beside each activity" do
