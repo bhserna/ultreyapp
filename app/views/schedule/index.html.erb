@@ -8,7 +8,7 @@
   <div class="toolbar">
     <nav class="tabs" aria-label="Días del programa">
       <% @schedule.days.each do |day| %>
-        <%= link_to day, root_path(day: day, commission: @schedule.selected_commission),
+        <%= link_to day, root_path(day: day, commission: @schedule.selected_commission, row_type: @schedule.selected_row_type),
               class: "tabs__item#{' tabs__item--active' if day == @schedule.selected_day}",
               aria: { current: ("page" if day == @schedule.selected_day) } %>
       <% end %>
@@ -17,6 +17,10 @@
     <%= form_with url: root_path, method: :get, class: "filter",
           data: { controller: "schedule-filter" } do %>
       <%= hidden_field_tag :day, @schedule.selected_day %>
+      <%= label_tag :row_type, "Tipo de actividad", class: "visually-hidden" %>
+      <%= select_tag :row_type,
+            options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"], ["Operación", "operations"]], @schedule.selected_row_type),
+            data: { action: "change->schedule-filter#submit" } %>
       <%= label_tag :commission, "Comisión", class: "visually-hidden" %>
       <%= select_tag :commission,
             options_for_select([["Sin filtro de comisión", ""]] + @schedule.commissions.map { |commission| [commission, commission] }, @schedule.selected_commission),
@@ -44,23 +48,36 @@
           <% if schedule_entry.is_a?(Preparation) %>
             <tr class="schedule__preparation" data-preparation-id="<%= schedule_entry.id %>">
               <td>Preparación</td>
-              <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
+              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
               <td>—</td>
               <td>—</td>
               <td class="schedule__activity"><%= schedule_entry.title %></td>
-              <td><%= commission_links(schedule_entry) %></td>
+              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
               <td>
                 <%= link_to "Ver detalle", preparation_path(schedule_entry.id), class: "schedule__resources-link" %>
               </td>
             </tr>
+          <% elsif schedule_entry.is_a?(OperationalActivity) %>
+            <tr class="schedule__operation" data-operational-activity-id="<%= schedule_entry.id %>">
+              <td>Operación</td>
+              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
+              <td class="text-nowrap"><%= schedule_time(schedule_entry.end_time) %></td>
+              <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
+              <td class="schedule__activity">
+                <%= schedule_entry.title %>
+                <span class="schedule__category"><%= schedule_entry.category %></span>
+              </td>
+              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
+              <td><%= link_to "Ver detalle", operational_activity_path(schedule_entry.id), class: "schedule__resources-link" %></td>
+            </tr>
           <% else %>
             <tr class="schedule__act">
               <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
-              <td class="text-nowrap"><%= schedule_entry.start_time.presence || "—" %></td>
-              <td class="text-nowrap"><%= schedule_entry.end_time.presence || "—" %></td>
+              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
+              <td class="text-nowrap"><%= schedule_time(schedule_entry.end_time) %></td>
               <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
               <td class="schedule__activity"><%= schedule_entry.activity %></td>
-              <td><%= commission_links(schedule_entry) %></td>
+              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
               <td>
                 <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
               </td>
@@ -68,7 +85,7 @@
           <% end %>
         <% end %>
         <% if @schedule.rows.empty? %>
-          <tr><td colspan="7">No hay actividades de esta comisión para <%= @schedule.selected_day %>.</td></tr>
+          <tr><td colspan="7"><%= @schedule.selected_commission ? "No hay actividades de esta comisión para #{@schedule.selected_day}." : "No hay actividades de este tipo para #{@schedule.selected_day}." %></td></tr>
         <% end %>
       </tbody>
     </table>

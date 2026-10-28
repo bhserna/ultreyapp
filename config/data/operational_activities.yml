@@ -1,0 +1,362 @@
+---
+source:
+  url: https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
+  sheet: 1er, día 15 Nov
+  description: 'Actividades operativas previas a la primera preparación. Filas 3,
+    4 y 7–17. Se excluye la fila 18: Se finalizan las actividades previas.'
+operational_activities:
+- id: 1
+  title: Recepción de Diócesis
+  category: Recepción y atención a participantes
+  day: Sábado 14
+  start_time:
+  end_time:
+  duration:
+  commissions:
+  - AC
+  - Hosp
+  source_sheet: 1er, día 15 Nov
+  source_row: 3
+  details:
+    commission: AC y Hosp
+    executors: AC y Hosp, Parroquias y Centros
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: Al menos uno por comisón
+    media_files:
+    radios: '2'
+    pending_confirmations:
+- id: 2
+  title: Entrega de Kits
+  category: Recepción y atención a participantes
+  day: Sábado 14
+  start_time:
+  end_time:
+  duration:
+  commissions:
+  - AC
+  source_sheet: 1er, día 15 Nov
+  source_row: 4
+  details:
+    commission: AC
+    executors: AC y Encargados de cada delegación
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: En la Arena habrá Stands de Atención a cursillista donde se entregaran
+      Kits y se realizan registros extemporaneos.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 3
+  title: Instalación de stands
+  category: Montaje e instalaciones
+  day: Domingo 15
+  start_time: '01:30'
+  end_time: '08:00'
+  duration: '6:30'
+  commissions:
+  - Marketing
+  source_sheet: 1er, día 15 Nov
+  source_row: 7
+  details:
+    commission: Marketing
+    executors: Lydia
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios: '1'
+    pending_confirmations:
+- id: 4
+  title: Instalación de capilla Santísimo
+  category: Montaje e instalaciones
+  day: Domingo 15
+  start_time: '05:00'
+  end_time:
+  duration:
+  commissions:
+  - Liturgia
+  source_sheet: 1er, día 15 Nov
+  source_row: 8
+  details:
+    commission: Liturgia
+    executors: Benito Elba
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes: A las 5:00 am llega el camión de Liturgia con lo que ellos requieren (Incluye
+      ambón)
+    media_files:
+    radios: '1'
+    pending_confirmations:
+- id: 5
+  title: Instalación Cruz
+  category: Montaje e instalaciones
+  day: Domingo 15
+  start_time: '01:30'
+  end_time: '08:00'
+  duration:
+  commissions:
+  - Liturgia
+  source_sheet: 1er, día 15 Nov
+  source_row: 9
+  details:
+    commission: Liturgia
+    executors: Proveedor Arena
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: Tesorería - La cruz estará iluminada?
+    notes: |-
+      No se utiliza la cruz en el bailable del grupo folklórico
+      El proveedor es la cruz es la Arena y se comprometen que para las 8:00 am estará instalada.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 6
+  title: Instalación del arreglo floral para la Virgen
+  category: Montaje e instalaciones
+  day: Domingo 15
+  start_time: '05:00'
+  end_time: '08:00'
+  duration:
+  commissions:
+  - Liturgia
+  source_sheet: 1er, día 15 Nov
+  source_row: 10
+  details:
+    commission: Liturgia
+    executors: Liturgia (Hilda)
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 7
+  title: Prueba de sonido e iluminación
+  category: Preparación técnica
+  day: Domingo 15
+  start_time: Por definir con la Arena
+  end_time: '08:00'
+  duration:
+  commissions:
+  - EyA
+  source_sheet: 1er, día 15 Nov
+  source_row: 11
+  details:
+    commission: EyA
+    executors: EyA
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions: A qué hora puede ser la prueba de sonido e iluminación?
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 8
+  title: Montaje de instruementos Coros Jessed
+  category: Preparación técnica
+  day: Domingo 15
+  start_time: '07:20'
+  end_time: '08:00'
+  duration:
+  commissions:
+  - EyA
+  source_sheet: 1er, día 15 Nov
+  source_row: 12
+  details:
+    commission: EyA
+    executors: Jessed
+    screen:
+    audio: Prueba de sonido 7:20 am
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements: se necesitan 6 micrófonos de voz, 3 pedestales de brazo y 3 pedestales
+      de micro rectos.
+    arena_questions: |-
+      Se harán prueba de sonido (soundcheck) y en qué horario?
+      Se instalará una tarima para los coros?
+    general_questions:
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 9
+  title: Montaje de instruementos Coros de Colores
+  category: Preparación técnica
+  day: Domingo 15
+  start_time: '07:00'
+  end_time: '08:00'
+  duration:
+  commissions:
+  - EyA
+  source_sheet: 1er, día 15 Nov
+  source_row: 13
+  details:
+    commission: EyA
+    executors: De Colores
+    screen:
+    audio: Cuántos canales y micrófonos necesitan?
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions: |-
+      Se harán prueba de sonido (soundcheck) y en qué horario?
+      Se instalará una tarima para los coros?
+    general_questions:
+    notes: El horario definitivo para la prueba de sonido será establecido por la
+      Arena
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 10
+  title: Personas de Animación
+  category: Preparación técnica
+  day: Domingo 15
+  start_time: '07:00'
+  end_time: '08:00'
+  duration:
+  commissions: []
+  source_sheet: 1er, día 15 Nov
+  source_row: 14
+  details:
+    commission:
+    executors: Fabiola Núñez y Lolys Cepeda
+    screen:
+    audio: Cuántos canales y micrófonos necesitan?
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions: se harán prueba de sonido (soundcheck),
+    general_questions:
+    notes: Lolys Cepeda utilizará un organo. compartirle los horarios de instalación.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 11
+  title: Preparación para la transmisión en vivo
+  category: Servicios y proveedores
+  day: Domingo 15
+  start_time: '07:00'
+  end_time: '08:00'
+  duration:
+  commissions:
+  - EyA
+  source_sheet: 1er, día 15 Nov
+  source_row: 15
+  details:
+    commission: EyA
+    executors: Proveedor externo (ANetwork)
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements: Transmisión en vivo del evento a través de redes sociales
+    arena_questions: Con qué anticipación puede preparar la infraestructura el proovedor
+      de Internet?
+    general_questions: |-
+      Con qué laptop o equipo se realizará la transmisión en vivo?
+
+      Comunicación Diocesana - Con qué cuenta se va a transmitir en redes sociales?
+    notes: El proovedor ANetwork solo proporciona el enlace bidireccional de Internet.
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 12
+  title: Recibir al fotógrafo
+  category: Servicios y proveedores
+  day: Domingo 15
+  start_time: Por definir
+  end_time: Por definir
+  duration:
+  commissions:
+  - Programa
+  source_sheet: 1er, día 15 Nov
+  source_row: 16
+  details:
+    commission: Programa
+    executors: EyA - Programa
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: "Programa - \n- Quién es el fotógrafo?\n- En qué horario lo
+      debemos esperar?\n- Cuáles son sus intervenciones?"
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:
+- id: 13
+  title: Preparación de Chisperos y cañón de serpentinas
+  category: Servicios y proveedores
+  day: Domingo 15
+  start_time: Por definir
+  end_time: Por definir
+  duration:
+  commissions:
+  - Programa
+  source_sheet: 1er, día 15 Nov
+  source_row: 17
+  details:
+    commission: Programa
+    executors: Proveedor
+    screen:
+    audio:
+    room_lighting:
+    stage_lighting:
+    aisle_lighting:
+    requirements:
+    arena_questions:
+    general_questions: "Programa - \n1. En que minuto del video se da la cuenta regresiva
+      para encender los chisperos?\n2. Quién es el proovedor y quién controla la activación
+      de los chisperos?\n3. En qué horario lo debemos esperar la instalación?"
+    notes:
+    media_files:
+    radios:
+    pending_confirmations:

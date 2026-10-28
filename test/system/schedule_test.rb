@@ -7,7 +7,8 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "tbody tr.schedule__act", count: 19
     assert_selector "tbody tr.schedule__preparation", count: 17
     assert_selector "tr[data-preparation-id='2']", count: 1
-    times = all("tbody tr td:nth-child(2)").map(&:text)
+    assert_selector "tbody tr.schedule__operation", count: 11
+    times = all("tbody tr td:nth-child(2)").map(&:text).grep(/\A\d{2}:\d{2}\z/)
     assert_equal times.sort, times
     within("tr[data-preparation-id='2']") do
       assert_selector "td:nth-child(1)", text: "Preparación"
@@ -50,14 +51,18 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_equal ["800px", "32px", "32px"], page_layout_styles
   end
 
-  test "shows act commissions and excludes preparation and extra activities" do
+  test "shows operations separately and keeps preparation actions off the table" do
     visit root_path
 
     within("tr", text: "Proyección Video Inicio") do
       assert_selector "td:nth-child(6) .commission-links", text: "Programa"
     end
     assert_no_text "Recepción de Diócesis"
-    assert_no_text "Instalación de stands"
+    within("tr.schedule__operation", text: "Instalación de stands") do
+      assert_selector "td:first-child", text: "Operación"
+      assert_selector ".schedule__category", text: "Montaje e instalaciones"
+    end
+    assert_no_text "Se finalizan las actividades previas"
     assert_no_text "Preparar a los Maestros de ceremonia"
     assert_no_text "Escoltar al grupo folclórico a la salida"
 
@@ -98,6 +103,7 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "tbody tr.schedule__preparation", count: 4
     assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
     assert_equal "EyA", find("#commission").value
+    assert_selector "tbody tr.schedule__operation", count: 4
 
     select "Sin filtro de comisión", from: "Comisión"
     assert_selector "tbody tr", minimum: 2
@@ -142,6 +148,7 @@ class ScheduleTest < ApplicationSystemTestCase
     page.driver.browser.manage.window.resize_to(390, 900)
     narrow = toolbar_positions
     assert_operator narrow["filterTop"], :>=, narrow["daysBottom"]
+    assert evaluate_script("Array.from(document.querySelectorAll('.filter select')).every(select => select.getBoundingClientRect().right <= window.innerWidth)")
   ensure
     page.driver.browser.manage.window.resize_to(1400, 900)
   end

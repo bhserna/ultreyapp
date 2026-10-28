@@ -1,6 +1,6 @@
 # Event data
 
-The active files are `schedule.yml`, `questions.yml`, `production_details.yml`, and `preparations.yml`. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
+The active files are `schedule.yml`, `questions.yml`, `production_details.yml`, `preparations.yml`, and `operational_activities.yml`. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
 
 https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
 
@@ -23,6 +23,16 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 - `source_title` and source rows preserve provenance. The Tema 2 block is linked to act 13 despite the source heading saying act 11. The heading for act 17 is displayed as Monday 16, correcting the source's Sunday 16; the actual preparation takes place on Sunday 15 at 19:00.
 - Monday's Vivencia 6 preparation links to act 24 despite its heading saying act 23; `source_title` retains the original. Other source inconsistencies are not silently corrected: the Vivencia 4 action starts at `21:30` although its heading says `09:30`, Vivencia 6's action starts at `11:05` although its heading says `11:30`, and the Tema 3 preparation names José Humberto Marroquín whereas the act names Pbro. Jose Juan Montalvo. Review these in the spreadsheet.
 - Action descriptions retain their multiline lists. Questions and material references remain within the preparation and are not imported as act questions or documents.
+
+## Operational activities
+
+`operational_activities.yml` stores 13 activities before the first preparation in `1er, día 15 Nov`: rows 3–4 and 7–17. Row 18, “Se finalizan las actividades previas”, is deliberately excluded. Existing act and preparation IDs are unchanged; operations have their own IDs and `/operational_activities/:id` pages.
+
+The four user-facing categories are reception and participant support, setup and installations, technical preparation, and services and vendors. Original titles, responsibilities, technical requirements, questions, notes, and radios are retained. Known times use 24-hour notation; blank and undecided times remain blank or retain their source wording. No missing durations are inferred. Source sheet and row identify each record.
+
+The program adds Saturday 14 for reception and kits, and interleaves Sunday operations with preparations and acts. It still opens on Sunday, the first day with acts, by default. Operations have no act number and use a separate table style with their category. The type filter offers all rows, acts, preparations, or operations; day and commission filters combine with it, and day tabs and table commission links preserve the selected type. Undecided times sort after known times. The program table displays a dash for missing or undecided times; detail pages retain the original wording, such as “Por definir con la Arena”. Operations with no commission remain visible without a commission filter.
+
+Technical details reuse the preparation details partial. Operational questions remain on their own detail pages and are not imported as act questions. This file is read directly by the app: deployment is sufficient, with no database migration or import required.
 
 ## Production details
 

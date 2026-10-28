@@ -1,0 +1,25 @@
+<% if details["description"].present? %>
+  <%= simple_format(details.fetch("description")) %>
+<% end %>
+
+<% {
+  "commission" => "Comisión",
+  "executors" => "Ejecuta",
+  "screen" => "Pantalla",
+  "audio" => "Audio",
+  "room_lighting" => "Iluminación de sala",
+  "stage_lighting" => "Iluminación de escenario",
+  "aisle_lighting" => "Iluminación de pasillos",
+  "requirements" => "Requerimientos",
+  "arena_questions" => "Preguntas para la Arena",
+  "general_questions" => "Dudas generales",
+  "notes" => "Notas",
+  "media_files" => "Videos o pistas",
+  "radios" => "Radios",
+  "pending_confirmations" => "Pendientes por confirmar"
+}.each do |attribute, label| %>
+  <% if details.fetch(attribute).present? %>
+    <h3><%= label %></h3>
+    <%= simple_format(details.fetch(attribute)) %>
+  <% end %>
+<% end %>

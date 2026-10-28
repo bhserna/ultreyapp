@@ -1,0 +1,21 @@
+<% content_for :title, @operational_activity.title %>
+
+<main class="page">
+  <%= link_to "← Volver al programa", root_path(day: @operational_activity.day), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @operational_activity.day %> · Operación</p>
+    <h1><%= @operational_activity.title %></h1>
+    <dl class="page__details">
+      <div><dt>Categoría</dt><dd><%= @operational_activity.category %></dd></div>
+      <div><dt>Inicio</dt><dd><%= @operational_activity.start_time.presence || "—" %></dd></div>
+      <div><dt>Fin</dt><dd><%= @operational_activity.end_time.presence || "—" %></dd></div>
+      <div><dt>Duración</dt><dd><%= @operational_activity.duration.presence || "—" %></dd></div>
+      <div><dt>Comisiones</dt><dd><%= commission_links(@operational_activity) %></dd></div>
+    </dl>
+  </header>
+
+  <section class="page__section" aria-label="Detalles operativos">
+    <%= render "shared/activity_details", details: @operational_activity.details %>
+  </section>
+</main>

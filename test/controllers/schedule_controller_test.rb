@@ -6,7 +6,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Programa"
-    assert_select "nav[aria-label='Días del programa'] a", count: 2
+    assert_select "nav[aria-label='Días del programa'] a", count: 3
     assert_select "nav a[aria-current='page']", text: "Domingo 15"
     assert_select "nav a[href=?]", root_path(day: "Lunes 16"), text: "Lunes 16"
     assert_select "select#commission option[value='Programa']", text: "Programa"
@@ -29,8 +29,10 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
       assert_select "td:nth-child(6) .commission-links", text: "Programa"
       assert_select "td:nth-child(7) a[href=?]", schedule_entry_path(1), text: "Ver detalle"
     end
-    assert_select "tbody td", text: "Instalación de stands", count: 0
+    assert_select "tbody tr.schedule__operation", count: 11
+    assert_select "tbody tr.schedule__operation", text: /Instalación de stands/
     assert_select "tbody td", text: "Recepción de Diócesis", count: 0
+    assert_no_match(/Se finalizan las actividades previas/, response.body)
   end
 
   test "shows Monday acts and preparations when its tab is selected" do
@@ -63,6 +65,20 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "tbody tr td[colspan='7']", text: /No hay actividades de esta comisión/
     assert_select "tbody tr td:nth-child(5)", count: 0
+  end
+
+  test "preserves type filters in day and commission links" do
+    get root_url(day: "Domingo 15", row_type: "operations")
+
+    assert_response :success
+    assert_select "tbody tr.schedule__operation", count: 11
+    assert_select "tbody tr.schedule__act", count: 0
+    assert_select "tbody tr.schedule__preparation", count: 0
+    assert_select "nav a[href=?]", root_path(day: "Sábado 14", row_type: "operations"), text: "Sábado 14"
+    assert_select "tbody a[href=?]", root_path(day: "Domingo 15", commission: "Marketing", row_type: "operations"), text: "Marketing"
+
+    get root_url(day: "Sábado 14", row_type: "acts")
+    assert_select "tbody td[colspan='7']", text: "No hay actividades de este tipo para Sábado 14."
   end
 
   test "keeps detail links without resource counts for each act" do

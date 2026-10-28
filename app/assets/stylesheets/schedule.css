@@ -4,8 +4,20 @@
     color: #284c70;
   }
 
-  .schedule__preparation td:first-child {
+  .schedule__operation {
+    background: #fff4dc;
+    color: #655227;
+  }
+
+  .schedule__preparation td:first-child,
+  .schedule__operation td:first-child {
     font-weight: 600;
+  }
+
+  .schedule__category {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.8rem;
   }
 
   .schedule__activity {

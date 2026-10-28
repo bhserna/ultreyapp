@@ -1,6 +1,8 @@
 @layer components {
   .filter {
     display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
     align-items: center;
     gap: 0.75rem;
     margin-left: auto;
@@ -8,6 +10,7 @@
 
   .filter select,
   .filter input[type="submit"] {
+    max-width: 100%;
     padding: 0.6rem 0.75rem;
     border: 1px solid #aebac8;
     border-radius: 0.4rem;
