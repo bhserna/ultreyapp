@@ -1,4 +1,12 @@
 @layer components {
+  .schedule__phase th {
+    padding: 0.65rem 1rem;
+    background: #eef1f5;
+    color: #385473;
+    font-size: 0.875rem;
+    text-align: left;
+  }
+
   .schedule__preparation {
     background: #e1effa;
     color: #284c70;

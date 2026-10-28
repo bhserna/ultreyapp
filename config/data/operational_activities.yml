@@ -6,6 +6,7 @@ source:
     4 y 7–17. Se excluye la fila 18: Se finalizan las actividades previas.'
 operational_activities:
 - id: 1
+  phase: pre_event
   title: Recepción de Diócesis
   category: Recepción y atención a participantes
   day: Sábado 14
@@ -33,6 +34,7 @@ operational_activities:
     radios: '2'
     pending_confirmations:
 - id: 2
+  phase: pre_event
   title: Entrega de Kits
   category: Recepción y atención a participantes
   day: Sábado 14
@@ -60,6 +62,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 3
+  phase: pre_event
   title: Instalación de stands
   category: Montaje e instalaciones
   day: Domingo 15
@@ -86,6 +89,7 @@ operational_activities:
     radios: '1'
     pending_confirmations:
 - id: 4
+  phase: pre_event
   title: Instalación de capilla Santísimo
   category: Montaje e instalaciones
   day: Domingo 15
@@ -113,6 +117,7 @@ operational_activities:
     radios: '1'
     pending_confirmations:
 - id: 5
+  phase: pre_event
   title: Instalación Cruz
   category: Montaje e instalaciones
   day: Domingo 15
@@ -141,6 +146,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 6
+  phase: pre_event
   title: Instalación del arreglo floral para la Virgen
   category: Montaje e instalaciones
   day: Domingo 15
@@ -167,6 +173,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 7
+  phase: pre_event
   title: Prueba de sonido e iluminación
   category: Preparación técnica
   day: Domingo 15
@@ -193,6 +200,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 8
+  phase: pre_event
   title: Montaje de instruementos Coros Jessed
   category: Preparación técnica
   day: Domingo 15
@@ -222,6 +230,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 9
+  phase: pre_event
   title: Montaje de instruementos Coros de Colores
   category: Preparación técnica
   day: Domingo 15
@@ -251,6 +260,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 10
+  phase: pre_event
   title: Personas de Animación
   category: Preparación técnica
   day: Domingo 15
@@ -276,6 +286,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 11
+  phase: pre_event
   title: Preparación para la transmisión en vivo
   category: Servicios y proveedores
   day: Domingo 15
@@ -306,6 +317,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 12
+  phase: pre_event
   title: Recibir al fotógrafo
   category: Servicios y proveedores
   day: Domingo 15
@@ -333,6 +345,7 @@ operational_activities:
     radios:
     pending_confirmations:
 - id: 13
+  phase: pre_event
   title: Preparación de Chisperos y cañón de serpentinas
   category: Servicios y proveedores
   day: Domingo 15

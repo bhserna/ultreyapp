@@ -1,7 +1,7 @@
 class ScheduleEntry
   ATTRIBUTES = %w[id act_number day start_time end_time duration activity commissions].freeze
 
-  attr_reader(*ATTRIBUTES)
+  attr_reader(*ATTRIBUTES, :phase)
 
   def self.all
     YAML.safe_load_file(Rails.root.join("config/data/schedule.yml")).map { |attributes| new(attributes) }
@@ -12,6 +12,7 @@ class ScheduleEntry
   end
 
   def initialize(attributes)
+    @phase = attributes.fetch("phase", "program")
     ATTRIBUTES.each { |attribute| instance_variable_set("@#{attribute}", attributes.fetch(attribute)) }
   end
 end

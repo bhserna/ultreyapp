@@ -16,6 +16,7 @@ source:
     de Tema 3 copiado de Tema 2.
 preparations:
 - id: 1
+  phase: before_parade
   title: Actividades en la Arena previo a que llegue el desfile
   source_title: Actividades en la Arena previo a que llegue el desfile
   day: Domingo 15

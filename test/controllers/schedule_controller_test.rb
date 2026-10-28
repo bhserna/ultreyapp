@@ -42,7 +42,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav a[aria-current='page']", text: "Lunes 16"
     assert_select "tbody tr.schedule__act", count: 12
     assert_select "tbody tr.schedule__preparation", count: 9
-    assert_select "tbody tr:first-child[data-preparation-id='18'] td:nth-child(2)", text: "07:40"
+    assert_select "tbody[data-phase='program'] tr[data-preparation-id='18'] td:nth-child(2)", text: "07:40"
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "INICIO / Presentación de conductores / Bienvenida"
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Desmontaje"
     assert_select "tbody tr:last-child[data-preparation-id='20'] td:nth-child(2)", text: "21:30"

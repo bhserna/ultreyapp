@@ -19,7 +19,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal (1..19).to_a, schedule.entries.map(&:id)
   end
 
-  test "interleaves preparations and acts by start time without duplicating shared preparations" do
+  test "orders by explicit phase then time without moving undecided pre-event work after the program" do
     schedule = Schedule.new(day: "Domingo 15", commission: nil)
     rows = schedule.rows
 
@@ -31,8 +31,14 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal 1, rows.count { |row| row.is_a?(Preparation) && row.id == 2 }
     assert_equal "01:30", rows.first.start_time
     assert_equal "19:00", timed_rows.last.start_time
-    assert_equal 4, rows.drop(timed_rows.size).size
-    assert_equal "Por definir con Programa", rows.last.start_time
+    assert_equal ["pre_event"] * 11 + ["before_parade"] + ["program"] * 35, rows.map(&:phase)
+    assert_equal [7, 12, 13], rows.first(11).last(3).map(&:id)
+    assert_instance_of Preparation, rows[11]
+    assert_equal 1, rows[11].id
+    assert_equal "Por definir con Programa", rows[11].start_time
+    assert_equal 2, rows[12].id
+    assert_equal "09:45", rows[12].start_time
+    assert_equal "19:00", rows.last.start_time
     assert_equal "12:30", rows.find { |row| row.is_a?(Preparation) && row.id == 7 }.start_time
     assert_equal "16:50", rows.find { |row| row.is_a?(Preparation) && row.id == 12 }.start_time
 
@@ -43,6 +49,25 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal 18, monday.rows.first.id
     assert_equal "21:30", monday.rows.last.start_time
     assert_equal 20, monday.rows.last.id
+  end
+
+  test "uses the explicit phase rather than the operation type or title" do
+    attributes = YAML.safe_load_file(Rails.root.join("config/data/operational_activities.yml")).fetch("operational_activities").first
+    activity = OperationalActivity.new(attributes.merge("phase" => "program", "day" => "Domingo 15", "start_time" => "Por definir", "end_time" => "10:02"))
+    operations = [activity] + OperationalActivity.all.drop(1)
+    schedule = Schedule.new(day: "Domingo 15", commission: nil)
+    schedule.instance_variable_set(:@all_operations, operations)
+    rows = schedule.rows
+    position = rows.index(activity)
+    assert_instance_of ScheduleEntry, rows[position - 1]
+    assert_equal 1, rows[position - 1].id
+    assert_instance_of ScheduleEntry, rows[position + 1]
+    assert_equal 2, rows[position + 1].id
+    assert_equal "Por definir", activity.start_time
+    assert_equal "program", activity.phase
+    assert_equal "program", ScheduleEntry.find(1).phase
+    assert_equal "program", Preparation.find(17).phase
+    assert_equal "before_parade", Preparation.find(1).phase
   end
 
   test "filters preparations by their own commission and day" do

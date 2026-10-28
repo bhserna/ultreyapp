@@ -44,22 +44,26 @@ class OperationalActivitiesTest < ApplicationSystemTestCase
 
     select "Sin filtro de comisión", from: "Comisión"
     assert_selector "tbody tr.schedule__operation", count: 2
+    assert_equal ["Operación previa"], all("tr.schedule__phase th").map(&:text)
     select "Actos", from: "Tipo de actividad"
+    assert_no_selector "tr.schedule__phase"
     assert_text "No hay actividades de este tipo para Sábado 14."
 
     click_link "Domingo 15"
     assert_selector "tbody tr.schedule__act", count: 19
     assert_no_selector "tbody tr.schedule__operation, tbody tr.schedule__preparation"
+    assert_equal ["Programa del día"], all("tr.schedule__phase th").map(&:text)
     select "Preparaciones", from: "Tipo de actividad"
     assert_selector "tbody tr.schedule__preparation", count: 17
     assert_no_selector "tbody tr.schedule__operation, tbody tr.schedule__act"
+    assert_equal ["Preparación previa al desfile", "Programa del día"], all("tr.schedule__phase th").map(&:text)
     select "Todo", from: "Tipo de actividad"
     assert_selector "tbody tr.schedule__operation", count: 11
     assert_selector "tbody tr.schedule__act", count: 19
     assert_selector "tbody tr.schedule__preparation", count: 17
   end
 
-  test "shows undecided times as dashes at the end of the program while preserving source details" do
+  test "keeps undecided pre-event work and the pre-parade preparation before the program" do
     visit root_path(day: "Domingo 15")
 
     assert_no_text "Por definir"
@@ -74,7 +78,20 @@ class OperationalActivitiesTest < ApplicationSystemTestCase
     within("tr[data-preparation-id='1']") do
       assert_selector "td:nth-child(2)", exact_text: "—"
     end
-    assert_equal ["—"] * 4, all("tbody tr").last(4).map { |row| row.find("td:nth-child(2)").text }
+    assert_equal ["Operación previa", "Preparación previa al desfile", "Programa del día"], all("tr.schedule__phase th").map(&:text)
+    within("tbody[data-phase='pre_event']") do
+      assert_selector "tr.schedule__operation", count: 11
+      assert_equal ["7", "12", "13"], all("tr.schedule__operation").last(3).map { |row| row["data-operational-activity-id"] }
+    end
+    within("tbody[data-phase='before_parade']") do
+      assert_selector "tr[data-preparation-id='1']"
+      assert_no_selector "tr.schedule__operation, tr.schedule__act"
+    end
+    within("tbody[data-phase='program']") do
+      assert_selector "tr:nth-child(2)[data-preparation-id='2']"
+      assert_no_selector "tr.schedule__operation"
+      assert_equal "19:00", all("tr.schedule__preparation").last.find("td:nth-child(2)").text
+    end
 
     within("tr[data-operational-activity-id='7']") { click_link "Ver detalle" }
     assert_text "Por definir con la Arena"

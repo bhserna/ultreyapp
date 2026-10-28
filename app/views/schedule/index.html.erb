@@ -43,8 +43,10 @@
           <th scope="col"><span class="visually-hidden">Preguntas y documentos</span></th>
         </tr>
       </thead>
-      <tbody>
-        <% @schedule.rows.each do |schedule_entry| %>
+      <% @schedule.rows.group_by(&:phase).each do |phase, rows| %>
+      <tbody data-phase="<%= phase %>">
+        <tr class="schedule__phase"><th colspan="7" scope="rowgroup"><%= Schedule::PHASES.fetch(phase) %></th></tr>
+        <% rows.each do |schedule_entry| %>
           <% if schedule_entry.is_a?(Preparation) %>
             <tr class="schedule__preparation" data-preparation-id="<%= schedule_entry.id %>">
               <td>Preparación</td>
@@ -84,10 +86,13 @@
             </tr>
           <% end %>
         <% end %>
-        <% if @schedule.rows.empty? %>
-          <tr><td colspan="7"><%= @schedule.selected_commission ? "No hay actividades de esta comisión para #{@schedule.selected_day}." : "No hay actividades de este tipo para #{@schedule.selected_day}." %></td></tr>
-        <% end %>
       </tbody>
+      <% end %>
+      <% if @schedule.rows.empty? %>
+        <tbody>
+          <tr><td colspan="7"><%= @schedule.selected_commission ? "No hay actividades de esta comisión para #{@schedule.selected_day}." : "No hay actividades de este tipo para #{@schedule.selected_day}." %></td></tr>
+        </tbody>
+      <% end %>
     </table>
   </div>
 </main>

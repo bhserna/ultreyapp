@@ -1,7 +1,7 @@
 class Preparation
   ATTRIBUTES = %w[id title day start_time schedule_entry_ids actions].freeze
 
-  attr_reader(*ATTRIBUTES)
+  attr_reader(*ATTRIBUTES, :phase)
 
   def self.all
     YAML.safe_load_file(Rails.root.join("config/data/preparations.yml")).fetch("preparations").map do |attributes|
@@ -21,6 +21,7 @@ class Preparation
   end
 
   def initialize(attributes)
+    @phase = attributes.fetch("phase", "program")
     ATTRIBUTES.each { |attribute| instance_variable_set("@#{attribute}", attributes.fetch(attribute)) }
   end
 end

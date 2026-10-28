@@ -1,5 +1,10 @@
 class Schedule
   ROW_TYPES = %w[acts preparations operations].freeze
+  PHASES = {
+    "pre_event" => "Operación previa",
+    "before_parade" => "Preparación previa al desfile",
+    "program" => "Programa del día"
+  }.freeze
 
   def initialize(day:, commission:, row_type: nil)
     @day = day
@@ -41,7 +46,10 @@ class Schedule
 
     candidates.select { |entry| matches_filters?(entry) }.sort_by do |entry|
       time = entry.start_time.to_s
-      time.match?(/\A\d{2}:\d{2}\z/) ? time : "24:00"
+      if !time.match?(/\A\d{2}:\d{2}\z/) && entry.respond_to?(:end_time)
+        time = entry.end_time.to_s
+      end
+      [PHASES.keys.index(entry.phase), time.match?(/\A\d{2}:\d{2}\z/) ? time : "24:00"]
     end
   end
 
