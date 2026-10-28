@@ -4,11 +4,8 @@ class PreparationsTest < ApplicationSystemTestCase
   test "styles related act links as full-width cards that wrap on narrow screens" do
     visit preparation_path(2)
 
-    within(".related-links") do
-      assert_selector "li", count: 2
-      assert_selector ".related-links__label", text: "Acto 1"
-      assert_selector ".related-links__title", text: "Proyección Video Inicio"
-    end
+    assert_selector :related_act, count: 2
+    assert_selector :related_act, "Acto 1", text: "Proyección Video Inicio"
     assert_equal [ "grid", "none", "10.4px" ], evaluate_script(<<~JAVASCRIPT)
       (() => {
         const style = getComputedStyle(document.querySelector('.related-links a'))
@@ -24,7 +21,7 @@ class PreparationsTest < ApplicationSystemTestCase
         return link.right <= window.innerWidth && title.right <= link.right && title.height > 30
       })()
     JAVASCRIPT
-    within(".related-links") { find("a[href='#{schedule_entry_path(1)}']").click }
+    find(:related_act, "Acto 1").click
     assert_current_path schedule_entry_path(1)
   ensure
     page.driver.browser.manage.window.resize_to(1400, 900)
@@ -38,7 +35,7 @@ class PreparationsTest < ApplicationSystemTestCase
     assert_selector "h1", text: "Preparación para el Acto 1 y 2"
     assert_text "Tener disponibles 10 sillas"
 
-    within(".related-links") { click_link href: schedule_entry_path(1) }
+    find(:related_act, "Acto 1").click
     assert_current_path schedule_entry_path(1)
     assert_selector "h1", text: "Proyección Video Inicio"
 

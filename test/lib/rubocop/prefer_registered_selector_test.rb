@@ -16,6 +16,9 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       "section[aria-labelledby='production-detail-heading']" => :production_details,
       "section[aria-label='Detalles operativos']" => :operational_details,
       ".page__details dd" => :activity_metadata,
+      ".related-links a" => :related_act,
+      ".related-links__label" => :related_act,
+      ".related-links__title" => :related_act,
       ".page__header .page__details a[href='/?commission=Programa']" => :activity_metadata,
       ".topics__tab[aria-current='page']" => :selected_topic
     }
@@ -95,6 +98,8 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       "within(:operational_details) { assert_selector :detail_field, 'Ejecuta' }",
       "assert_selector :activity_metadata, 'Inicio', exact_text: '07:00'",
       'assert_selector ".page__details-extra"',
+      "find(:related_act, 'Acto 1').click",
+      'assert_selector ".related-links-extra"',
       'assert_selector "section[aria-label=\'Otra sección\']"',
       'assert_selector ".topics__tab"',
       'assert_selector ".questions__item-extra"',

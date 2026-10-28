@@ -26,8 +26,8 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_no_selector "main", text: "Acción 2"
     assert_no_selector "main", text: "Colocar el ambón"
     assert_no_selector "main", text: "Escoltar al grupo folclórico a la salida"
-    assert_selector :link, href: schedule_entry_path(1)
-    assert_selector :link, href: schedule_entry_path(2)
+    assert_selector :related_act, "Acto 1", href: schedule_entry_path(1)
+    assert_selector :related_act, "Acto 2", href: schedule_entry_path(2)
     assert_selector :link, "← Volver al programa", href: root_path(day: "Domingo 15")
   end
 
@@ -49,8 +49,8 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_selector :activity_metadata, "Inicio de preparación", exact_text: "11:05"
     assert_selector "section.page__section p", text: "Tener listo al expositor (Pbro. Fernando Torres)"
     assert_selector "section.page__section p", text: "Néstor Velasquez"
-    assert_selector :link, href: schedule_entry_path(27)
-    assert_no_selector :link, href: schedule_entry_path(26)
+    assert_selector :related_act, "Acto 24", href: schedule_entry_path(27)
+    assert_no_selector :related_act, href: schedule_entry_path(26)
     assert_selector :link, "← Volver al programa", href: root_path(day: "Lunes 16")
   end
 
@@ -61,7 +61,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_selector :activity_metadata, "Inicio de preparación", exact_text: "12:40"
     assert_selector "section.page__section p", text: "Liturgia prepara lo relacionado a Sacristía"
     assert_selector "section.page__section p", text: "Las pantallas comienzan a mostrar de manera discreta la hora de la Eucaristía"
-    assert_selector :link, href: schedule_entry_path(29)
+    assert_selector :related_act, "Acto 26", href: schedule_entry_path(29)
     assert_no_selector "main", text: "Acción 1"
   end
 
@@ -72,6 +72,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_selector "h1", exact_text: "Actividades en la Arena previo a que llegue el desfile"
     assert_selector "section.page__section p", text: "Música Ambiental"
     assert_no_selector "h2", exact_text: "Actos relacionados"
+    assert_no_selector :related_act
     assert_selector :link, "← Volver al programa", href: root_path(day: "Domingo 15")
   end
 
@@ -81,7 +82,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_selector "h1", text: "Preparación para el Acto 13"
     assert_selector "section.page__section p", text: "Mantener prevenido a José Humberto Marroquín"
-    assert_selector :link, href: schedule_entry_path(16)
+    assert_selector :related_act, "Acto 13", href: schedule_entry_path(16)
   end
 
   test "shows the next-day preparation on Sunday with its related Monday act" do
@@ -91,7 +92,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_selector "section.page__section p", text: "Ubicar a la Virgen al centro del escenario"
     assert_selector ".page__eyebrow", exact_text: "Domingo 15"
     assert_selector :activity_metadata, "Inicio de preparación", exact_text: "19:00"
-    assert_selector :link, href: schedule_entry_path(20)
+    assert_selector :related_act, "Acto 17", href: schedule_entry_path(20)
   end
 
   test "rejects missing preparations" do

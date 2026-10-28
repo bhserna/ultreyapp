@@ -14,6 +14,17 @@ AppSelectors.add(:activity_metadata, replaces_css: /\.page__details(?![\w-])/) d
   end
 end
 
+AppSelectors.add(:related_act, replaces_css: /\.related-links(?:__(?:label|title))?(?![\w-])/) do
+  xpath do |label = nil|
+    links = XPath.descendant(:a)[
+      XPath.ancestor(:ul)[XPath.attr(:class).contains_word("related-links")]
+    ]
+    label ? links[XPath.descendant(:span)[XPath.attr(:class).contains_word("related-links__label")][XPath.string.n == label]] : links
+  end
+
+  node_filter(:href) { |link, href| link[:href] == href }
+end
+
 AppSelectors.add(:detail_field) do
   xpath do |label|
     XPath.descendant(:p)[
