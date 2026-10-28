@@ -1,6 +1,8 @@
 require "test_helper"
+require_relative "../support/response_html_assertions"
 
 class ScheduleControllerTest < ActionDispatch::IntegrationTest
+  include ResponseHtmlAssertions
   test "shows Sunday acts and preparations ordered by start time" do
     get root_url
 
@@ -47,6 +49,25 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Desmontaje"
     assert_select "tbody tr:last-child[data-preparation-id='20'] td:nth-child(2)", text: "21:30"
     assert_select "tbody td", text: "Participación Gpo Folclórico", count: 0
+  end
+
+  test "shows the official schedule times on both days" do
+    get root_url(day: "Domingo 15")
+
+    within(:schedule_act, "Presentación del Stmo y Entronización de la Virgen.") do
+      assert_selector :schedule_cell, :act_number, exact_text: "4"
+      assert_selector :schedule_cell, :start_time, exact_text: "10:50"
+      assert_selector :schedule_cell, :end_time, exact_text: "11:50"
+    end
+
+    get root_url(day: "Lunes 16")
+
+    within(:schedule_act, "Comida") do
+      assert_selector :schedule_cell, :act_number, exact_text: "27"
+      assert_selector :schedule_cell, :start_time, exact_text: "14:25"
+      assert_selector :schedule_cell, :end_time, exact_text: "15:00"
+      assert_selector :schedule_cell, :commission, exact_text: "Programa"
+    end
   end
 
   test "filters acts by commission and preserves the filter across days" do

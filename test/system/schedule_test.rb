@@ -75,25 +75,6 @@ class ScheduleTest < ApplicationSystemTestCase
     end
   end
 
-  test "shows the official schedule times on both days" do
-    visit root_path(day: "Domingo 15")
-
-    within(:schedule_act, "Presentación del Stmo y Entronización de la Virgen.") do
-      assert_selector :schedule_cell, :act_number, text: "4"
-      assert_selector :schedule_cell, :start_time, text: "10:50"
-      assert_selector :schedule_cell, :end_time, text: "11:50"
-    end
-
-    click_link "Lunes 16"
-
-    within(:schedule_act, "Comida") do
-      assert_selector :schedule_cell, :act_number, text: "27"
-      assert_selector :schedule_cell, :start_time, text: "14:25"
-      assert_selector :schedule_cell, :end_time, text: "15:00"
-      assert_selector :schedule_cell, :commission, text: "Programa"
-    end
-  end
-
   test "filters by selecting a commission and keeps it when changing days" do
     visit root_path(day: "Lunes 16")
 
