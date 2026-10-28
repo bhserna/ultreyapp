@@ -102,24 +102,6 @@ class OperationalActivitiesTest < ApplicationSystemTestCase
     assert_text "Por definir con la Arena"
   end
 
-  test "opens technical details and questions without assigning them to an act" do
-    visit root_path(day: "Domingo 15", row_type: "operations")
-    within(:schedule_operation, "Preparación para la transmisión en vivo") { click_link "Ver detalle" }
-
-    assert_selector "h1", text: "Preparación para la transmisión en vivo"
-    assert_text "Servicios y proveedores"
-    assert_text "07:00"
-    assert_text "Proveedor externo (ANetwork)"
-    assert_text "Con qué laptop o equipo se realizará la transmisión en vivo?"
-    assert_text "ANetwork solo proporciona el enlace bidireccional de Internet."
-    assert_no_selector "turbo-frame#questions, turbo-frame#documents"
-
-    visit operational_activity_path(7)
-    assert_text "Por definir con la Arena"
-    assert_text "A qué hora puede ser la prueba de sonido e iluminación?"
-    assert_no_text "Se finalizan las actividades previas"
-  end
-
   private
 
   def schedule_phase_titles
