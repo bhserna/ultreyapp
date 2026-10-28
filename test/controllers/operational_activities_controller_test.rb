@@ -9,8 +9,8 @@ class OperationalActivitiesControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: "Preparación para la transmisión en vivo"
-    assert_select ".page__details dd", text: "Servicios y proveedores"
-    assert_select ".page__details dd", text: "07:00"
+    assert_selector :activity_metadata, "Categoría", exact_text: "Servicios y proveedores"
+    assert_selector :activity_metadata, "Inicio", exact_text: "07:00"
     within(:operational_details) do
       assert_selector :detail_field, "Preguntas para la Arena", text: "Con qué anticipación puede preparar la infraestructura"
       assert_selector :detail_field, "Ejecuta", text: "Proveedor externo (ANetwork)"
@@ -26,7 +26,7 @@ class OperationalActivitiesControllerTest < ActionDispatch::IntegrationTest
     get operational_activity_url(7)
 
     assert_response :success
-    assert_selector ".page__details dd", exact_text: "Por definir con la Arena"
+    assert_selector :activity_metadata, "Inicio", exact_text: "Por definir con la Arena"
     within(:operational_details) do
       assert_selector :detail_field, "Preguntas para la Arena", text: "A qué hora puede ser la prueba de sonido e iluminación?"
     end

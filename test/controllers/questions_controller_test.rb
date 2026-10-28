@@ -10,8 +10,8 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "h1", text: "Presentación: saludos y palabras de autoridades"
     assert_select ".page__eyebrow", text: "Domingo 15"
-    assert_select ".page__details dd", text: "10:20"
-    assert_select ".page__details dt", text: "Día", count: 0
+    assert_selector :activity_metadata, "Inicio", exact_text: "10:20"
+    assert_no_selector :activity_metadata, "Día"
     assert_select "turbo-frame#questions[src=?]", schedule_entry_questions_path(3)
 
     get schedule_entry_questions_url(3)

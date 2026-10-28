@@ -114,7 +114,7 @@ class ScheduleTest < ApplicationSystemTestCase
       click_link "Ver detalle"
     end
 
-    within(".page__header .page__details") do
+    within(:activity_metadata, "Comisiones") do
       assert_selector ".commission-links", text: "Programa"
       assert_link "Programa", href: root_path(day: "Domingo 15", commission: "Programa")
       click_link "Programa"

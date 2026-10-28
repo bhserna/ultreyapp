@@ -11,7 +11,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_selector "h1", exact_text: "Preparación para el Acto 1 y 2"
     assert_selector "section.page__section", count: 2
     within("section.page__section:nth-of-type(1)", text: "Tener disponibles 10 sillas") do
-      assert_selector ".page__details dd", exact_text: "09:45"
+      assert_selector :activity_metadata, "Inicio de acción", exact_text: "09:45"
       assert_selector "p", text: "Tomar mobiliario de área de resguardo"
       assert_selector :detail_field, "Preguntas para la Arena", text: "Quién proporciona las sillas?"
       assert_selector :detail_field, "Notas", exact_text: "Tener disponibles 10 sillas"
@@ -46,7 +46,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_selector "h1", text: "Acto 24 / Vivencia 6"
     assert_selector ".page__eyebrow", exact_text: "Lunes 16"
-    assert_selector ".page__header .page__details dd", exact_text: "11:05"
+    assert_selector :activity_metadata, "Inicio de preparación", exact_text: "11:05"
     assert_selector "section.page__section p", text: "Tener listo al expositor (Pbro. Fernando Torres)"
     assert_selector "section.page__section p", text: "Néstor Velasquez"
     assert_selector :link, href: schedule_entry_path(27)
@@ -58,7 +58,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     get preparation_url(26)
 
     assert_response :success
-    assert_selector ".page__header .page__details dd", exact_text: "12:40"
+    assert_selector :activity_metadata, "Inicio de preparación", exact_text: "12:40"
     assert_selector "section.page__section p", text: "Liturgia prepara lo relacionado a Sacristía"
     assert_selector "section.page__section p", text: "Las pantallas comienzan a mostrar de manera discreta la hora de la Eucaristía"
     assert_selector :link, href: schedule_entry_path(29)
@@ -90,7 +90,7 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_selector "section.page__section p", text: "Ubicar a la Virgen al centro del escenario"
     assert_selector ".page__eyebrow", exact_text: "Domingo 15"
-    assert_selector ".page__header .page__details dd", exact_text: "19:00"
+    assert_selector :activity_metadata, "Inicio de preparación", exact_text: "19:00"
     assert_selector :link, href: schedule_entry_path(20)
   end
 
