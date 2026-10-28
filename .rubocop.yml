@@ -9,3 +9,4 @@ Ultreya/PreferRegisteredSelector:
   Enabled: true
   Include:
     - test/system/**/*.rb
+    - test/controllers/**/*.rb

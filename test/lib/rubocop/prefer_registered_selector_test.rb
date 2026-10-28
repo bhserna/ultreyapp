@@ -49,6 +49,14 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
     end
   end
 
+  test "checks Rails assert_select calls in controller tests" do
+    offenses = inspect_source('assert_select ".questions__item", count: 0', path: "test/controllers/questions_controller_test.rb")
+
+    assert_equal 1, offenses.size
+    assert_includes offenses.first.message, ":question"
+    assert_empty inspect_source('assert_select "h1", text: "Programa"', path: "test/controllers/schedule_controller_test.rb")
+  end
+
   test "reports all registered alternatives in a combined selector" do
     offenses = inspect_source('assert_no_selector "tr.schedule__act, tr.schedule__preparation"')
 
@@ -61,6 +69,8 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       'within(:schedule_act, "Comida") { assert_selector "td:nth-child(2)", text: "14:25" }',
       'within("tr.schedule__operation") { find("td:first-child") }',
       'within(:css, "tr.schedule__act") { find("td:nth-child(2)") }',
+      'within(:schedule_act, "Comida") { assert_select "td:nth-child(2)", text: "14:25" }',
+      'assert_select("tr.schedule__act") { assert_select "td:nth-child(2)", text: "14:25" }',
       'within(:schedule_phase, :program) { within(:schedule_preparation, 2) { all("td:nth-child(3)") } }'
     ]
 
@@ -93,9 +103,10 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
     end
   end
 
-  test "is enabled only for system tests" do
+  test "is enabled for system and controller tests but not other test files" do
     assert cop.relevant_file?(Rails.root.join("test/system/general_questions_test.rb").to_s)
-    assert_not cop.relevant_file?(Rails.root.join("test/controllers/questions_controller_test.rb").to_s)
+    assert cop.relevant_file?(Rails.root.join("test/controllers/questions_controller_test.rb").to_s)
+    assert_not cop.relevant_file?(Rails.root.join("test/models/question_test.rb").to_s)
     assert_not cop.relevant_file?(Rails.root.join("test/support/question_selectors.rb").to_s)
   end
 
@@ -109,9 +120,9 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
     RuboCop::Cop::Ultreya::PreferRegisteredSelector.new(config)
   end
 
-  def inspect_source(source)
+  def inspect_source(source, path: "test/system/example_test.rb")
     processed_source = RuboCop::ProcessedSource.new(
-      source.dup, 3.4, Rails.root.join("test/system/example_test.rb").to_s
+      source.dup, 3.4, Rails.root.join(path).to_s
     )
     team = RuboCop::Cop::Team.new([ cop ], config, raise_error: true)
     team.investigate(processed_source).offenses

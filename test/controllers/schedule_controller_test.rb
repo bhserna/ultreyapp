@@ -21,19 +21,21 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "thead th:nth-child(5)", text: "Actividad"
     assert_select "thead th:nth-child(6)", text: "Comisión"
     assert_select "thead th:nth-child(7) .visually-hidden", text: "Preguntas y documentos"
-    assert_select "tbody tr.schedule__act", count: 19
-    assert_select "tbody tr.schedule__preparation", count: 17
-    assert_select "tbody tr.schedule__act", text: /Proyección Video Inicio/ do
-      assert_select "td:nth-child(1)", text: "1"
-      assert_select "td:nth-child(2)", text: "10:00"
-      assert_select "td:nth-child(3)", text: "10:05"
-      assert_select "td:nth-child(4)", text: "0:05"
-      assert_select "td:nth-child(5)", text: /Proyección Video Inicio/
-      assert_select "td:nth-child(6) .commission-links", text: "Programa"
-      assert_select "td:nth-child(7) a[href=?]", schedule_entry_path(1), text: "Ver detalle"
+    assert_selector :schedule_act, count: 19
+    assert_selector :schedule_preparation, count: 17
+    within(:schedule_act, "Proyección Video Inicio") do
+      assert_selector :schedule_cell, :act_number, exact_text: "1"
+      assert_selector :schedule_cell, :start_time, exact_text: "10:00"
+      assert_selector :schedule_cell, :end_time, exact_text: "10:05"
+      assert_selector :schedule_cell, :duration, exact_text: "0:05"
+      assert_selector :schedule_cell, :activity, text: "Proyección Video Inicio"
+      within(:schedule_cell, :commission) do
+        assert_selector ".commission-links", exact_text: "Programa"
+      end
+      assert_selector :link, "Ver detalle", href: schedule_entry_path(1)
     end
-    assert_select "tbody tr.schedule__operation", count: 11
-    assert_select "tbody tr.schedule__operation", text: /Instalación de stands/
+    assert_selector :schedule_operation, count: 11
+    assert_selector :schedule_operation, "Instalación de stands"
     assert_select "tbody td", text: "Recepción de Diócesis", count: 0
     assert_no_match(/Se finalizan las actividades previas/, response.body)
   end
@@ -43,15 +45,22 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "nav a[aria-current='page']", text: "Lunes 16"
-    assert_select "tbody tr.schedule__act", count: 12
-    assert_select "tbody tr.schedule__preparation", count: 9
+    assert_selector :schedule_act, count: 12
+    assert_selector :schedule_preparation, count: 9
     within(:schedule_preparation, 18) do
       assert_selector :schedule_cell, :start_time, exact_text: "07:40"
       assert_selector :link, "Ver detalle", href: preparation_path(18)
     end
-    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "INICIO / Presentación de conductores / Bienvenida"
-    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Desmontaje"
-    assert_select "tbody tr:last-child[data-preparation-id='20'] td:nth-child(2)", text: "21:30"
+    within(:schedule_act, "INICIO / Presentación de conductores / Bienvenida") do
+      assert_selector :schedule_cell, :activity, exact_text: "INICIO / Presentación de conductores / Bienvenida"
+    end
+    within(:schedule_act, "Desmontaje") do
+      assert_selector :schedule_cell, :activity, exact_text: "Desmontaje"
+    end
+    within(:schedule_preparation, 20) do |preparation|
+      assert_selector :schedule_cell, :start_time, exact_text: "21:30"
+      assert preparation.matches_selector?("tr:last-child")
+    end
     assert_select "tbody td", text: "Participación Gpo Folclórico", count: 0
   end
 
@@ -160,17 +169,21 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_select "select#commission option[selected][value='EyA']"
     assert_select "nav a[href=?]", root_path(day: "Lunes 16", commission: "EyA"), text: "Lunes 16"
-    assert_select "tbody tr.schedule__act", count: 1
-    assert_select "tbody tr.schedule__preparation", count: 4
+    assert_selector :schedule_act, count: 1
+    assert_selector :schedule_preparation, count: 4
     assert_selector :schedule_operation, count: 4
-    assert_select "tbody tr.schedule__act td:nth-child(5)", text: "Canto de Colores"
-    assert_select "tbody tr td:nth-child(6) a[href=?]", root_path(day: "Domingo 15", commission: "EyA"), text: "EyA"
+    within(:schedule_act, "Canto de Colores") do
+      assert_selector :schedule_cell, :activity, exact_text: "Canto de Colores"
+      within(:schedule_cell, :commission) do
+        assert_selector :link, "EyA", href: root_path(day: "Domingo 15", commission: "EyA")
+      end
+    end
 
     get root_url(day: "Lunes 16", commission: "EyA")
 
     assert_response :success
     assert_select "tbody tr td[colspan='7']", text: /No hay actividades de esta comisión/
-    assert_select "tbody tr td:nth-child(5)", count: 0
+    assert_no_selector :schedule_cell, :activity
   end
 
   test "renders the acts and preparations assigned to the program commission" do
@@ -184,9 +197,9 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     get root_url(day: "Domingo 15", row_type: "operations")
 
     assert_response :success
-    assert_select "tbody tr.schedule__operation", count: 11
-    assert_select "tbody tr.schedule__act", count: 0
-    assert_select "tbody tr.schedule__preparation", count: 0
+    assert_selector :schedule_operation, count: 11
+    assert_no_selector :schedule_act
+    assert_no_selector :schedule_preparation
     assert_select "nav a[href=?]", root_path(day: "Sábado 14", row_type: "operations"), text: "Sábado 14"
     assert_select "tbody a[href=?]", root_path(day: "Domingo 15", commission: "Marketing", row_type: "operations"), text: "Marketing"
 
@@ -208,15 +221,21 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select ".schedule__resource-status", count: 0
-    assert_select "tbody tr.schedule__act a[href=?]", schedule_entry_path(1), text: "Ver detalle"
-    assert_select "tbody tr.schedule__act a[href=?]", schedule_entry_path(2), text: "Ver detalle"
+    within(:schedule_act, "Proyección Video Inicio") do
+      assert_selector :link, "Ver detalle", href: schedule_entry_path(1)
+    end
+    within(:schedule_act, "Participación Gpo Folclórico") do
+      assert_selector :link, "Ver detalle", href: schedule_entry_path(2)
+    end
     assert_no_match(/Preguntas \d+|Contestadas \d+|Documentos \d+/, response.body)
 
     get root_url(day: "Domingo 15", commission: "EyA")
 
     assert_response :success
-    assert_select "tbody tr.schedule__act", count: 1
+    assert_selector :schedule_act, count: 1
     assert_select ".schedule__resource-status", count: 0
-    assert_select "tbody tr a[href=?]", schedule_entry_path(5), text: "Ver detalle"
+    within(:schedule_act, "Canto de Colores") do
+      assert_selector :link, "Ver detalle", href: schedule_entry_path(5)
+    end
   end
 end

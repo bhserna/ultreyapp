@@ -7,7 +7,7 @@ module RuboCop
     module Ultreya
       class PreferRegisteredSelector < Base
         MSG = "Use the registered selector %<selectors>s instead of CSS for this application concept."
-        RESTRICT_ON_SEND = %i[ within find all assert_selector assert_no_selector ].freeze
+        RESTRICT_ON_SEND = %i[ within find all assert_selector assert_no_selector assert_select ].freeze
 
         def on_send(node)
           selector = css_argument(node)
@@ -39,7 +39,7 @@ module RuboCop
         def within_registered_scope?(node, scopes)
           node.each_ancestor(:block).any? do |block|
             call = block.send_node
-            next false unless call.method_name == :within
+            next false unless %i[ within assert_select ].include?(call.method_name)
 
             selector = call.first_argument
             css = css_argument(call)

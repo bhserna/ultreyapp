@@ -1,6 +1,9 @@
 require "test_helper"
+require_relative "../support/response_html_assertions"
 
 class QuestionsControllerTest < ActionDispatch::IntegrationTest
+  include ResponseHtmlAssertions
+
   test "shows activity details and manages its questions" do
     get schedule_entry_url(3)
 
@@ -24,7 +27,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to schedule_entry_questions_url(3)
 
     get schedule_entry_questions_url(3)
-    assert_select ".questions__item", text: /¿Quién participa\?/
+    assert_selector :question, "¿Quién participa?"
     assert_select "turbo-frame#question_#{question.id}"
 
     get edit_question_url(question)
@@ -46,12 +49,14 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   test "keeps questions scoped to their activity" do
     question = Question.create!(schedule_entry_id: 3, body: "Pregunta privada de la actividad")
     get schedule_entry_questions_url(4)
-    assert_select ".questions__item", count: 0
+    assert_no_selector :question
 
     get schedule_entry_questions_url(3)
-    assert_select ".questions__item a[href=?]", edit_question_path(question), text: "Editar"
-    assert_select ".questions__item a[href=?]", edit_question_answer_path(question), text: "Responder"
-    assert_select ".questions__item form[action=?]", question_path(question)
+    within(:question, question.body) do
+      assert_selector :link, "Editar", href: edit_question_path(question)
+      assert_selector :link, "Responder", href: edit_question_answer_path(question)
+      assert_selector "form[action='#{question_path(question)}']"
+    end
   end
 
   test "keeps general questions separate from activity questions" do
@@ -60,12 +65,12 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     get questions_url
     assert_response :success
-    assert_select ".questions__item", text: /Pregunta general/, count: 1
-    assert_select ".questions__item", text: /Pregunta de la actividad/, count: 0
+    assert_selector :question, general_question.body, count: 1
+    assert_no_selector :question, activity_question.body
 
     get schedule_entry_questions_url(3)
-    assert_select ".questions__item", text: /Pregunta general/, count: 0
-    assert_select ".questions__item", text: /Pregunta de la actividad/, count: 1
+    assert_no_selector :question, general_question.body
+    assert_selector :question, activity_question.body, count: 1
 
     get edit_question_url(activity_question)
     assert_response :success
@@ -93,15 +98,19 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     get questions_url
     assert_response :success
-    assert_select ".topics__tab[aria-current='page']", text: "Sin tema"
-    assert_select "turbo-frame#question_#{unassigned_question.id}"
-    assert_select ".questions__item", count: 1
+    assert_selector :selected_topic, "Sin tema"
+    within(:question, unassigned_question.body) do
+      assert_selector "turbo-frame#question_#{unassigned_question.id}"
+    end
+    assert_selector :question, count: 1
 
     get questions_url(topic_id: topic.id)
     assert_response :success
-    assert_select ".topics__tab[aria-current='page']", text: "Logística"
-    assert_select "turbo-frame#question_#{selected_question.id}"
-    assert_select ".questions__item", count: 1
+    assert_selector :selected_topic, "Logística"
+    within(:question, selected_question.body) do
+      assert_selector "turbo-frame#question_#{selected_question.id}"
+    end
+    assert_selector :question, count: 1
     assert_select "form[action=?]", questions_path(topic_id: topic.id)
   end
 
