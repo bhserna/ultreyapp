@@ -10,7 +10,7 @@ class ProductionDetailsControllerTest < ActionDispatch::IntegrationTest
 
     get schedule_entry_url(3)
 
-    within("section[aria-labelledby='production-detail-heading']") do
+    within(:production_details) do
       production_fields.each_value do |label, value|
         value.lines.each { |line| assert_selector :detail_field, label, text: line.strip }
       end

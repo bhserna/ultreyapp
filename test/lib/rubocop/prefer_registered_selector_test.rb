@@ -13,6 +13,8 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       "tbody[data-phase='program']" => :schedule_phase,
       ".questions__item" => :question,
       ".topics__management-item" => :topic_item,
+      "section[aria-labelledby='production-detail-heading']" => :production_details,
+      "section[aria-label='Detalles operativos']" => :operational_details,
       ".topics__tab[aria-current='page']" => :selected_topic
     }
 
@@ -87,6 +89,9 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       'assert_selector ".questions__answer"',
       'assert_selector ".page__header.page__header--flush"',
       'assert_selector ".schedule__activity"',
+      "within(:production_details) { assert_selector :detail_field, 'Notas' }",
+      "within(:operational_details) { assert_selector :detail_field, 'Ejecuta' }",
+      'assert_selector "section[aria-label=\'Otra sección\']"',
       'assert_selector ".topics__tab"',
       'assert_selector ".questions__item-extra"',
       'assert_selector ".schedule__act-extra"',
