@@ -4,32 +4,32 @@ class ScheduleTest < ApplicationSystemTestCase
   test "interleaves preparations and acts in the table by start time" do
     visit root_path(day: "Domingo 15")
 
-    assert_selector "tbody tr.schedule__act", count: 19
-    assert_selector "tbody tr.schedule__preparation", count: 17
-    assert_selector "tr[data-preparation-id='2']", count: 1
-    assert_selector "tbody tr.schedule__operation", count: 11
-    times = all("tbody tr td:nth-child(2)").map(&:text).grep(/\A\d{2}:\d{2}\z/)
+    assert_selector :schedule_act, count: 19
+    assert_selector :schedule_preparation, count: 17
+    assert_selector :schedule_preparation, 2, count: 1
+    assert_selector :schedule_operation, count: 11
+    times = all(:schedule_cell, :start_time).map(&:text).grep(/\A\d{2}:\d{2}\z/)
     assert_equal times.sort, times
-    within("tr[data-preparation-id='2']") do
-      assert_selector "td:nth-child(1)", text: "Preparación"
-      assert_selector "td:nth-child(2)", text: "09:45"
+    within(:schedule_preparation, 2) do
+      assert_selector :schedule_cell, :act_number, text: "Preparación"
+      assert_selector :schedule_cell, :start_time, text: "09:45"
       assert_text "Preparación para el Acto 1 y 2"
       assert_link "Ver detalle", href: preparation_path(2)
     end
-    within("tr[data-preparation-id='7']") do
-      assert_selector "td:nth-child(2)", text: "12:30"
+    within(:schedule_preparation, 7) do
+      assert_selector :schedule_cell, :start_time, text: "12:30"
       assert_no_text "00:15"
     end
-    within("tr[data-preparation-id='12']") do
-      assert_selector "td:nth-child(2)", text: "16:50"
+    within(:schedule_preparation, 12) do
+      assert_selector :schedule_cell, :start_time, text: "16:50"
     end
     assert_equal "rgb(225, 239, 250)", evaluate_script("getComputedStyle(document.querySelector('tr.schedule__preparation')).backgroundColor")
 
     click_link "Lunes 16"
-    assert_selector "tbody tr.schedule__preparation", count: 9
-    assert_selector "tbody tr.schedule__act", count: 12
-    within("tr[data-preparation-id='18']") do
-      assert_selector "td:nth-child(2)", text: "07:40"
+    assert_selector :schedule_preparation, count: 9
+    assert_selector :schedule_act, count: 12
+    within(:schedule_preparation, 18) do
+      assert_selector :schedule_cell, :start_time, text: "07:40"
       assert_link "Ver detalle", href: preparation_path(18)
     end
   end
@@ -40,26 +40,28 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_selector "main.page.page--wide"
     assert_selector ".page__header.page__header--flush"
     assert_no_selector ".page__eyebrow"
-    assert_equal ["1200px", "0px", "32px"], page_layout_styles
+    assert_equal [ "1200px", "0px", "32px" ], page_layout_styles
 
-    within("tr", text: "Proyección Video Inicio") do
+    within(:schedule_act, "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 
     assert_selector "main.page:not(.page--wide)"
     assert_selector ".page__eyebrow", text: "DOMINGO 15"
-    assert_equal ["800px", "32px", "32px"], page_layout_styles
+    assert_equal [ "800px", "32px", "32px" ], page_layout_styles
   end
 
   test "shows operations separately and keeps preparation actions off the table" do
     visit root_path
 
-    within("tr", text: "Proyección Video Inicio") do
-      assert_selector "td:nth-child(6) .commission-links", text: "Programa"
+    within(:schedule_act, "Proyección Video Inicio") do
+      within(:schedule_cell, :commission) do
+        assert_selector ".commission-links", text: "Programa"
+      end
     end
     assert_no_text "Recepción de Diócesis"
-    within("tr.schedule__operation", text: "Instalación de stands") do
-      assert_selector "td:first-child", text: "Operación"
+    within(:schedule_operation, "Instalación de stands") do
+      assert_selector :schedule_cell, :act_number, text: "Operación"
       assert_selector ".schedule__category", text: "Montaje e instalaciones"
     end
     assert_no_text "Se finalizan las actividades previas"
@@ -68,7 +70,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
     click_link "Lunes 16"
 
-    within("tr", text: "Desmontaje") do
+    within(:schedule_act, "Desmontaje") do
       assert_link "Todas las comisiones", href: root_path(day: "Lunes 16", commission: "Todas las comisiones")
     end
   end
@@ -76,19 +78,19 @@ class ScheduleTest < ApplicationSystemTestCase
   test "shows the official schedule times on both days" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Presentación del Stmo y Entronización de la Virgen.") do
-      assert_selector "td:nth-child(1)", text: "4"
-      assert_selector "td:nth-child(2)", text: "10:50"
-      assert_selector "td:nth-child(3)", text: "11:50"
+    within(:schedule_act, "Presentación del Stmo y Entronización de la Virgen.") do
+      assert_selector :schedule_cell, :act_number, text: "4"
+      assert_selector :schedule_cell, :start_time, text: "10:50"
+      assert_selector :schedule_cell, :end_time, text: "11:50"
     end
 
     click_link "Lunes 16"
 
-    within("tr", text: "Comida") do
-      assert_selector "td:nth-child(1)", text: "27"
-      assert_selector "td:nth-child(2)", text: "14:25"
-      assert_selector "td:nth-child(3)", text: "15:00"
-      assert_selector "td:nth-child(6)", text: "Programa"
+    within(:schedule_act, "Comida") do
+      assert_selector :schedule_cell, :act_number, text: "27"
+      assert_selector :schedule_cell, :start_time, text: "14:25"
+      assert_selector :schedule_cell, :end_time, text: "15:00"
+      assert_selector :schedule_cell, :commission, text: "Programa"
     end
   end
 
@@ -99,11 +101,11 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_text "No hay actividades de esta comisión para Lunes 16."
 
     click_link "Domingo 15"
-    assert_selector "tbody tr.schedule__act", count: 1
-    assert_selector "tbody tr.schedule__preparation", count: 4
-    assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
-    assert_equal "EyA", find("#commission").value
-    assert_selector "tbody tr.schedule__operation", count: 4
+    assert_selector :schedule_act, count: 1
+    assert_selector :schedule_preparation, count: 4
+    assert_selector :schedule_cell, :activity, text: "Canto de Colores"
+    assert_select "Comisión", selected: "EyA"
+    assert_selector :schedule_operation, count: 4
 
     select "Sin filtro de comisión", from: "Comisión"
     assert_selector "tbody tr", minimum: 2
@@ -113,27 +115,27 @@ class ScheduleTest < ApplicationSystemTestCase
     visit root_path(day: "Lunes 16")
 
     select "Todas las comisiones", from: "Comisión"
-    assert_selector "tbody tr.schedule__act", count: 1
-    assert_no_selector "tbody tr.schedule__preparation"
-    assert_selector "tbody tr td:nth-child(5)", text: "Desmontaje"
+    assert_selector :schedule_act, count: 1
+    assert_no_selector :schedule_preparation
+    assert_selector :schedule_cell, :activity, text: "Desmontaje"
 
     select "Sin filtro de comisión", from: "Comisión"
-    assert_selector "tbody tr.schedule__act", count: 12
-    assert_selector "tbody tr.schedule__preparation", count: 9
-    assert_equal "", find("#commission").value
+    assert_selector :schedule_act, count: 12
+    assert_selector :schedule_preparation, count: 9
+    assert_select "Comisión", selected: "Sin filtro de comisión"
   end
 
   test "filters when clicking a commission in the table" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Canto de Colores") do
+    within(:schedule_act, "Canto de Colores") do
       click_link "EyA"
     end
 
-    assert_selector "tbody tr.schedule__act", count: 1
-    assert_selector "tbody tr.schedule__preparation", count: 4
-    assert_selector "tbody tr td:nth-child(5)", text: "Canto de Colores"
-    assert_equal "EyA", find("#commission").value
+    assert_selector :schedule_act, count: 1
+    assert_selector :schedule_preparation, count: 4
+    assert_selector :schedule_cell, :activity, text: "Canto de Colores"
+    assert_select "Comisión", selected: "EyA"
 
     click_link "Lunes 16"
     assert_text "No hay actividades de esta comisión para Lunes 16."
@@ -156,7 +158,7 @@ class ScheduleTest < ApplicationSystemTestCase
   test "filters the activity list from a commission link on the detail page" do
     visit root_path
 
-    within("tr", text: "Proyección Video Inicio") do
+    within(:schedule_act, "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 
@@ -167,10 +169,10 @@ class ScheduleTest < ApplicationSystemTestCase
     end
 
     assert_selector "nav a[aria-current='page']", text: "Domingo 15"
-    assert_equal "Programa", find("#commission").value
-    assert_selector "tbody tr.schedule__act", count: 16
-    assert_selector "tbody tr.schedule__preparation", count: 2
-    assert_selector "tbody tr td:nth-child(5)", text: /Proyección Video Inicio/
+    assert_select "Comisión", selected: "Programa"
+    assert_selector :schedule_act, count: 16
+    assert_selector :schedule_preparation, count: 2
+    assert_selector :schedule_cell, :activity, text: /Proyección Video Inicio/
   end
 
   test "keeps access to resources without showing counts beside each activity" do
@@ -187,7 +189,7 @@ class ScheduleTest < ApplicationSystemTestCase
     assert_no_text "Contestadas 1"
     assert_no_text "Documentos 1"
 
-    within("tr", text: "Proyección Video Inicio") do
+    within(:schedule_act, "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
     assert_text "Pendiente"
