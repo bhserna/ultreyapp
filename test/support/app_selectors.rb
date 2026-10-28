@@ -13,3 +13,4 @@ end
 
 require_relative "schedule_selectors"
 require_relative "question_selectors"
+require_relative "activity_selectors"

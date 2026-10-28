@@ -12,8 +12,7 @@ class ProductionDetailsControllerTest < ActionDispatch::IntegrationTest
 
     within("section[aria-labelledby='production-detail-heading']") do
       production_fields.each_value do |label, value|
-        assert_selector "h3", exact_text: label
-        value.lines.each { |line| assert_selector "p", text: line.strip }
+        value.lines.each { |line| assert_selector :detail_field, label, text: line.strip }
       end
       assert_no_selector "p", text: "Equipo de otra actividad"
       assert_selector :link, "Editar detalles de producción", href: edit_schedule_entry_production_detail_path(3)

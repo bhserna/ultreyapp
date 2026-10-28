@@ -13,11 +13,12 @@ class PreparationsControllerTest < ActionDispatch::IntegrationTest
     within("section.page__section:nth-of-type(1)", text: "Tener disponibles 10 sillas") do
       assert_selector ".page__details dd", exact_text: "09:45"
       assert_selector "p", text: "Tomar mobiliario de área de resguardo"
-      assert_selector "p", text: "Quién proporciona las sillas?"
+      assert_selector :detail_field, "Preguntas para la Arena", text: "Quién proporciona las sillas?"
+      assert_selector :detail_field, "Notas", exact_text: "Tener disponibles 10 sillas"
       assert_no_selector "p", text: "Pista Popurri"
     end
     within("section.page__section:nth-of-type(2)", text: "Pista Popurri") do
-      assert_selector "p", text: "Utilizacion de Pantalla completa"
+      assert_selector :detail_field, "Pantalla", exact_text: "Utilizacion de Pantalla completa"
       assert_no_selector "p", text: "Tener disponibles 10 sillas"
     end
     assert_no_selector "section.page__section h2"
