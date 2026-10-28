@@ -1,8 +1,11 @@
 # Omakase Ruby styling for Rails
 inherit_gem: { rubocop-rails-omakase: rubocop.yml }
 
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+require:
+  - ./lib/rubocop/cop/ultreya/prefer_registered_selector.rb
+
+Ultreya/PreferRegisteredSelector:
+  Description: Prefer registered Capybara selectors for application concepts.
+  Enabled: true
+  Include:
+    - test/system/**/*.rb

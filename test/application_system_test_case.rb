@@ -1,6 +1,5 @@
 require "test_helper"
-require_relative "support/schedule_selectors"
-require_relative "support/question_selectors"
+require_relative "support/app_selectors"
 
 Capybara.enable_aria_label = true
 
