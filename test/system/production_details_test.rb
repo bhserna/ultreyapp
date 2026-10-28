@@ -1,58 +1,22 @@
 require "application_system_test_case"
-require "rake"
 
 class ProductionDetailsTest < ApplicationSystemTestCase
-  test "shows imported production details under their matching acts" do
-    Rails.application.load_tasks unless Rake::Task.task_defined?("production_details:import")
-    Rake::Task["production_details:import"].reenable
-    capture_io { Rake::Task["production_details:import"].invoke }
-    Rake::Task["questions:import"].reenable
-    capture_io { Rake::Task["questions:import"].invoke }
-
-    visit schedule_entry_path(1)
-    assert_text "Video de Ultreyas y anillo proyecta Bienvenidos"
-    assert_text "Los pasillos permanecen visibles."
-    assert_link "Editar detalles de producción"
-
-    visit schedule_entry_path(14)
-    assert_text "Abraham Moreno"
-    assert_text "Perseverancia como dirigente después de muchos años"
-    assert_text "Al concluir el acto se entrega el reconocimiento por parte de Javier Ayala y fotografía"
-    assert_text "¿Quién proporciona la presentación con el nombre del expositor y título de la vivencia? (Programa)"
-    assert_no_text "Video de Ultreyas y anillo proyecta Bienvenidos"
-
-    visit schedule_entry_path(10)
-    assert_text "1a llamada 1:47 pm"
-    click_link "Editar detalles de producción"
-    assert_field "Ejecuta", with: "EyA y Maestros de Ceremonias"
-    assert_field "Pantalla", with: "Las pantallas proyectan avisos"
-
-    visit schedule_entry_path(23)
-    assert_text "Daniela Serna"
-    assert_text "¿Quién proporciona la presentación con el nombre del expositor y título de la vivencia? (Programa)"
-    assert_text "Al concluir el acto se entrega el reconocimiento por parte de Nelly y fotografía"
-    assert_no_text "Abraham Moreno"
-
-    visit schedule_entry_path(31)
-    within("section[aria-labelledby='production-detail-heading']") { assert_text "Todas las comisiones" }
-  end
-
   test "creates reads edits and deletes production details from an activity" do
     visit schedule_entry_path(3)
     assert_text "Todavía no hay detalles de producción para esta actividad."
     click_link "Agregar detalles de producción"
 
     fields = {
-      "Ejecuta" => ["executors", "Equipo EyA"],
-      "Pantalla" => ["screen", "Video de bienvenida"],
-      "Audio" => ["audio", "Dos micrófonos"],
-      "Iluminación de sala" => ["room_lighting", "Sala al 30%"],
-      "Iluminación de escenario" => ["stage_lighting", "Luz frontal"],
-      "Iluminación de pasillos" => ["aisle_lighting", "Pasillos visibles"],
-      "Requerimientos" => ["requirements", "Diez sillas"],
-      "Notas" => ["notes", "Primera línea\nSegunda línea"],
-      "Radios" => ["radios", "2 radios, canal 3"],
-      "Pendientes por confirmar" => ["pending_confirmations", "Confirmar proveedor"]
+      "Ejecuta" => [ "executors", "Equipo EyA" ],
+      "Pantalla" => [ "screen", "Video de bienvenida" ],
+      "Audio" => [ "audio", "Dos micrófonos" ],
+      "Iluminación de sala" => [ "room_lighting", "Sala al 30%" ],
+      "Iluminación de escenario" => [ "stage_lighting", "Luz frontal" ],
+      "Iluminación de pasillos" => [ "aisle_lighting", "Pasillos visibles" ],
+      "Requerimientos" => [ "requirements", "Diez sillas" ],
+      "Notas" => [ "notes", "Primera línea\nSegunda línea" ],
+      "Radios" => [ "radios", "2 radios, canal 3" ],
+      "Pendientes por confirmar" => [ "pending_confirmations", "Confirmar proveedor" ]
     }
     fields.each { |label, (_, value)| fill_in label, with: value }
     click_button "Guardar detalles de producción"

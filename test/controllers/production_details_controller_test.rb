@@ -1,6 +1,38 @@
 require "test_helper"
+require_relative "../support/response_html_assertions"
 
 class ProductionDetailsControllerTest < ActionDispatch::IntegrationTest
+  include ResponseHtmlAssertions
+
+  test "shows production fields and multiline notes only for the requested activity" do
+    ProductionDetail.create!(schedule_entry_id: 3, **production_fields.transform_values(&:last))
+    ProductionDetail.create!(schedule_entry_id: 4, executors: "Equipo de otra actividad")
+
+    get schedule_entry_url(3)
+
+    within("section[aria-labelledby='production-detail-heading']") do
+      production_fields.each_value do |label, value|
+        assert_selector "h3", exact_text: label
+        value.lines.each { |line| assert_selector "p", text: line.strip }
+      end
+      assert_no_selector "p", text: "Equipo de otra actividad"
+      assert_selector :link, "Editar detalles de producción", href: edit_schedule_entry_production_detail_path(3)
+    end
+  end
+
+  test "populates every production field in the edit form from the requested activity" do
+    ProductionDetail.create!(schedule_entry_id: 3, **production_fields.transform_values(&:last))
+    ProductionDetail.create!(schedule_entry_id: 4, executors: "Equipo de otra actividad")
+
+    get edit_schedule_entry_production_detail_url(3)
+
+    within("form") do
+      production_fields.each_value do |label, value|
+        assert_selector :field, label, with: value
+      end
+    end
+  end
+
   test "creates details under the activity in the URL and rejects duplicates" do
     assert_difference("ProductionDetail.count", 1) do
       post schedule_entry_production_detail_url(3), params: {
@@ -49,5 +81,22 @@ class ProductionDetailsControllerTest < ActionDispatch::IntegrationTest
       post schedule_entry_production_detail_url(999), params: { production_detail: { audio: "Prueba" } }
     end
     assert_response :not_found
+  end
+
+  private
+
+  def production_fields
+    {
+      executors: [ "Ejecuta", "Equipo EyA" ],
+      screen: [ "Pantalla", "Video de bienvenida" ],
+      audio: [ "Audio", "Dos micrófonos" ],
+      room_lighting: [ "Iluminación de sala", "Sala al 30%" ],
+      stage_lighting: [ "Iluminación de escenario", "Luz frontal" ],
+      aisle_lighting: [ "Iluminación de pasillos", "Pasillos visibles" ],
+      requirements: [ "Requerimientos", "Diez sillas" ],
+      notes: [ "Notas", "Primera línea\nSegunda línea" ],
+      radios: [ "Radios", "2 radios, canal 3" ],
+      pending_confirmations: [ "Pendientes por confirmar", "Confirmar proveedor" ]
+    }
   end
 end
