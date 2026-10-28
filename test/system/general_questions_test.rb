@@ -1,7 +1,7 @@
 require "application_system_test_case"
 
 class GeneralQuestionsTest < ApplicationSystemTestCase
-  test "navigates between the schedule and general questions and manages a question" do
+  test "navigates between the schedule and general questions" do
     visit root_path
 
     within(".site-nav") do
@@ -14,41 +14,75 @@ class GeneralQuestionsTest < ApplicationSystemTestCase
     assert_selector ".site-nav a[aria-current='page']", text: "Preguntas generales"
     assert_text "Todavía no hay preguntas generales sin tema."
 
-    click_button "Nueva pregunta"
-    fill_in "Nueva pregunta", with: "¿Dónde nos reunimos?"
-    click_button "Guardar pregunta"
-
-    within(".questions__item", text: "¿Dónde nos reunimos?") do
-      click_link "Editar"
-    end
-    fill_in "Pregunta", with: "¿A qué hora nos reunimos?"
-    click_button "Guardar cambios"
-
-    within(".questions__item", text: "¿A qué hora nos reunimos?") do
-      click_link "Responder"
-    end
-    fill_in "Respuesta", with: "A las nueve."
-    click_button "Guardar respuesta"
-
-    within(".questions__item", text: "¿A qué hora nos reunimos?") do
-      assert_text "A las nueve."
-      click_link "Editar respuesta"
-    end
-    fill_in "Respuesta", with: "A las diez."
-    click_button "Guardar respuesta"
-
-    within(".questions__item", text: "¿A qué hora nos reunimos?") do
-      assert_text "A las diez."
-      accept_confirm { click_button "Eliminar" }
-    end
-    assert_text "Todavía no hay preguntas generales sin tema."
-
     within(".site-nav") { click_link "Programa" }
     assert_selector "h1", text: "Programa"
     assert_selector ".site-nav a[aria-current='page']", text: "Programa"
   end
 
-  test "manages topics and scopes general questions to the selected topic" do
+  test "creates a general question without a topic" do
+    visit questions_path
+
+    click_button "Nueva pregunta"
+    fill_in "Nueva pregunta", with: "¿Dónde nos reunimos?"
+    click_button "Guardar pregunta"
+
+    assert_selector :selected_topic, "Sin tema"
+    assert_selector :question, "¿Dónde nos reunimos?"
+  end
+
+  test "edits a general question" do
+    question = Question.create!(body: "¿Dónde nos reunimos?")
+    visit questions_path
+
+    within(:question, question.body) { click_link "Editar" }
+    fill_in "Pregunta", with: "¿A qué hora nos reunimos?"
+    click_button "Guardar cambios"
+
+    assert_selector :question, "¿A qué hora nos reunimos?"
+    assert_no_selector :question, question.body
+  end
+
+  test "answers a general question" do
+    question = Question.create!(body: "¿A qué hora nos reunimos?")
+    visit questions_path
+
+    within(:question, question.body) { click_link "Responder" }
+    fill_in "Respuesta", with: "A las nueve."
+    click_button "Guardar respuesta"
+
+    within(:question, question.body) do
+      assert_text "A las nueve."
+      assert_link "Editar respuesta"
+    end
+  end
+
+  test "updates an existing answer" do
+    question = Question.create!(body: "¿A qué hora nos reunimos?", answer: "A las nueve.")
+    visit questions_path
+
+    within(:question, question.body) { click_link "Editar respuesta" }
+    fill_in "Respuesta", with: "A las diez."
+    click_button "Guardar respuesta"
+
+    within(:question, question.body) do
+      assert_text "A las diez."
+      assert_no_text "A las nueve."
+    end
+  end
+
+  test "deletes a general question after confirmation" do
+    question = Question.create!(body: "¿Dónde nos reunimos?")
+    visit questions_path
+
+    within(:question, question.body) do
+      accept_confirm { click_button "Eliminar" }
+    end
+
+    assert_no_selector :question, question.body
+    assert_text "Todavía no hay preguntas generales sin tema."
+  end
+
+  test "creates a topic from topic management" do
     visit questions_path
 
     within(".topics") do
@@ -62,93 +96,140 @@ class GeneralQuestionsTest < ApplicationSystemTestCase
     assert_selector "main.page:not(.page--wide)"
     assert_text "Todavía no hay temas."
     click_button "Nuevo tema"
-    assert_selector "input[name='topic[name]'][required]"
+    assert_field("Nombre") { |field| field[:required] }
     fill_in "Nombre", with: "Logística"
     click_button "Guardar tema"
-    assert_current_path topics_path
-    assert_selector ".topics__management-item", text: "Logística"
 
+    assert_current_path topics_path
+    assert_selector :topic_item, "Logística"
     click_link "← Volver a las preguntas generales"
+    within(".topics") { click_link "Logística" }
+    assert_selector :selected_topic, "Logística"
+    assert_text "Todavía no hay preguntas para este tema."
+  end
+
+  test "shows only questions from the selected topic" do
+    topic = Topic.create!(name: "Logística")
+    other_topic = Topic.create!(name: "Comunicación")
+    question = Question.create!(body: "¿Dónde está el material?", topic: topic)
+    other_question = Question.create!(body: "¿Quién hace el anuncio?", topic: other_topic)
+    unassigned_question = Question.create!(body: "¿Cuándo empieza?")
+    visit questions_path
+
+    assert_selector :question, unassigned_question.body
+    assert_no_selector :question, question.body
+    assert_no_selector :question, other_question.body
 
     within(".topics") { click_link "Logística" }
-    assert_text "Todavía no hay preguntas para este tema."
+    assert_selector :selected_topic, "Logística"
+    assert_selector :question, question.body
+    assert_no_selector :question, unassigned_question.body
+    assert_no_selector :question, other_question.body
+
+    within(".topics") { click_link "Sin tema" }
+    assert_selector :selected_topic, "Sin tema"
+    assert_selector :question, unassigned_question.body
+    assert_no_selector :question, question.body
+  end
+
+  test "creates a question in the selected topic" do
+    topic = Topic.create!(name: "Logística")
+    visit questions_path(topic_id: topic.id)
+
     click_button "Nueva pregunta"
     fill_in "Nueva pregunta", with: "¿Dónde está el material?"
     click_button "Guardar pregunta"
-    assert_selector ".questions__item", text: "¿Dónde está el material?"
-    assert_equal "Logística", Question.find_by!(body: "¿Dónde está el material?").topic.name
 
+    assert_selector :selected_topic, "Logística"
+    assert_selector :question, "¿Dónde está el material?"
     within(".topics") { click_link "Sin tema" }
-    assert_no_selector ".questions__item", text: "¿Dónde está el material?"
-    click_button "Nueva pregunta"
-    fill_in "Nueva pregunta", with: "¿Cuándo empieza?"
-    click_button "Guardar pregunta"
-    assert_selector ".questions__item", text: "¿Cuándo empieza?"
+    assert_no_selector :question, "¿Dónde está el material?"
+  end
 
-    within(".topics") { click_link "Logística" }
-    assert_no_selector ".questions__item", text: "¿Cuándo empieza?"
-    within(".questions__item", text: "¿Dónde está el material?") { click_link "Editar" }
+  test "keeps the selected topic after editing and answering a question" do
+    topic = Topic.create!(name: "Logística")
+    question = Question.create!(body: "¿Dónde está el material?", topic: topic)
+    visit questions_path(topic_id: topic.id)
+
+    within(:question, question.body) { click_link "Editar" }
     fill_in "Pregunta", with: "¿Dónde guardamos el material?"
     click_button "Guardar cambios"
-    assert_selector ".questions__item", text: "¿Dónde guardamos el material?"
 
-    within(".questions__item", text: "¿Dónde guardamos el material?") { click_link "Responder" }
+    assert_selector :selected_topic, "Logística"
+    within(:question, "¿Dónde guardamos el material?") { click_link "Responder" }
     fill_in "Respuesta", with: "En la bodega."
     click_button "Guardar respuesta"
-    assert_selector ".topics__tab[aria-current='page']", text: "Logística"
-    within(".questions__item", text: "¿Dónde guardamos el material?") { assert_text "En la bodega." }
 
-    within(".topics") do
-      assert_no_selector "button"
-      click_link "Editar"
-    end
-    within(".topics__management-item", text: "Logística") { find("a[aria-label='Editar tema Logística']").click }
-    assert_current_path topics_path
-    assert_selector "h1", text: "Editar temas"
-    within("turbo-frame#topic_#{Topic.find_by!(name: "Logística").id}") do
+    assert_selector :selected_topic, "Logística"
+    within(:question, "¿Dónde guardamos el material?") { assert_text "En la bodega." }
+  end
+
+  test "cancels editing a topic without changing its name" do
+    Topic.create!(name: "Logística")
+    visit topics_path
+
+    within(:topic_item, "Logística") do
+      click_link "Editar tema Logística"
       assert_field "Nombre", with: "Logística"
+      fill_in "Nombre", with: "Materiales"
       click_link "Cancelar"
     end
-    assert_selector ".topics__management-item", text: "Logística"
 
-    within(".topics__management-item", text: "Logística") { find("a[aria-label='Editar tema Logística']").click }
-    within("turbo-frame#topic_#{Topic.find_by!(name: "Logística").id}") do
+    assert_current_path topics_path
+    assert_selector "h1", text: "Editar temas"
+    assert_selector :topic_item, "Logística"
+    assert_no_selector :topic_item, "Materiales"
+  end
+
+  test "renames a topic without losing its questions" do
+    topic = Topic.create!(name: "Logística")
+    question = Question.create!(body: "¿Dónde guardamos el material?", topic: topic)
+    visit topics_path
+
+    within(:topic_item, "Logística") do
+      click_link "Editar tema Logística"
       fill_in "Nombre", with: "Materiales"
       click_button "Guardar cambios"
     end
-    assert_current_path topics_path
-    assert_selector ".topics__management-item", text: "Materiales"
 
+    assert_selector :topic_item, "Materiales"
+    assert_no_selector :topic_item, "Logística"
     click_link "← Volver a las preguntas generales"
     within(".topics") { click_link "Materiales" }
-    assert_selector ".topics__tab[aria-current='page']", text: "Materiales"
-    assert_selector ".questions__item", text: "¿Dónde guardamos el material?"
+    assert_selector :selected_topic, "Materiales"
+    assert_selector :question, question.body
+  end
 
-    within(".topics") { click_link "Editar" }
-    within(".topics__management-item", text: "Materiales") do
-      accept_confirm { find("button[aria-label='Eliminar tema Materiales']").click }
+  test "moves questions to no topic when their topic is deleted" do
+    topic = Topic.create!(name: "Materiales")
+    question = Question.create!(body: "¿Dónde guardamos el material?", topic: topic)
+    visit topics_path
+
+    within(:topic_item, "Materiales") do
+      accept_confirm { click_button "Eliminar tema Materiales" }
     end
+
     assert_current_path topics_path
+    assert_no_selector :topic_item, "Materiales"
     click_link "← Volver a las preguntas generales"
-    assert_selector ".topics__tab[aria-current='page']", text: "Sin tema"
-    assert_selector ".questions__item", text: "¿Dónde guardamos el material?"
-    assert_nil Question.find_by!(body: "¿Dónde guardamos el material?").topic
+    assert_selector :selected_topic, "Sin tema"
+    assert_selector :question, question.body
+    within(".topics") { assert_no_link "Materiales" }
   end
 
   test "clears a blank answer on a general question" do
     question = Question.create!(body: "¿Dónde nos reunimos?", answer: "En la sala principal.")
-
     visit questions_path
 
-    within(".questions__item", text: question.body) do
-      click_link "Editar respuesta"
-    end
+    within(:question, question.body) { click_link "Editar respuesta" }
     fill_in "Respuesta", with: "  \n  "
     click_button "Guardar respuesta"
 
     assert_current_path questions_path
-    assert_link "Responder"
-    assert_no_selector ".questions__answer"
+    within(:question, question.body) do
+      assert_link "Responder"
+      assert_no_selector ".questions__answer"
+    end
     assert_nil question.reload.answer
   end
 end
