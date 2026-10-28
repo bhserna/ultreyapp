@@ -4,7 +4,7 @@ class DocumentsTest < ApplicationSystemTestCase
   test "uploads and deletes documents from an activity" do
     visit root_path(day: "Domingo 15")
 
-    within("tr", text: "Proyección Video Inicio") do
+    within(:schedule_act, "Proyección Video Inicio") do
       click_link "Ver detalle"
     end
 

@@ -1,6 +1,6 @@
 Capybara.add_selector(:schedule_act) do
   xpath do |title = nil|
-    rows = XPath.descendant(:tbody).descendant(:tr)[
+    rows = XPath.descendant(:tr)[
       XPath.attr(:class).contains_word("schedule__act")
     ]
 
@@ -10,7 +10,7 @@ end
 
 Capybara.add_selector(:schedule_preparation) do
   xpath do |id = nil|
-    rows = XPath.descendant(:tbody).descendant(:tr)[
+    rows = XPath.descendant(:tr)[
       XPath.attr(:class).contains_word("schedule__preparation")
     ]
 
@@ -19,13 +19,31 @@ Capybara.add_selector(:schedule_preparation) do
 end
 
 Capybara.add_selector(:schedule_operation) do
-  xpath do |title = nil|
-    rows = XPath.descendant(:tbody).descendant(:tr)[
+  xpath do |title_or_id = nil|
+    rows = XPath.descendant(:tr)[
       XPath.attr(:class).contains_word("schedule__operation")
     ]
 
-    title ? rows[XPath.child(:td)[5][XPath.text.n.is(title)]] : rows
+    case title_or_id
+    when Integer
+      rows[XPath.attr(:"data-operational-activity-id") == title_or_id.to_s]
+    when String
+      rows[XPath.child(:td)[5][XPath.text.n.is(title_or_id)]]
+    else
+      rows
+    end
   end
+end
+
+Capybara.add_selector(:schedule_phase) do
+  xpath do |phase = nil|
+    sections = XPath.descendant(:tbody)[XPath.attr(:"data-phase")]
+    phase ? sections[XPath.attr(:"data-phase") == phase.to_s] : sections
+  end
+end
+
+Capybara.add_selector(:schedule_row) do
+  xpath { XPath.descendant(:tr)[XPath.child(:td)] }
 end
 
 Capybara.add_selector(:schedule_cell) do

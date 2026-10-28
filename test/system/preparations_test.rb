@@ -9,7 +9,7 @@ class PreparationsTest < ApplicationSystemTestCase
       assert_selector ".related-links__label", text: "Acto 1"
       assert_selector ".related-links__title", text: "Proyección Video Inicio"
     end
-    assert_equal ["grid", "none", "10.4px"], evaluate_script(<<~JAVASCRIPT)
+    assert_equal [ "grid", "none", "10.4px" ], evaluate_script(<<~JAVASCRIPT)
       (() => {
         const style = getComputedStyle(document.querySelector('.related-links a'))
         return [style.display, style.textDecorationLine, style.borderTopLeftRadius]
@@ -32,7 +32,7 @@ class PreparationsTest < ApplicationSystemTestCase
 
   test "opens preparation details from the program and keeps actions off the act page" do
     visit root_path(day: "Domingo 15")
-    within("tr[data-preparation-id='2']") { click_link "Ver detalle" }
+    within(:schedule_preparation, 2) { click_link "Ver detalle" }
 
     assert_current_path preparation_path(2)
     assert_selector "h1", text: "Preparación para el Acto 1 y 2"
@@ -61,7 +61,7 @@ class PreparationsTest < ApplicationSystemTestCase
 
     click_link "← Volver al programa"
     assert_current_path root_path(day: "Domingo 15")
-    within("tr.schedule__act", text: "Proyección Video Inicio") { click_link "Ver detalle" }
+    within(:schedule_act, "Proyección Video Inicio") { click_link "Ver detalle" }
     assert_current_path schedule_entry_path(1)
     assert_no_text "Acciones de preparación"
     assert_no_text "Tener disponibles 10 sillas"
@@ -70,7 +70,7 @@ class PreparationsTest < ApplicationSystemTestCase
 
   test "opens Monday preparations with their action details and corrected act links" do
     visit root_path(day: "Lunes 16")
-    within("tr[data-preparation-id='24']") { click_link "Ver detalle" }
+    within(:schedule_preparation, 24) { click_link "Ver detalle" }
 
     assert_current_path preparation_path(24)
     assert_selector "h1", text: "Acto 24 / Vivencia 6"
@@ -83,7 +83,7 @@ class PreparationsTest < ApplicationSystemTestCase
 
     click_link "← Volver al programa"
     assert_current_path root_path(day: "Lunes 16")
-    within("tr[data-preparation-id='26']") { click_link "Ver detalle" }
+    within(:schedule_preparation, 26) { click_link "Ver detalle" }
 
     assert_text "12:40"
     assert_text "Liturgia prepara lo relacionado a Sacristía"
