@@ -1,11 +1,11 @@
-<% content_for :title, "Documentos · #{@schedule_entry.activity}" %>
+<% content_for :title, "Documentos · #{@schedule_entry.title}" %>
 
 <main class="page">
   <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "page__back" %>
 
   <header class="page__header">
     <p class="page__eyebrow"><%= @schedule_entry.day %></p>
-    <h1><%= @schedule_entry.activity %></h1>
+    <h1><%= @schedule_entry.title %></h1>
   </header>
 
   <%= turbo_frame_tag "documents" do %>

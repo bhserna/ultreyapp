@@ -78,7 +78,7 @@
               <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
               <td class="text-nowrap"><%= schedule_time(schedule_entry.end_time) %></td>
               <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
-              <td class="schedule__activity"><%= schedule_entry.activity %></td>
+              <td class="schedule__activity"><%= schedule_entry.title %></td>
               <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
               <td>
                 <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>

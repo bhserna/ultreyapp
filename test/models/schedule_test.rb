@@ -43,7 +43,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal "16:50", rows.find { |row| row.is_a?(Preparation) && row.id == 12 }.start_time
 
     monday = Schedule.new(day: "Lunes 16", commission: nil)
-    assert_equal (20..31).to_a, monday.rows.grep(ScheduleEntry).map(&:id)
+    assert_equal (20..31).to_a, monday.rows.grep(Activity).map(&:id)
     assert_equal 9, monday.rows.grep(Preparation).size
     assert_equal "07:40", monday.rows.first.start_time
     assert_equal 18, monday.rows.first.id
@@ -59,13 +59,13 @@ class ScheduleModelTest < ActiveSupport::TestCase
     schedule.instance_variable_set(:@all_operations, operations)
     rows = schedule.rows
     position = rows.index(activity)
-    assert_instance_of ScheduleEntry, rows[position - 1]
+    assert_instance_of Activity, rows[position - 1]
     assert_equal 1, rows[position - 1].id
-    assert_instance_of ScheduleEntry, rows[position + 1]
+    assert_instance_of Activity, rows[position + 1]
     assert_equal 2, rows[position + 1].id
     assert_equal "Por definir", activity.start_time
     assert_equal "program", activity.phase
-    assert_equal "program", ScheduleEntry.find(1).phase
+    assert_equal "program", Activity.find(1).phase
     assert_equal "program", Preparation.find(17).phase
     assert_equal "before_parade", Preparation.find(1).phase
   end
@@ -74,7 +74,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
 
     assert_equal [2, 3, 5, 6], schedule.rows.grep(Preparation).map(&:id)
-    assert_equal [5], schedule.rows.grep(ScheduleEntry).map(&:id)
+    assert_equal [5], schedule.rows.grep(Activity).map(&:id)
     assert_equal [9, 11, 8, 7], schedule.rows.grep(OperationalActivity).map(&:id)
     assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
   end

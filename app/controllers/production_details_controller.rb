@@ -36,7 +36,7 @@ class ProductionDetailsController < ApplicationController
   private
 
   def set_schedule_entry
-    @schedule_entry = ScheduleEntry.find(params[:schedule_entry_id])
+    @schedule_entry = Activity.find(params[:schedule_entry_id])
   end
 
   def set_production_detail

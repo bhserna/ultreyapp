@@ -1,35 +1,55 @@
 require "test_helper"
 
-class ScheduleEntryTest < ActiveSupport::TestCase
+class ActivityTest < ActiveSupport::TestCase
   test "includes only numbered acts from yellow Act cells in spreadsheet order" do
-    entries = ScheduleEntry.all
+    entries = Activity.all
+
+    assert entries.all? { |entry| entry.kind == "act" }
+    assert entries.none? { |entry| entry.is_a?(ApplicationRecord) }
     source = YAML.safe_load_file(Rails.root.join("config/data/schedule.yml"))
 
     assert_equal (1..31).to_a, entries.map(&:id)
     by_sheet = source.group_by { |entry| entry.fetch("source_sheet") }
-    assert_equal ["1er, día 15 Nov", "2do. día 16 Nov"], by_sheet.keys
-    assert_equal [29, 30, 36, 42, 47, 49, 53, 54, 55, 58, 60, 64, 68, 71, 76, 80, 84, 88, 92],
+    assert_equal [ "1er, día 15 Nov", "2do. día 16 Nov" ], by_sheet.keys
+    assert_equal [ 29, 30, 36, 42, 47, 49, 53, 54, 55, 58, 60, 64, 68, 71, 76, 80, 84, 88, 92 ],
       by_sheet.fetch("1er, día 15 Nov").map { |entry| entry.fetch("source_row") }
-    assert_equal [5, 6, 9, 13, 17, 21, 25, 29, 33, 37, 39, 40],
+    assert_equal [ 5, 6, 9, 13, 17, 21, 25, 29, 33, 37, 39, 40 ],
       by_sheet.fetch("2do. día 16 Nov").map { |entry| entry.fetch("source_row") }
-    assert_equal (1..28).to_a - [7], entries.map(&:act_number).grep(Integer)
+    assert_equal (1..28).to_a - [ 7 ], entries.map(&:act_number).grep(Integer)
     assert_equal %w[7.1 7.2 7.3 7.4], entries.map(&:act_number).grep(String)
-    assert_equal 1, ScheduleEntry.find(1).act_number
-    assert_equal "7.4", ScheduleEntry.find(10).act_number
-    assert_equal 17, ScheduleEntry.find(20).act_number
-    assert_equal 28, ScheduleEntry.find(31).act_number
-    assert_equal "14:25", ScheduleEntry.find(30).start_time
-    assert_equal "08:30", ScheduleEntry.find(20).start_time
-    assert_equal "08:35", ScheduleEntry.find(20).end_time
-    assert_equal "Palabras de Presidente Mundial / Agradecimientos Finales", ScheduleEntry.find(28).activity
-    assert_equal "12:27", ScheduleEntry.find(28).start_time
-    assert_equal "16:20", ScheduleEntry.find(12).end_time
-    assert_equal "0:30", ScheduleEntry.find(12).duration
-    assert_equal "16:20", ScheduleEntry.find(13).start_time
-    assert_includes ScheduleEntry.find(12).activity, "Esperanza en la enfermedad"
-    assert_includes ScheduleEntry.find(14).activity, "Perseverancia como dirigente"
-    assert_equal "Animación Coro de Cursillos/ Bendicam", ScheduleEntry.find(17).activity
-    assert_equal ["Domingo 15", "Lunes 16"], entries.map(&:day).uniq
+    assert_equal source.map { |entry| entry.fetch("activity") }, entries.map(&:title)
+    assert_equal 1, Activity.find(1).act_number
+    assert_equal "7.4", Activity.find(10).act_number
+    assert_equal 17, Activity.find(20).act_number
+    assert_equal 28, Activity.find(31).act_number
+    assert_equal "14:25", Activity.find(30).start_time
+    assert_equal "08:30", Activity.find(20).start_time
+    assert_equal "08:35", Activity.find(20).end_time
+    assert_equal "Palabras de Presidente Mundial / Agradecimientos Finales", Activity.find(28).title
+    assert_equal "12:27", Activity.find(28).start_time
+    assert_equal "16:20", Activity.find(12).end_time
+    assert_equal "0:30", Activity.find(12).duration
+    assert_equal "16:20", Activity.find(13).start_time
+    assert_includes Activity.find(12).title, "Esperanza en la enfermedad"
+    assert_includes Activity.find(14).title, "Perseverancia como dirigente"
+    assert_equal "Animación Coro de Cursillos/ Bendicam", Activity.find(17).title
+    assert_equal [ "Domingo 15", "Lunes 16" ], entries.map(&:day).uniq
+  end
+
+  test "finds acts with stable numeric or route IDs and rejects unknown IDs" do
+    assert_equal Activity.find(1).title, Activity.find("1").title
+    assert_equal 1, Activity.find("1").id
+    assert_equal "program", Activity.find(1).phase
+    assert_raises(ActiveRecord::RecordNotFound) { Activity.find(999) }
+  end
+
+  test "question references resolve to the renamed activity model" do
+    question = Question.create!(schedule_entry_id: 3, body: "Who coordinates this act?")
+
+    assert_instance_of Activity, question.schedule_entry
+    assert_equal 3, question.schedule_entry.id
+    assert_equal Activity.find(3).title, question.schedule_entry.title
+    assert_nil Question.new(body: "General question").schedule_entry
   end
 
   test "question data references only the numbered act on its source row" do
@@ -43,7 +63,7 @@ class ScheduleEntryTest < ActiveSupport::TestCase
     assert_empty source.fetch("cross_cutting_questions")
     question_entries.zip(schedule).each do |entry, act|
       assert_equal act.fetch("activity"), entry.fetch("act")
-      assert_equal [act.fetch("source_row")], entry.fetch("source_rows")
+      assert_equal [ act.fetch("source_row") ], entry.fetch("source_rows")
       assert_equal act.fetch("source_sheet"), entry.fetch("source_sheet")
     end
     assert_equal 4, question_entries.find { |entry| entry.fetch("id") == 1 }.fetch("questions").size

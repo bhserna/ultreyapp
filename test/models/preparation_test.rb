@@ -15,7 +15,7 @@ class PreparationTest < ActiveSupport::TestCase
     assert preparations.flat_map(&:actions).all? { |action| action.fetch("description").present? }
     assert_not_includes preparations.flat_map(&:actions).map { |action| action.fetch("source_row") }, 38
     assert_empty preparations.first.schedule_entry_ids
-    preparations.flat_map(&:schedule_entry_ids).each { |id| assert ScheduleEntry.find(id) }
+    preparations.flat_map(&:schedule_entry_ids).each { |id| assert Activity.find(id) }
   end
 
   test "preserves undecided start times without treating questions as commissions" do

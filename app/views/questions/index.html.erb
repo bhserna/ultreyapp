@@ -1,4 +1,4 @@
-<% content_for :title, @schedule_entry ? "Preguntas · #{@schedule_entry.activity}" : "Preguntas generales" %>
+<% content_for :title, @schedule_entry ? "Preguntas · #{@schedule_entry.title}" : "Preguntas generales" %>
 
 <main class="page<%= " page--wide" unless @schedule_entry %>">
   <% if @schedule_entry %>
@@ -9,7 +9,7 @@
     <% if @schedule_entry %>
       <p class="page__eyebrow"><%= @schedule_entry.day %></p>
     <% end %>
-    <h1><%= @schedule_entry ? @schedule_entry.activity : "Preguntas generales" %></h1>
+    <h1><%= @schedule_entry ? @schedule_entry.title : "Preguntas generales" %></h1>
   </header>
 
   <div class="<%= "questions-layout" unless @schedule_entry %>">

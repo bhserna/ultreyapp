@@ -30,7 +30,7 @@ class QuestionsController < ApplicationController
   private
 
   def maybe_set_schedule_entry
-    @schedule_entry = ScheduleEntry.find(params[:schedule_entry_id]) if params[:schedule_entry_id].present?
+    @schedule_entry = Activity.find(params[:schedule_entry_id]) if params[:schedule_entry_id].present?
   end
 
   def maybe_set_topics

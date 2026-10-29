@@ -27,7 +27,7 @@ class DocumentsController < ApplicationController
   private
 
   def set_schedule_entry
-    @schedule_entry = ScheduleEntry.find(params[:schedule_entry_id])
+    @schedule_entry = Activity.find(params[:schedule_entry_id])
   end
 
   def documents_for_entry

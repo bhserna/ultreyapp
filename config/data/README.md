@@ -13,6 +13,10 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 - Times are normalized to 24-hour format. Missing times and durations are not inferred; source wording is preserved.
 - `questions.yml` contains the 36 questions directly on these act rows, including the questions in the final notices' Notes cell. Questions from preparation or extra-activity rows are not assigned to acts. The previous complete question extraction remains in `previous/questions.yml`.
 
+## Activity model
+
+`Activity` represents the 31 numbered acts and still reads `schedule.yml` directly, without a database table. It exposes the source `activity` text as `title`, with `kind` defaulting to `act`. Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` references for questions, documents, and production details remain unchanged. Operations and preparations remain separate YAML-backed models for now.
+
 ## Preparations
 
 `preparations.yml` stores 26 dark-blue preparation headers and 32 light-blue action rows, stopping at the end of Monday 16. It is read directly by the app; no database import is needed. The program table groups rows by phase and interleaves acts and preparation summaries by start time within the program phase, with blue preparation rows. Each preparation's start time is taken from its first action; if that action has no start time, the header time is retained. Undecided times remain text and sort last within their phase when no end time is available. This corrects the act 7 preparation to `12:30` instead of the header's `00:15`. Day and commission filters apply to both kinds of rows, using each preparation's own day and action commissions. Shared preparations appear only once in the table. Each preparation row links to its own detail page with action timings, responsibilities, technical information, questions, notes, material references, and links to related acts. Preparation content is not displayed on act detail pages. Orange conclusions are excluded, as is Sunday row 38 (times without an action description). Existing preparation IDs 1–17 remain unchanged; the nine new Monday preparations use IDs 18–26.

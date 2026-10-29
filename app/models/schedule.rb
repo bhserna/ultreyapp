@@ -71,6 +71,6 @@ class Schedule
     end
 
     def all_entries
-      @all_entries ||= ScheduleEntry.all
+      @all_entries ||= Activity.all
     end
 end
