@@ -50,62 +50,18 @@ Rows within each phase sort by known start time, then by known end time if the s
 
 `production_details.yml` contains the ten production fields for the current numbered acts, linked by `schedule_entry_id`. It preserves source wording and line breaks, with blank cells represented as `null`. It excludes preparation, extra activities, questions, and the media-files column. Acts with all ten fields empty are omitted (all 31 acts currently have production data).
 
-The active YAML files identify their source sheets and rows consistently. No production data is taken from team working sheets or preparation blocks. Monday now includes production content for all its acts. An older detail omitted from a future YAML is not deleted by the import task, so previously imported content for omitted acts must be reviewed separately.
+This file is a reference snapshot, not the source of truth for editable records. Production details are maintained through the application and may differ from this YAML. The application reads them from the database; deployment does not synchronize or regenerate them.
 
-```sh
-bin/rails production_details:import
-```
-
-The task creates missing details and updates existing ones for the listed acts, without duplicates. All ten fields are replaced by their YAML values, including clearing fields whose value is `null`. Manual edits to these fields will therefore be overwritten. Details for acts not listed in the YAML, questions, and documents are left unchanged. The import runs in a transaction and rejects unknown IDs or activity names that do not match the current schedule.
-
-To use a different file:
-
-```sh
-PRODUCTION_DETAILS_FILE=path/to/production_details.yml bin/rails production_details:import
-```
-
-## Targeted rosary update
-
-The latest spreadsheet refresh changes preparations 8, 19, and 26 directly in YAML.
-Deploying those changes is sufficient; their IDs and related act IDs are unchanged.
-The rosary production detail also adds lay participants to `executors` for
-`schedule_entry_id=22` (act 19). Do not run the general import tasks for this refresh.
-
-After backing up the production database, preview the temporary task in the running
-container (after deploying this version):
-
-```sh
-bin/kamal app exec --reuse 'bin/rails data_updates:rosary_executors'
-```
-
-Review the output, then explicitly apply:
-
-```sh
-bin/kamal app exec --reuse 'bin/rails "data_updates:rosary_executors[apply]"'
-```
-
-For local data, use `bin/rails data_updates:rosary_executors` and
-`bin/rails 'data_updates:rosary_executors[apply]'` respectively.
-The task requires an existing record and the exact previous executors value.
-It refuses conflicting manual edits, atomically checks the previous value when
-writing, and does nothing if already applied. Only `executors` and `updated_at`
-are changed; other production fields, questions, answers, and attachments are untouched.
-Missing records or conflicts require manual review, not a general import.
-
-Verify the rosary detail and the three preparation pages after applying. The task
-and its dedicated test can be removed in a later deployment once the update has
-been verified in every intended environment. No production update is run by deployment.
+The question and production-detail import tasks and the temporary rosary update task have been removed to avoid replacing manually maintained information. The latest preparation changes remain in `preparations.yml` and take effect on deployment without updating database records.
 
 ## Previous version
 
 `previous/` contains the unchanged `schedule.yml`, `questions.yml`, and `old_follow_up_questions.yml` from before regeneration. Its IDs belong to the previous schedule, not the active one.
 
-## Importing questions
+## Editable records and stable IDs
 
-```sh
-bin/rails questions:import
-```
+`questions.yml` is a reference snapshot. Questions, answers, and topics are maintained through the application and stored in the database, independently of this file. Documents and their attachment associations are also stored in the database; uploaded files remain in the configured storage service. No YAML-to-database synchronization task is provided.
 
-This replaces all questions and topics using the active `questions.yml`. The schedule itself is read directly from YAML.
+The schedule, preparations, and operational activities are still read directly from YAML. Keep their IDs and related act IDs stable when editing these files.
 
-**The initial regeneration's IDs are not compatible with the archived schedule's database references.** Subsequent refreshes, including the split into two main sheets, preserve the active IDs. Regenerating these files does not migrate or delete existing questions, documents, or production details. Importing questions replaces the questions and topics only. Before using the new schedule with existing documents or production details, reconcile their `schedule_entry_id` values using the previous schedule; otherwise they may appear under a different activity. Do not import the archived question files against the new schedule.
+**The initial regeneration's IDs are not compatible with the archived schedule's database references.** Subsequent refreshes preserve the active IDs. Regenerating YAML does not migrate existing database references: changing act IDs could display questions, documents, or production details under the wrong activity.
