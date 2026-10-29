@@ -96,6 +96,24 @@ ssh:
   keys_only: true
 
 # Use accessory services (secrets come from .kamal/secrets).
+accessories:
+  backup:
+    image: ghcr.io/crmne/kamal-backup:1.1.0
+    host: 165.227.11.66
+    files:
+      - config/kamal-backup.yml:/app/config/kamal-backup.yml:ro
+    env:
+      clear:
+        AWS_DEFAULT_REGION: sfo3
+      secret:
+        - RESTIC_PASSWORD
+        - AWS_ACCESS_KEY_ID:BACKUP_SPACES_ACCESS_KEY_ID
+        - AWS_SECRET_ACCESS_KEY:BACKUP_SPACES_SECRET_ACCESS_KEY
+    volumes:
+      # Live SQLite WAL backups require read-write access.
+      - "ultreyapp_storage:/data/storage"
+      - "ultreyapp_backup_state:/var/lib/kamal-backup"
+
 # accessories:
 #   db:
 #     image: mysql:8.0
