@@ -1,6 +1,24 @@
 require "application_system_test_case"
 
 class PreparationsTest < ApplicationSystemTestCase
+  test "shows the updated altar service, rosary and Monday mass preparations" do
+    visit preparation_path(8)
+    assert_text "SERVICIO AL ALTAR – ULTREYA NACIONAL 2026"
+    assert_text "ALINA FERNANDA CADENA GONZALEZ"
+    assert_text "SHERLYN ANAHI SANTIAGO CASTRO"
+
+    visit preparation_path(19)
+    assert_text "Leonor Fernández de Arpee"
+    assert_text "Yolanda Ruiz - letanías"
+    assert_text "ya quedaron listos los reclinatorios y micrófonos un día antes"
+    assert_text "5 cruces que se iluminarán en cada misterio"
+
+    visit preparation_path(26)
+    assert_text "Trener listo a integrantes del coro arcoiris."
+    assert_text "Reunir a los sacerdotes celebrantes."
+    assert_text "Confirmar que equipo de pendones Eucaristía estén ubicados"
+  end
+
   test "styles related act links as full-width cards that wrap on narrow screens" do
     visit preparation_path(2)
 

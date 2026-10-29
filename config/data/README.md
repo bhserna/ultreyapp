@@ -64,6 +64,38 @@ To use a different file:
 PRODUCTION_DETAILS_FILE=path/to/production_details.yml bin/rails production_details:import
 ```
 
+## Targeted rosary update
+
+The latest spreadsheet refresh changes preparations 8, 19, and 26 directly in YAML.
+Deploying those changes is sufficient; their IDs and related act IDs are unchanged.
+The rosary production detail also adds lay participants to `executors` for
+`schedule_entry_id=22` (act 19). Do not run the general import tasks for this refresh.
+
+After backing up the production database, preview the temporary task in the running
+container (after deploying this version):
+
+```sh
+bin/kamal app exec --reuse 'bin/rails data_updates:rosary_executors'
+```
+
+Review the output, then explicitly apply:
+
+```sh
+bin/kamal app exec --reuse 'bin/rails "data_updates:rosary_executors[apply]"'
+```
+
+For local data, use `bin/rails data_updates:rosary_executors` and
+`bin/rails 'data_updates:rosary_executors[apply]'` respectively.
+The task requires an existing record and the exact previous executors value.
+It refuses conflicting manual edits, atomically checks the previous value when
+writing, and does nothing if already applied. Only `executors` and `updated_at`
+are changed; other production fields, questions, answers, and attachments are untouched.
+Missing records or conflicts require manual review, not a general import.
+
+Verify the rosary detail and the three preparation pages after applying. The task
+and its dedicated test can be removed in a later deployment once the update has
+been verified in every intended environment. No production update is run by deployment.
+
 ## Previous version
 
 `previous/` contains the unchanged `schedule.yml`, `questions.yml`, and `old_follow_up_questions.yml` from before regeneration. Its IDs belong to the previous schedule, not the active one.
