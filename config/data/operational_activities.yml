@@ -277,11 +277,12 @@ operational_activities:
   start_time: '07:00'
   end_time: '08:00'
   duration:
-  commissions: []
+  commissions:
+  - EyA
   source_sheet: 1er, día 15 Nov
   source_row: 14
   details:
-    commission:
+    commission: EyA
     executors: Fabiola Núñez y Lolys Cepeda
     screen:
     audio: Cuántos canales y micrófonos necesitan?

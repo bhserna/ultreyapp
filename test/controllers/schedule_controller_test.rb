@@ -173,7 +173,7 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
     assert_select "nav a[href=?]", root_path(day: "Lunes 16", commission: "EyA"), text: "Lunes 16"
     assert_selector :schedule_act, count: 1
     assert_selector :schedule_preparation, count: 4
-    assert_selector :schedule_operation, count: 4
+    assert_selector :schedule_operation, count: 5
     within(:schedule_act, "Canto de Colores") do
       assert_selector :schedule_cell, :activity, exact_text: "Canto de Colores"
       within(:schedule_cell, :commission) do

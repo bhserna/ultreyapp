@@ -77,7 +77,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal [ 2, 3, 5, 6 ], schedule.rows.grep(Preparation).map(&:id)
     activities = schedule.rows.grep(Activity)
     assert_equal [ 5 ], activities.select { |activity| activity.kind == "act" }.map(&:id)
-    assert_equal [ 40, 42, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
+    assert_equal [ 40, 41, 42, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
     assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
   end
 

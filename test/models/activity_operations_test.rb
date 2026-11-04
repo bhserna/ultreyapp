@@ -32,7 +32,7 @@ class ActivityOperationsTest < ActiveSupport::TestCase
     assert_includes Activity.find(39).details.fetch("requirements"), "6 micrófonos de voz"
     assert_includes Activity.find(42).details.fetch("general_questions"), "Con qué laptop"
     assert_includes Activity.find(42).details.fetch("notes"), "ANetwork solo proporciona"
-    assert_empty Activity.find(41).commissions
+    assert_equal [ "EyA" ], Activity.find(41).commissions
   end
 
   test "finds operations by their original route IDs independently of act IDs" do
