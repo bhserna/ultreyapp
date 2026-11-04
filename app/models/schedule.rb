@@ -63,7 +63,7 @@ class Schedule
     end
 
     def all_operations
-      @all_operations ||= OperationalActivity.all
+      @all_operations ||= all_activities.select { |activity| activity.kind == "operation" }
     end
 
     def all_preparations
@@ -71,6 +71,10 @@ class Schedule
     end
 
     def all_acts
-      @all_acts ||= Activity.all
+      @all_acts ||= all_activities.select { |activity| activity.kind == "act" }
+    end
+
+    def all_activities
+      @all_activities ||= Activity.all
     end
 end

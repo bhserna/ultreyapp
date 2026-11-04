@@ -2,7 +2,7 @@ require "test_helper"
 
 class ActivityTest < ActiveSupport::TestCase
   test "includes only numbered acts from yellow Act cells in spreadsheet order" do
-    entries = Activity.all
+    entries = Activity.acts
 
     assert entries.all? { |entry| entry.kind == "act" }
     assert entries.none? { |entry| entry.is_a?(ApplicationRecord) }
@@ -34,6 +34,24 @@ class ActivityTest < ActiveSupport::TestCase
     assert_includes Activity.find(14).title, "Perseverancia como dirigente"
     assert_equal "Animación Coro de Cursillos/ Bendicam", Activity.find(17).title
     assert_equal [ "Domingo 15", "Lunes 16" ], entries.map(&:day).uniq
+  end
+
+  test "gives acts and operations unique explicit IDs without renumbering existing acts" do
+    activities = Activity.all
+
+    assert_equal 44, activities.size
+    assert_equal activities.size, activities.map(&:id).uniq.size
+    assert activities.all? { |activity| activity.instance_of?(Activity) }
+    assert_equal (1..31).to_a, Activity.acts.map(&:id)
+    assert_equal (32..44).to_a, Activity.operations.map(&:id)
+    assert_equal (1..13).to_a, Activity.operations.map(&:source_id)
+    assert_equal "act", Activity.find(1).kind
+    assert_equal "operation", Activity.find("32").kind
+    assert_equal "Recepción de Diócesis", Activity.find(32).title
+    assert_equal "Recepción de Diócesis", Activity.find_operation_by_source_id("1").title
+    assert_nil Activity.find(32).act_number
+    assert_raises(ActiveRecord::RecordNotFound) { Activity.find(32, kind: "act") }
+    assert_raises(ActiveRecord::RecordNotFound) { Activity.find_operation_by_source_id(32) }
   end
 
   test "finds acts with stable numeric or route IDs and rejects unknown IDs" do

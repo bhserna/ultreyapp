@@ -4,8 +4,8 @@ class ScheduleModelTest < ActiveSupport::TestCase
   test "lists operational days and commissions while defaulting to the first program day" do
     schedule = Schedule.new(day: nil, commission: nil)
 
-    assert_equal ["Sábado 14", "Domingo 15", "Lunes 16"], schedule.days
-    assert_equal ["AC", "EyA", "Hosp", "Liturgia", "Marketing", "Programa", "Todas las comisiones"], schedule.commissions
+    assert_equal [ "Sábado 14", "Domingo 15", "Lunes 16" ], schedule.days
+    assert_equal [ "AC", "EyA", "Hosp", "Liturgia", "Marketing", "Programa", "Todas las comisiones" ], schedule.commissions
     assert_equal "Domingo 15", schedule.selected_day
     assert_nil schedule.selected_commission
     assert_equal (1..19).to_a, schedule.entries.map(&:id)
@@ -25,14 +25,15 @@ class ScheduleModelTest < ActiveSupport::TestCase
 
     assert_equal 47, rows.size
     assert_equal 17, rows.count { |row| row.is_a?(Preparation) }
-    assert_equal 11, rows.grep(OperationalActivity).size
+    assert_equal 11, rows.grep(Activity).count { |activity| activity.kind == "operation" }
+    assert_equal 19, rows.grep(Activity).count { |activity| activity.kind == "act" }
     timed_rows = rows.select { |row| row.start_time.to_s.match?(/\A\d{2}:\d{2}\z/) }
     assert_equal timed_rows.map(&:start_time).sort, timed_rows.map(&:start_time)
     assert_equal 1, rows.count { |row| row.is_a?(Preparation) && row.id == 2 }
     assert_equal "01:30", rows.first.start_time
     assert_equal "19:00", timed_rows.last.start_time
-    assert_equal ["pre_event"] * 11 + ["before_parade"] + ["program"] * 35, rows.map(&:phase)
-    assert_equal [7, 12, 13], rows.first(11).last(3).map(&:id)
+    assert_equal [ "pre_event" ] * 11 + [ "before_parade" ] + [ "program" ] * 35, rows.map(&:phase)
+    assert_equal [ 38, 43, 44 ], rows.first(11).last(3).map(&:id)
     assert_instance_of Preparation, rows[11]
     assert_equal 1, rows[11].id
     assert_equal "Por definir con Programa", rows[11].start_time
@@ -53,8 +54,8 @@ class ScheduleModelTest < ActiveSupport::TestCase
 
   test "uses the explicit phase rather than the operation type or title" do
     attributes = YAML.safe_load_file(Rails.root.join("config/data/operational_activities.yml")).fetch("operational_activities").first
-    activity = OperationalActivity.new(attributes.merge("phase" => "program", "day" => "Domingo 15", "start_time" => "Por definir", "end_time" => "10:02"))
-    operations = [activity] + OperationalActivity.all.drop(1)
+    activity = Activity.new(attributes.merge("kind" => "operation", "phase" => "program", "day" => "Domingo 15", "start_time" => "Por definir", "end_time" => "10:02"))
+    operations = [ activity ] + Activity.operations.drop(1)
     schedule = Schedule.new(day: "Domingo 15", commission: nil)
     schedule.instance_variable_set(:@all_operations, operations)
     rows = schedule.rows
@@ -73,20 +74,21 @@ class ScheduleModelTest < ActiveSupport::TestCase
   test "filters preparations by their own commission and day" do
     schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
 
-    assert_equal [2, 3, 5, 6], schedule.rows.grep(Preparation).map(&:id)
-    assert_equal [5], schedule.rows.grep(Activity).map(&:id)
-    assert_equal [9, 11, 8, 7], schedule.rows.grep(OperationalActivity).map(&:id)
+    assert_equal [ 2, 3, 5, 6 ], schedule.rows.grep(Preparation).map(&:id)
+    activities = schedule.rows.grep(Activity)
+    assert_equal [ 5 ], activities.select { |activity| activity.kind == "act" }.map(&:id)
+    assert_equal [ 40, 42, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
     assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
   end
 
   test "combines row type day and commission filters" do
     operations = Schedule.new(day: "Domingo 15", commission: "Liturgia", row_type: "operations")
-    assert_equal [5, 4, 6], operations.rows.map(&:id)
-    assert operations.rows.all? { |row| row.is_a?(OperationalActivity) }
+    assert_equal [ 36, 35, 37 ], operations.rows.map(&:id)
+    assert operations.rows.all? { |row| row.is_a?(Activity) && row.kind == "operation" }
     assert_equal "operations", operations.selected_row_type
 
     saturday = Schedule.new(day: "Sábado 14", commission: "AC", row_type: "operations")
-    assert_equal [1, 2], saturday.rows.map(&:id)
+    assert_equal [ 32, 33 ], saturday.rows.map(&:id)
     assert_empty Schedule.new(day: "Sábado 14", commission: nil, row_type: "acts").rows
     assert_empty Schedule.new(day: "Sábado 14", commission: nil, row_type: "preparations").rows
     assert_equal 19, Schedule.new(day: "Domingo 15", commission: nil, row_type: "acts").rows.size
@@ -94,7 +96,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
 
     unknown = Schedule.new(day: "Sábado 14", commission: nil, row_type: "unknown")
     assert_nil unknown.selected_row_type
-    assert_equal [1, 2], unknown.rows.map(&:id)
+    assert_equal [ 32, 33 ], unknown.rows.map(&:id)
   end
 
   test "filters entries by day and commission" do
@@ -102,7 +104,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
 
     assert_equal "Domingo 15", schedule.selected_day
     assert_equal "EyA", schedule.selected_commission
-    assert_equal [5], schedule.entries.map(&:id)
+    assert_equal [ 5 ], schedule.entries.map(&:id)
   end
 
   test "keeps a valid commission even when it has no entries on the selected day" do

@@ -1,5 +1,5 @@
 class OperationalActivitiesController < ApplicationController
   def show
-    @operational_activity = OperationalActivity.find(params[:id])
+    @activity = Activity.find_operation_by_source_id(params[:id])
   end
 end

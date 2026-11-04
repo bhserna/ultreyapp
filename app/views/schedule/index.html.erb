@@ -59,8 +59,8 @@
                 <%= link_to "Ver detalle", preparation_path(activity.id), class: "schedule__resources-link" %>
               </td>
             </tr>
-          <% elsif activity.is_a?(OperationalActivity) %>
-            <tr class="schedule__operation" data-operational-activity-id="<%= activity.id %>">
+          <% elsif activity.kind == "operation" %>
+            <tr class="schedule__operation" data-operational-activity-id="<%= activity.source_id %>">
               <td>Operación</td>
               <td class="text-nowrap"><%= schedule_time(activity.start_time) %></td>
               <td class="text-nowrap"><%= schedule_time(activity.end_time) %></td>
@@ -70,7 +70,7 @@
                 <span class="schedule__category"><%= activity.category %></span>
               </td>
               <td><%= commission_links(activity, row_type: @schedule.selected_row_type) %></td>
-              <td><%= link_to "Ver detalle", operational_activity_path(activity.id), class: "schedule__resources-link" %></td>
+              <td><%= link_to "Ver detalle", operational_activity_path(activity.source_id), class: "schedule__resources-link" %></td>
             </tr>
           <% else %>
             <tr class="schedule__act">

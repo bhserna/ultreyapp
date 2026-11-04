@@ -15,7 +15,11 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 
 ## Activity model
 
-`Activity` represents the 31 numbered acts and still reads `schedule.yml` directly, without a database table. It exposes the source `activity` text as `title`, with `kind` defaulting to `act`. Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` references for questions, documents, and production details remain unchanged. Operations and preparations remain separate YAML-backed models for now.
+`Activity` represents both the 31 numbered acts and the 13 operations, reading `schedule.yml` and `operational_activities.yml` directly, without a database table. `Activity.all` combines both kinds; `Activity.acts` and `Activity.operations` select each kind. Acts expose the source `activity` text as `title` with `kind: "act"`; operations use `kind: "operation"` and retain their category and detail hash. Preparations remain a separate YAML-backed model.
+
+Activity IDs are explicit and unique across both files: existing acts keep IDs 1–31 and operations use IDs 32–44. Operations also preserve their original IDs 1–13 as `source_id`, used exclusively for their existing `/operational_activities/:id` URLs. For example, operation activity 32 still lives at `/operational_activities/1`, while `/schedule_entries/1` continues to show act activity 1. Never recalculate IDs from file order or the number of acts when adding data; allocate an unused activity ID across both files and preserve existing IDs.
+
+Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` references for questions, documents, and production details remain unchanged. Act endpoints only resolve activities of kind `act`; operation IDs are not accepted there. Operations retain their YAML details and do not gain act questions, documents, production records, or editing forms in this step.
 
 ## Preparations
 
@@ -30,7 +34,7 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 
 ## Operational activities
 
-`operational_activities.yml` stores 13 activities before the first preparation in `1er, día 15 Nov`: rows 3–4 and 7–17. Row 18, “Se finalizan las actividades previas”, is deliberately excluded. Existing act and preparation IDs are unchanged; operations have their own IDs and `/operational_activities/:id` pages.
+`operational_activities.yml` stores 13 activities before the first preparation in `1er, día 15 Nov`: rows 3–4 and 7–17. Row 18, “Se finalizan las actividades previas”, is deliberately excluded. Existing act and preparation IDs are unchanged. Operations have globally unique activity IDs and retain their original `source_id` values for `/operational_activities/:id` pages.
 
 The four user-facing categories are reception and participant support, setup and installations, technical preparation, and services and vendors. Original titles, responsibilities, technical requirements, questions, notes, and radios are retained. Known times use 24-hour notation; blank and undecided times remain blank or retain their source wording. No missing durations are inferred. Source sheet and row identify each record.
 
@@ -66,6 +70,6 @@ The question and production-detail import tasks and the temporary rosary update 
 
 `questions.yml` is a reference snapshot. Questions, answers, and topics are maintained through the application and stored in the database, independently of this file. Documents and their attachment associations are also stored in the database; uploaded files remain in the configured storage service. No YAML-to-database synchronization task is provided.
 
-The schedule, preparations, and operational activities are still read directly from YAML. Keep their IDs and related act IDs stable when editing these files.
+The schedule, preparations, and operational activities are still read directly from YAML. Keep their IDs, operation `source_id` values, and related act IDs stable when editing these files.
 
 **The initial regeneration's IDs are not compatible with the archived schedule's database references.** Subsequent refreshes preserve the active IDs. Regenerating YAML does not migrate existing database references: changing act IDs could display questions, documents, or production details under the wrong activity.

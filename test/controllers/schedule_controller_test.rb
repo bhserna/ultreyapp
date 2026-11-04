@@ -77,10 +77,12 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
         within(:schedule_phase, phase) do |section|
           assert_selector "th[scope='rowgroup']", exact_text: Schedule::PHASES.fetch(phase)
           expected_paths = rows.map do |row|
-            case row
-            when Preparation then preparation_path(row.id)
-            when OperationalActivity then operational_activity_path(row.id)
-            else schedule_entry_path(row.id)
+            if row.is_a?(Preparation)
+              preparation_path(row.id)
+            elsif row.kind == "operation"
+              operational_activity_path(row.source_id)
+            else
+              schedule_entry_path(row.id)
             end
           end
           rendered_paths = section.all(:schedule_row).map { |row| row.find(:link, "Ver detalle")[:href] }

@@ -5,7 +5,8 @@ source:
   description: 'Actividades operativas previas a la primera preparación. Filas 3,
     4 y 7–17. Se excluye la fila 18: Se finalizan las actividades previas.'
 operational_activities:
-- id: 1
+- id: 32
+  source_id: 1
   phase: pre_event
   title: Recepción de Diócesis
   category: Recepción y atención a participantes
@@ -33,7 +34,8 @@ operational_activities:
     media_files:
     radios: '2'
     pending_confirmations:
-- id: 2
+- id: 33
+  source_id: 2
   phase: pre_event
   title: Entrega de Kits
   category: Recepción y atención a participantes
@@ -61,7 +63,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 3
+- id: 34
+  source_id: 3
   phase: pre_event
   title: Instalación de stands
   category: Montaje e instalaciones
@@ -88,7 +91,8 @@ operational_activities:
     media_files:
     radios: '1'
     pending_confirmations:
-- id: 4
+- id: 35
+  source_id: 4
   phase: pre_event
   title: Instalación de capilla Santísimo
   category: Montaje e instalaciones
@@ -116,7 +120,8 @@ operational_activities:
     media_files:
     radios: '1'
     pending_confirmations:
-- id: 5
+- id: 36
+  source_id: 5
   phase: pre_event
   title: Instalación Cruz
   category: Montaje e instalaciones
@@ -145,7 +150,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 6
+- id: 37
+  source_id: 6
   phase: pre_event
   title: Instalación del arreglo floral para la Virgen
   category: Montaje e instalaciones
@@ -172,7 +178,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 7
+- id: 38
+  source_id: 7
   phase: pre_event
   title: Prueba de sonido e iluminación
   category: Preparación técnica
@@ -199,7 +206,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 8
+- id: 39
+  source_id: 8
   phase: pre_event
   title: Montaje de instruementos Coros Jessed
   category: Preparación técnica
@@ -229,7 +237,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 9
+- id: 40
+  source_id: 9
   phase: pre_event
   title: Montaje de instruementos Coros de Colores
   category: Preparación técnica
@@ -259,7 +268,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 10
+- id: 41
+  source_id: 10
   phase: pre_event
   title: Personas de Animación
   category: Preparación técnica
@@ -285,7 +295,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 11
+- id: 42
+  source_id: 11
   phase: pre_event
   title: Preparación para la transmisión en vivo
   category: Servicios y proveedores
@@ -316,7 +327,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 12
+- id: 43
+  source_id: 12
   phase: pre_event
   title: Recibir al fotógrafo
   category: Servicios y proveedores
@@ -344,7 +356,8 @@ operational_activities:
     media_files:
     radios:
     pending_confirmations:
-- id: 13
+- id: 44
+  source_id: 13
   phase: pre_event
   title: Preparación de Chisperos y cañón de serpentinas
   category: Servicios y proveedores

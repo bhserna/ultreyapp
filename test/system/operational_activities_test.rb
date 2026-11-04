@@ -26,6 +26,28 @@ class OperationalActivitiesTest < ApplicationSystemTestCase
     assert_text "se entregaran Kits y se realizan registros extemporaneos"
   end
 
+  test "keeps an operation separate from the act with the same original source ID" do
+    Question.create!(schedule_entry_id: 1, body: "Pregunta exclusiva del acto")
+    ProductionDetail.create!(schedule_entry_id: 1, executors: "Equipo exclusivo del acto")
+
+    visit schedule_entry_path(1)
+    assert_text "Pregunta exclusiva del acto"
+    assert_text "Equipo exclusivo del acto"
+
+    visit operational_activity_path(1)
+    assert_current_path operational_activity_path(1)
+    assert_selector "h1", text: "Recepción de Diócesis"
+    assert_text "AC y Hosp, Parroquias y Centros"
+    assert_no_text "Pregunta exclusiva del acto"
+    assert_no_text "Equipo exclusivo del acto"
+    assert_no_link "Agregar detalles de producción"
+
+    visit schedule_entry_path(1)
+    assert_selector "h1", text: Activity.find(1).title
+    assert_text "Pregunta exclusiva del acto"
+    assert_text "Equipo exclusivo del acto"
+  end
+
   test "filters operations by commission across days without losing the row type" do
     visit root_path(day: "Domingo 15")
     select "Operación", from: "Tipo de actividad"
