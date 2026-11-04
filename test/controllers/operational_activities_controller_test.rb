@@ -13,11 +13,11 @@ class OperationalActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_selector :activity_metadata, "Inicio", exact_text: "07:00"
     within(:operational_details) do
       assert_selector :detail_field, "Preguntas para la Arena", text: "Con qué anticipación puede preparar la infraestructura"
-      assert_selector :detail_field, "Ejecuta", text: "Proveedor externo (ANetwork)"
+      assert_selector :detail_field, "Ejecuta", text: "Javier Ayala"
       assert_selector :detail_field, "Dudas generales", text: "Con qué laptop o equipo se realizará la transmisión en vivo?"
       assert_selector :detail_field, "Notas", text: "ANetwork solo proporciona el enlace bidireccional de Internet."
     end
-    assert_select "a[href=?]", root_path(day: "Domingo 15", commission: "EyA"), text: "EyA"
+    assert_select "a[href=?]", root_path(day: "Domingo 15", commission: "Javier Ayala"), text: "Javier Ayala"
     assert_select "turbo-frame#questions", count: 0
     assert_select "turbo-frame#documents", count: 0
   end

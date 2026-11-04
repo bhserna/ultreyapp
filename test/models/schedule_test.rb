@@ -5,7 +5,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     schedule = Schedule.new(day: nil, commission: nil)
 
     assert_equal [ "Sábado 14", "Domingo 15", "Lunes 16" ], schedule.days
-    assert_equal [ "AC", "EyA", "Hosp", "Liturgia", "Marketing", "Programa", "Todas las comisiones" ], schedule.commissions
+    assert_equal [ "AC", "EyA", "Hosp", "Javier Ayala", "Liturgia", "Marketing", "Programa", "Todas las comisiones" ], schedule.commissions
     assert_equal "Domingo 15", schedule.selected_day
     assert_nil schedule.selected_commission
     assert_equal (1..19).to_a, schedule.entries.map(&:id)
@@ -77,7 +77,7 @@ class ScheduleModelTest < ActiveSupport::TestCase
     assert_equal [ 2, 3, 5, 6 ], schedule.rows.grep(Preparation).map(&:id)
     activities = schedule.rows.grep(Activity)
     assert_equal [ 5 ], activities.select { |activity| activity.kind == "act" }.map(&:id)
-    assert_equal [ 40, 41, 42, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
+    assert_equal [ 40, 41, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
     assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
   end
 

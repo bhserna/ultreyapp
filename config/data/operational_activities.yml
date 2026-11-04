@@ -306,12 +306,12 @@ operational_activities:
   end_time: '08:00'
   duration:
   commissions:
-  - EyA
+  - Javier Ayala
   source_sheet: 1er, día 15 Nov
   source_row: 15
   details:
-    commission: EyA
-    executors: Proveedor externo (ANetwork)
+    commission: Javier Ayala
+    executors: Javier Ayala
     screen:
     audio:
     room_lighting:
