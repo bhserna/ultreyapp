@@ -16,6 +16,11 @@
   </header>
 
   <section class="page__section" aria-label="Detalles operativos">
-    <%= render "shared/activity_details", details: @activity.details %>
+    <%= render "shared/activity_details", details: @activity.details.merge(
+          @activity.production_detail.to_h.stringify_keys,
+          "executors" => @activity.executors,
+          "notes" => @activity.notes,
+          "pending_confirmations" => @activity.pending_confirmations
+        ) %>
   </section>
 </main>

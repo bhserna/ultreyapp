@@ -29,6 +29,25 @@ class Activity
       raise(ActiveRecord::RecordNotFound, "Operation not found")
   end
 
+  def executors
+    detail_attributes.to_h["executors"]
+  end
+
+  def notes
+    detail_attributes.to_h["notes"]
+  end
+
+  def pending_confirmations
+    detail_attributes.to_h["pending_confirmations"]
+  end
+
+  def production_detail
+    return unless detail_attributes
+
+    attributes = ProductionInformation.members.index_with { |attribute| detail_attributes[attribute.to_s] }
+    ProductionInformation.new(**attributes)
+  end
+
   def initialize(attributes)
     @kind = attributes.fetch("kind", "act")
     @phase = attributes.fetch("phase", "program")
@@ -37,5 +56,17 @@ class Activity
     @details = attributes.fetch("details", {})
     @source_id = attributes.fetch("source_id", attributes.fetch("id"))
     ATTRIBUTES.each { |attribute| instance_variable_set("@#{attribute}", attributes.fetch(attribute)) }
+  end
+
+  private
+
+  def detail_attributes
+    return @detail_attributes if defined?(@detail_attributes)
+
+    @detail_attributes = if kind == "act"
+      ProductionDetail.find_by(schedule_entry_id: id)&.attributes
+    else
+      details
+    end
   end
 end

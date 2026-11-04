@@ -1,21 +1,21 @@
 <section class="page__section" aria-labelledby="production-detail-heading">
   <h2 id="production-detail-heading">Detalles de producción</h2>
 
-  <% if @production_detail %>
+  <% if (production_detail = @activity.production_detail) %>
     <% {
-      executors: "Ejecuta",
-      screen: "Pantalla",
-      audio: "Audio",
-      room_lighting: "Iluminación de sala",
-      stage_lighting: "Iluminación de escenario",
-      aisle_lighting: "Iluminación de pasillos",
-      requirements: "Requerimientos",
-      notes: "Notas",
-      radios: "Radios",
-      pending_confirmations: "Pendientes por confirmar"
-    }.each do |attribute, label| %>
+      "Ejecuta" => @activity.executors,
+      "Pantalla" => production_detail.screen,
+      "Audio" => production_detail.audio,
+      "Iluminación de sala" => production_detail.room_lighting,
+      "Iluminación de escenario" => production_detail.stage_lighting,
+      "Iluminación de pasillos" => production_detail.aisle_lighting,
+      "Requerimientos" => production_detail.requirements,
+      "Notas" => @activity.notes,
+      "Radios" => production_detail.radios,
+      "Pendientes por confirmar" => @activity.pending_confirmations
+    }.each do |label, value| %>
       <h3><%= label %></h3>
-      <%= simple_format(@production_detail.public_send(attribute).presence || "—") %>
+      <%= simple_format(value.presence || "—") %>
     <% end %>
 
     <div class="questions__actions">

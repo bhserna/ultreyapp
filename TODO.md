@@ -23,9 +23,16 @@ Move toward a shared activity model in small steps. Keep existing behavior worki
 - [x] Keep act endpoints and existing database references isolated from operations.
 - [x] Verify schedule filters, ordering, details, and ID isolation with Rails and system tests.
 
+## 3. Introduce a common read interface for activity information
+
+- [x] Expose execution, general notes, and pending confirmations through activity readers.
+- [x] Expose technical information through a read-only `ProductionInformation` value object.
+- [x] Read existing act production records and operation YAML without moving or overwriting data.
+- [x] Use the readers on existing detail pages without changing their presentation or adding forms.
+- [x] Verify missing data, current database edits, source isolation, and existing UI behavior with Rails and system tests.
+
 ## Later, one step at a time
 
-- [ ] Agree on common attributes and the boundary between activity and production information.
 - [ ] Persist activities without adding forms.
 - [ ] Represent preparation actions as activities while retaining preparation groups and related acts.
 - [ ] Introduce shared commissions and assignments, preserving unresolved source wording.
