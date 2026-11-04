@@ -1,8 +1,8 @@
 class DocumentsController < ApplicationController
-  before_action :set_schedule_entry
+  before_action :set_activity
 
   def index
-    @documents = documents_for_entry.with_attached_file.order(created_at: :desc, id: :desc)
+    @documents = documents_for_activity.with_attached_file.order(created_at: :desc, id: :desc)
   end
 
   def create
@@ -10,27 +10,27 @@ class DocumentsController < ApplicationController
 
     Document.transaction do
       uploaded_files.each do |uploaded_file|
-        Document.create!(schedule_entry_id: @schedule_entry.id, file: uploaded_file)
+        Document.create!(schedule_entry_id: @activity.id, file: uploaded_file)
       end
     end
 
-    redirect_to schedule_entry_documents_path(@schedule_entry.id), status: :see_other
+    redirect_to schedule_entry_documents_path(@activity.id), status: :see_other
   end
 
   def destroy
-    document = documents_for_entry.find(params[:id])
+    document = documents_for_activity.find(params[:id])
     document.file.purge
     document.destroy!
-    redirect_to schedule_entry_documents_path(@schedule_entry.id), status: :see_other
+    redirect_to schedule_entry_documents_path(@activity.id), status: :see_other
   end
 
   private
 
-  def set_schedule_entry
-    @schedule_entry = Activity.find(params[:schedule_entry_id])
+  def set_activity
+    @activity = Activity.find(params[:schedule_entry_id])
   end
 
-  def documents_for_entry
-    Document.where(schedule_entry_id: @schedule_entry.id)
+  def documents_for_activity
+    Document.where(schedule_entry_id: @activity.id)
   end
 end

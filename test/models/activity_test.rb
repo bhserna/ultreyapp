@@ -46,10 +46,10 @@ class ActivityTest < ActiveSupport::TestCase
   test "question references resolve to the renamed activity model" do
     question = Question.create!(schedule_entry_id: 3, body: "Who coordinates this act?")
 
-    assert_instance_of Activity, question.schedule_entry
-    assert_equal 3, question.schedule_entry.id
-    assert_equal Activity.find(3).title, question.schedule_entry.title
-    assert_nil Question.new(body: "General question").schedule_entry
+    assert_instance_of Activity, question.activity
+    assert_equal 3, question.activity.id
+    assert_equal Activity.find(3).title, question.activity.title
+    assert_nil Question.new(body: "General question").activity
   end
 
   test "question data references only the numbered act on its source row" do

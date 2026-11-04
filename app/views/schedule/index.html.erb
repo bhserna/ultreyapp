@@ -46,42 +46,42 @@
       <% @schedule.rows.group_by(&:phase).each do |phase, rows| %>
       <tbody data-phase="<%= phase %>">
         <tr class="schedule__phase"><th colspan="7" scope="rowgroup"><%= Schedule::PHASES.fetch(phase) %></th></tr>
-        <% rows.each do |schedule_entry| %>
-          <% if schedule_entry.is_a?(Preparation) %>
-            <tr class="schedule__preparation" data-preparation-id="<%= schedule_entry.id %>">
+        <% rows.each do |activity| %>
+          <% if activity.is_a?(Preparation) %>
+            <tr class="schedule__preparation" data-preparation-id="<%= activity.id %>">
               <td>Preparación</td>
-              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
+              <td class="text-nowrap"><%= schedule_time(activity.start_time) %></td>
               <td>—</td>
               <td>—</td>
-              <td class="schedule__activity"><%= schedule_entry.title %></td>
-              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
+              <td class="schedule__activity"><%= activity.title %></td>
+              <td><%= commission_links(activity, row_type: @schedule.selected_row_type) %></td>
               <td>
-                <%= link_to "Ver detalle", preparation_path(schedule_entry.id), class: "schedule__resources-link" %>
+                <%= link_to "Ver detalle", preparation_path(activity.id), class: "schedule__resources-link" %>
               </td>
             </tr>
-          <% elsif schedule_entry.is_a?(OperationalActivity) %>
-            <tr class="schedule__operation" data-operational-activity-id="<%= schedule_entry.id %>">
+          <% elsif activity.is_a?(OperationalActivity) %>
+            <tr class="schedule__operation" data-operational-activity-id="<%= activity.id %>">
               <td>Operación</td>
-              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
-              <td class="text-nowrap"><%= schedule_time(schedule_entry.end_time) %></td>
-              <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
+              <td class="text-nowrap"><%= schedule_time(activity.start_time) %></td>
+              <td class="text-nowrap"><%= schedule_time(activity.end_time) %></td>
+              <td class="text-nowrap"><%= activity.duration.presence || "—" %></td>
               <td class="schedule__activity">
-                <%= schedule_entry.title %>
-                <span class="schedule__category"><%= schedule_entry.category %></span>
+                <%= activity.title %>
+                <span class="schedule__category"><%= activity.category %></span>
               </td>
-              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
-              <td><%= link_to "Ver detalle", operational_activity_path(schedule_entry.id), class: "schedule__resources-link" %></td>
+              <td><%= commission_links(activity, row_type: @schedule.selected_row_type) %></td>
+              <td><%= link_to "Ver detalle", operational_activity_path(activity.id), class: "schedule__resources-link" %></td>
             </tr>
           <% else %>
             <tr class="schedule__act">
-              <td class="text-nowrap"><%= schedule_entry.act_number || "—" %></td>
-              <td class="text-nowrap"><%= schedule_time(schedule_entry.start_time) %></td>
-              <td class="text-nowrap"><%= schedule_time(schedule_entry.end_time) %></td>
-              <td class="text-nowrap"><%= schedule_entry.duration.presence || "—" %></td>
-              <td class="schedule__activity"><%= schedule_entry.title %></td>
-              <td><%= commission_links(schedule_entry, row_type: @schedule.selected_row_type) %></td>
+              <td class="text-nowrap"><%= activity.act_number || "—" %></td>
+              <td class="text-nowrap"><%= schedule_time(activity.start_time) %></td>
+              <td class="text-nowrap"><%= schedule_time(activity.end_time) %></td>
+              <td class="text-nowrap"><%= activity.duration.presence || "—" %></td>
+              <td class="schedule__activity"><%= activity.title %></td>
+              <td><%= commission_links(activity, row_type: @schedule.selected_row_type) %></td>
               <td>
-                <%= link_to "Ver detalle", schedule_entry_path(schedule_entry.id), class: "schedule__resources-link" %>
+                <%= link_to "Ver detalle", schedule_entry_path(activity.id), class: "schedule__resources-link" %>
               </td>
             </tr>
           <% end %>

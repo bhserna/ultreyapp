@@ -6,14 +6,14 @@ class AnswersController < ApplicationController
 
   def update
     @question.update!(answer_params)
-    redirect_to helpers.questions_collection_path(schedule_entry: @schedule_entry, topic: @question.topic), status: :see_other
+    redirect_to helpers.questions_collection_path(activity: @activity, topic: @question.topic), status: :see_other
   end
 
   private
 
   def set_question
     @question = Question.find(params[:question_id])
-    @schedule_entry = @question.schedule_entry
+    @activity = @question.activity
   end
 
   def answer_params

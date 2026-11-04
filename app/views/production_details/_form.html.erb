@@ -1,4 +1,4 @@
-<%= form_with model: @production_detail, url: schedule_entry_production_detail_path(@schedule_entry.id), class: "questions__form" do |form| %>
+<%= form_with model: @production_detail, url: schedule_entry_production_detail_path(@activity.id), class: "questions__form" do |form| %>
   <% if @production_detail.errors.any? %>
     <ul role="alert">
       <% @production_detail.errors.full_messages.each do |message| %>
@@ -30,6 +30,6 @@
 
   <div class="questions__form-actions">
     <%= form.submit "Guardar detalles de producción" %>
-    <%= link_to "Cancelar", schedule_entry_path(@schedule_entry.id), class: "questions__cancel" %>
+    <%= link_to "Cancelar", schedule_entry_path(@activity.id), class: "questions__cancel" %>
   </div>
 <% end %>

@@ -10,14 +10,14 @@
       <div><dt>Inicio de preparación</dt><dd><%= @preparation.start_time.presence || "—" %></dd></div>
       <div><dt>Comisiones</dt><dd><%= commission_links(@preparation) %></dd></div>
     </dl>
-    <% if @schedule_entries.any? %>
+    <% if @activities.any? %>
       <h2>Actos relacionados</h2>
       <ul class="related-links">
-        <% @schedule_entries.each do |entry| %>
+        <% @activities.each do |activity| %>
           <li>
-            <%= link_to schedule_entry_path(entry.id) do %>
-              <span class="related-links__label">Acto <%= entry.act_number %></span>
-              <span class="related-links__title"><%= entry.title %></span>
+            <%= link_to schedule_entry_path(activity.id) do %>
+              <span class="related-links__label">Acto <%= activity.act_number %></span>
+              <span class="related-links__title"><%= activity.title %></span>
               <span aria-hidden="true">→</span>
             <% end %>
           </li>

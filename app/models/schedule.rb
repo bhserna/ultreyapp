@@ -13,7 +13,7 @@ class Schedule
   end
 
   def days
-    (all_operations + all_entries + all_preparations).map(&:day).uniq
+    (all_operations + all_acts + all_preparations).map(&:day).uniq
   end
 
   def commissions
@@ -21,7 +21,7 @@ class Schedule
   end
 
   def selected_day
-    days.include?(@day) ? @day : all_entries.first.day
+    days.include?(@day) ? @day : all_acts.first.day
   end
 
   def selected_commission
@@ -33,33 +33,33 @@ class Schedule
   end
 
   def entries
-    all_entries.select { |entry| matches_filters?(entry) }
+    all_acts.select { |activity| matches_filters?(activity) }
   end
 
   def rows
     candidates = case selected_row_type
-    when "acts" then all_entries
+    when "acts" then all_acts
     when "preparations" then all_preparations
     when "operations" then all_operations
     else all_rows
     end
 
-    candidates.select { |entry| matches_filters?(entry) }.sort_by do |entry|
-      time = entry.start_time.to_s
-      if !time.match?(/\A\d{2}:\d{2}\z/) && entry.respond_to?(:end_time)
-        time = entry.end_time.to_s
+    candidates.select { |activity| matches_filters?(activity) }.sort_by do |activity|
+      time = activity.start_time.to_s
+      if !time.match?(/\A\d{2}:\d{2}\z/) && activity.respond_to?(:end_time)
+        time = activity.end_time.to_s
       end
-      [PHASES.keys.index(entry.phase), time.match?(/\A\d{2}:\d{2}\z/) ? time : "24:00"]
+      [ PHASES.keys.index(activity.phase), time.match?(/\A\d{2}:\d{2}\z/) ? time : "24:00" ]
     end
   end
 
   private
-    def matches_filters?(entry)
-      entry.day == selected_day && (selected_commission.nil? || entry.commissions.include?(selected_commission))
+    def matches_filters?(activity)
+      activity.day == selected_day && (selected_commission.nil? || activity.commissions.include?(selected_commission))
     end
 
     def all_rows
-      all_operations + all_preparations + all_entries
+      all_operations + all_preparations + all_acts
     end
 
     def all_operations
@@ -70,7 +70,7 @@ class Schedule
       @all_preparations ||= Preparation.all
     end
 
-    def all_entries
-      @all_entries ||= Activity.all
+    def all_acts
+      @all_acts ||= Activity.all
     end
 end

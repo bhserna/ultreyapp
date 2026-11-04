@@ -1,19 +1,19 @@
-<% content_for :title, @schedule_entry ? "Preguntas · #{@schedule_entry.title}" : "Preguntas generales" %>
+<% content_for :title, @activity ? "Preguntas · #{@activity.title}" : "Preguntas generales" %>
 
-<main class="page<%= " page--wide" unless @schedule_entry %>">
-  <% if @schedule_entry %>
-    <%= link_to "← Volver a la actividad", schedule_entry_path(@schedule_entry.id), class: "page__back" %>
+<main class="page<%= " page--wide" unless @activity %>">
+  <% if @activity %>
+    <%= link_to "← Volver a la actividad", schedule_entry_path(@activity.id), class: "page__back" %>
   <% end %>
 
   <header class="page__header">
-    <% if @schedule_entry %>
-      <p class="page__eyebrow"><%= @schedule_entry.day %></p>
+    <% if @activity %>
+      <p class="page__eyebrow"><%= @activity.day %></p>
     <% end %>
-    <h1><%= @schedule_entry ? @schedule_entry.title : "Preguntas generales" %></h1>
+    <h1><%= @activity ? @activity.title : "Preguntas generales" %></h1>
   </header>
 
-  <div class="<%= "questions-layout" unless @schedule_entry %>">
-  <% unless @schedule_entry %>
+  <div class="<%= "questions-layout" unless @activity %>">
+  <% unless @activity %>
     <aside class="topics" aria-labelledby="topics-heading">
       <div class="topics__header">
         <h2 id="topics-heading">Temas</h2>
@@ -41,7 +41,7 @@
           <%= render @questions %>
         </ul>
       <% else %>
-        <p class="questions__empty"><%= @schedule_entry ? "Todavía no hay preguntas para esta actividad." : (@topic ? "Todavía no hay preguntas para este tema." : "Todavía no hay preguntas generales sin tema.") %></p>
+        <p class="questions__empty"><%= @activity ? "Todavía no hay preguntas para esta actividad." : (@topic ? "Todavía no hay preguntas para este tema." : "Todavía no hay preguntas generales sin tema.") %></p>
       <% end %>
 
       <div class="questions__new" data-controller="form-toggle">
@@ -53,7 +53,7 @@
 
         <div id="new-question-form" class="questions__new-form" data-form-toggle-target="panel" hidden>
           <%= render "form", question: @question,
-                url: questions_collection_path(schedule_entry: @schedule_entry, topic: @topic), method: :post,
+                url: questions_collection_path(activity: @activity, topic: @topic), method: :post,
                 submit_label: "Guardar pregunta", cancel_action: "form-toggle#hide" %>
         </div>
       </div>
