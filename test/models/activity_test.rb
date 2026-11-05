@@ -5,7 +5,7 @@ class ActivityTest < ActiveSupport::TestCase
     entries = Activity.acts
 
     assert entries.all? { |entry| entry.kind == "act" }
-    assert entries.none? { |entry| entry.is_a?(ApplicationRecord) }
+    assert entries.all?(&:persisted?)
     source = YAML.safe_load_file(Rails.root.join("config/data/schedule.yml"))
 
     assert_equal (1..31).to_a, entries.map(&:id)
@@ -50,7 +50,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal "Recepción de Diócesis", Activity.find(32).title
     assert_equal "Recepción de Diócesis", Activity.find_operation_by_source_id("1").title
     assert_nil Activity.find(32).act_number
-    assert_raises(ActiveRecord::RecordNotFound) { Activity.find(32, kind: "act") }
+    assert_raises(ActiveRecord::RecordNotFound) { Activity.acts.find(32) }
     assert_raises(ActiveRecord::RecordNotFound) { Activity.find_operation_by_source_id(32) }
   end
 

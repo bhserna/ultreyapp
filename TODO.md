@@ -31,9 +31,17 @@ Move toward a shared activity model in small steps. Keep existing behavior worki
 - [x] Use the readers on existing detail pages without changing their presentation or adding forms.
 - [x] Verify missing data, current database edits, source isolation, and existing UI behavior with Rails and system tests.
 
+## 4. Persist activities without adding forms
+
+- [x] Create the activities table, preserving existing IDs, source identity, and source metadata.
+- [x] Import missing acts and operations transactionally without overwriting records or related data.
+- [x] Read activities from the database while keeping act production records and the common Data interface intact.
+- [x] Preserve routes, filters, ordering, preparation links, and existing act forms; add no editing UI.
+- [x] Verify import behavior and persisted page behavior with Rails and system tests.
+- [x] Document the migration and import commands for setup and deployment.
+
 ## Later, one step at a time
 
-- [ ] Persist activities without adding forms.
 - [ ] Represent preparation actions as activities while retaining preparation groups and related acts.
 - [ ] Introduce shared commissions and assignments, preserving unresolved source wording.
 - [ ] Add editing only after the model is settled.

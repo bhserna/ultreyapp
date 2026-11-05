@@ -75,6 +75,6 @@ class Schedule
     end
 
     def all_activities
-      @all_activities ||= Activity.all
+      @all_activities ||= Activity.order(:id).to_a
     end
 end

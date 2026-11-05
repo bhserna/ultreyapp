@@ -57,7 +57,7 @@ class ActivityInformationTest < ActiveSupport::TestCase
     assert_nil activity.production_detail
   end
 
-  test "reads operation information from YAML without using records with matching IDs" do
+  test "reads imported operation details without using production records with matching IDs" do
     operation = Activity.find_operation_by_source_id(8)
     ProductionDetail.create!(schedule_entry_id: operation.id, executors: "Unrelated team", audio: "Unrelated audio", notes: "Unrelated notes")
     ProductionDetail.create!(schedule_entry_id: operation.source_id, executors: "Act team", audio: "Act audio", notes: "Act notes")

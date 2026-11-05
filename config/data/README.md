@@ -15,17 +15,30 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 
 ## Activity model
 
-`Activity` represents both the 31 numbered acts and the 13 operations, reading `schedule.yml` and `operational_activities.yml` directly, without a database table. `Activity.all` combines both kinds; `Activity.acts` and `Activity.operations` select each kind. Acts expose the source `activity` text as `title` with `kind: "act"`; operations use `kind: "operation"` and retain their category and detail hash. Preparations remain a separate YAML-backed model.
+`Activity` is an Active Record model for both the 31 numbered acts and the 13 operations. `Activity.all` reads persisted records; `Activity.acts` and `Activity.operations` select each kind in ID order. The initial import maps the source `activity` text to `title` with `kind: "act"`; operations use `kind: "operation"` and retain their category and detail hash. Preparations remain a separate YAML-backed model.
 
 Activity IDs are explicit and unique across both files: existing acts keep IDs 1–31 and operations use IDs 32–44. Operations also preserve their original IDs 1–13 as `source_id`, used exclusively for their existing `/operational_activities/:id` URLs. For example, operation activity 32 still lives at `/operational_activities/1`, while `/schedule_entries/1` continues to show act activity 1. Never recalculate IDs from file order or the number of acts when adding data; allocate an unused activity ID across both files and preserve existing IDs.
 
-Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` references for questions, documents, and production details remain unchanged. Act endpoints only resolve activities of kind `act`; operation IDs are not accepted there. Operations retain their YAML details and do not gain act questions, documents, production records, or editing forms in this step.
+Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` references for questions, documents, and production details remain unchanged. Act endpoints only resolve activities of kind `act`; operation IDs are not accepted there. Operation details are imported into the activity's JSON `details` column; they do not gain act questions, documents, separate production records, or editing forms in this step.
+
+### Setup and deployment
+
+Migrate and import before serving traffic on an existing installation:
+
+```sh
+RAILS_ENV=production bin/rails db:migrate
+RAILS_ENV=production bin/rails activities:import
+```
+
+For local setup, run `bin/rails db:migrate` and `bin/rails activities:import`. `bin/rails db:seed` also imports activities. The import is transactional and creates only missing activity IDs. Repeating it does not overwrite existing records, user edits, timestamps, questions, documents, attachments, or act production details. It preserves source sheet/row, commission lists, textual and missing times, and the original integer or subact-string numbering (stored as JSON).
+
+After import, the database is the source of truth for acts and operations. The two YAML files are import/reference snapshots, not runtime configuration; changing them does not update existing records. No new editing UI is provided.
 
 ## Activity information boundary
 
 `Activity#executors` and `Activity#notes` expose general execution information independently of technical production. `Activity#production_detail` returns an immutable `ProductionInformation` value object defined with Ruby's `Data.define` containing screen, audio, room/stage/aisle lighting, requirements, radios, and media-file references. It is not an editable `ProductionDetail` record and has no persistence methods.
 
-For acts, these readers use the existing database `ProductionDetail`, including manual edits; they never fall back to `production_details.yml`. An act without a production record returns `nil` for these readers. For operations, the same interface reads the existing YAML detail hash and never looks up production records using either its activity ID or original operation ID. The underlying data has not moved: act executors and notes remain stored in `ProductionDetail` for now, and operation details remain in YAML.
+For acts, these readers use the existing database `ProductionDetail`, including manual edits; they never fall back to `production_details.yml`. An act without a production record returns `nil` for these readers. For operations, the same interface reads the persisted activity's `details` hash and never looks up production records using either its activity ID or original operation ID. Act executors and notes remain stored in `ProductionDetail`; the full operation detail hash is imported unchanged from YAML into the activity record.
 
 Questions retain their existing storage and presentation. Pending confirmations remain separate source wording, exposed through `Activity#pending_confirmations`, rather than being classified as technical production. Existing detail pages retain their labels, order, empty-state behavior, and act production forms. The readers cache the source attributes per activity instance; a fresh activity reflects subsequent edits or deletions.
 
@@ -48,7 +61,7 @@ The four user-facing categories are reception and participant support, setup and
 
 The program adds Saturday 14 for reception and kits, and places Sunday operations in the pre-event block before preparations and acts. It still opens on Sunday, the first day with acts, by default. Operations have no act number and use a separate table style with their category. The type filter offers all rows, acts, preparations, or operations; day and commission filters combine with it, and day tabs and table commission links preserve the selected type. Undecided times sort after known times within their phase unless a known end time can be used for ordering. The program table displays a dash for missing or undecided times; detail pages retain the original wording, such as “Por definir con la Arena”. Operations with no commission remain visible without a commission filter.
 
-Technical details reuse the preparation details partial. Operational questions remain on their own detail pages and are not imported as act questions. This file is read directly by the app: deployment is sufficient, with no database migration or import required.
+Technical details reuse the preparation details partial. Operational questions remain on their own detail pages and are not imported as act questions. This file is the source snapshot for the initial activity import described above. Runtime operation data comes from the database.
 
 ## Program phases and ordering
 
@@ -78,6 +91,6 @@ The question and production-detail import tasks and the temporary rosary update 
 
 `questions.yml` is a reference snapshot. Questions, answers, and topics are maintained through the application and stored in the database, independently of this file. Documents and their attachment associations are also stored in the database; uploaded files remain in the configured storage service. No YAML-to-database synchronization task is provided.
 
-The schedule, preparations, and operational activities are still read directly from YAML. Keep their IDs, operation `source_id` values, and related act IDs stable when editing these files.
+Preparations are still read directly from YAML. Acts and operations are persisted activities; their YAML files are import/reference snapshots. Keep activity IDs, operation `source_id` values, and related act IDs stable when editing source files or database records.
 
 **The initial regeneration's IDs are not compatible with the archived schedule's database references.** Subsequent refreshes preserve the active IDs. Regenerating YAML does not migrate existing database references: changing act IDs could display questions, documents, or production details under the wrong activity.
