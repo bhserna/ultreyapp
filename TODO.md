@@ -40,8 +40,16 @@ Move toward a shared activity model in small steps. Keep existing behavior worki
 - [x] Verify import behavior and persisted page behavior with Rails and system tests.
 - [x] Document the migration and import commands for setup and deployment.
 
+## 5. Represent preparation actions as activities
+
+- [x] Assign explicit action IDs without changing existing act, operation, or preparation IDs.
+- [x] Import actions as persisted activities with a preparation reference, position, inherited source metadata, and original details.
+- [x] Keep preparation headers and related-act lists in YAML while reading their ordered actions from the database.
+- [x] Reuse the common information interface and existing detail component, with no new forms or standalone action rows.
+- [x] Preserve shared/independent preparations, unknown times and responsibility wording, and existing act endpoints.
+- [x] Verify imports, non-overwriting upgrades, ordering, grouping, filters, and persisted page behavior with Rails and system tests.
+
 ## Later, one step at a time
 
-- [ ] Represent preparation actions as activities while retaining preparation groups and related acts.
 - [ ] Introduce shared commissions and assignments, preserving unresolved source wording.
 - [ ] Add editing only after the model is settled.

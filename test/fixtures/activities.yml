@@ -3,8 +3,21 @@
    end
    operations = YAML.safe_load_file(Rails.root.join("config/data/operational_activities.yml")).fetch("operational_activities").map do |attributes|
      attributes.merge("kind" => "operation")
+   end
+   actions = YAML.safe_load_file(Rails.root.join("config/data/preparations.yml")).fetch("preparations").flat_map do |preparation|
+     preparation.fetch("actions").each_with_index.map do |action, index|
+       commission = action["commission"]
+       action.slice("id", "source_row", "start_time", "end_time", "duration").merge(
+         "kind" => "preparation_action", "source_id" => action.fetch("id"),
+         "preparation_id" => preparation.fetch("id"), "position" => index + 1,
+         "title" => action.fetch("description"), "day" => preparation.fetch("day"),
+         "phase" => preparation.fetch("phase", "program"), "source_sheet" => preparation.fetch("source_sheet"),
+         "commissions" => commission.present? && !commission.include?("?") ? [ commission ] : [],
+         "details" => action.except("id", "source_row", "start_time", "end_time", "duration", "description")
+       )
+     end
    end %>
-<% (acts + operations).each do |attributes| %>
+<% (acts + operations + actions).each do |attributes| %>
 activity_<%= attributes.fetch("id") %>:
 <%= attributes.to_yaml.lines.drop(1).map { |line| "  #{line}" }.join %>
 <% end %>

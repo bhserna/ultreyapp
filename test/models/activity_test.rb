@@ -36,14 +36,15 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal [ "Domingo 15", "Lunes 16" ], entries.map(&:day).uniq
   end
 
-  test "gives acts and operations unique explicit IDs without renumbering existing acts" do
+  test "gives all activity kinds unique explicit IDs without renumbering existing acts" do
     activities = Activity.all
 
-    assert_equal 44, activities.size
+    assert_equal 76, activities.size
     assert_equal activities.size, activities.map(&:id).uniq.size
     assert activities.all? { |activity| activity.instance_of?(Activity) }
     assert_equal (1..31).to_a, Activity.acts.map(&:id)
     assert_equal (32..44).to_a, Activity.operations.map(&:id)
+    assert_equal (45..76).to_a, Activity.preparation_actions.order(:id).map(&:id)
     assert_equal (1..13).to_a, Activity.operations.map(&:source_id)
     assert_equal "act", Activity.find(1).kind
     assert_equal "operation", Activity.find("32").kind

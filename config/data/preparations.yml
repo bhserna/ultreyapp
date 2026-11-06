@@ -25,7 +25,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 19
   actions:
-  - source_row: 20
+  - id: 45
+    source_row: 20
     start_time: Por definir con Programa
     end_time: Por definir con Programa
     duration:
@@ -48,7 +49,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 21
+  - id: 46
+    source_row: 21
     start_time: '08:30'
     end_time: Durante todo el evento
     duration:
@@ -67,7 +69,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 22
+  - id: 47
+    source_row: 22
     start_time: '08:30'
     end_time: '10:00'
     duration:
@@ -100,7 +103,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 26
   actions:
-  - source_row: 27
+  - id: 48
+    source_row: 27
     start_time: '09:45'
     end_time: '10:00'
     duration:
@@ -122,7 +126,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 28
+  - id: 49
+    source_row: 28
     start_time: '09:45'
     end_time:
     duration:
@@ -162,7 +167,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 32
   actions:
-  - source_row: 33
+  - id: 50
+    source_row: 33
     start_time: '10:00'
     end_time: '10:20'
     duration:
@@ -181,7 +187,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 34
+  - id: 51
+    source_row: 34
     start_time: '10:00'
     end_time: '10:20'
     duration:
@@ -204,7 +211,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 35
+  - id: 52
+    source_row: 35
     start_time: '10:00'
     end_time: '10:20'
     duration: 1-2 min
@@ -235,7 +243,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 37
   actions:
-  - source_row: 39
+  - id: 53
+    source_row: 39
     start_time: '10:20'
     end_time: '10:50'
     duration:
@@ -260,7 +269,8 @@ preparations:
     media_files:
     radios:
     pending_confirmations:
-  - source_row: 41
+  - id: 54
+    source_row: 41
     start_time: '10:50'
     end_time:
     duration:
@@ -291,7 +301,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 43
   actions:
-  - source_row: 44
+  - id: 55
+    source_row: 44
     start_time: '11:30'
     end_time: '11:50'
     duration:
@@ -328,7 +339,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 45
   actions:
-  - source_row: 46
+  - id: 56
+    source_row: 46
     start_time: '11:40'
     end_time: '12:00'
     duration:
@@ -367,7 +379,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 51
   actions:
-  - source_row: 52
+  - id: 57
+    source_row: 52
     start_time: '12:30'
     end_time: '12:45'
     duration:
@@ -400,7 +413,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 56
   actions:
-  - source_row: 57
+  - id: 58
+    source_row: 57
     start_time: '13:00'
     end_time:
     duration:
@@ -449,7 +463,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 62
   actions:
-  - source_row: 63
+  - id: 59
+    source_row: 63
     start_time: '15:35'
     end_time:
     duration:
@@ -482,7 +497,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 66
   actions:
-  - source_row: 67
+  - id: 60
+    source_row: 67
     start_time: '16:00'
     end_time:
     duration:
@@ -514,7 +530,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 69
   actions:
-  - source_row: 70
+  - id: 61
+    source_row: 70
     start_time: '16:20'
     end_time:
     duration:
@@ -546,7 +563,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 73
   actions:
-  - source_row: 74
+  - id: 62
+    source_row: 74
     start_time: '16:50'
     end_time: '17:05'
     duration: '0:15'
@@ -575,7 +593,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 78
   actions:
-  - source_row: 79
+  - id: 63
+    source_row: 79
     start_time: '16:55'
     end_time: '17:15'
     duration: '0:15'
@@ -610,7 +629,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 82
   actions:
-  - source_row: 83
+  - id: 64
+    source_row: 83
     start_time: '17:40'
     end_time:
     duration:
@@ -644,7 +664,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 86
   actions:
-  - source_row: 87
+  - id: 65
+    source_row: 87
     start_time: '18:00'
     end_time:
     duration:
@@ -676,7 +697,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 90
   actions:
-  - source_row: 91
+  - id: 66
+    source_row: 91
     start_time: '18:25'
     end_time: '18:45'
     duration: '0:20'
@@ -709,7 +731,8 @@ preparations:
   source_sheet: 1er, día 15 Nov
   source_row: 94
   actions:
-  - source_row: 95
+  - id: 67
+    source_row: 95
     start_time:
     end_time:
     duration:
@@ -739,7 +762,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 3
   actions:
-  - source_row: 4
+  - id: 68
+    source_row: 4
     start_time:
     end_time:
     duration:
@@ -769,7 +793,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 7
   actions:
-  - source_row: 8
+  - id: 69
+    source_row: 8
     start_time: '08:30'
     end_time:
     duration:
@@ -810,7 +835,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 11
   actions:
-  - source_row: 12
+  - id: 70
+    source_row: 12
     start_time: '21:30'
     end_time:
     duration:
@@ -842,7 +868,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 15
   actions:
-  - source_row: 16
+  - id: 71
+    source_row: 16
     start_time: '09:55'
     end_time: '10:15'
     duration:
@@ -877,7 +904,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 19
   actions:
-  - source_row: 20
+  - id: 72
+    source_row: 20
     start_time: '10:40'
     end_time:
     duration:
@@ -913,7 +941,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 23
   actions:
-  - source_row: 24
+  - id: 73
+    source_row: 24
     start_time: '11:05'
     end_time: '11:25'
     duration:
@@ -947,7 +976,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 27
   actions:
-  - source_row: 28
+  - id: 74
+    source_row: 28
     start_time: '11:05'
     end_time: '11:25'
     duration:
@@ -979,7 +1009,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 31
   actions:
-  - source_row: 32
+  - id: 75
+    source_row: 32
     start_time: '12:07'
     end_time: '12:27'
     duration:
@@ -1011,7 +1042,8 @@ preparations:
   source_sheet: 2do. día 16 Nov
   source_row: 35
   actions:
-  - source_row: 36
+  - id: 76
+    source_row: 36
     start_time: '12:40'
     end_time: '13:00'
     duration:

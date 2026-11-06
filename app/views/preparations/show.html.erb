@@ -30,12 +30,13 @@
     <section class="page__section">
       <dl class="page__details">
         <% { "start_time" => "Inicio de acción", "end_time" => "Fin de acción", "duration" => "Duración" }.each do |attribute, label| %>
-          <% if action.fetch(attribute).present? %>
-            <div><dt><%= label %></dt><dd><%= action.fetch(attribute) %></dd></div>
+          <% if action.public_send(attribute).present? %>
+            <div><dt><%= label %></dt><dd><%= action.public_send(attribute) %></dd></div>
           <% end %>
         <% end %>
       </dl>
-      <%= render "shared/activity_details", details: action %>
+      <%= simple_format(action.title) %>
+      <%= render "shared/activity_details", details: activity_detail_attributes(action) %>
     </section>
   <% end %>
 </main>
