@@ -1,8 +1,7 @@
 require "test_helper"
 
 class PreparationTest < ActiveSupport::TestCase
-  test "loads blue headers and persisted activities for the nonempty light-blue rows" do
-    source = YAML.safe_load_file(Rails.root.join("config/data/preparations.yml"))
+  test "groups persisted action activities and preserves their order and related acts" do
     preparations = Preparation.all
     actions = preparations.flat_map(&:actions)
 
@@ -10,13 +9,7 @@ class PreparationTest < ActiveSupport::TestCase
     assert_equal 32, actions.size
     assert_equal (45..76).to_a, actions.map(&:id)
     assert actions.all? { |action| action.persisted? && action.kind == "preparation_action" }
-    by_sheet = source.fetch("preparations").group_by { |preparation| preparation.fetch("source_sheet") }
-    assert_equal [ 19, 26, 32, 37, 43, 45, 51, 56, 62, 66, 69, 73, 78, 82, 86, 90, 94 ],
-      by_sheet.fetch("1er, día 15 Nov").map { |preparation| preparation.fetch("source_row") }
-    assert_equal [ 3, 7, 11, 15, 19, 23, 27, 31, 35 ],
-      by_sheet.fetch("2do. día 16 Nov").map { |preparation| preparation.fetch("source_row") }
     assert actions.all? { |action| action.title.present? }
-    assert_not_includes actions.map(&:source_row), 38
     assert_empty preparations.first.schedule_entry_ids
     preparations.flat_map(&:schedule_entry_ids).each { |id| assert Activity.acts.find(id) }
 

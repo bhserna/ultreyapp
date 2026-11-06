@@ -1,24 +1,16 @@
 require "test_helper"
 
 class ActivityOperationsTest < ActiveSupport::TestCase
-  test "includes only the operational source rows before preparations and excludes the closing marker" do
-    source = YAML.safe_load_file(Rails.root.join("config/data/operational_activities.yml"))
-    activities = Activity.operations
+  test "selects persisted operations in ID order without including acts or preparation actions" do
+    operation = Activity.create!(kind: "operation", source_id: 100, title: "Additional operation", day: "Sábado 14")
+    operations = Activity.operations.to_a
 
-    assert_equal (32..44).to_a, activities.map(&:id)
-    assert_equal (1..13).to_a, activities.map(&:source_id)
-    assert activities.all? { |activity| activity.kind == "operation" }
-    assert_equal [ 3, 4, *(7..17) ], source.fetch("operational_activities").map { |activity| activity.fetch("source_row") }
-    assert_equal [ "Sábado 14", "Sábado 14" ] + [ "Domingo 15" ] * 11, activities.map(&:day)
-    assert_equal [ "Recepción y atención a participantes", "Montaje e instalaciones", "Preparación técnica", "Servicios y proveedores" ], activities.map(&:category).uniq
-    assert activities.none? { |activity| activity.title.include?("Se finalizan") }
-    assert_equal [ "AC", "Hosp" ], activities.first.commissions
-
-    source.fetch("operational_activities").zip(activities).each do |attributes, activity|
-      assert_equal attributes.fetch("title"), activity.title
-      assert_equal attributes.fetch("details"), activity.details
-      assert_equal attributes.fetch("commissions"), activity.commissions
-    end
+    assert_includes operations, operation
+    assert operations.all? { |activity| activity.kind == "operation" }
+    assert_equal operations.map(&:id).sort, operations.map(&:id)
+    assert_not_includes operations, activities(:activity_1)
+    assert_not_includes operations, activities(:activity_48)
+    assert_equal [ "AC", "Hosp" ], activities(:activity_32).commissions
   end
 
   test "retains unknown times questions and technical requirements without inventing missing data" do

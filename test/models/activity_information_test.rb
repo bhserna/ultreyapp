@@ -31,7 +31,7 @@ class ActivityInformationTest < ActiveSupport::TestCase
     assert_equal record.attributes, record.reload.attributes
   end
 
-  test "does not fall back to source YAML when an act has no production record" do
+  test "returns no production information when an act has no production record" do
     activity = Activity.find(1)
 
     assert_nil activity.executors

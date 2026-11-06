@@ -53,11 +53,9 @@ class ScheduleModelTest < ActiveSupport::TestCase
   end
 
   test "uses the explicit phase rather than the operation type or title" do
-    attributes = YAML.safe_load_file(Rails.root.join("config/data/operational_activities.yml")).fetch("operational_activities").first
-    activity = Activity.new(attributes.merge("kind" => "operation", "phase" => "program", "day" => "Domingo 15", "start_time" => "Por definir", "end_time" => "10:02"))
-    operations = [ activity ] + Activity.operations.drop(1)
+    activity = activities(:activity_32)
+    activity.update!(phase: "program", day: "Domingo 15", start_time: "Por definir", end_time: "10:02")
     schedule = Schedule.new(day: "Domingo 15", commission: nil)
-    schedule.instance_variable_set(:@all_operations, operations)
     rows = schedule.rows
     position = rows.index(activity)
     assert_instance_of Activity, rows[position - 1]

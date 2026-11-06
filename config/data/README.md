@@ -1,6 +1,6 @@
 # Event data
 
-Only preparation headers and related-act lists in `preparations.yml` are read by the running application. The other YAML files, and the action rows within `preparations.yml`, remain reference snapshots and test inputs for now. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
+Only preparation headers and related-act lists in `preparations.yml` are read by the running application. The other YAML files, and the action rows within `preparations.yml`, remain reference snapshots for now. Test activities are defined independently in static `test/fixtures/activities.yml`; tests do not load these snapshots. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
 
 https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
 
