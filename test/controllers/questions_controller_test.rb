@@ -23,7 +23,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     question = Question.order(:id).last
-    assert_equal 3, question.schedule_entry_id
+    assert_equal 3, question.act_id
     assert_redirected_to schedule_entry_questions_url(3)
 
     get schedule_entry_questions_url(3)
@@ -47,7 +47,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "keeps questions scoped to their activity" do
-    question = Question.create!(schedule_entry_id: 3, body: "Pregunta privada de la actividad")
+    question = Question.create!(act_id: 3, body: "Pregunta privada de la actividad")
     get schedule_entry_questions_url(4)
     assert_no_selector :question
 
@@ -61,7 +61,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
   test "keeps general questions separate from activity questions" do
     general_question = Question.create!(body: "Pregunta general")
-    activity_question = Question.create!(schedule_entry_id: 3, body: "Pregunta de la actividad")
+    activity_question = Question.create!(act_id: 3, body: "Pregunta de la actividad")
 
     get questions_url
     assert_response :success
@@ -94,7 +94,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     unassigned_question = Question.create!(body: "Pregunta sin tema")
     selected_question = Question.create!(body: "Pregunta de logística", topic: topic)
     Question.create!(body: "Pregunta de comunicación", topic: other_topic)
-    Question.create!(body: "Pregunta de actividad", schedule_entry_id: 3)
+    Question.create!(body: "Pregunta de actividad", act_id: 3)
 
     get questions_url
     assert_response :success
@@ -124,7 +124,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
 
     question = Question.order(:id).last
     assert_equal topic, question.topic
-    assert_nil question.schedule_entry_id
+    assert_nil question.act_id
     assert_redirected_to questions_url(topic_id: topic.id)
   end
 
@@ -152,7 +152,7 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     question = Question.order(:id).last
-    assert_equal 3, question.schedule_entry_id
+    assert_equal 3, question.act_id
     assert_nil question.topic_id
     assert_redirected_to schedule_entry_questions_url(3)
   end

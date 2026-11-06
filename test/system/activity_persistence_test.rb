@@ -4,8 +4,8 @@ class ActivityPersistenceTest < ApplicationSystemTestCase
   test "reads persisted act attributes while retaining existing production and question references" do
     activity = Activity.find(1)
     activity.update!(title: "Acto actualizado en la base de datos", start_time: "10:01")
-    ProductionDetail.create!(schedule_entry_id: activity.id, executors: "Equipo asignado manualmente", notes: "Notas guardadas")
-    Question.create!(schedule_entry_id: activity.id, body: "Pregunta guardada del acto")
+    ProductionDetail.create!(act_id: activity.id, executors: "Equipo asignado manualmente", notes: "Notas guardadas")
+    Question.create!(act_id: activity.id, body: "Pregunta guardada del acto")
 
     visit root_path(day: activity.day, row_type: "acts")
     within(:schedule_act, "Acto actualizado en la base de datos") do

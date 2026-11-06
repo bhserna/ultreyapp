@@ -4,7 +4,7 @@ class ActivityInformationTest < ActiveSupport::TestCase
   test "reads act execution notes and production from the current database record" do
     technical_attributes = ProductionInformation.members.map(&:to_s).excluding("media_files").index_with { |attribute| "Current #{attribute}" }
     record = ProductionDetail.create!(
-      schedule_entry_id: 1,
+      act_id: 1,
       executors: "Current execution team",
       notes: "Current notes\nSecond line",
       pending_confirmations: "Current pending confirmation",
@@ -41,7 +41,7 @@ class ActivityInformationTest < ActiveSupport::TestCase
   end
 
   test "fresh activities reflect existing production edits and deletions" do
-    record = ProductionDetail.create!(schedule_entry_id: 1, executors: "Initial team", notes: "Initial notes", audio: "Initial audio")
+    record = ProductionDetail.create!(act_id: 1, executors: "Initial team", notes: "Initial notes", audio: "Initial audio")
     assert_equal "Initial team", Activity.find(1).executors
 
     record.update!(executors: "Updated team", notes: "Updated notes", audio: "Updated audio")
@@ -59,8 +59,8 @@ class ActivityInformationTest < ActiveSupport::TestCase
 
   test "reads imported operation details without using production records with matching IDs" do
     operation = Activity.find_operation_by_source_id(8)
-    ProductionDetail.create!(schedule_entry_id: operation.id, executors: "Unrelated team", audio: "Unrelated audio", notes: "Unrelated notes")
-    ProductionDetail.create!(schedule_entry_id: operation.source_id, executors: "Act team", audio: "Act audio", notes: "Act notes")
+    ProductionDetail.create!(act_id: operation.id, executors: "Unrelated team", audio: "Unrelated audio", notes: "Unrelated notes")
+    ProductionDetail.create!(act_id: operation.source_id, executors: "Act team", audio: "Act audio", notes: "Act notes")
     expected = operation.details.deep_dup
 
     assert_no_difference "ProductionDetail.count" do

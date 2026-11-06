@@ -44,7 +44,7 @@ class Activity < ApplicationRecord
     return @detail_attributes if defined?(@detail_attributes)
 
     @detail_attributes = if kind == "act"
-      ProductionDetail.find_by(schedule_entry_id: id)&.attributes
+      ProductionDetail.find_by(act_id: id)&.attributes
     else
       details
     end

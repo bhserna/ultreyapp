@@ -6,6 +6,6 @@ class Question < ApplicationRecord
   validates :body, presence: true
 
   def activity
-    Activity.acts.find(schedule_entry_id) if schedule_entry_id.present?
+    Activity.acts.find(act_id) if act_id.present?
   end
 end

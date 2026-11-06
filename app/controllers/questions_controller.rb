@@ -9,7 +9,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    Question.create!(question_params.merge(schedule_entry_id: @activity&.id, topic: @topic))
+    Question.create!(question_params.merge(act_id: @activity&.id, topic: @topic))
     redirect_to helpers.questions_collection_path(activity: @activity, topic: @topic), status: :see_other
   end
 
@@ -46,7 +46,7 @@ class QuestionsController < ApplicationController
   end
 
   def fetch_questions
-    questions = Question.where(schedule_entry_id: @activity&.id)
+    questions = Question.where(act_id: @activity&.id)
     questions = questions.where(topic: @topic) if @activity.nil?
     questions.order(:created_at, :id)
   end

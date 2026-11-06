@@ -69,7 +69,7 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   test "question references resolve to the activity model" do
-    question = Question.create!(schedule_entry_id: 3, body: "Who coordinates this act?")
+    question = Question.create!(act_id: 3, body: "Who coordinates this act?")
 
     assert_instance_of Activity, question.activity
     assert_equal 3, question.activity.id

@@ -10,8 +10,8 @@ class PreparationTest < ActiveSupport::TestCase
     assert_equal (45..76).to_a, actions.map(&:id)
     assert actions.all? { |action| action.persisted? && action.kind == "preparation_action" }
     assert actions.all? { |action| action.title.present? }
-    assert_empty preparations.first.schedule_entry_ids
-    preparations.flat_map(&:schedule_entry_ids).each { |id| assert Activity.acts.find(id) }
+    assert_empty preparations.first.act_ids
+    preparations.flat_map(&:act_ids).each { |id| assert Activity.acts.find(id) }
 
     preparations.each do |preparation|
       assert_equal (1..preparation.actions.size).to_a, preparation.actions.map(&:position)
@@ -27,7 +27,7 @@ class PreparationTest < ActiveSupport::TestCase
   test "preserves undecided start times without treating questions as commissions" do
     preparation = Preparation.new(
       "id" => 100, "title" => "Sin horario", "day" => "Domingo 15", "start_time" => nil,
-      "schedule_entry_ids" => []
+      "act_ids" => []
     )
     Activity.create!(
       kind: "preparation_action", preparation_id: 100, position: 1, source_id: 100,
@@ -42,14 +42,14 @@ class PreparationTest < ActiveSupport::TestCase
   end
 
   test "finds preparations by route ID and preserves shared act references" do
-    assert_equal [ 1, 2 ], Preparation.find("2").schedule_entry_ids
-    assert_equal [ 7, 8, 9, 10 ], Preparation.find(7).schedule_entry_ids
-    assert_equal [ 16 ], Preparation.find(13).schedule_entry_ids
-    assert_equal [ 20 ], Preparation.find(17).schedule_entry_ids
-    assert_equal [ 20 ], Preparation.find(18).schedule_entry_ids
-    assert_equal [ 27 ], Preparation.find(24).schedule_entry_ids
+    assert_equal [ 1, 2 ], Preparation.find("2").act_ids
+    assert_equal [ 7, 8, 9, 10 ], Preparation.find(7).act_ids
+    assert_equal [ 16 ], Preparation.find(13).act_ids
+    assert_equal [ 20 ], Preparation.find(17).act_ids
+    assert_equal [ 20 ], Preparation.find(18).act_ids
+    assert_equal [ 27 ], Preparation.find(24).act_ids
     assert_includes Preparation.find(24).title, "Acto 24 / Vivencia 6"
-    assert_equal [ 29 ], Preparation.find(26).schedule_entry_ids
+    assert_equal [ 29 ], Preparation.find(26).act_ids
     assert_raises(ActiveRecord::RecordNotFound) { Preparation.find(999) }
   end
 
@@ -112,8 +112,8 @@ class PreparationTest < ActiveSupport::TestCase
 
   test "uses action details through the common interface rather than act production records" do
     action = Activity.find(48)
-    ProductionDetail.create!(schedule_entry_id: action.id, executors: "Unrelated team", notes: "Unrelated notes")
-    ProductionDetail.create!(schedule_entry_id: action.preparation_id, executors: "Act team", notes: "Act notes")
+    ProductionDetail.create!(act_id: action.id, executors: "Unrelated team", notes: "Unrelated notes")
+    ProductionDetail.create!(act_id: action.preparation_id, executors: "Act team", notes: "Act notes")
 
     assert_equal "EyA", action.executors
     assert_equal "Tener disponibles 10 sillas", action.notes
@@ -129,6 +129,6 @@ class PreparationTest < ActiveSupport::TestCase
     assert_empty preparation.actions
     assert_empty preparation.commissions
     assert_equal "09:45", preparation.start_time
-    assert_equal [ 1, 2 ], preparation.schedule_entry_ids
+    assert_equal [ 1, 2 ], preparation.act_ids
   end
 end

@@ -27,8 +27,8 @@ class OperationalActivitiesTest < ApplicationSystemTestCase
   end
 
   test "keeps an operation separate from the act with the same original source ID" do
-    Question.create!(schedule_entry_id: 1, body: "Pregunta exclusiva del acto")
-    ProductionDetail.create!(schedule_entry_id: 1, executors: "Equipo exclusivo del acto")
+    Question.create!(act_id: 1, body: "Pregunta exclusiva del acto")
+    ProductionDetail.create!(act_id: 1, executors: "Equipo exclusivo del acto")
 
     visit schedule_entry_path(1)
     assert_text "Pregunta exclusiva del acto"

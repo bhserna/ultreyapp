@@ -2,7 +2,7 @@ require "application_system_test_case"
 
 class ActivityQuestionsTest < ApplicationSystemTestCase
   test "edits and answers a question without changing its activity" do
-    question = Question.create!(schedule_entry_id: 3, body: "¿Quién coordina?")
+    question = Question.create!(act_id: 3, body: "¿Quién coordina?")
 
     visit schedule_entry_questions_path(3)
 
@@ -19,11 +19,11 @@ class ActivityQuestionsTest < ApplicationSystemTestCase
     within(:question, "¿Quién dirige?") do
       assert_text "El equipo de coordinación."
     end
-    assert_equal 3, question.reload.schedule_entry_id
+    assert_equal 3, question.reload.act_id
   end
 
   test "clears a blank answer on an activity question" do
-    question = Question.create!(schedule_entry_id: 3, body: "¿Quién coordina?", answer: "El equipo de coordinación.")
+    question = Question.create!(act_id: 3, body: "¿Quién coordina?", answer: "El equipo de coordinación.")
 
     visit schedule_entry_questions_path(3)
 

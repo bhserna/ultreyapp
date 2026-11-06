@@ -2,7 +2,7 @@ class PreparationsController < ApplicationController
   before_action :set_preparation
 
   def show
-    @activities = @preparation.schedule_entry_ids.map { |id| Activity.acts.find(id) }
+    @activities = @preparation.act_ids.map { |id| Activity.acts.find(id) }
   end
 
   private

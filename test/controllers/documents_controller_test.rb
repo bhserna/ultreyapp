@@ -14,7 +14,7 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
       post schedule_entry_documents_url(3), params: { files: files }
     end
     assert_redirected_to schedule_entry_documents_url(3)
-    assert_equal [3], Document.distinct.pluck(:schedule_entry_id)
+    assert_equal [ 3 ], Document.distinct.pluck(:act_id)
 
     get schedule_entry_documents_url(3)
     assert_response :success
@@ -27,7 +27,7 @@ class DocumentsControllerTest < ActionDispatch::IntegrationTest
 
   test "keeps documents scoped to their activity and deletes their files" do
     document = Document.create!(
-      schedule_entry_id: 3,
+      act_id: 3,
       file: fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")
     )
     blob_id = document.file.blob.id

@@ -22,7 +22,7 @@ class ProductionDetailsTest < ApplicationSystemTestCase
     click_button "Guardar detalles de producción"
 
     assert_current_path schedule_entry_path(3)
-    detail = ProductionDetail.find_by!(schedule_entry_id: 3)
+    detail = ProductionDetail.find_by!(act_id: 3)
     fields.each_value do |attribute, value|
       assert_equal value, detail.public_send(attribute)
       value.lines.each { |line| assert_text line.strip }

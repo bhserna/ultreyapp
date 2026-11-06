@@ -210,12 +210,12 @@ class ScheduleControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "keeps detail links without resource counts for each act" do
-    Question.create!(schedule_entry_id: 1, body: "Pendiente")
-    Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
-    blank = Question.create!(schedule_entry_id: 1, body: "Sin contenido")
+    Question.create!(act_id: 1, body: "Pendiente")
+    Question.create!(act_id: 1, body: "Contestada", answer: "Listo")
+    blank = Question.create!(act_id: 1, body: "Sin contenido")
     blank.update_column(:answer, "  \n  ")
     Document.create!(
-      schedule_entry_id: 1,
+      act_id: 1,
       file: fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")
     )
 

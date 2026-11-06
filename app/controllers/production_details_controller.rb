@@ -3,12 +3,12 @@ class ProductionDetailsController < ApplicationController
   before_action :set_production_detail, only: %i[edit update destroy]
 
   def new
-    @production_detail = ProductionDetail.new(schedule_entry_id: @activity.id)
+    @production_detail = ProductionDetail.new(act_id: @activity.id)
   end
 
   def create
     @production_detail = ProductionDetail.new(production_detail_params)
-    @production_detail.schedule_entry_id = @activity.id
+    @production_detail.act_id = @activity.id
 
     if @production_detail.save
       redirect_to schedule_entry_path(@activity.id), status: :see_other
@@ -40,7 +40,7 @@ class ProductionDetailsController < ApplicationController
   end
 
   def set_production_detail
-    @production_detail = ProductionDetail.find_by!(schedule_entry_id: @activity.id)
+    @production_detail = ProductionDetail.find_by!(act_id: @activity.id)
   end
 
   def production_detail_params

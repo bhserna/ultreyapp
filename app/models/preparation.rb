@@ -1,5 +1,5 @@
 class Preparation
-  ATTRIBUTES = %w[id title day schedule_entry_ids].freeze
+  ATTRIBUTES = %w[id title day act_ids].freeze
 
   attr_reader(*ATTRIBUTES, :phase)
 

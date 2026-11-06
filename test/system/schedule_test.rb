@@ -127,10 +127,10 @@ class ScheduleTest < ApplicationSystemTestCase
   end
 
   test "keeps access to resources without showing counts beside each activity" do
-    Question.create!(schedule_entry_id: 1, body: "Pendiente")
-    Question.create!(schedule_entry_id: 1, body: "Contestada", answer: "Listo")
+    Question.create!(act_id: 1, body: "Pendiente")
+    Question.create!(act_id: 1, body: "Contestada", answer: "Listo")
     File.open(Rails.root.join("test/fixtures/files/agenda.txt")) do |file|
-      Document.create!(schedule_entry_id: 1, file: { io: file, filename: "agenda.txt", content_type: "text/plain" })
+      Document.create!(act_id: 1, file: { io: file, filename: "agenda.txt", content_type: "text/plain" })
     end
 
     visit root_path

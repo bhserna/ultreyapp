@@ -1,7 +1,7 @@
 class Document < ApplicationRecord
   has_one_attached :file
 
-  validates :schedule_entry_id, presence: true
+  validates :act_id, presence: true
   validate :file_attached
 
   def format_label

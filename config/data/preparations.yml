@@ -21,7 +21,7 @@ preparations:
   source_title: Actividades en la Arena previo a que llegue el desfile
   day: Domingo 15
   start_time: Por definir con Programa
-  schedule_entry_ids: []
+  act_ids: []
   source_sheet: 1er, día 15 Nov
   source_row: 19
   actions:
@@ -97,7 +97,7 @@ preparations:
   source_title: 9:45:00 a.m. Preparación para el Acto 1 y 2
   day: Domingo 15
   start_time: '09:45'
-  schedule_entry_ids:
+  act_ids:
   - 1
   - 2
   source_sheet: 1er, día 15 Nov
@@ -162,7 +162,7 @@ preparations:
   source_title: 10:00:00 a.m. Preparación para el Acto 3
   day: Domingo 15
   start_time: '10:00'
-  schedule_entry_ids:
+  act_ids:
   - 3
   source_sheet: 1er, día 15 Nov
   source_row: 32
@@ -238,7 +238,7 @@ preparations:
   source_title: 10:20:00 a.m. Preparación para el Acto 4
   day: Domingo 15
   start_time: '10:20'
-  schedule_entry_ids:
+  act_ids:
   - 4
   source_sheet: 1er, día 15 Nov
   source_row: 37
@@ -296,7 +296,7 @@ preparations:
   source_title: 11:30:00 a.m. Preparación para el Acto 5
   day: Domingo 15
   start_time: '11:30'
-  schedule_entry_ids:
+  act_ids:
   - 5
   source_sheet: 1er, día 15 Nov
   source_row: 43
@@ -334,7 +334,7 @@ preparations:
     de la esperanza en los ambientes
   day: Domingo 15
   start_time: '11:40'
-  schedule_entry_ids:
+  act_ids:
   - 6
   source_sheet: 1er, día 15 Nov
   source_row: 45
@@ -371,7 +371,7 @@ preparations:
     / Animación
   day: Domingo 15
   start_time: '12:30'
-  schedule_entry_ids:
+  act_ids:
   - 7
   - 8
   - 9
@@ -408,7 +408,7 @@ preparations:
   source_title: 1:00:00 p.m. Preparación para el Acto 8 / Misa / Coro Jessed)
   day: Domingo 15
   start_time: '13:00'
-  schedule_entry_ids:
+  act_ids:
   - 11
   source_sheet: 1er, día 15 Nov
   source_row: 56
@@ -458,7 +458,7 @@ preparations:
   source_title: 3:35 p.m. Preparación para el Acto 9 / Vivencia 1/ Agradecimiento
   day: Domingo 15
   start_time: '15:35'
-  schedule_entry_ids:
+  act_ids:
   - 12
   source_sheet: 1er, día 15 Nov
   source_row: 62
@@ -492,7 +492,7 @@ preparations:
     y Bendicam
   day: Domingo 15
   start_time: '16:00'
-  schedule_entry_ids:
+  act_ids:
   - 13
   source_sheet: 1er, día 15 Nov
   source_row: 66
@@ -525,7 +525,7 @@ preparations:
   source_title: 4:20 p.m. Preparación para el Acto 11 / Vivencia 2/ Agradecimiento
   day: Domingo 15
   start_time: '16:20'
-  schedule_entry_ids:
+  act_ids:
   - 14
   source_sheet: 1er, día 15 Nov
   source_row: 69
@@ -558,7 +558,7 @@ preparations:
   source_title: Preparación para el Acto 12 / Proyección Video MCC
   day: Domingo 15
   start_time: '16:50'
-  schedule_entry_ids:
+  act_ids:
   - 15
   source_sheet: 1er, día 15 Nov
   source_row: 73
@@ -588,7 +588,7 @@ preparations:
   source_title: 4:55 p.m. Preparación para el Acto 11 / Tema 2/ Agradecimiento
   day: Domingo 15
   start_time: '16:55'
-  schedule_entry_ids:
+  act_ids:
   - 16
   source_sheet: 1er, día 15 Nov
   source_row: 78
@@ -624,7 +624,7 @@ preparations:
     y Bendicam
   day: Domingo 15
   start_time: '17:40'
-  schedule_entry_ids:
+  act_ids:
   - 17
   source_sheet: 1er, día 15 Nov
   source_row: 82
@@ -659,7 +659,7 @@ preparations:
     en mi ambiente/ Agradecimiento
   day: Domingo 15
   start_time: '18:00'
-  schedule_entry_ids:
+  act_ids:
   - 18
   source_sheet: 1er, día 15 Nov
   source_row: 86
@@ -692,7 +692,7 @@ preparations:
   source_title: Preparación para el Acto 16 / Avisos Finales
   day: Domingo 15
   start_time: '18:25'
-  schedule_entry_ids:
+  act_ids:
   - 19
   source_sheet: 1er, día 15 Nov
   source_row: 90
@@ -726,7 +726,7 @@ preparations:
   source_title: 7:00 p.m. Preparación para el domingo 16 / Acto 17
   day: Domingo 15
   start_time: '19:00'
-  schedule_entry_ids:
+  act_ids:
   - 20
   source_sheet: 1er, día 15 Nov
   source_row: 94
@@ -757,7 +757,7 @@ preparations:
   source_title: 7:40 a.m. Preparación  del Acto 17 / INICIO / Bienvenida
   day: Lunes 16
   start_time: '07:40'
-  schedule_entry_ids:
+  act_ids:
   - 20
   source_sheet: 2do. día 16 Nov
   source_row: 3
@@ -788,7 +788,7 @@ preparations:
   source_title: 8:30 a.m. Preparación  del Acto 19 / Rosario
   day: Lunes 16
   start_time: '08:30'
-  schedule_entry_ids:
+  act_ids:
   - 22
   source_sheet: 2do. día 16 Nov
   source_row: 7
@@ -830,7 +830,7 @@ preparations:
   source_title: 9:30 a.m. Preparación para el Acto 20 / Vivencia 4/ Agradecimiento
   day: Lunes 16
   start_time: '21:30'
-  schedule_entry_ids:
+  act_ids:
   - 23
   source_sheet: 2do. día 16 Nov
   source_row: 11
@@ -863,7 +863,7 @@ preparations:
   source_title: 9:50 a.m. Preparación para el Acto 21 / Tema 3/ Agradecimiento
   day: Lunes 16
   start_time: '09:55'
-  schedule_entry_ids:
+  act_ids:
   - 24
   source_sheet: 2do. día 16 Nov
   source_row: 15
@@ -899,7 +899,7 @@ preparations:
     Salvador Amor y Bendicam
   day: Lunes 16
   start_time: '10:40'
-  schedule_entry_ids:
+  act_ids:
   - 25
   source_sheet: 2do. día 16 Nov
   source_row: 19
@@ -936,7 +936,7 @@ preparations:
     después de vivir el cursillo / Agradecimiento
   day: Lunes 16
   start_time: '11:05'
-  schedule_entry_ids:
+  act_ids:
   - 26
   source_sheet: 2do. día 16 Nov
   source_row: 23
@@ -971,7 +971,7 @@ preparations:
     a la luz del carisma de cursillos / Agradecimiento
   day: Lunes 16
   start_time: '11:05'
-  schedule_entry_ids:
+  act_ids:
   - 27
   source_sheet: 2do. día 16 Nov
   source_row: 27
@@ -1004,7 +1004,7 @@ preparations:
   source_title: 12:07 p.m. Preparación para el Acto 25 / Palabras del Presidente Mundial
   day: Lunes 16
   start_time: '12:07'
-  schedule_entry_ids:
+  act_ids:
   - 28
   source_sheet: 2do. día 16 Nov
   source_row: 31
@@ -1037,7 +1037,7 @@ preparations:
   source_title: '12:40: p.m. Preparación para el Acto 26 / Misa - Coro de Cursillos'
   day: Lunes 16
   start_time: '12:40'
-  schedule_entry_ids:
+  act_ids:
   - 29
   source_sheet: 2do. día 16 Nov
   source_row: 35

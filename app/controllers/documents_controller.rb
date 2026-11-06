@@ -10,7 +10,7 @@ class DocumentsController < ApplicationController
 
     Document.transaction do
       uploaded_files.each do |uploaded_file|
-        Document.create!(schedule_entry_id: @activity.id, file: uploaded_file)
+        Document.create!(act_id: @activity.id, file: uploaded_file)
       end
     end
 
@@ -31,6 +31,6 @@ class DocumentsController < ApplicationController
   end
 
   def documents_for_activity
-    Document.where(schedule_entry_id: @activity.id)
+    Document.where(act_id: @activity.id)
   end
 end
