@@ -1,6 +1,6 @@
 # Event data
 
-The active files are `schedule.yml`, `questions.yml`, `production_details.yml`, `preparations.yml`, and `operational_activities.yml`. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
+Only preparation headers and related-act lists in `preparations.yml` are read by the running application. The other YAML files, and the action rows within `preparations.yml`, remain reference snapshots and test inputs for now. They are based on the two main program sheets (`1er, día 15 Nov` and `2do. día 16 Nov`) of:
 
 https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gid=1593648280
 
@@ -15,7 +15,7 @@ https://docs.google.com/spreadsheets/d/1EmpnzOyj9OpEx48-1GhAy5Gym5kUjlMs/edit?gi
 
 ## Activity model
 
-`Activity` is an Active Record model for 31 numbered acts, 13 operations, and 32 preparation actions. `Activity.all` reads all persisted records; `Activity.acts`, `Activity.operations`, and `Activity.preparation_actions` select each kind. The import maps the source act `activity` text and action `description` text to `title`. Operations and actions retain their detail information in JSON. Preparations remain a separate YAML-backed grouping model, not another activity kind.
+`Activity` is an Active Record model for 31 numbered acts, 13 operations, and 32 preparation actions. `Activity.all` reads all persisted records; `Activity.acts`, `Activity.operations`, and `Activity.preparation_actions` select each kind. Persisted titles originally came from the source act `activity` text and action `description` text. Operations and actions retain their detail information in JSON. Preparations remain a separate YAML-backed grouping model, not another activity kind.
 
 Activity IDs are explicit and unique across all three source files: existing acts keep IDs 1–31, operations use IDs 32–44, and preparation actions use IDs 45–76. Operations also preserve their original IDs 1–13 as `source_id`, used exclusively for their existing `/operational_activities/:id` URLs. For example, operation activity 32 still lives at `/operational_activities/1`, while `/schedule_entries/1` continues to show act activity 1. Never recalculate IDs from file order or the number of acts when adding data; allocate an unused activity ID across all three files and preserve existing IDs.
 
@@ -23,16 +23,11 @@ Act IDs, `/schedule_entries/:id` routes, and existing `schedule_entry_id` refere
 
 ### Setup and deployment
 
-Migrate and import before serving traffic on an existing installation:
+The event data has already been imported. The activity import task and model method have been removed. There is no `db/seeds.rb` for now; initial or example seed data will be defined in a later iteration.
 
-```sh
-RAILS_ENV=production bin/rails db:migrate
-RAILS_ENV=production bin/rails activities:import
-```
+Apply schema changes with `RAILS_ENV=production bin/rails db:migrate`. Deployment does not reload event data from YAML. A fresh database will not contain the event activities; populate a new environment from an appropriate database backup, following the recovery precautions in [docs/backups.md](../../docs/backups.md). Automated tests use fixtures instead of seeds.
 
-For local setup, run `bin/rails db:migrate` and `bin/rails activities:import`. `bin/rails db:seed` also imports activities. The import is transactional and creates only missing activity IDs. Repeating it does not overwrite existing records, user edits, timestamps, questions, documents, attachments, or act production details. It preserves source sheet/row, commission lists, textual and missing times, and the original integer or subact-string numbering (stored as JSON).
-
-After import, the database is the source of truth for acts, operations, and preparation actions. Their YAML activity data is an import/reference snapshot; changing it does not update existing records. Preparation headers and related-act lists are still read from YAML. No new editing UI is provided.
+The database is the source of truth for acts, operations, and preparation actions. The retained YAML activity data is a reference snapshot; changing it does not update existing records or restore deleted ones. Preparation headers and related-act lists are still read from YAML. No new editing UI is provided.
 
 ## Activity information boundary
 
@@ -44,12 +39,12 @@ Questions retain their existing storage and presentation. Pending confirmations 
 
 ## Preparations
 
-`preparations.yml` stores 26 dark-blue preparation headers and the source snapshot for 32 light-blue action rows, stopping at the end of Monday 16. Headers and their `schedule_entry_ids` lists are still read directly from YAML. Actions are imported as persisted activities of kind `preparation_action`; run the migration and `activities:import` when upgrading. Existing activity IDs 1–44 are unchanged, and repeated imports do not overwrite existing actions or their order. The program table groups rows by phase and interleaves acts and preparation summaries by start time within the program phase, with blue preparation rows. Each preparation's start time is taken from its first action; if that action has no start time, the header time is retained. Undecided times remain text and sort last within their phase when no end time is available. This corrects the act 7 preparation to `12:30` instead of the header's `00:15`. Day and commission filters apply to both kinds of rows, using each preparation's own day and action commissions. Shared preparations appear only once in the table. Each preparation row links to its own detail page with action timings, responsibilities, technical information, questions, notes, material references, and links to related acts. Preparation content is not displayed on act detail pages. Orange conclusions are excluded, as is Sunday row 38 (times without an action description). Existing preparation IDs 1–17 remain unchanged; the nine new Monday preparations use IDs 18–26.
+`preparations.yml` stores 26 dark-blue preparation headers and the source snapshot for 32 light-blue action rows, stopping at the end of Monday 16. Headers and their `schedule_entry_ids` lists are still read directly from YAML. Actions already exist as persisted activities of kind `preparation_action`; their YAML rows are no longer used to populate the database. Existing activity IDs and action positions must be maintained in the database. The program table groups rows by phase and interleaves acts and preparation summaries by start time within the program phase, with blue preparation rows. Each preparation's start time is taken from its first action; if that action has no start time, the header time is retained. Undecided times remain text and sort last within their phase when no end time is available. This corrects the act 7 preparation to `12:30` instead of the header's `00:15`. Day and commission filters apply to both kinds of rows, using each preparation's own day and action commissions. Shared preparations appear only once in the table. Each preparation row links to its own detail page with action timings, responsibilities, technical information, questions, notes, material references, and links to related acts. Preparation content is not displayed on act detail pages. Orange conclusions are excluded, as is Sunday row 38 (times without an action description). Existing preparation IDs 1–17 remain unchanged; the nine new Monday preparations use IDs 18–26.
 
 - `Preparation#actions` reads activities by `preparation_id`, ordered by an explicit positive `position`. These fields are required only for preparation actions; each position within a preparation is unique. `Activity#preparation` resolves the existing YAML group. Since groups are not database records yet, `preparation_id` has no database foreign key.
 - Each action has an explicit ID 45–76 (also its `source_id`), inherited day/phase/source sheet at import time, and its own source row and timing. Actions are not separate program rows and have no new routes or forms. Act endpoints reject action IDs just as they reject operation IDs.
 - Preparation start time follows the first persisted action, falling back to the YAML header when that action has no start time. Commission filters use the persisted action commission lists. Unresolved source wording such as “Quién los recibe Programa o EyA?” remains in `details`, not as an assigned commission.
-- Reordering or editing an existing action is not undone by re-importing. If a missing source action cannot be restored because its position is occupied, the import fails and rolls back rather than moving or overwriting existing actions.
+- Reordering, editing, or deleting an action is not undone by deployment. There is no YAML import or automatic recreation of missing actions.
 - `schedule_entry_ids` supports shared preparations: acts 1 and 2 share a block; the act 7 block is shown for subacts 7.1–7.4.
 - The general pre-parade block has no act reference; it appears in the program and has its own detail page.
 - Original header text remains in `source_title`; action timings and durations are preserved. The preparation's start time follows its first action rather than an inconsistent header.
@@ -65,7 +60,7 @@ The four user-facing categories are reception and participant support, setup and
 
 The program adds Saturday 14 for reception and kits, and places Sunday operations in the pre-event block before preparations and acts. It still opens on Sunday, the first day with acts, by default. Operations have no act number and use a separate table style with their category. The type filter offers all rows, acts, preparations, or operations; day and commission filters combine with it, and day tabs and table commission links preserve the selected type. Undecided times sort after known times within their phase unless a known end time can be used for ordering. The program table displays a dash for missing or undecided times; detail pages retain the original wording, such as “Por definir con la Arena”. Operations with no commission remain visible without a commission filter.
 
-Technical details reuse the preparation details partial. Operational questions remain on their own detail pages and are not imported as act questions. This file is the source snapshot for the initial activity import described above. Runtime operation data comes from the database.
+Technical details reuse the preparation details partial. Operational questions remain on their own detail pages and are not imported as act questions. This file is a reference snapshot of the original operation data. Runtime operation data comes from the database; no import task remains.
 
 ## Program phases and ordering
 
@@ -85,7 +80,7 @@ Rows within each phase sort by known start time, then by known end time if the s
 
 This file is a reference snapshot, not the source of truth for editable records. Production details are maintained through the application and may differ from this YAML. The application reads them from the database; deployment does not synchronize or regenerate them.
 
-The question and production-detail import tasks and the temporary rosary update task have been removed to avoid replacing manually maintained information. Preparation header and related-act changes in `preparations.yml` take effect on deployment. Existing action changes must be applied to persisted activities; the import only creates missing records.
+The activity, question, and production-detail import tasks and the temporary rosary update task have been removed to avoid recreating or replacing manually maintained information. Preparation header and related-act changes in `preparations.yml` take effect on deployment. Action changes must be applied to persisted activities.
 
 ## Previous version
 

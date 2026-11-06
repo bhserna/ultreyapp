@@ -55,6 +55,21 @@ class ActivityTest < ActiveSupport::TestCase
     assert_raises(ActiveRecord::RecordNotFound) { Activity.find_operation_by_source_id(32) }
   end
 
+  test "validates the minimum persisted identity and schedule attributes" do
+    activity = Activity.new(title: "", day: "", kind: "unknown", phase: "unknown")
+
+    assert_not activity.valid?
+    assert activity.errors.of_kind?(:title, :blank)
+    assert activity.errors.of_kind?(:day, :blank)
+    assert activity.errors.of_kind?(:source_id, :blank)
+    assert activity.errors.of_kind?(:kind, :inclusion)
+    assert activity.errors.of_kind?(:phase, :inclusion)
+
+    duplicate = Activity.find(32).dup
+    assert_not duplicate.valid?
+    assert duplicate.errors.of_kind?(:source_id, :taken)
+  end
+
   test "finds acts with stable numeric or route IDs and rejects unknown IDs" do
     assert_equal Activity.find(1).title, Activity.find("1").title
     assert_equal 1, Activity.find("1").id
