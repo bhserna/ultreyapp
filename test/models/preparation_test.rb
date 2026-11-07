@@ -2,7 +2,7 @@ require "test_helper"
 
 class PreparationTest < ActiveSupport::TestCase
   test "groups persisted action activities and preserves their order and related acts" do
-    preparations = Preparation.all
+    preparations = Preparation.order(:id)
     actions = preparations.flat_map(&:actions)
 
     assert_equal (1..26).to_a, preparations.map(&:id)
@@ -25,7 +25,7 @@ class PreparationTest < ActiveSupport::TestCase
   end
 
   test "preserves undecided start times without treating questions as commissions" do
-    preparation = Preparation.new(
+    preparation = Preparation.create!(
       "id" => 100, "title" => "Sin horario", "day" => "Domingo 15", "start_time" => nil,
       "act_ids" => []
     )
@@ -130,5 +130,66 @@ class PreparationTest < ActiveSupport::TestCase
     assert_empty preparation.commissions
     assert_equal "09:45", preparation.start_time
     assert_equal [ 1, 2 ], preparation.act_ids
+  end
+
+  test "validates required fields phase and references to acts only" do
+    preparation = Preparation.new(title: "", day: "", phase: "unknown")
+
+    assert_not preparation.valid?
+    assert preparation.errors.of_kind?(:title, :blank)
+    assert preparation.errors.of_kind?(:day, :blank)
+    assert preparation.errors.of_kind?(:phase, :inclusion)
+
+    preparation.assign_attributes(title: "New preparation", day: "Domingo 15", phase: "program")
+    [ [ activities(:activity_32).id ], [ activities(:activity_48).id ], [ 999 ], [ "1" ], nil, {} ].each do |act_ids|
+      preparation.act_ids = act_ids
+      assert_not preparation.valid?
+      assert preparation.errors.of_kind?(:act_ids, :invalid)
+    end
+
+    preparation.act_ids = [ activities(:activity_1).id ]
+    assert preparation.valid?
+    preparation.act_ids = []
+    assert preparation.valid?
+  end
+
+  test "uses the persisted header time when the first action has no time" do
+    preparation = preparations(:opening_acts)
+    preparation.actions.first.update!(start_time: nil)
+    preparation.actions.last.update!(start_time: "07:00")
+    preparation.update!(start_time: "09:35")
+
+    assert_equal "09:35", preparation.reload.start_time
+    assert_equal "09:35", preparation[:start_time]
+
+    preparation.actions.first.update!(start_time: "09:30")
+
+    assert_equal "09:30", preparation.reload.start_time
+    assert_equal "09:35", preparation[:start_time]
+  end
+
+  test "derives unique commissions from its own action records" do
+    preparation = preparations(:opening_acts)
+    preparation.actions.first.update!(commissions: [ "EyA", "Programa" ])
+    preparation.actions.last.update!(commissions: [ "Programa", "Hosp" ])
+
+    assert_equal [ "EyA", "Programa", "Hosp" ], preparation.reload.commissions
+  end
+
+  test "does not delete a preparation with actions or delete those actions" do
+    preparation = preparations(:opening_acts)
+
+    assert_no_difference [ "Preparation.count", "Activity.count" ] do
+      assert_not preparation.destroy
+    end
+    assert Preparation.exists?(preparation.id)
+  end
+
+  test "requires an existing preparation for action activities" do
+    action = activities(:activity_48)
+    action.preparation_id = 999
+
+    assert_not action.valid?
+    assert action.errors.of_kind?(:preparation, :blank)
   end
 end

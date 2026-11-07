@@ -1,33 +1,25 @@
-class Preparation
-  ATTRIBUTES = %w[id title day act_ids].freeze
+class Preparation < ApplicationRecord
+  has_many :actions, -> { preparation_actions.order(:position) }, class_name: "Activity", inverse_of: :preparation, dependent: :restrict_with_error
 
-  attr_reader(*ATTRIBUTES, :phase)
-
-  def self.all
-    YAML.safe_load_file(Rails.root.join("config/data/preparations.yml")).fetch("preparations").map do |attributes|
-      new(attributes)
-    end
-  end
-
-  def self.find(id)
-    all.find { |preparation| preparation.id.to_s == id.to_s } || raise(ActiveRecord::RecordNotFound, "Preparation not found")
-  end
-
-  def actions
-    @actions ||= Activity.preparation_actions.where(preparation_id: id).order(:position).to_a
-  end
+  validates :title, :day, presence: true
+  validates :phase, inclusion: { in: Schedule::PHASES.keys }
+  validate :act_ids_reference_acts
 
   def start_time
-    actions.first&.start_time.presence || @start_time
+    actions.first&.start_time.presence || self[:start_time]
   end
 
   def commissions
     actions.flat_map(&:commissions).uniq
   end
 
-  def initialize(attributes)
-    @phase = attributes.fetch("phase", "program")
-    @start_time = attributes.fetch("start_time")
-    ATTRIBUTES.each { |attribute| instance_variable_set("@#{attribute}", attributes.fetch(attribute)) }
+  private
+
+  def act_ids_reference_acts
+    if act_ids.is_a?(Array) && act_ids.all? { |id| id.is_a?(Integer) && id.positive? }
+      return if (act_ids - Activity.acts.where(id: act_ids).pluck(:id)).empty?
+    end
+
+    errors.add(:act_ids, :invalid)
   end
 end

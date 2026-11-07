@@ -50,4 +50,36 @@ class PreparationActivityPersistenceTest < ApplicationSystemTestCase
     assert_selector :related_act, "Acto 1"
     assert_selector :related_act, "Acto 2"
   end
+
+  test "shows persisted preparation headers and related acts in the schedule and detail page" do
+    preparation = preparations(:opening_acts)
+    act = activities(:activity_3)
+    preparation.update!(
+      title: "Preparación guardada en la base de datos", day: "Lunes 16", phase: "before_parade",
+      start_time: "07:15", act_ids: [ act.id ]
+    )
+    preparation.actions.first.update!(start_time: nil, commissions: [ "Equipo especial" ])
+
+    visit root_path(day: "Lunes 16", commission: "Equipo especial", row_type: "preparations")
+    assert_selector :schedule_preparation, count: 1
+    within(:schedule_phase, "before_parade") do
+      within(:schedule_preparation, preparation.id) do
+        assert_selector :schedule_cell, :activity, text: "Preparación guardada en la base de datos"
+        assert_selector :schedule_cell, :start_time, text: "07:15"
+        click_link "Ver detalle"
+      end
+    end
+
+    assert_current_path preparation_path(preparation)
+    assert_selector "h1", text: "Preparación guardada en la base de datos"
+    assert_selector ".page__eyebrow", text: /Lunes 16/i
+    assert_selector :activity_metadata, "Inicio de preparación", text: "07:15"
+    assert_selector :related_act, "Acto 3"
+    assert_no_selector :related_act, "Acto 1"
+    assert_no_selector :related_act, "Acto 2"
+    assert_no_link "Editar preparación"
+
+    click_link "Acto 3"
+    assert_current_path schedule_entry_path(act)
+  end
 end

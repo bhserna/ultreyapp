@@ -67,7 +67,7 @@ class Schedule
     end
 
     def all_preparations
-      @all_preparations ||= Preparation.all
+      @all_preparations ||= Preparation.order(:id).preload(:actions).to_a
     end
 
     def all_acts

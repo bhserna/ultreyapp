@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_10_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_25_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -69,6 +69,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_000000) do
     t.index ["act_id"], name: "index_documents_on_act_id"
   end
 
+  create_table "preparations", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "day", null: false
+    t.string "phase", default: "program", null: false
+    t.string "start_time"
+    t.json "act_ids", default: [], null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "production_details", force: :cascade do |t|
     t.integer "act_id", null: false
     t.text "executors"
@@ -93,7 +103,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_000000) do
     t.datetime "updated_at", null: false
     t.text "answer"
     t.integer "topic_id"
+    t.string "source_key"
     t.index ["act_id"], name: "index_questions_on_act_id"
+    t.index ["source_key"], name: "index_questions_on_source_key", unique: true
     t.index ["topic_id"], name: "index_questions_on_topic_id"
   end
 
@@ -101,9 +113,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_10_000000) do
     t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_topics_on_name", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "activities", "preparations"
   add_foreign_key "questions", "topics"
 end

@@ -6,4 +6,4 @@ The 76 activity fixtures cover acts, operations, and ordered preparation actions
 
 Production details, questions, and documents are created explicitly by the tests that exercise them. Assertions should verify application behavior using those records, not compare spreadsheet snapshots with each other.
 
-The application still reads preparation group headers and related-act lists from `config/data/preparations.yml`. Tests of that runtime behavior continue to exercise those groups, but action records come from fixtures, not the action rows in that file. The other event YAML snapshots are not required to run the suite.
+`preparations.yml` contains static preparation group fixtures with descriptive labels and explicit IDs matching their action fixtures. Headers and related-act lists are read from database records. No event YAML snapshot under `config/data` is required to run the suite.
