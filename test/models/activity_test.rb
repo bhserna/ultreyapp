@@ -1,79 +1,80 @@
 require "test_helper"
 
 class ActivityTest < ActiveSupport::TestCase
-  test "selects persisted acts in ID order without including other activity kinds" do
-    act = Activity.create!(kind: "act", source_id: 100, title: "Additional act", day: "Lunes 16")
-    entries = Activity.acts.to_a
-
-    assert_includes entries, act
-    assert entries.all?(&:persisted?)
-    assert entries.all? { |entry| entry.kind == "act" }
-    assert_equal entries.map(&:id).sort, entries.map(&:id)
-    assert_not_includes entries, activities(:activity_32)
-    assert_not_includes entries, activities(:activity_48)
+  test "select activities by kind" do
+    assert_equal [ activities(:opening_act), activities(:closing_act), activities(:next_day_act) ], Activity.acts.to_a
+    assert_equal [ activities(:reception), activities(:sound_check), activities(:next_day_operation) ], Activity.operations.to_a
+    assert_equal [ activities(:microphone_setup), activities(:chair_setup) ].sort_by(&:id), Activity.preparation_actions.order(:id).to_a
   end
 
-  test "preserves integer and subact numbering along with source metadata" do
-    act = activities(:activity_1)
-    subact = activities(:activity_10)
+  test "find an operation by source ID" do
+    operation = activities(:reception)
 
-    assert_equal 1, act.reload.act_number
-    assert_equal "7.4", subact.reload.act_number
-    assert_equal "1er, día 15 Nov", act.source_sheet
-    assert_equal 29, act.source_row
-    assert_equal "INICIO / Proyección Video Inicio “Ultreyas Monterrey 1998–2026”", act.title
-    assert_equal "10:00", act.start_time
-    assert_equal "10:05", act.end_time
-    assert_equal "0:05", act.duration
+    assert_not_equal operation.id, operation.source_id
+    assert_equal activities(:opening_act).id, operation.source_id
+    assert_equal operation, Activity.find_operation_by_source_id(operation.source_id)
   end
 
-  test "gives all activity kinds unique explicit IDs without renumbering existing acts" do
-    activities = Activity.all
-
-    assert_equal 76, activities.size
-    assert_equal activities.size, activities.map(&:id).uniq.size
-    assert activities.all? { |activity| activity.instance_of?(Activity) }
-    assert_equal (1..31).to_a, Activity.acts.map(&:id)
-    assert_equal (32..44).to_a, Activity.operations.map(&:id)
-    assert_equal (45..76).to_a, Activity.preparation_actions.order(:id).map(&:id)
-    assert_equal (1..13).to_a, Activity.operations.map(&:source_id)
-    assert_equal "act", Activity.find(1).kind
-    assert_equal "operation", Activity.find("32").kind
-    assert_equal "Recepción de Diócesis", Activity.find(32).title
-    assert_equal "Recepción de Diócesis", Activity.find_operation_by_source_id("1").title
-    assert_nil Activity.find(32).act_number
-    assert_raises(ActiveRecord::RecordNotFound) { Activity.acts.find(32) }
-    assert_raises(ActiveRecord::RecordNotFound) { Activity.find_operation_by_source_id(32) }
-  end
-
-  test "validates the minimum persisted identity and schedule attributes" do
-    activity = Activity.new(title: "", day: "", kind: "unknown", phase: "unknown")
+  test "validate required attributes" do
+    activity = Activity.new(title: "", day: "", source_id: nil, kind: "unknown", phase: "unknown")
 
     assert_not activity.valid?
-    assert activity.errors.of_kind?(:title, :blank)
-    assert activity.errors.of_kind?(:day, :blank)
-    assert activity.errors.of_kind?(:source_id, :blank)
-    assert activity.errors.of_kind?(:kind, :inclusion)
-    assert activity.errors.of_kind?(:phase, :inclusion)
+    %i[title day source_id].each { |attribute| assert activity.errors.of_kind?(attribute, :blank) }
+    %i[kind phase].each { |attribute| assert activity.errors.of_kind?(attribute, :inclusion) }
+  end
 
-    duplicate = Activity.find(32).dup
+  test "keep source IDs unique within each kind" do
+    duplicate = activities(:opening_act).dup
+
     assert_not duplicate.valid?
     assert duplicate.errors.of_kind?(:source_id, :taken)
+
+    duplicate.source_id = Activity.maximum(:source_id) + 1
+    duplicate.save!
+    operation = activities(:reception).dup
+    operation.source_id = duplicate.source_id
+
+    assert operation.valid?
   end
 
-  test "finds acts with stable numeric or route IDs and rejects unknown IDs" do
-    assert_equal Activity.find(1).title, Activity.find("1").title
-    assert_equal 1, Activity.find("1").id
-    assert_equal "program", Activity.find(1).phase
-    assert_raises(ActiveRecord::RecordNotFound) { Activity.find(999) }
+  test "require a preparation for actions" do
+    action = activities(:chair_setup)
+    action.preparation_id = Preparation.maximum(:id) + 1
+
+    assert_not action.valid?
+    assert action.errors.of_kind?(:preparation, :blank)
+
+    action.preparation_id = nil
+    assert_not action.valid?
+    assert action.errors.of_kind?(:preparation_id, :not_a_number)
+
+    action.preparation = preparations(:opening_setup)
+    [ nil, 0, -1, 1.5 ].each do |position|
+      action.position = position
+      assert_not action.valid?
+      assert action.errors[:position].present?
+    end
   end
 
-  test "question references resolve to the activity model" do
-    question = Question.create!(act_id: 3, body: "Who coordinates this act?")
+  test "keep action positions unique within a preparation" do
+    action = activities(:chair_setup)
+    action.position = activities(:microphone_setup).position
 
-    assert_instance_of Activity, question.activity
-    assert_equal 3, question.activity.id
-    assert_equal Activity.find(3).title, question.activity.title
-    assert_nil Question.new(body: "General question").activity
+    assert_not action.valid?
+    assert action.errors.of_kind?(:position, :taken)
+
+    action.preparation = preparations(:next_day_setup)
+    assert action.valid?
+  end
+
+  test "restrict grouping to preparation actions" do
+    [ activities(:opening_act), activities(:reception) ].each do |activity|
+      activity.preparation = preparations(:opening_setup)
+      activity.position = 1
+
+      assert_not activity.valid?
+      assert activity.errors.of_kind?(:preparation_id, :present)
+      assert activity.errors.of_kind?(:position, :present)
+    end
   end
 end

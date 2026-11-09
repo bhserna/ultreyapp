@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class OperationalActivitiesControllerTest < ApplicationRequestTestCase
+class OperationalActivitiesControllerTest < ActionDispatch::IntegrationTest
   test "resolve operations by source ID" do
     operation = activities(:reception)
     act = activities(:opening_act)

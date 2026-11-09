@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class PreparationsControllerTest < ApplicationRequestTestCase
+class PreparationsControllerTest < ActionDispatch::IntegrationTest
   test "reject an unknown preparation" do
     get preparation_url(Preparation.maximum(:id) + 1)
 

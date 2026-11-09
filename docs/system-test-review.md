@@ -2,7 +2,7 @@
 
 Estas son las **32 pruebas de sistema**, organizadas por contexto y comportamiento. Cada contexto corresponde a un archivo en `test/system/`.
 
-Las pruebas usan un conjunto independiente de **8 actividades y 2 preparaciones** en `test/scenario_fixtures/`, compartido con las pruebas de controlador. Preguntas, temas, documentos y detalles de producción se crean solo en los escenarios que los necesitan. No dependen de los textos ni de las cantidades de actividades del evento real.
+Las pruebas usan un conjunto independiente de **8 actividades y 2 preparaciones** en `test/fixtures/`, compartido con las pruebas de modelos y controladores. Preguntas, temas, documentos y detalles de producción se crean solo en los escenarios que los necesitan. No dependen de los textos ni de las cantidades de actividades del evento real.
 
 ## Schedule
 

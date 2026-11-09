@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class AnswersControllerTest < ApplicationRequestTestCase
+class AnswersControllerTest < ActionDispatch::IntegrationTest
   test "update only the answer" do
     topic = Topic.create!(name: "Logística")
     question = Question.create!(body: "Pregunta original", topic: topic, answer: "Respuesta original")

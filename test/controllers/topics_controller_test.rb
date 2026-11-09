@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class TopicsControllerTest < ApplicationRequestTestCase
+class TopicsControllerTest < ActionDispatch::IntegrationTest
   test "protect question assignments" do
     topic = Topic.create!(name: "Logística")
     assigned_question = Question.create!(body: "Pregunta del tema", topic: topic)

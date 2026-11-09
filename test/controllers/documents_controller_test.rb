@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class DocumentsControllerTest < ApplicationRequestTestCase
+class DocumentsControllerTest < ActionDispatch::IntegrationTest
   test "upload under the act in the URL" do
     act = activities(:opening_act)
     file = fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")

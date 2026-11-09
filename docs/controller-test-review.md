@@ -2,7 +2,7 @@
 
 Estas son las **22 pruebas de controlador**, complementando la cobertura de sistema.
 
-El foco es comprobar límites de las peticiones: qué registros pueden consultar o modificar, qué parámetros aceptan y qué ocurre cuando se rechaza una operación. Comparten con sistema el conjunto de **8 actividades y 2 preparaciones** de `test/scenario_fixtures/`. Los demás registros se crean en cada escenario, sin depender del evento completo.
+El foco es comprobar límites de las peticiones: qué registros pueden consultar o modificar, qué parámetros aceptan y qué ocurre cuando se rechaza una operación. Comparten con sistema y modelos el conjunto de **8 actividades y 2 preparaciones** de `test/fixtures/`. Los demás registros se crean en cada escenario, sin depender del evento completo.
 
 ## Acts
 

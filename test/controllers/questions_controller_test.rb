@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class QuestionsControllerTest < ApplicationRequestTestCase
+class QuestionsControllerTest < ActionDispatch::IntegrationTest
   test "create under the act in the URL" do
     act = activities(:opening_act)
     topic = Topic.create!(name: "Logística")

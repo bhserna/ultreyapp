@@ -1,114 +1,107 @@
 require "test_helper"
 
 class ScheduleModelTest < ActiveSupport::TestCase
-  test "lists operational days and commissions while defaulting to the first program day" do
-    schedule = Schedule.new(day: nil, commission: nil)
+  test "list available days" do
+    activities(:reception).update!(day: "Día previo")
+    preparations(:next_day_setup).update!(day: "Día posterior")
+    expected = [ "Día previo", activities(:opening_act).day, activities(:next_day_act).day, "Día posterior" ]
 
-    assert_equal [ "Sábado 14", "Domingo 15", "Lunes 16" ], schedule.days
-    assert_equal [ "AC", "EyA", "Hosp", "Javier Ayala", "Liturgia", "Marketing", "Programa", "Todas las comisiones" ], schedule.commissions
-    assert_equal "Domingo 15", schedule.selected_day
+    assert_equal expected.sort, Schedule.new(day: nil, commission: nil).days.sort
+  end
+
+  test "list available commissions" do
+    activities(:chair_setup).update!(commissions: [ "Equipo de preparación", "Programa" ])
+
+    assert_equal [ "Equipo de preparación", "EyA", "Hosp", "Liturgia", "Programa" ], Schedule.new(day: nil, commission: nil).commissions
+  end
+
+  test "select a default day" do
+    activities(:reception).update!(day: "Día previo")
+
+    assert_equal activities(:opening_act).day, Schedule.new(day: nil, commission: nil).selected_day
+  end
+
+  test "ignore unknown filters" do
+    schedule = Schedule.new(day: "Unknown day", commission: "Unknown commission", row_type: "unknown")
+    default = Schedule.new(day: nil, commission: nil)
+
+    assert_equal default.selected_day, schedule.selected_day
     assert_nil schedule.selected_commission
-    assert_equal (1..19).to_a, schedule.entries.map(&:id)
+    assert_nil schedule.selected_row_type
+    assert_equal default.rows, schedule.rows
   end
 
-  test "ignores unknown days and commissions" do
-    schedule = Schedule.new(day: "Unknown day", commission: "Unknown commission")
+  test "combine day, type and commission filters" do
+    operation = activities(:sound_check)
+    activities(:next_day_operation).update!(commissions: operation.commissions)
 
-    assert_equal "Domingo 15", schedule.selected_day
-    assert_nil schedule.selected_commission
-    assert_equal (1..19).to_a, schedule.entries.map(&:id)
+    schedule = Schedule.new(day: operation.day, commission: "EyA", row_type: "operations")
+
+    assert_equal [ operation ], schedule.rows
   end
 
-  test "orders by explicit phase then time without moving undecided pre-event work after the program" do
-    schedule = Schedule.new(day: "Domingo 15", commission: nil)
-    rows = schedule.rows
-
-    assert_equal 47, rows.size
-    assert_equal 17, rows.count { |row| row.is_a?(Preparation) }
-    assert_equal 11, rows.grep(Activity).count { |activity| activity.kind == "operation" }
-    assert_equal 19, rows.grep(Activity).count { |activity| activity.kind == "act" }
-    timed_rows = rows.select { |row| row.start_time.to_s.match?(/\A\d{2}:\d{2}\z/) }
-    assert_equal timed_rows.map(&:start_time).sort, timed_rows.map(&:start_time)
-    assert_equal 1, rows.count { |row| row.is_a?(Preparation) && row.id == 2 }
-    assert_equal "01:30", rows.first.start_time
-    assert_equal "19:00", timed_rows.last.start_time
-    assert_equal [ "pre_event" ] * 11 + [ "before_parade" ] + [ "program" ] * 35, rows.map(&:phase)
-    assert_equal [ 38, 43, 44 ], rows.first(11).last(3).map(&:id)
-    assert_instance_of Preparation, rows[11]
-    assert_equal 1, rows[11].id
-    assert_equal "Por definir con Programa", rows[11].start_time
-    assert_equal 2, rows[12].id
-    assert_equal "09:45", rows[12].start_time
-    assert_equal "19:00", rows.last.start_time
-    assert_equal "12:30", rows.find { |row| row.is_a?(Preparation) && row.id == 7 }.start_time
-    assert_equal "16:50", rows.find { |row| row.is_a?(Preparation) && row.id == 12 }.start_time
-
-    monday = Schedule.new(day: "Lunes 16", commission: nil)
-    assert_equal (20..31).to_a, monday.rows.grep(Activity).map(&:id)
-    assert_equal 9, monday.rows.grep(Preparation).size
-    assert_equal "07:40", monday.rows.first.start_time
-    assert_equal 18, monday.rows.first.id
-    assert_equal "21:30", monday.rows.last.start_time
-    assert_equal 20, monday.rows.last.id
-  end
-
-  test "uses the explicit phase rather than the operation type or title" do
-    activity = activities(:activity_32)
-    activity.update!(phase: "program", day: "Domingo 15", start_time: "Por definir", end_time: "10:02")
-    schedule = Schedule.new(day: "Domingo 15", commission: nil)
-    rows = schedule.rows
-    position = rows.index(activity)
-    assert_instance_of Activity, rows[position - 1]
-    assert_equal 1, rows[position - 1].id
-    assert_instance_of Activity, rows[position + 1]
-    assert_equal 2, rows[position + 1].id
-    assert_equal "Por definir", activity.start_time
-    assert_equal "program", activity.phase
-    assert_equal "program", Activity.find(1).phase
-    assert_equal "program", Preparation.find(17).phase
-    assert_equal "before_parade", Preparation.find(1).phase
-  end
-
-  test "filters preparations by their own commission and day" do
-    schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
-
-    assert_equal [ 2, 3, 5, 6 ], schedule.rows.grep(Preparation).map(&:id)
-    activities = schedule.rows.grep(Activity)
-    assert_equal [ 5 ], activities.select { |activity| activity.kind == "act" }.map(&:id)
-    assert_equal [ 40, 41, 39, 38 ], activities.select { |activity| activity.kind == "operation" }.map(&:id)
-    assert_empty Schedule.new(day: "Lunes 16", commission: "EyA").rows
-  end
-
-  test "combines row type day and commission filters" do
-    operations = Schedule.new(day: "Domingo 15", commission: "Liturgia", row_type: "operations")
-    assert_equal [ 36, 35, 37 ], operations.rows.map(&:id)
-    assert operations.rows.all? { |row| row.is_a?(Activity) && row.kind == "operation" }
-    assert_equal "operations", operations.selected_row_type
-
-    saturday = Schedule.new(day: "Sábado 14", commission: "AC", row_type: "operations")
-    assert_equal [ 32, 33 ], saturday.rows.map(&:id)
-    assert_empty Schedule.new(day: "Sábado 14", commission: nil, row_type: "acts").rows
-    assert_empty Schedule.new(day: "Sábado 14", commission: nil, row_type: "preparations").rows
-    assert_equal 19, Schedule.new(day: "Domingo 15", commission: nil, row_type: "acts").rows.size
-    assert_equal 17, Schedule.new(day: "Domingo 15", commission: nil, row_type: "preparations").rows.size
-
-    unknown = Schedule.new(day: "Sábado 14", commission: nil, row_type: "unknown")
-    assert_nil unknown.selected_row_type
-    assert_equal [ 32, 33 ], unknown.rows.map(&:id)
-  end
-
-  test "filters entries by day and commission" do
-    schedule = Schedule.new(day: "Domingo 15", commission: "EyA")
-
-    assert_equal "Domingo 15", schedule.selected_day
-    assert_equal "EyA", schedule.selected_commission
-    assert_equal [ 5 ], schedule.entries.map(&:id)
-  end
-
-  test "keeps a valid commission even when it has no entries on the selected day" do
-    schedule = Schedule.new(day: "Lunes 16", commission: "EyA")
+  test "keep a commission with no results" do
+    schedule = Schedule.new(day: activities(:next_day_act).day, commission: "EyA")
 
     assert_equal "EyA", schedule.selected_commission
-    assert_empty schedule.entries
+    assert_empty schedule.rows
+  end
+
+  test "order by phase" do
+    operation = activities(:reception)
+    preparation_work = activities(:sound_check)
+    program_work = activities(:next_day_operation)
+    operation.update!(phase: "pre_event", start_time: "23:00")
+    preparation_work.update!(phase: "before_parade", start_time: "12:00")
+    program_work.update!(day: operation.day, phase: "program", start_time: "01:00")
+
+    schedule = Schedule.new(day: operation.day, commission: nil, row_type: "operations")
+
+    assert_equal [ operation, preparation_work, program_work ], schedule.rows
+  end
+
+  test "order by start time" do
+    first = activities(:closing_act)
+    second = activities(:opening_act)
+    first.update!(start_time: "09:00")
+    second.update!(start_time: "11:00")
+
+    schedule = Schedule.new(day: first.day, commission: nil, row_type: "acts")
+
+    assert_equal [ first, second ], schedule.rows
+  end
+
+  test "fall back to end time for ordering" do
+    operation = activities(:reception)
+    earlier_operation = activities(:sound_check)
+
+    [ nil, "Por confirmar" ].each do |start_time|
+      operation.update!(start_time: start_time, end_time: "08:30")
+      schedule = Schedule.new(day: operation.day, commission: nil, row_type: "operations")
+
+      assert_equal [ earlier_operation, operation ], schedule.rows
+      assert_equal [ start_time, "08:30" ], operation.reload.attributes.values_at("start_time", "end_time")
+    end
+  end
+
+  test "place unknown times last within their phase" do
+    unknown = activities(:reception)
+    timed = activities(:sound_check)
+    next_phase = activities(:next_day_operation)
+    unknown.update!(start_time: "Por confirmar", end_time: nil)
+    next_phase.update!(day: unknown.day, phase: "program", start_time: "01:00")
+
+    schedule = Schedule.new(day: unknown.day, commission: nil, row_type: "operations")
+
+    assert_equal [ timed, unknown, next_phase ], schedule.rows
+  end
+
+  test "exclude preparation action rows" do
+    preparation = preparations(:opening_setup)
+    rows = Schedule.new(day: preparation.day, commission: nil).rows
+
+    assert_equal 1, rows.count(preparation)
+    assert_not_includes rows, activities(:chair_setup)
+    assert_not_includes rows, activities(:microphone_setup)
   end
 end

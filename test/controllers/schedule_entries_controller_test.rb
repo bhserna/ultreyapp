@@ -1,6 +1,6 @@
-require "application_request_test_case"
+require "test_helper"
 
-class ScheduleEntriesControllerTest < ApplicationRequestTestCase
+class ScheduleEntriesControllerTest < ActionDispatch::IntegrationTest
   test "reject non-act activities" do
     [ activities(:reception), activities(:chair_setup) ].each do |activity|
       assert_act_endpoints_reject(activity.id)
