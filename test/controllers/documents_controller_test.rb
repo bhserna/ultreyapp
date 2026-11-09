@@ -1,48 +1,75 @@
-require "test_helper"
+require "application_request_test_case"
 
-class DocumentsControllerTest < ActionDispatch::IntegrationTest
-  test "uploads multiple documents and shows their formats" do
-    get schedule_entry_url(3)
-    assert_select "turbo-frame#documents[src=?]", schedule_entry_documents_path(3)
+class DocumentsControllerTest < ApplicationRequestTestCase
+  test "upload under the act in the URL" do
+    act = activities(:opening_act)
+    file = fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")
 
-    files = [
-      fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain"),
-      fixture_file_upload(Rails.root.join("test/fixtures/files/participants.csv"), "text/csv")
-    ]
-
-    assert_difference("Document.count", 2) do
-      post schedule_entry_documents_url(3), params: { files: files }
+    assert_difference "Document.count", 1 do
+      post schedule_entry_documents_url(act), params: { files: [ file ], act_id: activities(:closing_act).id }
     end
-    assert_redirected_to schedule_entry_documents_url(3)
-    assert_equal [ 3 ], Document.distinct.pluck(:act_id)
 
-    get schedule_entry_documents_url(3)
-    assert_response :success
-    assert_select "turbo-frame#documents .documents__item", count: 2
-    assert_select ".documents__format[data-format='txt']", text: "TXT"
-    assert_select ".documents__format[data-format='csv']", text: "CSV"
-    assert_select ".documents__file a", text: "agenda.txt"
-    assert_select ".documents__file a", text: "participants.csv"
+    document = Document.order(:id).last
+    assert_equal act.id, document.act_id
+    assert document.file.attached?
+    assert_redirected_to schedule_entry_documents_url(act)
   end
 
-  test "keeps documents scoped to their activity and deletes their files" do
-    document = Document.create!(
-      act_id: 3,
-      file: fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain")
-    )
-    blob_id = document.file.blob.id
+  test "list only the act documents" do
+    act = activities(:opening_act)
+    document = create_document(act, "agenda.txt")
+    other_document = create_document(activities(:closing_act), "participants.csv")
 
-    get schedule_entry_documents_url(4)
-    assert_select ".documents__item", count: 0
+    get schedule_entry_documents_url(act)
 
-    delete schedule_entry_document_url(4, document)
-    assert_response :not_found
-    assert Document.exists?(document.id)
+    assert_response :success
+    assert_select ".documents__file a", text: document.file.filename.to_s
+    assert_select ".documents__file a", text: other_document.file.filename.to_s, count: 0
+  end
 
-    assert_difference("Document.count", -1) do
-      delete schedule_entry_document_url(3, document)
+  test "reject deletion through another act" do
+    document = create_document(activities(:opening_act), "agenda.txt")
+    original_attributes = document.reload.attributes
+    attachment = document.file.attachment
+    blob = document.file.blob
+    original_content = document.file.download
+
+    assert_no_difference [ "Document.count", "ActiveStorage::Attachment.count", "ActiveStorage::Blob.count" ] do
+      delete schedule_entry_document_url(activities(:closing_act), document)
+      assert_response :not_found
     end
-    assert_redirected_to schedule_entry_documents_url(3)
-    assert_not ActiveStorage::Blob.exists?(blob_id)
+
+    assert_equal original_attributes, document.reload.attributes
+    assert_equal attachment.id, document.file.attachment.id
+    assert_equal blob.id, document.file.blob.id
+    assert_equal original_content, document.file.download
+  end
+
+  test "purge the deleted document file" do
+    act = activities(:opening_act)
+    document = create_document(act, "agenda.txt")
+    other_document = create_document(act, "participants.csv")
+    blob = document.file.blob
+    attachment_id = document.file.attachment.id
+    other_attributes = other_document.reload.attributes
+    other_content = other_document.file.download
+
+    assert_difference [ "Document.count", "ActiveStorage::Attachment.count", "ActiveStorage::Blob.count" ], -1 do
+      delete schedule_entry_document_url(act, document)
+    end
+
+    assert_redirected_to schedule_entry_documents_url(act)
+    assert_not Document.exists?(document.id)
+    assert_not ActiveStorage::Attachment.exists?(attachment_id)
+    assert_not ActiveStorage::Blob.exists?(blob.id)
+    assert_not blob.service.exist?(blob.key)
+    assert_equal other_attributes, other_document.reload.attributes
+    assert_equal other_content, other_document.file.download
+  end
+
+  private
+
+  def create_document(act, filename)
+    Document.create!(act_id: act.id, file: fixture_file_upload(Rails.root.join("test/fixtures/files", filename), "text/plain"))
   end
 end

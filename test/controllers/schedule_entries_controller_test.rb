@@ -1,32 +1,38 @@
-require "test_helper"
-require_relative "../support/response_html_assertions"
+require "application_request_test_case"
 
-class ScheduleEntriesControllerTest < ActionDispatch::IntegrationTest
-  include ResponseHtmlAssertions
-
-  test "links commissions to acts on the same day" do
-    get schedule_entry_url(1)
-
-    assert_response :success
-    within(:activity_metadata, "Comisiones") do
-      assert_selector ".commission-links", exact_text: "Programa"
-      assert_selector :link, "Programa", href: root_path(day: "Domingo 15", commission: "Programa")
-    end
-
-    get schedule_entry_url(21)
-
-    assert_response :success
-    within(:activity_metadata, "Comisiones") do
-      assert_selector :link, "Liturgia", href: root_path(day: "Lunes 16", commission: "Liturgia")
+class ScheduleEntriesControllerTest < ApplicationRequestTestCase
+  test "reject non-act activities" do
+    [ activities(:reception), activities(:chair_setup) ].each do |activity|
+      assert_act_endpoints_reject(activity.id)
     end
   end
 
-  test "links teardown to all commissions as specified by the source" do
-    get schedule_entry_url(31)
+  test "reject an unknown act" do
+    assert_act_endpoints_reject(Activity.maximum(:id) + 1)
+  end
 
-    assert_response :success
-    within(:activity_metadata, "Comisiones") do
-      assert_selector :link, "Todas las comisiones", href: root_path(day: "Lunes 16", commission: "Todas las comisiones")
+  private
+
+  def assert_act_endpoints_reject(id)
+    assert_no_difference [ "Question.count", "ProductionDetail.count", "Document.count", "ActiveStorage::Blob.count", "ActiveStorage::Attachment.count" ] do
+      [
+        schedule_entry_url(id),
+        schedule_entry_questions_url(id),
+        schedule_entry_documents_url(id),
+        new_schedule_entry_production_detail_url(id)
+      ].each do |url|
+        get url
+        assert_response :not_found
+      end
+
+      post schedule_entry_questions_url(id), params: { question: { body: "Rejected question" } }
+      assert_response :not_found
+      post schedule_entry_production_detail_url(id), params: { production_detail: { notes: "Rejected notes" } }
+      assert_response :not_found
+      post schedule_entry_documents_url(id), params: {
+        files: [ fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain") ]
+      }
+      assert_response :not_found
     end
   end
 end

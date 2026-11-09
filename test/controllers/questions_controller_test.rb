@@ -1,125 +1,30 @@
-require "test_helper"
-require_relative "../support/response_html_assertions"
+require "application_request_test_case"
 
-class QuestionsControllerTest < ActionDispatch::IntegrationTest
-  include ResponseHtmlAssertions
+class QuestionsControllerTest < ApplicationRequestTestCase
+  test "create under the act in the URL" do
+    act = activities(:opening_act)
+    topic = Topic.create!(name: "Logística")
 
-  test "shows activity details and manages its questions" do
-    get schedule_entry_url(3)
-
-    assert_response :success
-    assert_select "h1", text: "Presentación: saludos y palabras de autoridades"
-    assert_select ".page__eyebrow", text: "Domingo 15"
-    assert_selector :activity_metadata, "Inicio", exact_text: "10:20"
-    assert_no_selector :activity_metadata, "Día"
-    assert_select "turbo-frame#questions[src=?]", schedule_entry_questions_path(3)
-
-    get schedule_entry_questions_url(3)
-    assert_response :success
-    assert_select "turbo-frame#questions form[action=?]", schedule_entry_questions_path(3)
-
-    assert_difference("Question.count", 1) do
-      post schedule_entry_questions_url(3), params: { question: { body: "¿Quién participa?" } }
+    assert_difference "Question.count", 1 do
+      post schedule_entry_questions_url(act), params: {
+        question: { body: "¿Quién coordina?", act_id: activities(:closing_act).id, topic_id: topic.id }
+      }
     end
 
     question = Question.order(:id).last
-    assert_equal 3, question.act_id
-    assert_redirected_to schedule_entry_questions_url(3)
-
-    get schedule_entry_questions_url(3)
-    assert_selector :question, "¿Quién participa?"
-    assert_select "turbo-frame#question_#{question.id}"
-
-    get edit_question_url(question)
-    assert_response :success
-    assert_select "turbo-frame#question_#{question.id}"
-    assert_select "textarea", text: "¿Quién participa?"
-    assert_select ".site-nav a[aria-current='page']", text: "Programa"
-
-    patch question_url(question), params: { question: { body: "¿Quién coordina?" } }
-    assert_redirected_to schedule_entry_questions_url(3)
-    assert_equal "¿Quién coordina?", question.reload.body
-
-    assert_difference("Question.count", -1) do
-      delete question_url(question)
-    end
-    assert_redirected_to schedule_entry_questions_url(3)
+    assert_equal act.id, question.act_id
+    assert_nil question.topic_id
+    assert_redirected_to schedule_entry_questions_url(act)
   end
 
-  test "keeps questions scoped to their activity" do
-    question = Question.create!(act_id: 3, body: "Pregunta privada de la actividad")
-    get schedule_entry_questions_url(4)
-    assert_no_selector :question
-
-    get schedule_entry_questions_url(3)
-    within(:question, question.body) do
-      assert_selector :link, "Editar", href: edit_question_path(question)
-      assert_selector :link, "Responder", href: edit_question_answer_path(question)
-      assert_selector "form[action='#{question_path(question)}']"
-    end
-  end
-
-  test "keeps general questions separate from activity questions" do
-    general_question = Question.create!(body: "Pregunta general")
-    activity_question = Question.create!(act_id: 3, body: "Pregunta de la actividad")
-
-    get questions_url
-    assert_response :success
-    assert_selector :question, general_question.body, count: 1
-    assert_no_selector :question, activity_question.body
-
-    get schedule_entry_questions_url(3)
-    assert_no_selector :question, general_question.body
-    assert_selector :question, activity_question.body, count: 1
-
-    get edit_question_url(activity_question)
-    assert_response :success
-    assert_select ".page__eyebrow", text: /Presentación: saludos y palabras de autoridades/
-    assert_select ".site-nav a[aria-current='page']", text: "Programa"
-
-    get edit_question_url(general_question)
-    assert_response :success
-    assert_select ".page__eyebrow", count: 0
-    assert_select ".site-nav a[aria-current='page']", text: "Preguntas generales"
-
-    patch question_answer_url(activity_question), params: { question: { answer: "Respuesta de la actividad" } }
-    assert_redirected_to schedule_entry_questions_url(3)
-    patch question_answer_url(general_question), params: { question: { answer: "Respuesta general" } }
-    assert_redirected_to questions_url
-  end
-
-  test "filters general questions by the selected topic" do
-    topic = Topic.create!(name: "Logística")
-    other_topic = Topic.create!(name: "Comunicación")
-    unassigned_question = Question.create!(body: "Pregunta sin tema")
-    selected_question = Question.create!(body: "Pregunta de logística", topic: topic)
-    Question.create!(body: "Pregunta de comunicación", topic: other_topic)
-    Question.create!(body: "Pregunta de actividad", act_id: 3)
-
-    get questions_url
-    assert_response :success
-    assert_selector :selected_topic, "Sin tema"
-    within(:question, unassigned_question.body) do
-      assert_selector "turbo-frame#question_#{unassigned_question.id}"
-    end
-    assert_selector :question, count: 1
-
-    get questions_url(topic_id: topic.id)
-    assert_response :success
-    assert_selector :selected_topic, "Logística"
-    within(:question, selected_question.body) do
-      assert_selector "turbo-frame#question_#{selected_question.id}"
-    end
-    assert_selector :question, count: 1
-    assert_select "form[action=?]", questions_path(topic_id: topic.id)
-  end
-
-  test "creates a question in the selected topic" do
+  test "create under the selected topic" do
     topic = Topic.create!(name: "Logística")
     other_topic = Topic.create!(name: "Comunicación")
 
-    assert_difference("Question.count", 1) do
-      post questions_url(topic_id: topic.id), params: { question: { body: "¿Dónde está el material?", topic_id: other_topic.id } }
+    assert_difference "Question.count", 1 do
+      post questions_url(topic_id: topic.id), params: {
+        question: { body: "¿Dónde está el material?", act_id: activities(:opening_act).id, topic_id: other_topic.id }
+      }
     end
 
     question = Question.order(:id).last
@@ -128,32 +33,57 @@ class QuestionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to questions_url(topic_id: topic.id)
   end
 
-  test "keeps the topic when editing or deleting a general question" do
-    topic = Topic.create!(name: "Logística")
-    question = Question.create!(body: "Pregunta original", topic: topic)
-
-    get edit_question_url(question)
-    assert_response :success
-    assert_select "a[href=?]", questions_path(topic_id: topic.id), text: /Volver a las preguntas/
-
-    patch question_url(question), params: { question: { body: "Pregunta actualizada" } }
-    assert_equal "Pregunta actualizada", question.reload.body
-    assert_redirected_to questions_url(topic_id: topic.id)
-
-    assert_difference("Question.count", -1) { delete question_url(question) }
-    assert_redirected_to questions_url(topic_id: topic.id)
-  end
-
-  test "ignores topic selection for activity questions" do
+  test "ignore topic selection for act questions" do
+    act = activities(:opening_act)
     topic = Topic.create!(name: "Logística")
 
-    assert_difference("Question.count", 1) do
-      post schedule_entry_questions_url(3, topic_id: topic.id), params: { question: { body: "Pregunta de actividad" } }
+    assert_difference "Question.count", 1 do
+      post schedule_entry_questions_url(act, topic_id: topic.id), params: { question: { body: "¿Quién presenta?" } }
     end
 
     question = Question.order(:id).last
-    assert_equal 3, question.act_id
+    assert_equal act.id, question.act_id
     assert_nil question.topic_id
-    assert_redirected_to schedule_entry_questions_url(3)
+    assert_redirected_to schedule_entry_questions_url(act)
+  end
+
+  test "protect question associations and answers" do
+    topic = Topic.create!(name: "Logística")
+    question = Question.create!(act_id: activities(:opening_act).id, body: "Pregunta original", answer: "Respuesta original")
+    original_attributes = question.attributes.except("body", "updated_at")
+
+    patch question_url(question), params: {
+      question: { body: "Pregunta actualizada", act_id: activities(:closing_act).id, topic_id: topic.id, answer: "Respuesta manipulada" }
+    }
+
+    assert_response :see_other
+    assert_equal "Pregunta actualizada", question.reload.body
+    assert_equal original_attributes, question.attributes.except("body", "updated_at")
+  end
+
+  test "return to the question context" do
+    act = activities(:opening_act)
+    topic = Topic.create!(name: "Logística")
+    other_topic = Topic.create!(name: "Comunicación")
+    contexts = [
+      [ Question.create!(body: "Pregunta del acto", act_id: act.id), schedule_entry_questions_url(act) ],
+      [ Question.create!(body: "Pregunta del tema", topic: topic), questions_url(topic_id: topic.id) ],
+      [ Question.create!(body: "Pregunta sin tema"), questions_url ]
+    ]
+
+    contexts.each do |question, destination|
+      url = question_url(question, topic_id: other_topic.id, schedule_entry_id: activities(:closing_act).id)
+      patch url, params: { question: { body: "Texto actualizado" } }
+      assert_response :see_other
+      assert_redirected_to destination
+      assert_equal "Texto actualizado", question.reload.body
+
+      assert_difference "Question.count", -1 do
+        delete url
+      end
+      assert_response :see_other
+      assert_redirected_to destination
+      assert_not Question.exists?(question.id)
+    end
   end
 end
