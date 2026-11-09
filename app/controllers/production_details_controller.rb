@@ -1,6 +1,6 @@
 class ProductionDetailsController < ApplicationController
   before_action :set_activity
-  before_action :set_production_detail, only: %i[edit update destroy]
+  before_action :set_production_detail, only: %i[edit update]
 
   def new
     @production_detail = ProductionDetail.new(act_id: @activity.id)
@@ -26,11 +26,6 @@ class ProductionDetailsController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @production_detail.destroy!
-    redirect_to schedule_entry_path(@activity.id), status: :see_other
   end
 
   private

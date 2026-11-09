@@ -20,9 +20,6 @@
 
     <div class="questions__actions">
       <%= link_to "Editar detalles de producción", edit_schedule_entry_production_detail_path(@activity.id) %>
-      <%= button_to "Eliminar detalles de producción", schedule_entry_production_detail_path(@activity.id),
-            method: :delete, class: "page__action",
-            form: { data: { turbo_confirm: "¿Eliminar los detalles de producción de esta actividad?" } } %>
     </div>
   <% else %>
     <p>Todavía no hay detalles de producción para esta actividad.</p>

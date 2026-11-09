@@ -1,7 +1,7 @@
 require "application_system_test_case"
 
 class ProductionDetailsTest < ApplicationSystemTestCase
-  test "create, edit and delete production details" do
+  test "create and edit production details" do
     act = activities(:opening_act)
     visit schedule_entry_path(act)
     assert_text "Todavía no hay detalles de producción para esta actividad."
@@ -28,10 +28,8 @@ class ProductionDetailsTest < ApplicationSystemTestCase
     within(:production_details) do
       assert_text "Dos micrófonos"
       assert_no_text "Micrófono principal"
-      accept_confirm { click_button "Eliminar detalles de producción" }
     end
 
-    assert_text "Todavía no hay detalles de producción para esta actividad."
-    assert_link "Agregar detalles de producción"
+    assert_no_link "Agregar detalles de producción"
   end
 end

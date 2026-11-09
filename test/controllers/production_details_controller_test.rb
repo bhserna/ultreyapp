@@ -40,10 +40,21 @@ class ProductionDetailsControllerTest < ActionDispatch::IntegrationTest
       assert_response :not_found
       patch schedule_entry_production_detail_url(other_act), params: { production_detail: { notes: "Notas manipuladas" } }
       assert_response :not_found
-      delete schedule_entry_production_detail_url(other_act)
-      assert_response :not_found
     end
 
+    assert_equal original_attributes, detail.reload.attributes
+  end
+
+  test "reject deletion of production details" do
+    act = activities(:opening_act)
+    detail = ProductionDetail.create!(act_id: act.id, notes: "Notas originales")
+    original_attributes = detail.attributes
+
+    assert_no_difference "ProductionDetail.count" do
+      delete schedule_entry_production_detail_url(act)
+    end
+
+    assert_response :not_found
     assert_equal original_attributes, detail.reload.attributes
   end
 

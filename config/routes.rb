@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   resources :operational_activities, only: :show
 
   resources :schedule_entries, only: :show do
-    resource :production_detail, only: %i[new create edit update destroy]
+    resource :production_detail, only: %i[new create edit update]
     resources :documents, only: %i[index create destroy]
     resources :questions, only: %i[index create edit update destroy], shallow: true do
       resource :answer, only: %i[edit update]
