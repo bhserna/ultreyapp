@@ -1,4 +1,3 @@
-# Static test data, independent of config/data snapshots.
 ---
 activity_1:
   id: 1
