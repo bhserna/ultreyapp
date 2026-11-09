@@ -1,0 +1,15 @@
+opening_setup:
+  id: 1
+  title: Preparación de bienvenida
+  day: Domingo 15
+  phase: program
+  start_time: '09:20'
+  act_ids: [1, 2]
+
+next_day_setup:
+  id: 2
+  title: Preparación del segundo día
+  day: Lunes 16
+  phase: program
+  start_time: '08:45'
+  act_ids: [3]

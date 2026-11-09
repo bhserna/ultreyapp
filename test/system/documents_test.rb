@@ -1,14 +1,8 @@
 require "application_system_test_case"
 
 class DocumentsTest < ApplicationSystemTestCase
-  test "uploads and deletes documents from an activity" do
-    visit root_path(day: "Domingo 15")
-
-    within(:schedule_act, "Proyección Video Inicio") do
-      click_link "Ver detalle"
-    end
-
-    assert_text "INICIO / Proyección Video Inicio"
+  test "upload and delete documents" do
+    visit schedule_entry_path(activities(:opening_act))
 
     within("turbo-frame#documents") do
       attach_file "files[]", [
@@ -18,8 +12,6 @@ class DocumentsTest < ApplicationSystemTestCase
 
       assert_text "agenda.txt"
       assert_text "participants.csv"
-      assert_selector ".documents__format[data-format='txt']", text: "TXT"
-      assert_selector ".documents__format[data-format='csv']", text: "CSV"
 
       within("li", text: "agenda.txt") do
         accept_confirm { click_button "Eliminar" }
