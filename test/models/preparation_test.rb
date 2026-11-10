@@ -68,7 +68,7 @@ class PreparationTest < ActiveSupport::TestCase
   test "collect unique action commissions" do
     preparation = preparations(:opening_setup)
     activities(:chair_setup).update!(commissions: [ "EyA", "Programa" ])
-    activities(:microphone_setup).update!(commissions: [ "Programa" ], details: { "commission" => "¿Quién coordina?" })
+    activities(:microphone_setup).update!(commissions: [ "Programa" ])
 
     assert_equal [ "EyA", "Programa" ], preparation.commissions
     assert_empty preparations(:next_day_setup).commissions

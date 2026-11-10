@@ -5,14 +5,6 @@ AppSelectors.add(:activity_details, replaces_css: /\[\s*aria-label\s*=\s*['"]Det
   end
 end
 
-AppSelectors.add(:production_details, replaces_css: /\[\s*aria-labelledby\s*=\s*['"]production-detail-heading['"]\s*\]/) do
-  css { "section[aria-labelledby='production-detail-heading']" }
-end
-
-AppSelectors.add(:operational_details, replaces_css: /\[\s*aria-label\s*=\s*['"]Detalles operativos['"]\s*\]/) do
-  css { "section[aria-label='Detalles operativos']" }
-end
-
 AppSelectors.add(:activity_metadata, replaces_css: /\.page__details(?![\w-])/) do
   xpath do |label|
     XPath.descendant(:dd)[

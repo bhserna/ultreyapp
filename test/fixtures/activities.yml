@@ -42,13 +42,6 @@ reception:
   category: Atención a participantes
   start_time: Por confirmar
   commissions: [Hosp]
-  details:
-    commission: Hosp
-    arena_questions:
-    general_questions:
-    executors: Equipo de recepción
-    notes: Preparar registros
-    audio: Micrófono de recepción
 
 sound_check:
   id: 12
@@ -60,10 +53,6 @@ sound_check:
   category: Preparación técnica
   start_time: '08:00'
   commissions: [EyA]
-  details:
-    commission: EyA
-    arena_questions:
-    general_questions:
 
 next_day_operation:
   id: 13
@@ -74,10 +63,6 @@ next_day_operation:
   phase: pre_event
   category: Atención a participantes
   commissions: [Hosp]
-  details:
-    commission: Hosp
-    arena_questions:
-    general_questions:
 
 chair_setup:
   id: 22
@@ -91,11 +76,6 @@ chair_setup:
   start_time: '09:30'
   end_time: '09:35'
   commissions: [EyA]
-  details:
-    commission: EyA
-    arena_questions:
-    general_questions:
-    notes: Colocar las sillas frente al escenario
 
 microphone_setup:
   id: 21
@@ -108,8 +88,3 @@ microphone_setup:
   phase: program
   start_time: '09:35'
   commissions: [Programa]
-  details:
-    commission: Programa
-    arena_questions:
-    general_questions:
-    audio: Probar ambos micrófonos

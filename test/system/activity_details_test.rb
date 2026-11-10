@@ -38,13 +38,10 @@ class ActivityDetailsTest < ApplicationSystemTestCase
   def assert_details_flow(activity, return_path)
     activity.activity_detail&.destroy!
     original_activity = activity.reload.attributes
-    production = ProductionDetail.create!(act_id: activity.id, notes: "Legacy notes", audio: "Legacy audio")
-    original_production = production.attributes
     visit return_path
 
     within(:activity_details, activity.id) do
       assert_text "Todavía no hay detalles para esta actividad."
-      assert_no_text "Legacy notes"
       click_link "Agregar detalles"
     end
     assert_current_path new_activity_activity_detail_path(activity)
@@ -89,6 +86,5 @@ class ActivityDetailsTest < ApplicationSystemTestCase
 
     assert_equal "Dos micrófonos", activity.reload.activity_detail.audio
     assert_equal original_activity, activity.attributes
-    assert_equal original_production, production.reload.attributes
   end
 end

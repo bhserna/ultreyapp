@@ -95,26 +95,4 @@ class ActivityDetailTest < ActiveSupport::TestCase
 
     assert_not ActivityDetail.exists?(detail.id)
   end
-
-  test "leave existing information sources unchanged" do
-    act = activities(:opening_act)
-    ProductionDetail.create!(act_id: act.id, notes: "Original act notes", audio: "Original act audio")
-    operation = activities(:reception)
-    action = activities(:chair_setup)
-    original_details = [ operation, action ].to_h { |activity| [ activity.id, activity.details.deep_dup ] }
-
-    [ act, operation, action ].each do |activity|
-      activity.create_activity_detail!(notes: "New notes", audio: "New audio")
-    end
-
-    assert_equal "Original act notes", ProductionDetail.find_by!(act_id: act.id).notes
-    assert_equal "Original act audio", ProductionDetail.find_by!(act_id: act.id).audio
-    [ act, operation, action ].each do |activity|
-      assert_equal "New notes", activity.reload.activity_detail.notes
-      assert_equal "New audio", activity.activity_detail.audio
-    end
-    [ operation, action ].each do |activity|
-      assert_equal original_details.fetch(activity.id), activity.details
-    end
-  end
 end

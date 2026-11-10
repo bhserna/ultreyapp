@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_10_28_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_29_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,7 +50,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_000000) do
     t.json "act_number"
     t.string "category"
     t.json "commissions", default: [], null: false
-    t.json "details", default: {}, null: false
     t.integer "source_id", null: false
     t.string "source_sheet"
     t.integer "source_row"
@@ -76,7 +75,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_000000) do
     t.text "requirements"
     t.text "radios"
     t.text "media_files"
-    t.text "commission"
     t.text "arena_questions"
     t.text "general_questions"
     t.datetime "created_at", null: false
@@ -99,23 +97,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_28_000000) do
     t.json "act_ids", default: [], null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "production_details", force: :cascade do |t|
-    t.integer "act_id", null: false
-    t.text "executors"
-    t.text "screen"
-    t.text "audio"
-    t.text "room_lighting"
-    t.text "stage_lighting"
-    t.text "aisle_lighting"
-    t.text "requirements"
-    t.text "notes"
-    t.text "radios"
-    t.text "pending_confirmations"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["act_id"], name: "index_production_details_on_act_id", unique: true
   end
 
   create_table "questions", force: :cascade do |t|

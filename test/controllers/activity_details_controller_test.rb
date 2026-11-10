@@ -8,8 +8,6 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
   test "create details for each kind using the activity in the URL" do
     each_activity do |activity|
       original = activity.attributes
-      production = ProductionDetail.create!(act_id: activity.id, notes: "Old notes")
-      original_production = production.attributes
       values = {
         description: "Instructions", executors: "Stage team", notes: "Saved notes",
         pending_confirmations: "Confirm supplier", screen: "Welcome slide", audio: "Microphone",
@@ -19,7 +17,7 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
       }
 
       assert_difference "ActivityDetail.count", 1 do
-        assert_no_difference [ "ProductionDetail.count", "Question.count" ] do
+        assert_no_difference "Question.count" do
           post activity_activity_detail_url(activity), params: {
             activity_detail: values.merge(activity_id: activities(:closing_act).id, act_id: activities(:closing_act).id)
           }
@@ -31,15 +29,12 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
       assert_equal values.stringify_keys, detail.attributes.slice(*values.keys.map(&:to_s))
       assert_redirected_to return_path(activity)
       assert_equal original, activity.attributes
-      assert_equal original_production, production.reload.attributes
     end
   end
 
-  test "update details without changing the activity or legacy sources" do
+  test "update details without changing the activity" do
     each_activity do |activity|
       original_activity = activity.attributes
-      production = ProductionDetail.create!(act_id: activity.id, notes: "Old notes")
-      original_production = production.attributes
       detail = activity.create_activity_detail!(notes: "Original notes", audio: "Microphone")
       original = detail.attributes.except("notes", "updated_at")
 
@@ -51,7 +46,6 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
       assert_equal "Updated notes", detail.reload.notes
       assert_equal original, detail.attributes.except("notes", "updated_at")
       assert_equal original_activity, activity.reload.attributes
-      assert_equal original_production, production.reload.attributes
     end
   end
 
