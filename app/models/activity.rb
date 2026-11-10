@@ -1,5 +1,6 @@
 class Activity < ApplicationRecord
   belongs_to :preparation, optional: true, inverse_of: :actions
+  has_one :activity_detail, dependent: :destroy, inverse_of: :activity
 
   scope :acts, -> { where(kind: "act").order(:id) }
   scope :operations, -> { where(kind: "operation").order(:id) }
