@@ -27,7 +27,7 @@
   </header>
 
   <% @preparation.actions.each do |action| %>
-    <section class="page__section">
+    <section class="page__section" id="<%= dom_id(action) %>">
       <dl class="page__details">
         <% { "start_time" => "Inicio de acción", "end_time" => "Fin de acción", "duration" => "Duración" }.each do |attribute, label| %>
           <% if action.public_send(attribute).present? %>
@@ -36,7 +36,7 @@
         <% end %>
       </dl>
       <%= simple_format(action.title) %>
-      <%= render "shared/activity_details", details: activity_detail_attributes(action) %>
+      <%= render "shared/activity_details", activity: action %>
     </section>
   <% end %>
 </main>

@@ -9,15 +9,15 @@ class PreparationsTest < ApplicationSystemTestCase
 
     assert_selector "h1", text: preparation.title
     assert_selector :activity_metadata, "Inicio de preparación", text: first.start_time
-    sections = all("section.page__section")
+    sections = all("section.page__section[id^='activity_']")
     assert_equal [ first.title, second.title ], sections.map { |section| section.first("p").text }
     within(sections.first) do
       assert_selector :activity_metadata, "Inicio de acción", text: first.start_time
-      assert_text first.notes
+      assert_text first.activity_detail.notes
     end
     within(sections.last) do
       assert_selector :activity_metadata, "Inicio de acción", text: second.start_time
-      assert_text second.production_detail.audio
+      assert_text second.activity_detail.audio
     end
   end
 

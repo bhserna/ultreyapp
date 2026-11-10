@@ -1,3 +1,10 @@
+AppSelectors.add(:activity_details, replaces_css: /\[\s*aria-label\s*=\s*['"]Detalles de la actividad['"]\s*\]/) do
+  css do |activity_id = nil|
+    selector = "section[aria-label='Detalles de la actividad']"
+    activity_id ? "#{selector}[data-activity-id='#{activity_id}']" : selector
+  end
+end
+
 AppSelectors.add(:production_details, replaces_css: /\[\s*aria-labelledby\s*=\s*['"]production-detail-heading['"]\s*\]/) do
   css { "section[aria-labelledby='production-detail-heading']" }
 end

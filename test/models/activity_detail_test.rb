@@ -1,6 +1,10 @@
 require "test_helper"
 
 class ActivityDetailTest < ActiveSupport::TestCase
+  setup do
+    ActivityDetail.delete_all
+  end
+
   test "store general and technical details for every activity kind" do
     attributes = {
       description: "Execution instructions", executors: "Production team",
@@ -103,13 +107,14 @@ class ActivityDetailTest < ActiveSupport::TestCase
       activity.create_activity_detail!(notes: "New notes", audio: "New audio")
     end
 
-    assert_equal "Original act notes", act.reload.notes
-    assert_equal "Original act audio", act.production_detail.audio
+    assert_equal "Original act notes", ProductionDetail.find_by!(act_id: act.id).notes
+    assert_equal "Original act audio", ProductionDetail.find_by!(act_id: act.id).audio
+    [ act, operation, action ].each do |activity|
+      assert_equal "New notes", activity.reload.activity_detail.notes
+      assert_equal "New audio", activity.activity_detail.audio
+    end
     [ operation, action ].each do |activity|
-      assert_equal original_details.fetch(activity.id), activity.reload.details
-      assert_equal activity.details.slice("notes", "audio"), {
-        "notes" => activity.notes, "audio" => activity.production_detail.audio
-      }.compact
+      assert_equal original_details.fetch(activity.id), activity.details
     end
   end
 end

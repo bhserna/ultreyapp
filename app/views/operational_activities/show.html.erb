@@ -15,7 +15,5 @@
     </dl>
   </header>
 
-  <section class="page__section" aria-label="Detalles operativos">
-    <%= render "shared/activity_details", details: activity_detail_attributes(@activity) %>
-  </section>
+  <%= render "shared/activity_details", activity: @activity %>
 </main>

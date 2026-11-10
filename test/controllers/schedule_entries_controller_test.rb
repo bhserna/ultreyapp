@@ -14,7 +14,7 @@ class ScheduleEntriesControllerTest < ActionDispatch::IntegrationTest
   private
 
   def assert_act_endpoints_reject(id)
-    assert_no_difference [ "Question.count", "ProductionDetail.count", "Document.count", "ActiveStorage::Blob.count", "ActiveStorage::Attachment.count" ] do
+    assert_no_difference [ "Question.count", "ProductionDetail.count", "ActivityDetail.count", "Document.count", "ActiveStorage::Blob.count", "ActiveStorage::Attachment.count" ] do
       [
         schedule_entry_url(id),
         schedule_entry_questions_url(id),
@@ -27,7 +27,7 @@ class ScheduleEntriesControllerTest < ActionDispatch::IntegrationTest
 
       post schedule_entry_questions_url(id), params: { question: { body: "Rejected question" } }
       assert_response :not_found
-      post schedule_entry_production_detail_url(id), params: { production_detail: { notes: "Rejected notes" } }
+      post "/schedule_entries/#{id}/production_detail", params: { production_detail: { notes: "Rejected notes" } }
       assert_response :not_found
       post schedule_entry_documents_url(id), params: {
         files: [ fixture_file_upload(Rails.root.join("test/fixtures/files/agenda.txt"), "text/plain") ]

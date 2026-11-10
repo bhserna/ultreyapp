@@ -1,44 +1,17 @@
 class ProductionDetailsController < ApplicationController
   before_action :set_activity
-  before_action :set_production_detail, only: %i[edit update]
 
   def new
-    @production_detail = ProductionDetail.new(act_id: @activity.id)
-  end
-
-  def create
-    @production_detail = ProductionDetail.new(production_detail_params)
-    @production_detail.act_id = @activity.id
-
-    if @production_detail.save
-      redirect_to schedule_entry_path(@activity.id), status: :see_other
-    else
-      render :new, status: :unprocessable_entity
-    end
+    redirect_to new_activity_activity_detail_path(@activity)
   end
 
   def edit
-  end
-
-  def update
-    if @production_detail.update(production_detail_params)
-      redirect_to schedule_entry_path(@activity.id), status: :see_other
-    else
-      render :edit, status: :unprocessable_entity
-    end
+    redirect_to edit_activity_activity_detail_path(@activity)
   end
 
   private
 
   def set_activity
     @activity = Activity.acts.find(params[:schedule_entry_id])
-  end
-
-  def set_production_detail
-    @production_detail = ProductionDetail.find_by!(act_id: @activity.id)
-  end
-
-  def production_detail_params
-    params.expect(production_detail: %i[executors screen audio room_lighting stage_lighting aisle_lighting requirements notes radios pending_confirmations])
   end
 end

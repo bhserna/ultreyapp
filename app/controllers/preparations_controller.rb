@@ -8,6 +8,6 @@ class PreparationsController < ApplicationController
   private
 
   def set_preparation
-    @preparation = Preparation.find(params[:id])
+    @preparation = Preparation.includes(actions: :activity_detail).find(params[:id])
   end
 end

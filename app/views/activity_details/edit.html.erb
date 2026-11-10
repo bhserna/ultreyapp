@@ -1,0 +1,14 @@
+<% content_for :title, "Editar detalles · #{@activity.title}" %>
+
+<main class="page">
+  <%= link_to "← Volver a la actividad", activity_return_path(@activity), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @activity.title %></p>
+    <h1>Editar detalles</h1>
+  </header>
+
+  <section class="page__section">
+    <%= render "form" %>
+  </section>
+</main>

@@ -14,7 +14,7 @@
     </dl>
   </header>
 
-  <%= render "production_details/detail" %>
+  <%= render "shared/activity_details", activity: @activity %>
 
   <%= turbo_frame_tag "questions", src: schedule_entry_questions_path(@activity.id) do %>
     <p class="questions__empty">Cargando preguntas…</p>

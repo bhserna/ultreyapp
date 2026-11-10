@@ -2,6 +2,10 @@ require "test_helper"
 require Rails.root.join("db/migrate/20261027000000_backfill_activity_details")
 
 class BackfillActivityDetailsTest < ActiveSupport::TestCase
+  setup do
+    ActivityDetail.delete_all
+  end
+
   test "copy production fields and JSON-only fields for acts without changing sources" do
     act = activities(:opening_act)
     act.update!(details: {
@@ -24,7 +28,7 @@ class BackfillActivityDetailsTest < ActiveSupport::TestCase
     assert_equal expected, act.reload.activity_detail.attributes.slice(*expected.keys)
     assert_equal original_act, act.attributes
     assert_equal original_production, production.reload.attributes
-    assert_equal "Two microphones", act.production_detail.audio
+    assert_equal "Two microphones", act.activity_detail.audio
   end
 
   test "copy JSON details for operations and preparation actions" do

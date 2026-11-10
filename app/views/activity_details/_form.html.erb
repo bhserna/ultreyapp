@@ -1,0 +1,19 @@
+<%= form_with model: @activity_detail, url: activity_activity_detail_path(@activity), data: { turbo: false }, class: "questions__form" do |form| %>
+  <% if @activity_detail.errors.any? %>
+    <ul role="alert">
+      <% @activity_detail.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  <% end %>
+
+  <% activity_detail_fields.each do |attribute, label| %>
+    <%= form.label attribute, label %>
+    <%= form.text_area attribute, rows: 3 %>
+  <% end %>
+
+  <div class="questions__form-actions">
+    <%= form.submit "Guardar detalles" %>
+    <%= link_to "Cancelar", activity_return_path(@activity), class: "questions__cancel" %>
+  </div>
+<% end %>

@@ -3,7 +3,7 @@ require "application_system_test_case"
 class ActsTest < ApplicationSystemTestCase
   test "show act details" do
     act = activities(:opening_act)
-    ProductionDetail.create!(act_id: act.id, executors: "Equipo de bienvenida", audio: "Micrófono principal", notes: "Notas del acto")
+    act.create_activity_detail!(executors: "Equipo de bienvenida", audio: "Micrófono principal", notes: "Notas del acto")
 
     visit schedule_entry_path(act)
 

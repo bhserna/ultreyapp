@@ -1,0 +1,24 @@
+reception_details:
+  activity_id: 11
+  commission: Hosp
+  executors: Equipo de recepción
+  notes: Preparar registros
+  audio: Micrófono de recepción
+
+sound_check_details:
+  activity_id: 12
+  commission: EyA
+
+next_day_operation_details:
+  activity_id: 13
+  commission: Hosp
+
+chair_setup_details:
+  activity_id: 22
+  commission: EyA
+  notes: Colocar las sillas frente al escenario
+
+microphone_setup_details:
+  activity_id: 21
+  commission: Programa
+  audio: Probar ambos micrófonos

@@ -18,35 +18,4 @@ class Activity < ApplicationRecord
   def self.find_operation_by_source_id(source_id)
     operations.find_by!(source_id: source_id)
   end
-
-  def executors
-    detail_attributes.to_h["executors"]
-  end
-
-  def notes
-    detail_attributes.to_h["notes"]
-  end
-
-  def pending_confirmations
-    detail_attributes.to_h["pending_confirmations"]
-  end
-
-  def production_detail
-    return unless detail_attributes
-
-    attributes = ProductionInformation.members.index_with { |attribute| detail_attributes[attribute.to_s] }
-    ProductionInformation.new(**attributes)
-  end
-
-  private
-
-  def detail_attributes
-    return @detail_attributes if defined?(@detail_attributes)
-
-    @detail_attributes = if kind == "act"
-      ProductionDetail.find_by(act_id: id)&.attributes
-    else
-      details
-    end
-  end
 end

@@ -1,25 +1,18 @@
-<% if details["description"].present? %>
-  <%= simple_format(details.fetch("description")) %>
-<% end %>
+<section class="page__section" aria-label="Detalles de la actividad" data-activity-id="<%= activity.id %>">
+  <h2>Detalles de la actividad</h2>
 
-<% {
-  "commission" => "Comisión",
-  "executors" => "Ejecuta",
-  "screen" => "Pantalla",
-  "audio" => "Audio",
-  "room_lighting" => "Iluminación de sala",
-  "stage_lighting" => "Iluminación de escenario",
-  "aisle_lighting" => "Iluminación de pasillos",
-  "requirements" => "Requerimientos",
-  "arena_questions" => "Preguntas para la Arena",
-  "general_questions" => "Dudas generales",
-  "notes" => "Notas",
-  "media_files" => "Videos o pistas",
-  "radios" => "Radios",
-  "pending_confirmations" => "Pendientes por confirmar"
-}.each do |attribute, label| %>
-  <% if details.fetch(attribute).present? %>
-    <h3><%= label %></h3>
-    <%= simple_format(details.fetch(attribute)) %>
+  <% if (detail = activity.activity_detail) %>
+    <% activity_detail_fields.each do |attribute, label| %>
+      <% if detail.public_send(attribute).present? %>
+        <h3><%= label %></h3>
+        <%= simple_format(detail.public_send(attribute)) %>
+      <% end %>
+    <% end %>
+    <div class="questions__actions">
+      <%= link_to "Editar detalles", edit_activity_activity_detail_path(activity) %>
+    </div>
+  <% else %>
+    <p>Todavía no hay detalles para esta actividad.</p>
+    <%= link_to "Agregar detalles", new_activity_activity_detail_path(activity), class: "page__action" %>
   <% end %>
-<% end %>
+</section>
