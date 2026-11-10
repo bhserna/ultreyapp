@@ -17,7 +17,7 @@ class ActivityDetailsTest < ApplicationSystemTestCase
 
     assert_details_flow(action, preparation_path(action.preparation_id))
     assert_equal "activity_#{action.id}", URI.parse(current_url).fragment
-    assert_equal "Programa", activities(:microphone_setup).activity_detail.commission
+    assert_equal "Programa", activities(:microphone_setup).commissions.first
   end
 
   test "cancel editing without changing details" do
@@ -48,6 +48,7 @@ class ActivityDetailsTest < ApplicationSystemTestCase
       click_link "Agregar detalles"
     end
     assert_current_path new_activity_activity_detail_path(activity)
+    assert_no_field "Comisión"
     fill_in "Descripción", with: "Instructions for this activity"
     fill_in "Ejecuta", with: "Equipo de bienvenida"
     fill_in "Audio", with: "Micrófono principal"
@@ -70,6 +71,7 @@ class ActivityDetailsTest < ApplicationSystemTestCase
     end
 
     assert_current_path edit_activity_activity_detail_path(activity)
+    assert_no_field "Comisión"
     assert_field "Audio", with: "Micrófono principal"
     assert_field "Videos o pistas", with: "Welcome video"
     fill_in "Audio", with: "Dos micrófonos"

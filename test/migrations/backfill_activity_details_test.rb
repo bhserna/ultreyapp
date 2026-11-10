@@ -25,8 +25,8 @@ class BackfillActivityDetailsTest < ActiveSupport::TestCase
     backfill
 
     expected = act.details.merge(production.attributes.slice(*BackfillActivityDetails::DETAIL_FIELDS))
-    assert_equal expected, act.reload.activity_detail.attributes.slice(*expected.keys)
-    assert_equal original_act, act.attributes
+    assert_equal expected, BackfillActivityDetails::ActivityDetailRecord.find_by!(activity_id: act.id).attributes.slice(*expected.keys)
+    assert_equal original_act, act.reload.attributes
     assert_equal original_production, production.reload.attributes
     assert_equal "Two microphones", act.activity_detail.audio
   end
@@ -44,7 +44,7 @@ class BackfillActivityDetailsTest < ActiveSupport::TestCase
 
     originals.each do |id, original|
       activity = Activity.find(id)
-      assert_equal original.fetch("details"), activity.activity_detail.attributes.slice(*fields)
+      assert_equal original.fetch("details"), BackfillActivityDetails::ActivityDetailRecord.find_by!(activity_id: id).attributes.slice(*fields)
       assert_equal original, activity.attributes
     end
     assert_equal 0, Question.count

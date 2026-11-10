@@ -15,7 +15,7 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
         pending_confirmations: "Confirm supplier", screen: "Welcome slide", audio: "Microphone",
         room_lighting: "Dimmed", stage_lighting: "White", aisle_lighting: "On",
         requirements: "Two chairs", radios: "Channel 1", media_files: "Welcome video",
-        commission: "Production", arena_questions: "Which entrance?", general_questions: "Who coordinates?"
+        arena_questions: "Which entrance?", general_questions: "Who coordinates?"
       }
 
       assert_difference "ActivityDetail.count", 1 do
@@ -52,6 +52,28 @@ class ActivityDetailsControllerTest < ActionDispatch::IntegrationTest
       assert_equal original, detail.attributes.except("notes", "updated_at")
       assert_equal original_activity, activity.reload.attributes
       assert_equal original_production, production.reload.attributes
+    end
+  end
+
+  test "ignore commission assignments submitted through the details form" do
+    each_activity do |activity|
+      original_commissions = activity.commissions
+      post activity_activity_detail_url(activity), params: {
+        activity_detail: { notes: "Saved notes", commission: "Other team", commissions: [ "Other team" ] }
+      }
+
+      assert_redirected_to return_path(activity)
+      assert_equal original_commissions, activity.reload.commissions
+      assert_equal "Saved notes", activity.activity_detail.notes
+      assert_not activity.activity_detail.has_attribute?(:commission)
+
+      patch activity_activity_detail_url(activity), params: {
+        activity_detail: { notes: "Updated notes", commission: "Other team", commissions: [ "Other team" ] }
+      }
+
+      assert_redirected_to return_path(activity)
+      assert_equal original_commissions, activity.reload.commissions
+      assert_equal "Updated notes", activity.activity_detail.notes
     end
   end
 

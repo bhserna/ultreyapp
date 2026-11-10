@@ -2,7 +2,6 @@ module ActivityDetailsHelper
   def activity_detail_fields
     {
       description: "Descripción",
-      commission: "Comisión",
       executors: "Ejecuta",
       screen: "Pantalla",
       audio: "Audio",

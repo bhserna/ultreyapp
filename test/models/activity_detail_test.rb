@@ -12,7 +12,7 @@ class ActivityDetailTest < ActiveSupport::TestCase
       screen: "Welcome slide", audio: "Two microphones",
       room_lighting: "Dimmed", stage_lighting: "White", aisle_lighting: "On",
       requirements: "Two chairs", radios: "Channel 1", media_files: "Welcome video",
-      commission: "Production", arena_questions: "Where is the entrance?",
+      arena_questions: "Where is the entrance?",
       general_questions: "Who coordinates?"
     }
 

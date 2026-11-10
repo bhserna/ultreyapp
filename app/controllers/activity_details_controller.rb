@@ -45,7 +45,7 @@ class ActivityDetailsController < ApplicationController
   def activity_detail_params
     params.expect(activity_detail: %i[
       description executors screen audio room_lighting stage_lighting aisle_lighting
-      requirements notes radios media_files pending_confirmations commission
+      requirements notes radios media_files pending_confirmations
       arena_questions general_questions
     ])
   end

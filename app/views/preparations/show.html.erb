@@ -29,6 +29,7 @@
   <% @preparation.actions.each do |action| %>
     <section class="page__section" id="<%= dom_id(action) %>">
       <dl class="page__details">
+        <div><dt>Comisiones</dt><dd><%= commission_links(action) %></dd></div>
         <% { "start_time" => "Inicio de acción", "end_time" => "Fin de acción", "duration" => "Duración" }.each do |attribute, label| %>
           <% if action.public_send(attribute).present? %>
             <div><dt><%= label %></dt><dd><%= action.public_send(attribute) %></dd></div>
