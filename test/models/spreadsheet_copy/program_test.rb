@@ -118,6 +118,21 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal "02:00", program.preparations.last.schedule.to_s
   end
 
+  test "filter entries by type without mixing days and treat unknown filters as all" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ],
+      "Lunes 16" => [ { "Horario" => "08:00", "# Acto" => 17, "Actividad" => "Apertura del lunes" } ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Preparación" => "09:30", "Previo al Acto #" => 1, "Nombre del Acto" => "Montaje" }
+      ]
+    )
+
+    assert_equal [ "Inicio" ], program.entries(day: "Domingo 15", row_type: "acts").map(&:title)
+    assert_equal [ "Montaje" ], program.entries(day: "Domingo 15", row_type: "preparations").map(&:title)
+    assert_equal [ "Montaje", "Inicio" ], program.entries(day: "Domingo 15", row_type: "unknown").map(&:title)
+    assert_empty program.entries(day: "Lunes 16", row_type: "preparations")
+  end
+
   test "programs without preparation sheets still list their acts" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]

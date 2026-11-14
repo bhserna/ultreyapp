@@ -4,5 +4,7 @@ class SpreadsheetCopies::ActsController < SpreadsheetCopies::BaseController
       act.day == params[:day_id] && act.to_param == params[:id]
     end
     raise ActiveRecord::RecordNotFound unless @act
+
+    @selected_row_type = params[:row_type].presence_in(SpreadsheetCopy::Program::ROW_TYPES)
   end
 end

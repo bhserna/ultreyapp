@@ -1,7 +1,7 @@
 <% content_for :title, @act.title %>
 
 <main class="page">
-  <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @act.day), class: "page__back" %>
+  <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @act.day, row_type: @selected_row_type), class: "page__back" %>
 
   <header class="page__header">
     <p class="page__eyebrow"><%= @act.day %></p>

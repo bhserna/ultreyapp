@@ -10,11 +10,20 @@
   <div class="toolbar">
     <nav class="tabs" aria-label="Días del programa actualizado">
       <% @days.each do |day| %>
-        <%= link_to day, spreadsheet_copy_day_path(@spreadsheet_copy, day),
+        <%= link_to day, spreadsheet_copy_day_path(@spreadsheet_copy, day, row_type: @selected_row_type),
               class: "tabs__item#{' tabs__item--active' if day == @selected_day}",
               aria: { current: ("page" if day == @selected_day) } %>
       <% end %>
     </nav>
+
+    <%= form_with url: spreadsheet_copy_day_path(@spreadsheet_copy, @selected_day), method: :get,
+          class: "filter", data: { controller: "schedule-filter" } do %>
+      <%= label_tag :row_type, "Tipo de actividad", class: "visually-hidden" %>
+      <%= select_tag :row_type,
+            options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"]], @selected_row_type),
+            data: { action: "change->schedule-filter#submit" } %>
+      <%= submit_tag "Filtrar", data: { schedule_filter_target: "submit" } %>
+    <% end %>
   </div>
 
   <div class="table-container">
@@ -42,9 +51,12 @@
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
               <td class="text-nowrap"><%= entry.number || "—" %></td>
               <td class="schedule__activity"><%= entry.title %></td>
-              <td><%= link_to "Ver detalle", spreadsheet_copy_day_act_path(@spreadsheet_copy, entry.day, entry), class: "schedule__resources-link" %></td>
+              <td><%= link_to "Ver detalle", spreadsheet_copy_day_act_path(@spreadsheet_copy, entry.day, entry, row_type: @selected_row_type), class: "schedule__resources-link" %></td>
             </tr>
           <% end %>
+        <% end %>
+        <% if @entries.empty? %>
+          <tr><td colspan="4">No hay actividades de este tipo para este día.</td></tr>
         <% end %>
       </tbody>
     </table>
