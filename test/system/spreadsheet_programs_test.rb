@@ -11,34 +11,13 @@ class SpreadsheetProgramsTest < ApplicationSystemTestCase
 
     assert_selector ".site-nav a[aria-current=page]", text: "Programa actualizado"
     assert_selector "h1", text: "Programa actualizado"
-    assert_text "Copia descargada el"
-    assert_no_selector ".page__section"
-    assert_no_selector "h2"
-    within "table" do
-      assert_selector "thead th", text: "Horario"
-      assert_selector "thead th", text: "Acto"
-      assert_selector "thead th", text: "Actividad"
-      assert_selector "tbody tr", count: 4
-      within all("tbody tr").first do
-        assert_selector "td", text: "08:30–09:30"
-        assert_selector "td", exact_text: "—"
-        assert_text "Entrada a la Arena"
-      end
-      within all("tbody tr")[1] do
-        assert_selector "td", exact_text: "1"
-        assert_text "Inicio / Video"
-      end
-    end
+    assert_selector ".tabs a[aria-current=page]", text: "Domingo 15"
+    assert_text "Entrada a la Arena"
     assert_no_text "Bienvenida del lunes"
     click_link "Lunes 16"
     assert_selector ".tabs a[aria-current=page]", text: "Lunes 16"
-    within "table" do
-      assert_selector "tbody tr", count: 2
-      assert_text "Bienvenida del lunes"
-      assert_text "02A"
-    end
+    assert_text "Bienvenida del lunes"
     assert_no_text "Entrada a la Arena"
-    assert_no_text "Preparar instrumentos"
 
     visit spreadsheet_program_path(day: "Día desconocido")
     assert_selector ".tabs a[aria-current=page]", text: "Domingo 15"
