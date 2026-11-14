@@ -42,7 +42,7 @@
           <% if entry.is_a?(SpreadsheetCopy::Preparation) %>
             <tr class="schedule__preparation">
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
-              <td class="text-nowrap"><%= entry.act_number.present? ? "Previo al #{entry.act_number}" : "—" %></td>
+              <td class="text-nowrap"><%= entry.act_number.presence || "—" %></td>
               <td class="schedule__activity"><strong>Preparación</strong> · <%= entry.title %></td>
               <td></td>
             </tr>
