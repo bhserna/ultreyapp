@@ -17,4 +17,8 @@ class SpreadsheetCopy::Act
     @pending_files = pending_files
     @ready_files = ready_files
   end
+
+  def to_param
+    position.to_s
+  end
 end

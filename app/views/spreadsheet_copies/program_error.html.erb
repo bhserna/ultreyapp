@@ -1,0 +1,9 @@
+<% content_for :title, "Programa actualizado" %>
+
+<main class="page">
+  <header class="page__header page__header--flush">
+    <h1>Programa actualizado</h1>
+    <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+  </header>
+  <%= link_to "Ver copias del spreadsheet", spreadsheet_copies_path, class: "link" %>
+</main>

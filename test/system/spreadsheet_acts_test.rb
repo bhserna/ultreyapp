@@ -5,7 +5,7 @@ class SpreadsheetActsTest < ApplicationSystemTestCase
 
   test "open an unnumbered act and return to the same copy and day after a new download" do
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_details.xlsx", SpreadsheetCopy::CONTENT_TYPE))
-    visit spreadsheet_program_path
+    visit current_program_path
 
     within "tr", text: "Entrada a la Arena" do
       click_link "Ver detalle"
@@ -36,10 +36,10 @@ class SpreadsheetActsTest < ApplicationSystemTestCase
     SpreadsheetCopy.create!(file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE))
     click_link "← Volver al programa"
 
-    assert_current_path spreadsheet_program_path(copy_id: copy.id, day: "Domingo 15")
+    assert_current_path spreadsheet_copy_day_path(copy, "Domingo 15")
     assert_text "Entrada a la Arena"
     click_link "Lunes 16"
-    assert_current_path spreadsheet_program_path(copy_id: copy.id, day: "Lunes 16")
+    assert_current_path spreadsheet_copy_day_path(copy, "Lunes 16")
     within "tr", text: "Bienvenida del lunes" do
       click_link "Ver detalle"
     end
@@ -49,7 +49,7 @@ class SpreadsheetActsTest < ApplicationSystemTestCase
     assert_no_selector :activity_details
 
     click_link "← Volver al programa"
-    assert_current_path spreadsheet_program_path(copy_id: copy.id, day: "Lunes 16")
+    assert_current_path spreadsheet_copy_day_path(copy, "Lunes 16")
     assert_text "Bienvenida del lunes"
     assert_no_text "Entrada a la Arena"
   end

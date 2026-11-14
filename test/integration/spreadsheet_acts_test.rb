@@ -5,14 +5,14 @@ class SpreadsheetActsIntegrationTest < ActionDispatch::IntegrationTest
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_details.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 
     [ "0", "-1", "99", "1junk" ].each do |position|
-      get spreadsheet_copy_act_path(copy, position, day: "Domingo 15")
+      get spreadsheet_copy_day_act_path(copy, "Domingo 15", position)
       assert_response :not_found
     end
 
-    get spreadsheet_copy_act_path(copy, 1, day: "Día desconocido")
+    get spreadsheet_copy_day_act_path(copy, "Día desconocido", 1)
     assert_response :not_found
 
-    get spreadsheet_copy_act_path(copy, 1)
+    get spreadsheet_copy_day_path(copy, "Día desconocido")
     assert_response :not_found
   end
 
@@ -20,18 +20,28 @@ class SpreadsheetActsIntegrationTest < ActionDispatch::IntegrationTest
     SpreadsheetCopy.create!(file: fixture_file_upload("program_details.xlsx", SpreadsheetCopy::CONTENT_TYPE))
     missing_id = SpreadsheetCopy.maximum(:id) + 1
 
-    get spreadsheet_copy_act_path(missing_id, 1, day: "Domingo 15")
+    get spreadsheet_copy_day_act_path(missing_id, "Domingo 15", 1)
     assert_response :not_found
 
-    get spreadsheet_program_path(copy_id: missing_id)
+    get spreadsheet_copy_day_path(missing_id, "Domingo 15")
+    assert_response :not_found
+
+    get spreadsheet_copy_program_path(missing_id)
     assert_response :not_found
   end
 
-  test "an unreadable act copy returns to that copy's program error" do
+  test "an unreadable copy keeps its error and saved files accessible through every resource" do
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 
-    get spreadsheet_copy_act_path(copy, 1, day: "Domingo 15")
+    [
+      spreadsheet_copy_program_path(copy),
+      spreadsheet_copy_day_path(copy, "Domingo 15"),
+      spreadsheet_copy_day_act_path(copy, "Domingo 15", 1)
+    ].each do |path|
+      get path
 
-    assert_redirected_to spreadsheet_program_path(copy_id: copy.id, day: "Domingo 15")
+      assert_select "[role=alert]", text: /No se pudo mostrar el programa de esta copia/
+      assert_select "a[href=?]", spreadsheet_copies_path, text: "Ver copias del spreadsheet"
+    end
   end
 end

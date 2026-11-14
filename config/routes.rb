@@ -13,10 +13,15 @@ Rails.application.routes.draw do
 
   resources :questions, only: %i[index create]
   resources :topics, only: %i[index create edit update destroy]
+  resource :current_program, only: :show
   resources :spreadsheet_copies, only: %i[index create] do
-    resources :acts, only: :show, controller: "spreadsheet_acts"
+    scope module: :spreadsheet_copies do
+      resource :program, only: :show
+      resources :days, only: :show do
+        resources :acts, only: :show
+      end
+    end
   end
-  resource :spreadsheet_program, only: :show
   resources :preparations, only: :show
   resources :operational_activities, only: :show
 

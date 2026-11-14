@@ -1,4 +1,4 @@
-module SpreadsheetActsHelper
+module SpreadsheetCopies::ActsHelper
   def spreadsheet_act_detail_fields
     {
       audio: "Audio",
