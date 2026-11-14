@@ -28,7 +28,7 @@ class SpreadsheetCopy < ApplicationRecord
   end
 
   def program
-    @program ||= Program.new(self)
+    @program ||= Program.new(Reader.new(self).read)
   end
 
   private

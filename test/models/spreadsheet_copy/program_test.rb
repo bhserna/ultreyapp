@@ -1,39 +1,51 @@
 require "test_helper"
 
 class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
-  include ActionDispatch::TestProcess::FixtureFile
-  test "read program sheets in order and ignore preparation sheets" do
-    copy = SpreadsheetCopy.create!(file: fixture_file_upload("program.xlsx", SpreadsheetCopy::CONTENT_TYPE))
+  test "build acts in sheet and row order with their day" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "08:30–09:30", "# Acto" => nil, "Actividad" => "Entrada a la Arena" },
+        { "Horario" => "10:00–10:05", "# Acto" => 1.0, "Actividad" => "Inicio / Video" }
+      ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Participación" => "09:45", "Previo al Acto #" => 2, "Nombre del Acto" => "Preparar instrumentos" }
+      ],
+      "Lunes 16" => [
+        { "Actividad" => "Bienvenida del lunes", "Horario" => "08:00–08:15", "# Acto" => "02A" }
+      ]
+    )
 
-    acts = copy.program.acts
-    sunday = acts.select { |act| act.day == "Domingo 15" }
+    acts = program.acts
 
-    assert_equal [ "Domingo 15" ] * 4 + [ "Lunes 16" ] * 2, acts.map(&:day)
-    assert_equal [ "Entrada a la Arena", "Inicio / Video", "Grupo Folklórico", "Sin horario todavía" ], sunday.map(&:title)
-    assert_equal [ nil, "1", "2", nil ], sunday.map(&:number)
-    assert_equal "08:30–09:30", sunday.first.schedule
-    assert_equal "", sunday.last.schedule
+    assert_equal [ "Domingo 15", "Domingo 15", "Lunes 16" ], acts.map(&:day)
+    assert_equal [ "Entrada a la Arena", "Inicio / Video", "Bienvenida del lunes" ], acts.map(&:title)
+    assert_equal [ nil, "1", "02A" ], acts.map(&:number)
+    assert_equal [ "08:30–09:30", "10:00–10:05", "08:00–08:15" ], acts.map(&:schedule)
   end
 
-  test "match columns by header rather than position and preserve text act numbers" do
-    copy = SpreadsheetCopy.create!(file: fixture_file_upload("program.xlsx", SpreadsheetCopy::CONTENT_TYPE))
+  test "ignore rows without an activity and allow missing schedules and numbers" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "10:00", "# Acto" => 1, "Actividad" => nil },
+        { "Horario" => "10:05", "# Acto" => 2, "Actividad" => "  " },
+        { "Horario" => nil, "# Acto" => nil, "Actividad" => "  Sin horario todavía  " }
+      ]
+    )
 
-    monday = copy.program.acts.select { |act| act.day == "Lunes 16" }
-
-    assert_equal "Bienvenida del lunes", monday.first.title
-    assert_equal "08:00–08:15", monday.first.schedule
-    assert_equal "1", monday.first.number
-    assert_equal "02A", monday.last.number
+    assert_equal 1, program.acts.size
+    act = program.acts.first
+    assert_equal "Sin horario todavía", act.title
+    assert_equal "", act.schedule
+    assert_nil act.number
   end
 
-  test "report an unreadable saved copy without changing it" do
-    copy = SpreadsheetCopy.create!(file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE))
-    original = copy.file.download
+  test "report when no sheet has the program columns" do
+    program = SpreadsheetCopy::Program.new(
+      "Preparaciones" => [ { "Nombre del Acto" => "Preparar instrumentos" } ]
+    )
 
     assert_raises SpreadsheetCopy::Program::ReadError do
-      copy.program.acts
+      program.acts
     end
-
-    assert_equal original, copy.file.download
   end
 end
