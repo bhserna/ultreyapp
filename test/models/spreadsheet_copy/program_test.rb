@@ -39,6 +39,57 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_nil act.number
   end
 
+  test "map detail columns and preserve line breaks" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        {
+          "Horario" => "10:00–10:05", "# Acto" => 1, "Actividad" => "Inicio",
+          "Audio" => "  Abrir micrófono\nBajar pista  ",
+          "Video / Pantalla" => "Video de bienvenida",
+          "Anillo" => "BIENVENIDOS",
+          "Iluminación" => "Sala al 60 %",
+          "Efectos Especiales" => "Chisperos",
+          "Archivos Pendientes" => "Confirmar pista",
+          "Archivos Listos" => "Video aprobado"
+        }
+      ]
+    )
+
+    act = program.acts.first
+
+    assert_equal 1, act.position
+    assert_equal "Abrir micrófono\nBajar pista", act.audio
+    assert_equal "Video de bienvenida", act.screen
+    assert_equal "BIENVENIDOS", act.ring
+    assert_equal "Sala al 60 %", act.lighting
+    assert_equal "Chisperos", act.special_effects
+    assert_equal "Confirmar pista", act.pending_files
+    assert_equal "Video aprobado", act.ready_files
+  end
+
+  test "allow absent and empty detail columns and identify unnumbered acts within their day" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "08:30", "# Acto" => nil, "Actividad" => "Entrada", "Audio" => "  " },
+        { "Horario" => "09:00", "# Acto" => nil, "Actividad" => "Llamada" }
+      ],
+      "Lunes 16" => [
+        { "Horario" => "08:00", "# Acto" => nil, "Actividad" => "Bienvenida" }
+      ]
+    )
+
+    assert_equal [ [ "Domingo 15", 1 ], [ "Domingo 15", 2 ], [ "Lunes 16", 1 ] ], program.acts.map { |act| [ act.day, act.position ] }
+    program.acts.each do |act|
+      assert_nil act.audio
+      assert_nil act.screen
+      assert_nil act.ring
+      assert_nil act.lighting
+      assert_nil act.special_effects
+      assert_nil act.pending_files
+      assert_nil act.ready_files
+    end
+  end
+
   test "report when no sheet has the program columns" do
     program = SpreadsheetCopy::Program.new(
       "Preparaciones" => [ { "Nombre del Acto" => "Preparar instrumentos" } ]

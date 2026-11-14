@@ -15,7 +15,7 @@
     <div class="toolbar">
       <nav class="tabs" aria-label="Días del programa actualizado">
         <% @days.each do |day| %>
-          <%= link_to day, spreadsheet_program_path(day: day),
+          <%= link_to day, spreadsheet_program_path(day: day, copy_id: @spreadsheet_copy.id),
                 class: "tabs__item#{' tabs__item--active' if day == @selected_day}",
                 aria: { current: ("page" if day == @selected_day) } %>
         <% end %>
@@ -30,6 +30,7 @@
             <th scope="col">Horario</th>
             <th scope="col">Acto</th>
             <th scope="col">Actividad</th>
+            <th scope="col"><span class="visually-hidden">Detalle</span></th>
           </tr>
         </thead>
         <tbody>
@@ -38,10 +39,11 @@
               <td class="text-nowrap"><%= act.schedule.presence || "—" %></td>
               <td class="text-nowrap"><%= act.number || "—" %></td>
               <td class="schedule__activity"><%= act.title %></td>
+              <td><%= link_to "Ver detalle", spreadsheet_copy_act_path(@spreadsheet_copy, act.position, day: act.day), class: "schedule__resources-link" %></td>
             </tr>
           <% end %>
           <% if @acts.empty? %>
-            <tr><td colspan="3">No hay actividades en esta pestaña.</td></tr>
+            <tr><td colspan="4">No hay actividades en esta pestaña.</td></tr>
           <% end %>
         </tbody>
       </table>

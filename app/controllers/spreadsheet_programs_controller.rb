@@ -1,6 +1,10 @@
 class SpreadsheetProgramsController < ApplicationController
   def show
-    @spreadsheet_copy = SpreadsheetCopy.order(created_at: :desc, id: :desc).first
+    @spreadsheet_copy = if params[:copy_id].present?
+      SpreadsheetCopy.find(params[:copy_id])
+    else
+      SpreadsheetCopy.order(created_at: :desc, id: :desc).first
+    end
     return unless @spreadsheet_copy
 
     acts = @spreadsheet_copy.program.acts
