@@ -27,6 +27,10 @@ class SpreadsheetCopy < ApplicationRecord
     raise DownloadError, error.message
   end
 
+  def program
+    @program ||= Program.new(self)
+  end
+
   private
 
   def file_attached

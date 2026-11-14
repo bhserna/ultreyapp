@@ -1,0 +1,50 @@
+<% content_for :title, "Programa actualizado" %>
+
+<main class="page page--wide">
+  <header class="page__header page__header--flush">
+    <h1>Programa actualizado</h1>
+    <% if @spreadsheet_copy %>
+      <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+    <% end %>
+    <%= link_to "Ver copias del spreadsheet", spreadsheet_copies_path, class: "link" %>
+  </header>
+
+  <% if @spreadsheet_copy.nil? %>
+    <p>Todavía no hay copias del spreadsheet. Descarga una copia para ver el programa.</p>
+  <% elsif @acts %>
+    <div class="toolbar">
+      <nav class="tabs" aria-label="Días del programa actualizado">
+        <% @days.each do |day| %>
+          <%= link_to day, spreadsheet_program_path(day: day),
+                class: "tabs__item#{' tabs__item--active' if day == @selected_day}",
+                aria: { current: ("page" if day == @selected_day) } %>
+        <% end %>
+      </nav>
+    </div>
+
+    <div class="table-container">
+      <table class="table">
+        <caption class="visually-hidden">Programa de actividades para <%= @selected_day %></caption>
+        <thead>
+          <tr>
+            <th scope="col">Horario</th>
+            <th scope="col">Acto</th>
+            <th scope="col">Actividad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @acts.each do |act| %>
+            <tr>
+              <td class="text-nowrap"><%= act.schedule.presence || "—" %></td>
+              <td class="text-nowrap"><%= act.number || "—" %></td>
+              <td class="schedule__activity"><%= act.title %></td>
+            </tr>
+          <% end %>
+          <% if @acts.empty? %>
+            <tr><td colspan="3">No hay actividades en esta pestaña.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% end %>
+</main>

@@ -25,9 +25,11 @@
   <body>
     <% general_questions_page = %w[questions answers topics].include?(controller_name) && @activity.nil? %>
     <% spreadsheet_copies_page = controller_name == "spreadsheet_copies" %>
+    <% spreadsheet_program_page = controller_name == "spreadsheet_programs" %>
     <nav class="site-nav" aria-label="Navegación principal">
-      <%= link_to "Programa", root_path, aria: { current: ("page" unless general_questions_page || spreadsheet_copies_page) } %>
+      <%= link_to "Programa", root_path, aria: { current: ("page" unless general_questions_page || spreadsheet_copies_page || spreadsheet_program_page) } %>
       <%= link_to "Preguntas generales", questions_path, aria: { current: ("page" if general_questions_page) } %>
+      <%= link_to "Programa actualizado", spreadsheet_program_path, aria: { current: ("page" if spreadsheet_program_page) } %>
       <%= link_to "Copias del spreadsheet", spreadsheet_copies_path, aria: { current: ("page" if spreadsheet_copies_page) } %>
     </nav>
 
