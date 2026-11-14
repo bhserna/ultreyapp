@@ -2,7 +2,7 @@ class DocumentsController < ApplicationController
   before_action :set_activity
 
   def index
-    @documents = documents_for_activity.with_attached_file.order(created_at: :desc, id: :desc)
+    @documents = documents_for_activity.with_attached_file.newest_first
   end
 
   def create
@@ -31,6 +31,6 @@ class DocumentsController < ApplicationController
   end
 
   def documents_for_activity
-    Document.where(act_id: @activity.id)
+    Document.for_legacy_act(@activity.id)
   end
 end

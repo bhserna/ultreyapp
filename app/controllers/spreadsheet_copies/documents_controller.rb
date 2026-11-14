@@ -2,7 +2,7 @@ class SpreadsheetCopies::DocumentsController < SpreadsheetCopies::BaseController
   before_action :set_act
 
   def index
-    @documents = @document_key ? documents_for_act.with_attached_file.order(created_at: :desc, id: :desc) : []
+    @documents = documents_for_act.with_attached_file.newest_first
   end
 
   def create
@@ -43,7 +43,7 @@ class SpreadsheetCopies::DocumentsController < SpreadsheetCopies::BaseController
   end
 
   def documents_for_act
-    Document.where(spreadsheet_act_key: @document_key)
+    Document.for_spreadsheet_act(@document_key)
   end
 
   def documents_path
