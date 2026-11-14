@@ -25,6 +25,16 @@ class SpreadsheetCopy::Program
     acts.select { |act| act.day == preparation.day && act.number == preparation.act_number }
   end
 
+  def document_keys
+    @document_keys ||= acts.group_by(&:source_key).filter_map do |key, matches|
+      key if key.present? && matches.one?
+    end
+  end
+
+  def document_key_for(act)
+    act.source_key if document_keys.include?(act.source_key)
+  end
+
   def entries(day:, row_type: nil)
     candidates = case row_type
     when "acts" then acts

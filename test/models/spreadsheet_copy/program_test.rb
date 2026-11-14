@@ -182,6 +182,25 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal [ "Inicio" ], program.acts_for(program.preparations.first).map(&:title)
   end
 
+  test "only unique nonblank IDs across all days can identify documents" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "ID" => "act-001", "Horario" => "09:00", "# Acto" => 1, "Actividad" => "Único" },
+        { "ID" => "act-002", "Actividad" => "Duplicado del domingo" },
+        { "ID" => " ", "Actividad" => "Sin ID" }
+      ],
+      "Lunes 16" => [
+        { "ID" => "act-002", "Horario" => "08:00", "# Acto" => 17, "Actividad" => "Duplicado del lunes" }
+      ]
+    )
+
+    assert_equal [ "act-001" ], program.document_keys
+    assert_equal "act-001", program.document_key_for(program.acts[0])
+    assert_nil program.document_key_for(program.acts[1])
+    assert_nil program.document_key_for(program.acts[2])
+    assert_nil program.document_key_for(program.acts[3])
+  end
+
   test "programs without preparation sheets still list their acts" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]

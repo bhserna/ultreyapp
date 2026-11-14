@@ -24,7 +24,7 @@
 
   <body>
     <% general_questions_page = %w[questions answers topics].include?(controller_name) && @activity.nil? %>
-    <% spreadsheet_copies_page = controller_name == "spreadsheet_copies" %>
+    <% spreadsheet_copies_page = %w[spreadsheet_copies spreadsheet_documents].include?(controller_name) %>
     <% spreadsheet_program_page = controller_path.start_with?("spreadsheet_copies/") || controller_name == "current_programs" %>
     <nav class="site-nav" aria-label="Navegación principal">
       <%= link_to "Programa", root_path, aria: { current: ("page" unless general_questions_page || spreadsheet_copies_page || spreadsheet_program_page) } %>

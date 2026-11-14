@@ -25,4 +25,8 @@
       <% end %>
     </section>
   <% end %>
+
+  <%= turbo_frame_tag "documents", src: spreadsheet_copy_day_act_documents_path(@spreadsheet_copy, @act.day, @act, row_type: @selected_row_type) do %>
+    <p class="documents__empty">Cargando documentos…</p>
+  <% end %>
 </main>

@@ -61,6 +61,17 @@ class SpreadsheetCopy::ActTest < ActiveSupport::TestCase
     end
   end
 
+  test "read the optional stable ID without replacing the position used for navigation" do
+    act = SpreadsheetCopy::Act.from_row(
+      { "ID" => " act-047 ", "Actividad" => "Apertura" }, day: "Lunes 16", position: 1
+    )
+    legacy = SpreadsheetCopy::Act.from_row({ "Actividad" => "Apertura" }, day: "Lunes 16", position: 1)
+
+    assert_equal "act-047", act.source_key
+    assert_equal "1", act.to_param
+    assert_nil legacy.source_key
+  end
+
   test "use the position within its day as the URL parameter rather than the act number" do
     act = SpreadsheetCopy::Act.new(day: "Domingo 15", position: 3, schedule: "10:00", number: 1, title: "Inicio")
 

@@ -1,0 +1,14 @@
+<% content_for :title, "Documentos · #{@act.title}" %>
+
+<main class="page">
+  <%= link_to "← Volver al acto", spreadsheet_copy_day_act_path(@spreadsheet_copy, @act.day, @act, row_type: @selected_row_type), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @act.day %></p>
+    <h1><%= @act.title %></h1>
+  </header>
+
+  <%= render "documents/collection", documents: @documents, unavailable_message: @unavailable_message,
+        upload_path: spreadsheet_copy_day_act_documents_path(@spreadsheet_copy, @act.day, @act, row_type: @selected_row_type),
+        destroy_path: ->(document) { spreadsheet_copy_day_act_document_path(@spreadsheet_copy, @act.day, @act, document, row_type: @selected_row_type) } %>
+</main>

@@ -1,0 +1,33 @@
+<% content_for :title, "Documentos sin acto" %>
+
+<main class="page page--wide">
+  <%= link_to "← Volver a las copias", spreadsheet_copies_path, class: "page__back" %>
+  <header class="page__header">
+    <h1>Documentos sin acto</h1>
+    <p>Archivos cuyo ID no aparece, o está duplicado, en los actos de la copia más reciente. No se eliminan al actualizar el spreadsheet.</p>
+    <% if @spreadsheet_copy %>
+      <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+    <% end %>
+  </header>
+
+  <% unless @read_error %>
+    <% if @documents.any? %>
+      <div class="table-container">
+        <table class="table">
+          <thead><tr><th scope="col">ID del acto</th><th scope="col">Último nombre conocido</th><th scope="col">Archivo</th></tr></thead>
+          <tbody>
+            <% @documents.each do |document| %>
+              <tr>
+                <td><%= document.spreadsheet_act_key %></td>
+                <td><%= document.spreadsheet_act_title.presence || "—" %></td>
+                <td><%= link_to document.file.filename.to_s, rails_blob_path(document.file, disposition: "attachment"), class: "link", data: { turbo: false } %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% else %>
+      <p>No hay documentos sin acto.</p>
+    <% end %>
+  <% end %>
+</main>

@@ -1,0 +1,40 @@
+<%= turbo_frame_tag "documents" do %>
+  <section class="page__section" aria-labelledby="documents-heading">
+    <h2 id="documents-heading">Documentos</h2>
+
+    <% if unavailable_message.present? %>
+      <p role="status"><%= unavailable_message %></p>
+    <% else %>
+      <%= form_with url: upload_path, multipart: true,
+            class: "documents__dropzone",
+            data: { controller: "document-dropzone",
+                    action: "dragover->document-dropzone#dragOver dragleave->document-dropzone#dragLeave drop->document-dropzone#drop turbo:submit-end->document-dropzone#submitEnd" } do %>
+        <label for="document-files">Arrastra documentos aquí o selecciónalos</label>
+        <%= file_field_tag "files[]", id: "document-files", multiple: true, required: true,
+              data: { document_dropzone_target: "input", action: "change->document-dropzone#upload" } %>
+        <p role="status" data-document-dropzone-target="status">Puedes seleccionar varios archivos a la vez.</p>
+      <% end %>
+
+      <% if documents.any? %>
+        <ul class="documents__list">
+          <% documents.each do |document| %>
+            <li class="documents__item">
+              <span class="documents__format" data-format="<%= document.format_label.downcase %>"><%= document.format_label %></span>
+              <div class="documents__file">
+                <%= link_to document.file.filename.to_s,
+                      rails_blob_path(document.file, disposition: "attachment"),
+                      data: { turbo: false } %>
+                <span><%= number_to_human_size(document.file.blob.byte_size) %></span>
+              </div>
+              <%= button_to "Eliminar", destroy_path.call(document),
+                    method: :delete, form: { data: { turbo_frame: "documents", turbo_confirm: "¿Eliminar este documento?" } },
+                    class: "page__action" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="documents__empty">Todavía no hay documentos para esta actividad.</p>
+      <% end %>
+    <% end %>
+  </section>
+<% end %>

@@ -1,7 +1,8 @@
 class Document < ApplicationRecord
   has_one_attached :file
 
-  validates :act_id, presence: true
+  validates :act_id, presence: true, unless: -> { spreadsheet_act_key.present? }
+  validates :spreadsheet_act_key, absence: true, if: -> { act_id.present? }
   validate :file_attached
 
   def format_label

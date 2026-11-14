@@ -21,20 +21,22 @@ class SpreadsheetCopy::Act
       after_noon: after_noon,
       number: row[COLUMNS[:number]],
       title: title,
+      source_key: row["ID"].to_s.strip.presence,
       **DETAIL_COLUMNS.transform_values { |column| row[column].to_s.strip.presence }
     )
   end
 
-  attr_reader :day, :position, :schedule, :number, :title,
+  attr_reader :day, :position, :schedule, :number, :title, :source_key,
     :audio, :screen, :ring, :lighting, :special_effects, :pending_files, :ready_files
 
   def initialize(day:, position:, schedule:, number:, title:, audio: nil, screen: nil, ring: nil,
-    lighting: nil, special_effects: nil, pending_files: nil, ready_files: nil, after_noon: false)
+    lighting: nil, special_effects: nil, pending_files: nil, ready_files: nil, after_noon: false, source_key: nil)
     @day = day
     @position = position
     @schedule = SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon)
     @number = number.is_a?(Numeric) && number == number.to_i ? number.to_i.to_s : number.to_s.presence
     @title = title
+    @source_key = source_key
     @audio = audio
     @screen = screen
     @ring = ring

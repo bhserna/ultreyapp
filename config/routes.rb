@@ -15,11 +15,14 @@ Rails.application.routes.draw do
   resources :topics, only: %i[index create edit update destroy]
   get "spreadsheet_program", to: redirect("/current_program", status: 302)
   resource :current_program, only: :show
+  resources :spreadsheet_documents, only: :index
   resources :spreadsheet_copies, only: %i[index create] do
     scope module: :spreadsheet_copies do
       resource :program, only: :show
       resources :days, only: :show do
-        resources :acts, only: :show
+        resources :acts, only: :show do
+          resources :documents, only: %i[index create destroy]
+        end
         resources :preparations, only: :show
       end
     end

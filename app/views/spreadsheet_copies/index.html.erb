@@ -4,6 +4,7 @@
   <header class="page__header">
     <h1>Copias del spreadsheet</h1>
     <p>Cada descarga guarda una nueva copia del spreadsheet completo, con todas sus pestañas.</p>
+    <p><%= link_to "Documentos sin acto", spreadsheet_documents_path, class: "link" %></p>
     <%= button_to "Descargar copia", spreadsheet_copies_path, class: "button", data: { turbo_submits_with: "Descargando…" } %>
   </header>
 
