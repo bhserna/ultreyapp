@@ -40,6 +40,37 @@ class SpreadsheetCopy::PreparationTest < ActiveSupport::TestCase
     assert_equal "02A", preparation.act_number
   end
 
+  test "map team instructions and pending items while preserving line breaks" do
+    preparation = SpreadsheetCopy::Preparation.from_row(
+      {
+        "Nombre del Acto" => "Montaje",
+        "Actividad para Actos Previos" => "  Recibir invitados\nConfirmar accesos  ",
+        "Actividad para Tramoya" => "Colocar pódium",
+        "Actividad para Ambientación Coro Arcoiris" => "Preparar instrumentos",
+        "Pendientes" => "Confirmar participantes"
+      },
+      day: "Domingo 15", position: 3
+    )
+
+    assert_equal "Recibir invitados\nConfirmar accesos", preparation.previous_acts_instructions
+    assert_equal "Colocar pódium", preparation.stage_crew_instructions
+    assert_equal "Preparar instrumentos", preparation.choir_instructions
+    assert_equal "Confirmar participantes", preparation.pending_items
+    assert_equal "3", preparation.to_param
+  end
+
+  test "allow absent and blank detail fields for unnumbered preparations" do
+    preparation = SpreadsheetCopy::Preparation.from_row(
+      { "Nombre del Acto" => "Montaje", "Pendientes" => "  " }, day: "Domingo 15", position: 1
+    )
+
+    assert_nil preparation.previous_acts_instructions
+    assert_nil preparation.stage_crew_instructions
+    assert_nil preparation.choir_instructions
+    assert_nil preparation.pending_items
+    assert_equal "1", preparation.to_param
+  end
+
   test "ignore rows with missing or blank act names" do
     [ nil, "", "  " ].each do |title|
       assert_nil SpreadsheetCopy::Preparation.from_row({ "Nombre del Acto" => title }, day: "Domingo 15", position: 1)

@@ -42,14 +42,14 @@ class SpreadsheetPreparationsTest < ApplicationSystemTestCase
     within all("tbody tr").first do
       assert_text "Preparación · Instalación y Montaje"
       assert_selector "td", exact_text: "—", count: 2
-      assert_no_link "Ver detalle"
+      assert_link "Ver detalle"
     end
     within "tr", text: "Preparar instrumentos" do
       assert_text "09:45 am"
       assert_selector "td", exact_text: "2"
       assert_no_text "Previo"
       assert_no_text "10:05–10:20"
-      assert_no_link "Ver detalle"
+      assert_link "Ver detalle"
       assert_equal "rgb(225, 239, 250)", evaluate_script("getComputedStyle(document.querySelector('tr.schedule__preparation')).backgroundColor")
     end
     titles = all("tbody .schedule__activity").map(&:text)
@@ -66,7 +66,7 @@ class SpreadsheetPreparationsTest < ApplicationSystemTestCase
       assert_text "07:30"
       assert_selector "td", exact_text: "1"
       assert_no_text "Previo"
-      assert_no_link "Ver detalle"
+      assert_link "Ver detalle"
     end
     assert_no_text "Instalación y Montaje"
     assert_no_text "Preparar instrumentos"

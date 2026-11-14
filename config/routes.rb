@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       resource :program, only: :show
       resources :days, only: :show do
         resources :acts, only: :show
+        resources :preparations, only: :show
       end
     end
   end

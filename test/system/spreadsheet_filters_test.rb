@@ -28,7 +28,7 @@ class SpreadsheetFiltersTest < ApplicationSystemTestCase
     assert_current_path spreadsheet_copy_day_path(copy, "Lunes 16", row_type: "preparations")
     assert_text "Preparar apertura del lunes"
     assert_no_text "Bienvenida del lunes"
-    assert_no_link "Ver detalle"
+    assert_link "Ver detalle"
 
     click_link "Domingo 15"
     assert_current_path spreadsheet_copy_day_path(copy, "Domingo 15", row_type: "preparations")

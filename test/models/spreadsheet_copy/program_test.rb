@@ -133,6 +133,29 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_empty program.entries(day: "Lunes 16", row_type: "preparations")
   end
 
+  test "link a preparation to every segment with the same act number and day" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Presentación" },
+        { "Horario" => "10:05", "# Acto" => 1, "Actividad" => "Participación" },
+        { "Horario" => "10:20", "# Acto" => 2, "Actividad" => "Otro acto" },
+        { "Horario" => "09:00", "# Acto" => nil, "Actividad" => "Entrada" }
+      ],
+      "Lunes 16" => [ { "Horario" => "08:00", "# Acto" => 1, "Actividad" => "Acto del lunes" } ],
+      "Preparaciones Dom 15" => [
+        { "Previo al Acto #" => 1, "Nombre del Acto" => "Preparar participación" },
+        { "Previo al Acto #" => 2, "Nombre del Acto" => "Preparar otro acto" },
+        { "Previo al Acto #" => nil, "Nombre del Acto" => "Montaje" },
+        { "Previo al Acto #" => 99, "Nombre del Acto" => "Sin coincidencias" }
+      ]
+    )
+
+    assert_equal [ "Presentación", "Participación" ], program.acts_for(program.preparations[0]).map(&:title)
+    assert_equal [ "Otro acto" ], program.acts_for(program.preparations[1]).map(&:title)
+    assert_empty program.acts_for(program.preparations[2])
+    assert_empty program.acts_for(program.preparations[3])
+  end
+
   test "programs without preparation sheets still list their acts" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]

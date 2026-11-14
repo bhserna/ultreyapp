@@ -19,6 +19,12 @@ class SpreadsheetCopy::Program
     acts.map(&:day).uniq
   end
 
+  def acts_for(preparation)
+    return [] unless preparation.act_number.present?
+
+    acts.select { |act| act.day == preparation.day && act.number == preparation.act_number }
+  end
+
   def entries(day:, row_type: nil)
     candidates = case row_type
     when "acts" then acts

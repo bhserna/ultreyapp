@@ -1,0 +1,40 @@
+<% content_for :title, @preparation.title %>
+
+<main class="page">
+  <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @preparation.day, row_type: @selected_row_type), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @preparation.day %> · Preparación</p>
+    <h1><%= @preparation.title %></h1>
+    <dl class="page__details">
+      <div><dt>Horario de preparación</dt><dd><%= @preparation.schedule.to_s.presence || "—" %></dd></div>
+    </dl>
+    <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+
+    <% if @related_acts.any? %>
+      <h2>Actos relacionados</h2>
+      <ul class="related-links">
+        <% @related_acts.each do |act| %>
+          <li>
+            <%= link_to spreadsheet_copy_day_act_path(@spreadsheet_copy, act.day, act, row_type: @selected_row_type) do %>
+              <span class="related-links__label">Acto <%= act.number %></span>
+              <span class="related-links__title"><%= act.title %></span>
+              <span aria-hidden="true">→</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </header>
+
+  <% details = spreadsheet_preparation_detail_fields.select { |attribute, label| @preparation.public_send(attribute).present? } %>
+  <% if details.any? %>
+    <section class="page__section" aria-label="Instrucciones de preparación">
+      <h2>Instrucciones de preparación</h2>
+      <% details.each do |attribute, label| %>
+        <h3><%= label %></h3>
+        <%= simple_format(h(@preparation.public_send(attribute))) %>
+      <% end %>
+    </section>
+  <% end %>
+</main>

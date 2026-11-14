@@ -44,7 +44,7 @@
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
               <td class="text-nowrap"><%= entry.act_number.presence || "—" %></td>
               <td class="schedule__activity"><strong>Preparación</strong> · <%= entry.title %></td>
-              <td></td>
+              <td><%= link_to "Ver detalle", spreadsheet_copy_day_preparation_path(@spreadsheet_copy, entry.day, entry, row_type: @selected_row_type), class: "schedule__resources-link" %></td>
             </tr>
           <% else %>
             <tr>
