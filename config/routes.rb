@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   resources :questions, only: %i[index create]
   resources :topics, only: %i[index create edit update destroy]
+  resources :spreadsheet_copies, only: %i[index create]
   resources :preparations, only: :show
   resources :operational_activities, only: :show
 

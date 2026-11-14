@@ -1,0 +1,29 @@
+<% content_for :title, "Copias del spreadsheet" %>
+
+<main class="page">
+  <header class="page__header">
+    <h1>Copias del spreadsheet</h1>
+    <p>Cada descarga guarda una nueva copia del spreadsheet completo, con todas sus pestañas.</p>
+    <%= button_to "Descargar copia", spreadsheet_copies_path, class: "button", data: { turbo_submits_with: "Descargando…" } %>
+  </header>
+
+  <% if @spreadsheet_copies.any? %>
+    <div class="table-container">
+      <table class="table">
+        <thead>
+          <tr><th scope="col">Fecha de descarga</th><th scope="col">Archivo</th></tr>
+        </thead>
+        <tbody>
+          <% @spreadsheet_copies.each do |copy| %>
+            <tr>
+              <td><%= time_tag copy.created_at, l(copy.created_at, format: :spreadsheet_copy, locale: :es) %></td>
+              <td><%= link_to "Descargar archivo", rails_blob_path(copy.file, disposition: "attachment"), class: "link", aria: { label: "Descargar archivo de la copia ##{copy.id}" } %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  <% else %>
+    <p>Todavía no hay copias del spreadsheet.</p>
+  <% end %>
+</main>

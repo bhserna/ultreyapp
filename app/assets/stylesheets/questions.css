@@ -127,18 +127,6 @@
     resize: none;
   }
 
-  .questions__new-button,
-  .questions__form input[type="submit"] {
-    padding: 0.7rem 1rem;
-    border: 0;
-    border-radius: 0.4rem;
-    background: #385473;
-    color: #fff;
-    font: inherit;
-    font-weight: 600;
-    cursor: pointer;
-  }
-
   .questions__form textarea:focus-visible,
   .questions__form input[type="text"]:focus-visible,
   .questions__new-button:focus-visible,

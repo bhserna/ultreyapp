@@ -1,0 +1,21 @@
+@layer components {
+  .button,
+  .questions__new-button,
+  .questions__form input[type="submit"] {
+    display: inline-block;
+    padding: 0.7rem 1rem;
+    border: 0;
+    border-radius: 0.4rem;
+    background: #385473;
+    color: #fff;
+    font: inherit;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .button:focus-visible {
+    outline: 2px solid #385473;
+    outline-offset: 2px;
+  }
+}
