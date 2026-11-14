@@ -29,13 +29,22 @@
         </tr>
       </thead>
       <tbody>
-        <% @acts.each do |act| %>
-          <tr>
-            <td class="text-nowrap"><%= act.schedule.presence || "—" %></td>
-            <td class="text-nowrap"><%= act.number || "—" %></td>
-            <td class="schedule__activity"><%= act.title %></td>
-            <td><%= link_to "Ver detalle", spreadsheet_copy_day_act_path(@spreadsheet_copy, act.day, act), class: "schedule__resources-link" %></td>
-          </tr>
+        <% @entries.each do |entry| %>
+          <% if entry.is_a?(SpreadsheetCopy::Preparation) %>
+            <tr class="schedule__preparation">
+              <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
+              <td class="text-nowrap"><%= entry.act_number.present? ? "Previo al #{entry.act_number}" : "—" %></td>
+              <td class="schedule__activity"><strong>Preparación</strong> · <%= entry.title %></td>
+              <td></td>
+            </tr>
+          <% else %>
+            <tr>
+              <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
+              <td class="text-nowrap"><%= entry.number || "—" %></td>
+              <td class="schedule__activity"><%= entry.title %></td>
+              <td><%= link_to "Ver detalle", spreadsheet_copy_day_act_path(@spreadsheet_copy, entry.day, entry), class: "schedule__resources-link" %></td>
+            </tr>
+          <% end %>
         <% end %>
       </tbody>
     </table>

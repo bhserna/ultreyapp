@@ -10,7 +10,7 @@
       <% if @act.number.present? %>
         <div><dt>Acto</dt><dd><%= @act.number %></dd></div>
       <% end %>
-      <div><dt>Horario</dt><dd><%= @act.schedule.presence || "—" %></dd></div>
+      <div><dt>Horario</dt><dd><%= @act.schedule.to_s.presence || "—" %></dd></div>
     </dl>
     <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
   </header>

@@ -1,17 +1,6 @@
 class SpreadsheetCopy::Program
   class ReadError < StandardError; end
 
-  COLUMNS = { schedule: "Horario", number: "# Acto", title: "Actividad" }.freeze
-  DETAIL_COLUMNS = {
-    audio: "Audio",
-    screen: "Video / Pantalla",
-    ring: "Anillo",
-    lighting: "Iluminación",
-    special_effects: "Efectos Especiales",
-    pending_files: "Archivos Pendientes",
-    ready_files: "Archivos Listos"
-  }.freeze
-
   def initialize(sheets)
     @sheets = sheets
   end
@@ -20,28 +9,50 @@ class SpreadsheetCopy::Program
     @acts ||= build_acts
   end
 
+  def preparations
+    @preparations ||= build_preparations
+  end
+
+  def days
+    acts.map(&:day).uniq
+  end
+
+  def entries(day:)
+    (acts + preparations).select { |entry| entry.day == day }.each_with_index.sort_by do |entry, index|
+      [ entry.schedule.start_minutes || -1, entry.is_a?(SpreadsheetCopy::Preparation) ? 0 : 1, index ]
+    end.map(&:first)
+  end
+
   private
 
   def build_acts
-    program_sheets = @sheets.select do |name, rows|
-      rows.any? && COLUMNS.values.all? { |column| rows.first.key?(column) }
+    sheets = sheets_with_columns(SpreadsheetCopy::Act::COLUMNS.values)
+    raise ReadError, "No program sheets found" if sheets.empty?
+
+    sheets.flat_map do |day, rows|
+      build_rows(rows, type: SpreadsheetCopy::Act, day: day)
     end
-    raise ReadError, "No program sheets found" if program_sheets.empty?
+  end
 
-    program_sheets.flat_map do |day, rows|
-      rows.each_with_index.filter_map do |row, index|
-        title = row[COLUMNS[:title]].to_s.strip
-        next if title.empty?
+  def build_preparations
+    sheets_with_columns(SpreadsheetCopy::Preparation::REQUIRED_COLUMNS).flat_map do |name, rows|
+      day_name = name.sub(/\APreparaciones\s+/i, "").sub(/\ADom(?=\s)/i, "Domingo")
+      day = days.find { |candidate| candidate.casecmp?(day_name) }
+      raise ReadError, "Unknown preparation day: #{name}" unless day
 
-        SpreadsheetCopy::Act.new(
-          day: day,
-          position: index + 1,
-          schedule: row[COLUMNS[:schedule]].to_s.strip,
-          number: row[COLUMNS[:number]],
-          title: title,
-          **DETAIL_COLUMNS.transform_values { |column| row[column].to_s.strip.presence }
-        )
-      end
+      build_rows(rows, type: SpreadsheetCopy::Preparation, day: day)
+    end
+  end
+
+  def sheets_with_columns(columns)
+    @sheets.select do |name, rows|
+      rows.any? && columns.all? { |column| rows.first.key?(column) }
+    end
+  end
+
+  def build_rows(rows, type:, day:)
+    rows.each_with_index.filter_map do |row, index|
+      type.from_row(row, day: day, position: index + 1)
     end
   end
 end
