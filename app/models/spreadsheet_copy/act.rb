@@ -10,7 +10,7 @@ class SpreadsheetCopy::Act
     ready_files: "Archivos Listos"
   }.freeze
 
-  def self.from_row(row, day:, position:)
+  def self.from_row(row, day:, position:, after_noon: false)
     title = row[COLUMNS[:title]].to_s.strip
     return if title.empty?
 
@@ -18,6 +18,7 @@ class SpreadsheetCopy::Act
       day: day,
       position: position,
       schedule: row[COLUMNS[:schedule]],
+      after_noon: after_noon,
       number: row[COLUMNS[:number]],
       title: title,
       **DETAIL_COLUMNS.transform_values { |column| row[column].to_s.strip.presence }
@@ -28,10 +29,10 @@ class SpreadsheetCopy::Act
     :audio, :screen, :ring, :lighting, :special_effects, :pending_files, :ready_files
 
   def initialize(day:, position:, schedule:, number:, title:, audio: nil, screen: nil, ring: nil,
-    lighting: nil, special_effects: nil, pending_files: nil, ready_files: nil)
+    lighting: nil, special_effects: nil, pending_files: nil, ready_files: nil, after_noon: false)
     @day = day
     @position = position
-    @schedule = SpreadsheetCopy::ScheduleTime.new(schedule)
+    @schedule = SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon)
     @number = number.is_a?(Numeric) && number == number.to_i ? number.to_i.to_s : number.to_s.presence
     @title = title
     @audio = audio

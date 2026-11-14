@@ -64,6 +64,60 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal [ "Solo lunes" ], program.entries(day: "Lunes 16").map(&:title)
   end
 
+  test "resolve afternoon hours in source order before mixing acts and preparations" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "11:52–12:00", "# Acto" => 5, "Actividad" => "Canto" },
+        { "Horario" => "12:00–12:45", "# Acto" => 6, "Actividad" => "Tema" },
+        { "Horario" => "12:54–1:09", "# Acto" => 7, "Actividad" => "Animación" },
+        { "Horario" => "1:09–1:19", "# Acto" => 7, "Actividad" => "Saludos" },
+        { "Horario" => "2:00–3:50", "# Acto" => 8, "Actividad" => "Eucaristía" }
+      ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Preparación" => "11:30 am", "Previo al Acto #" => 5, "Nombre del Acto" => "Preparar canto" },
+        { "Horario de Preparación" => "12:35 pm", "Nombre del Acto" => "Preparar animación" },
+        { "Horario de Preparación" => "1:30 pm", "Nombre del Acto" => "Preparar eucaristía" }
+      ]
+    )
+
+    assert_equal [ 712, 720, 774, 789, 840 ], program.acts.map { |act| act.schedule.start_minutes }
+    assert_equal [
+      "Preparar canto", "Canto", "Tema", "Preparar animación", "Animación", "Saludos", "Preparar eucaristía", "Eucaristía"
+    ], program.entries(day: "Domingo 15").map(&:title)
+    assert_equal "2:00–3:50", program.acts.last.schedule.to_s
+  end
+
+  test "reset noon context for every sheet and do not mistake morning reversals for afternoon" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Primero" },
+        { "Horario" => "09:55", "Actividad" => "Pequeño retroceso" },
+        { "Horario" => "13:00", "Actividad" => "Referencia de tarde" },
+        { "Horario" => "2:00", "Actividad" => "Después" }
+      ],
+      "Lunes 16" => [
+        { "Horario" => "08:00", "# Acto" => 17, "Actividad" => "Apertura" },
+        { "Horario" => "12:56–1:00", "Actividad" => "Palabras finales" },
+        { "Horario" => "1:00–2:25", "Actividad" => "Clausura" }
+      ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Preparación" => "09:00", "Previo al Acto #" => 1, "Nombre del Acto" => "Montaje" },
+        { "Horario de Preparación" => "1:00 pm", "Nombre del Acto" => "Referencia PM" },
+        { "Horario de Preparación" => "2:00", "Nombre del Acto" => "Montaje de tarde" }
+      ],
+      "Preparaciones Lunes 16" => [
+        { "Horario de Preparación" => 27_000, "Previo al Acto #" => 17, "Nombre del Acto" => "Montaje matutino" },
+        { "Horario de Preparación" => 45_000, "Nombre del Acto" => "Preparar clausura" },
+        { "Horario de Preparación" => nil, "Nombre del Acto" => "Pendiente" },
+        { "Horario de Preparación" => 7200, "Nombre del Acto" => "Preparar salida" }
+      ]
+    )
+
+    assert_equal [ 600, 595, 780, 840, 480, 776, 780 ], program.acts.map { |act| act.schedule.start_minutes }
+    assert_equal [ 540, 780, 840, 450, 750, nil, 840 ], program.preparations.map { |preparation| preparation.schedule.start_minutes }
+    assert_equal "02:00", program.preparations.last.schedule.to_s
+  end
+
   test "programs without preparation sheets still list their acts" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]

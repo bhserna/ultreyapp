@@ -51,8 +51,14 @@ class SpreadsheetCopy::Program
   end
 
   def build_rows(rows, type:, day:)
+    after_noon = false
     rows.each_with_index.filter_map do |row, index|
-      type.from_row(row, day: day, position: index + 1)
+      entry = type.from_row(row, day: day, position: index + 1, after_noon: after_noon)
+      next unless entry
+
+      minutes = entry.schedule.start_minutes
+      after_noon = true if minutes && minutes >= 12 * 60
+      entry
     end
   end
 end

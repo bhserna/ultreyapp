@@ -37,6 +37,22 @@ class SpreadsheetCopy::ScheduleTimeTest < ActiveSupport::TestCase
     end
   end
 
+  test "interpret ambiguous hours as afternoon when the sheet has passed noon" do
+    { "1:09–1:19" => 789, "2:00–3:50" => 840, 7200 => 840 }.each do |value, expected|
+      schedule = SpreadsheetCopy::ScheduleTime.new(value, after_noon: true)
+
+      assert_equal expected, schedule.start_minutes
+      assert_equal SpreadsheetCopy::ScheduleTime.new(value).to_s, schedule.to_s
+    end
+  end
+
+  test "the afternoon context respects explicit AM PM and 24 hour values" do
+    { "09:45 am" => 585, "12:00 am" => 0, "01:30 pm" => 810, "12:00" => 720, "14:00" => 840 }.each do |value, expected|
+      assert_equal expected, SpreadsheetCopy::ScheduleTime.new(value, after_noon: true).start_minutes
+    end
+    assert_nil SpreadsheetCopy::ScheduleTime.new("Por confirmar", after_noon: true).start_minutes
+  end
+
   test "keep free text and leave empty values without a sortable time" do
     [ nil, "", "  ", "Por confirmar", "Antes de abrir puertas" ].each do |value|
       schedule = SpreadsheetCopy::ScheduleTime.new(value)

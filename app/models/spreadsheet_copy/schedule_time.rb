@@ -1,5 +1,6 @@
 class SpreadsheetCopy::ScheduleTime
-  def initialize(value)
+  def initialize(value, after_noon: false)
+    @after_noon = after_noon
     @text = if value.is_a?(Numeric) && value >= 0 && value < 86_400
       format("%02d:%02d", value.to_i / 3600, value.to_i % 3600 / 60)
     else
@@ -22,6 +23,8 @@ class SpreadsheetCopy::ScheduleTime
       return unless (1..12).cover?(hour)
 
       hour = hour % 12 + (match[3].downcase == "pm" ? 12 : 0)
+    elsif @after_noon && (1..11).cover?(hour)
+      hour += 12
     end
     hour * 60 + minute if hour < 24
   end
