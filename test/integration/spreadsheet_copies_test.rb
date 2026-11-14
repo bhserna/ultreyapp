@@ -32,6 +32,17 @@ class SpreadsheetCopiesIntegrationTest < ActionDispatch::IntegrationTest
     assert_includes response.headers["Content-Disposition"], "attachment"
   end
 
+  test "display download dates in Monterrey time" do
+    SpreadsheetCopy.create!(
+      file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE),
+      created_at: Time.utc(2026, 11, 14, 19, 4)
+    )
+
+    get spreadsheet_copies_url
+
+    assert_select "tbody time", text: "14 de noviembre de 2026, 13:04 CST"
+  end
+
   test "failed downloads preserve earlier copies" do
     existing = SpreadsheetCopy.create!(file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 

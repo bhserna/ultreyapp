@@ -10,6 +10,7 @@ module Ultreyapp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.1
+    config.time_zone = "Monterrey"
     config.x.spreadsheet_export_url = "https://docs.google.com/spreadsheets/d/1USIv14BX6vUvADXJDZ6Z6bsxW4Uqgb4qH2LleU8LYLE/export?format=xlsx"
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do

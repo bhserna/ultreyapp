@@ -13,7 +13,7 @@ class SpreadsheetCopiesTest < ApplicationSystemTestCase
       click_button "Descargar copia"
       assert_text "La copia del spreadsheet se guardó correctamente."
       assert_selector "tbody tr", count: 1
-      assert_selector "tbody time", count: 1, text: /\d{1,2} de [a-z]+ de \d{4}, \d{2}:\d{2} UTC/
+      assert_selector "tbody time", count: 1, text: /\d{1,2} de [a-z]+ de \d{4}, \d{2}:\d{2} CST/
       assert_link "Descargar archivo", count: 1
       button = find_button("Descargar copia")
       assert_equal "rgb(56, 84, 115)", button.evaluate_script("getComputedStyle(this).backgroundColor")
