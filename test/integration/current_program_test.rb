@@ -1,6 +1,13 @@
 require "test_helper"
 
 class CurrentProgramIntegrationTest < ActionDispatch::IntegrationTest
+  test "the previous spreadsheet program path redirects to the current program" do
+    get "/spreadsheet_program"
+
+    assert_response :found
+    assert_redirected_to current_program_path
+  end
+
   test "the current program temporarily redirects to the newest copy and its first day" do
     SpreadsheetCopy.create!(file: fixture_file_upload("program.xlsx", SpreadsheetCopy::CONTENT_TYPE), created_at: 1.day.ago)
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("program.xlsx", SpreadsheetCopy::CONTENT_TYPE))
