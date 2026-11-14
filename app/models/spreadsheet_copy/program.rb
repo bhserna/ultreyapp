@@ -43,19 +43,23 @@ class SpreadsheetCopy::Program
     sheets = sheets_with_columns(SpreadsheetCopy::Act::COLUMNS.values)
     raise ReadError, "No program sheets found" if sheets.empty?
 
-    sheets.flat_map do |day, rows|
-      build_rows(rows, type: SpreadsheetCopy::Act, day: day)
+    sheets.flat_map do |name, rows|
+      build_rows(rows, type: SpreadsheetCopy::Act, day: day_from_sheet_name(name))
     end
   end
 
   def build_preparations
     sheets_with_columns(SpreadsheetCopy::Preparation::REQUIRED_COLUMNS).flat_map do |name, rows|
-      day_name = name.sub(/\APreparaciones\s+/i, "").sub(/\ADom(?=\s)/i, "Domingo")
+      day_name = day_from_sheet_name(name)
       day = days.find { |candidate| candidate.casecmp?(day_name) }
       raise ReadError, "Unknown preparation day: #{name}" unless day
 
       build_rows(rows, type: SpreadsheetCopy::Preparation, day: day)
     end
+  end
+
+  def day_from_sheet_name(name)
+    name.strip.sub(/\A(?:Actos|Preparaciones)\s+/i, "").sub(/\ADom(?=\s)/i, "Domingo")
   end
 
   def sheets_with_columns(columns)

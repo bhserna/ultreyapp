@@ -156,6 +156,32 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_empty program.acts_for(program.preparations[3])
   end
 
+  test "normalize renamed act sheets and match preparations while allowing the new ID column" do
+    program = SpreadsheetCopy::Program.new(
+      "Actos Domingo 15" => [
+        { "ID" => "act-001", "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" }
+      ],
+      "Actos Lunes 16" => [
+        { "ID" => "act-047", "Horario" => "08:00", "# Acto" => 17, "Actividad" => "Apertura" }
+      ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Preparación" => "09:30", "Previo al Acto #" => 1, "Nombre del Acto" => "Montaje del domingo" }
+      ],
+      "Preparaciones Lunes 16" => [
+        { "Horario de Preparación" => "07:30", "Previo al Acto #" => 17, "Nombre del Acto" => "Montaje del lunes" }
+      ],
+      "Actividades previas" => [
+        { "Día" => "Sábado 14", "Horario" => nil, "Actividad" => "Recepción de Diócesis" }
+      ]
+    )
+
+    assert_equal [ "Domingo 15", "Lunes 16" ], program.days
+    assert_equal [ "Domingo 15", "Lunes 16" ], program.preparations.map(&:day)
+    assert_equal [ "Montaje del domingo", "Inicio" ], program.entries(day: "Domingo 15").map(&:title)
+    assert_equal [ "Montaje del lunes", "Apertura" ], program.entries(day: "Lunes 16").map(&:title)
+    assert_equal [ "Inicio" ], program.acts_for(program.preparations.first).map(&:title)
+  end
+
   test "programs without preparation sheets still list their acts" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]
