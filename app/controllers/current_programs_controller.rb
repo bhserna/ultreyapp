@@ -1,6 +1,6 @@
 class CurrentProgramsController < ApplicationController
   def show
-    copy = SpreadsheetCopy.order(created_at: :desc, id: :desc).first
+    copy = SpreadsheetCopy.latest
 
     if copy
       redirect_to spreadsheet_copy_program_path(copy)

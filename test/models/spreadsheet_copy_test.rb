@@ -5,6 +5,19 @@ class SpreadsheetCopyTest < ActiveSupport::TestCase
   include ActionDispatch::TestProcess::FixtureFile
   include SpreadsheetServer
 
+  test "order copies by download time and descending ID to select the latest" do
+    copies = [ Time.utc(2026, 11, 14), Time.utc(2026, 11, 14), Time.utc(2026, 11, 13) ].map do |created_at|
+      SpreadsheetCopy.create!(created_at: created_at, file: fixture_file_upload("spreadsheet.xlsx", SpreadsheetCopy::CONTENT_TYPE))
+    end
+
+    assert_equal [ copies[1], copies[0], copies[2] ], SpreadsheetCopy.newest_first.to_a
+    assert_equal copies[1], SpreadsheetCopy.latest
+  end
+
+  test "return no latest copy when none have been downloaded" do
+    assert_nil SpreadsheetCopy.latest
+  end
+
   test "each download saves the original file in a separate copy" do
     copies = with_spreadsheet_response(body: spreadsheet_content) do
       Array.new(2) do

@@ -30,8 +30,7 @@ class SpreadsheetCopies::DocumentsController < SpreadsheetCopies::BaseController
 
   def set_act
     program = @spreadsheet_copy.program
-    @act = program.acts.find { |act| act.day == params[:day_id] && act.to_param == params[:act_id] }
-    raise ActiveRecord::RecordNotFound unless @act
+    @act = program.find_act!(day: params[:day_id], id: params[:act_id])
 
     @document_key = program.document_key_for(@act)
     @selected_row_type = params[:row_type].presence_in(SpreadsheetCopy::Program::ROW_TYPES)

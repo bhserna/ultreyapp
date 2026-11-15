@@ -1,6 +1,6 @@
 class SpreadsheetCopiesController < ApplicationController
   def index
-    @spreadsheet_copies = SpreadsheetCopy.with_attached_file.order(created_at: :desc, id: :desc)
+    @spreadsheet_copies = SpreadsheetCopy.with_attached_file.newest_first
   end
 
   def create

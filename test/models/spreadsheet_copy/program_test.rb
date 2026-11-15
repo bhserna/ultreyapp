@@ -19,6 +19,8 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal [ "Domingo 15", "Lunes 16" ], program.days
     assert_equal [ "Entrada a la Arena", "Inicio / Video", "Bienvenida del lunes" ], program.acts.map(&:title)
     assert_equal [ [ "Domingo 15", 1 ], [ "Domingo 15", 3 ], [ "Lunes 16", 1 ] ], program.acts.map { |act| [ act.day, act.position ] }
+    assert_same program.acts[1], program.find_act!(day: "Domingo 15", id: "3")
+    assert_same program.acts[2], program.find_act!(day: "Lunes 16", id: "1")
   end
 
   test "match preparation sheets to program days and keep their row positions" do
@@ -37,6 +39,32 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
 
     assert_equal [ "Instalación", "Preparar instrumentos", "Preparar apertura" ], program.preparations.map(&:title)
     assert_equal [ [ "Domingo 15", 1 ], [ "Domingo 15", 3 ], [ "Lunes 16", 1 ] ], program.preparations.map { |entry| [ entry.day, entry.position ] }
+    assert_same program.preparations[1], program.find_preparation!(day: "Domingo 15", id: "3")
+    assert_same program.preparations[2], program.find_preparation!(day: "Lunes 16", id: "1")
+  end
+
+  test "finders reject missing days, skipped positions and malformed position parameters" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [
+        { "ID" => "act-001", "Horario" => "10:00", "# Acto" => 17, "Actividad" => "Apertura" },
+        { "Actividad" => " " }
+      ],
+      "Preparaciones Dom 15" => [
+        { "Previo al Acto #" => 17, "Nombre del Acto" => "Preparar apertura" },
+        { "Nombre del Acto" => " " }
+      ]
+    )
+
+    [ [ "Lunes 16", "1" ], [ nil, "1" ], [ "Domingo 15", "2" ], [ "Domingo 15", "17" ],
+      [ "Domingo 15", "act-001" ], [ "Domingo 15", "1junk" ], [ "Domingo 15", "01" ],
+      [ "Domingo 15", nil ] ].each do |day, id|
+      assert_raises ActiveRecord::RecordNotFound do
+        program.find_act!(day: day, id: id)
+      end
+      assert_raises ActiveRecord::RecordNotFound do
+        program.find_preparation!(day: day, id: id)
+      end
+    end
   end
 
   test "mix preparations and acts chronologically within a day with unknown times first" do

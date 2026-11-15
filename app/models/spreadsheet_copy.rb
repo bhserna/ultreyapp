@@ -8,7 +8,13 @@ class SpreadsheetCopy < ApplicationRecord
 
   has_one_attached :file
 
+  scope :newest_first, -> { order(created_at: :desc, id: :desc) }
+
   validate :file_attached
+
+  def self.latest
+    newest_first.first
+  end
 
   def self.download!
     content = URI.open(Rails.configuration.x.spreadsheet_export_url, open_timeout: 10, read_timeout: 30) do |response|

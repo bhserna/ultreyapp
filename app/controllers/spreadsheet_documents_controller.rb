@@ -1,6 +1,6 @@
 class SpreadsheetDocumentsController < ApplicationController
   def index
-    @spreadsheet_copy = SpreadsheetCopy.order(created_at: :desc, id: :desc).first
+    @spreadsheet_copy = SpreadsheetCopy.latest
     keys = @spreadsheet_copy ? @spreadsheet_copy.program.document_keys : []
     @documents = Document.without_spreadsheet_acts(keys).with_attached_file.newest_first
   rescue SpreadsheetCopy::Reader::ReadError, SpreadsheetCopy::Program::ReadError

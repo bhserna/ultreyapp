@@ -15,6 +15,16 @@ class SpreadsheetCopy::Program
     @preparations ||= build_preparations
   end
 
+  def find_act!(day:, id:)
+    acts.find { |act| act.day == day && act.to_param == id } ||
+      raise(ActiveRecord::RecordNotFound)
+  end
+
+  def find_preparation!(day:, id:)
+    preparations.find { |preparation| preparation.day == day && preparation.to_param == id } ||
+      raise(ActiveRecord::RecordNotFound)
+  end
+
   def days
     acts.map(&:day).uniq
   end
