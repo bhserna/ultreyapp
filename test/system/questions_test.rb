@@ -6,9 +6,7 @@ class QuestionsTest < ApplicationSystemTestCase
     topic = Topic.create!(name: "Logística")
     topic_question = Question.create!(body: "¿Dónde está el material?", topic: topic)
     act_question = Question.create!(body: "¿Quién presenta?", act_id: activities(:opening_act).id)
-    visit root_path
-
-    within(".site-nav") { click_link "Preguntas generales" }
+    visit questions_path
 
     assert_selector :question, question.body
     assert_no_selector :question, topic_question.body

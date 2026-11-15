@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  root "schedule#index"
+  root to: redirect("/current_program", status: 302)
+  get "schedule", to: "schedule#index"
 
   resources :questions, only: %i[index create]
   resources :topics, only: %i[index create edit update destroy]

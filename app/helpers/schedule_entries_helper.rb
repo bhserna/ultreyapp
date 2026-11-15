@@ -7,7 +7,7 @@ module ScheduleEntriesHelper
     return "—" if activity.commissions.empty?
 
     links = activity.commissions.map do |commission|
-      link_to commission, root_path(day: activity.day, commission: commission, row_type: row_type)
+      link_to commission, schedule_path(day: activity.day, commission: commission, row_type: row_type)
     end
 
     content_tag(:span, safe_join(links, ", "), class: "commission-links")

@@ -31,7 +31,7 @@ class PreparationsTest < ApplicationSystemTestCase
     assert_current_path schedule_entry_path(act)
     assert_selector "h1", text: act.title
     click_link "← Volver al programa"
-    assert_current_path root_path(day: act.day)
+    assert_current_path schedule_path(day: act.day)
     assert_selector :schedule_act, act.title
   end
 end

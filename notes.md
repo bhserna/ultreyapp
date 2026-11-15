@@ -62,15 +62,14 @@ Stories
 - [x] poder descargar de nuevo
 - [x] mostrar los actos en lista
 - [x] detalle de un acto
-- [ ] preparaciones en la lista
-- [ ] filtrar entre preparaciones y detalle
-- [ ] detalle de las preparaciones
-- [ ] actividades previas
-- [ ] filtrar también actividades previas
-- [ ] detalle de actividad previa
-- [ ] ver y adjuntar documentos
-- [ ] imprimir detalle
-- [ ] descargar pdf
+- [x] preparaciones en la lista
+- [x] filtrar entre preparaciones y actos
+- [x] detalle de las preparaciones
+- [x] ver y adjuntar documentos
+- [x] actividades previas
+- [x] filtrar también actividades previas
+- [x] detalle de actividad previa
+- [x] imprimir pdf
 - [ ] descargar zip
 - [ ] guardar versión en navegador
 - [ ] navegar versiones

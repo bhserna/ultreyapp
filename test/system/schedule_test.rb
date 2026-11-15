@@ -3,7 +3,7 @@ require "application_system_test_case"
 class ScheduleTest < ApplicationSystemTestCase
   test "show acts" do
     act = activities(:opening_act)
-    visit root_path(day: act.day)
+    visit schedule_path(day: act.day)
 
     within(:schedule_act, act.title) do
       assert_selector :schedule_cell, :act_number, exact_text: act.act_number.to_s
@@ -15,7 +15,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
   test "show preparations" do
     preparation = preparations(:opening_setup)
-    visit root_path(day: preparation.day)
+    visit schedule_path(day: preparation.day)
 
     within(:schedule_preparation, preparation.id) do
       assert_selector :schedule_cell, :activity, text: preparation.title
@@ -29,7 +29,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
   test "show operations" do
     operation = activities(:reception)
-    visit root_path(day: operation.day)
+    visit schedule_path(day: operation.day)
 
     within(:schedule_operation, operation.title) do
       assert_selector :schedule_cell, :act_number, text: "Operación"
@@ -43,12 +43,12 @@ class ScheduleTest < ApplicationSystemTestCase
     act = activities(:opening_act)
     operation = activities(:reception)
 
-    visit root_path(day: act.day)
+    visit schedule_path(day: act.day)
     within(:schedule_act, act.title) { click_link "Ver detalle" }
     assert_current_path schedule_entry_path(act)
     assert_selector "h1", text: act.title
 
-    visit root_path(day: operation.day)
+    visit schedule_path(day: operation.day)
     within(:schedule_operation, operation.title) { click_link "Ver detalle" }
     assert_current_path operational_activity_path(operation.source_id)
     assert_selector "h1", text: operation.title
@@ -56,7 +56,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
   test "go to a preparation" do
     preparation = preparations(:opening_setup)
-    visit root_path(day: preparation.day)
+    visit schedule_path(day: preparation.day)
 
     within(:schedule_preparation, preparation.id) { click_link "Ver detalle" }
 
@@ -68,7 +68,7 @@ class ScheduleTest < ApplicationSystemTestCase
     act = activities(:next_day_act)
     operation = activities(:next_day_operation)
     preparation = preparations(:next_day_setup)
-    visit root_path
+    visit schedule_path
 
     click_link act.day
 
@@ -81,7 +81,7 @@ class ScheduleTest < ApplicationSystemTestCase
   end
 
   test "filter by activity type" do
-    visit root_path
+    visit schedule_path
 
     select "Actos", from: "Tipo de actividad"
     assert_selector :schedule_act
@@ -105,7 +105,7 @@ class ScheduleTest < ApplicationSystemTestCase
   end
 
   test "filter by commission" do
-    visit root_path
+    visit schedule_path
 
     select "EyA", from: "Comisión"
 
@@ -122,7 +122,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
   test "filter from a commission link" do
     operation = activities(:sound_check)
-    visit root_path(day: operation.day)
+    visit schedule_path(day: operation.day)
 
     within(:schedule_operation, operation.title) { click_link "EyA" }
 
@@ -133,7 +133,7 @@ class ScheduleTest < ApplicationSystemTestCase
   end
 
   test "keep filters when changing days" do
-    visit root_path
+    visit schedule_path
     select "Operación", from: "Tipo de actividad"
     assert_no_selector :schedule_act
     select "EyA", from: "Comisión"
@@ -151,7 +151,7 @@ class ScheduleTest < ApplicationSystemTestCase
 
   test "use filters on a narrow screen" do
     page.driver.browser.manage.window.resize_to(390, 900)
-    visit root_path
+    visit schedule_path
 
     assert evaluate_script("Array.from(document.querySelectorAll('.filter select')).every(select => { const bounds = select.getBoundingClientRect(); return bounds.left >= 0 && bounds.right <= window.innerWidth })")
     select "Operación", from: "Tipo de actividad"

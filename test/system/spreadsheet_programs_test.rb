@@ -7,7 +7,6 @@ class SpreadsheetProgramsTest < ApplicationSystemTestCase
     SpreadsheetCopy.create!(file: fixture_file_upload("program.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 
     visit root_path
-    click_link "Programa actualizado"
 
     assert_selector ".site-nav a[aria-current=page]", text: "Programa actualizado"
     assert_selector "h1", text: "Programa actualizado"
@@ -19,9 +18,11 @@ class SpreadsheetProgramsTest < ApplicationSystemTestCase
     assert_text "Bienvenida del lunes"
     assert_no_text "Entrada a la Arena"
 
-    click_link "Programa", exact: true
-    assert_current_path root_path
-    assert_selector "h1", exact_text: "Programa"
+    within ".site-nav" do
+      assert_no_link "Programa", exact: true
+      assert_no_link "Preguntas generales"
+      assert_link "Copias del spreadsheet"
+    end
   end
 
   test "read renamed act sheets with IDs and preserve day and preparation navigation" do

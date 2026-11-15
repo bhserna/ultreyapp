@@ -8,13 +8,13 @@
   <div class="toolbar">
     <nav class="tabs" aria-label="Días del programa">
       <% @schedule.days.each do |day| %>
-        <%= link_to day, root_path(day: day, commission: @schedule.selected_commission, row_type: @schedule.selected_row_type),
+        <%= link_to day, schedule_path(day: day, commission: @schedule.selected_commission, row_type: @schedule.selected_row_type),
               class: "tabs__item#{' tabs__item--active' if day == @schedule.selected_day}",
               aria: { current: ("page" if day == @schedule.selected_day) } %>
       <% end %>
     </nav>
 
-    <%= form_with url: root_path, method: :get, class: "filter",
+    <%= form_with url: schedule_path, method: :get, class: "filter",
           data: { controller: "schedule-filter" } do %>
       <%= hidden_field_tag :day, @schedule.selected_day %>
       <%= label_tag :row_type, "Tipo de actividad", class: "visually-hidden" %>

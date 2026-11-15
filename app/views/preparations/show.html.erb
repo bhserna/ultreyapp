@@ -1,7 +1,7 @@
 <% content_for :title, @preparation.title %>
 
 <main class="page">
-  <%= link_to "← Volver al programa", root_path(day: @preparation.day), class: "page__back" %>
+  <%= link_to "← Volver al programa", schedule_path(day: @preparation.day), class: "page__back" %>
 
   <header class="page__header">
     <p class="page__eyebrow"><%= @preparation.day %></p>

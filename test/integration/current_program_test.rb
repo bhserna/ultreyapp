@@ -1,6 +1,13 @@
 require "test_helper"
 
 class CurrentProgramIntegrationTest < ActionDispatch::IntegrationTest
+  test "home temporarily redirects to the current program" do
+    get root_path
+
+    assert_response :found
+    assert_redirected_to current_program_path
+  end
+
   test "the previous spreadsheet program path redirects to the current program" do
     get "/spreadsheet_program"
 
