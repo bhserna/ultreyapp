@@ -47,12 +47,17 @@
   width: 100%;
 }
 
-.printout__checkbox {
+.printout__options {
   grid-column: 1 / -1;
+  display: grid;
+  gap: 0.25rem;
+}
+
+.printout__checkbox {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  min-height: 2.75rem;
+  min-height: 2rem;
 }
 
 .printout__checkbox input {
@@ -116,6 +121,14 @@
 
   .printout__day + .printout__day,
   .printout__entry {
+    break-before: auto;
+    margin-top: 5mm;
+    padding-top: 3mm;
+    border-top: 1px solid #dce3eb;
+  }
+
+  .printout--page-breaks .printout__day + .printout__day,
+  .printout--page-breaks .printout__entry {
     break-before: page;
     margin-top: 0;
     padding-top: 0;

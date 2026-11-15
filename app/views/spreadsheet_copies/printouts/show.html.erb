@@ -3,7 +3,7 @@
   <%= stylesheet_link_tag "printout", media: "all" %>
 <% end %>
 
-<main class="page page--wide printout" data-controller="printout">
+<main class="page page--wide printout<%= " printout--page-breaks" if @page_breaks %>" data-controller="printout">
   <div class="printout__controls">
     <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @selected_day || @days.first, row_type: @selected_row_type), class: "page__back" %>
     <%= form_with url: spreadsheet_copy_printout_path(@spreadsheet_copy), method: :get, class: "filter printout__settings" do %>
@@ -19,10 +19,17 @@
         <%= label_tag :row_type, "Tipo de actividad" %>
         <%= select_tag :row_type, options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"], ["Actividades previas", "prior_activities"]], @selected_row_type) %>
       </div>
-      <div class="printout__checkbox">
-        <%= hidden_field_tag :include_details, "0", id: nil %>
-        <%= check_box_tag :include_details, "1", @include_details %>
-        <%= label_tag :include_details, "Incluir detalles" %>
+      <div class="printout__options">
+        <div class="printout__checkbox">
+          <%= hidden_field_tag :include_details, "0", id: nil %>
+          <%= check_box_tag :include_details, "1", @include_details %>
+          <%= label_tag :include_details, "Incluir detalles" %>
+        </div>
+        <div class="printout__checkbox">
+          <%= hidden_field_tag :page_breaks, "0", id: nil %>
+          <%= check_box_tag :page_breaks, "1", @page_breaks %>
+          <%= label_tag :page_breaks, "Empezar cada actividad y día en una hoja nueva" %>
+        </div>
       </div>
       <div class="printout__actions">
         <%= submit_tag "Actualizar vista" %>
