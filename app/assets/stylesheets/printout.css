@@ -1,0 +1,155 @@
+.printout__controls {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.printout__settings {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: end;
+  gap: 1.25rem;
+  width: 100%;
+  margin: 0;
+  padding: 1.5rem;
+  border: 1px solid #dce3eb;
+  border-radius: 0.75rem;
+  background: #fff;
+}
+
+.printout__settings-heading,
+.printout__actions {
+  grid-column: 1 / -1;
+}
+
+.printout__settings-heading h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.15rem;
+}
+
+.printout__settings-heading p {
+  margin: 0;
+  color: #5c6878;
+}
+
+.printout__field {
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.printout__field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.printout__field select {
+  width: 100%;
+}
+
+.printout__checkbox {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.75rem;
+}
+
+.printout__checkbox input {
+  accent-color: #385473;
+}
+
+.printout__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid #e7ecf2;
+}
+
+@media screen and (max-width: 700px) {
+  .printout__settings {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1rem;
+  }
+
+  .printout__actions > * {
+    width: 100%;
+  }
+}
+
+.printout__day + .printout__day,
+.printout__entry {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #dce3eb;
+}
+
+.printout__entry {
+  overflow-wrap: anywhere;
+}
+
+@media print {
+  @page {
+    size: auto;
+    margin: 15mm;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .site-nav,
+  .flash,
+  .printout__controls {
+    display: none !important;
+  }
+
+  .printout {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    font-size: 10pt;
+  }
+
+  .printout__day + .printout__day,
+  .printout__entry {
+    break-before: page;
+    margin-top: 0;
+    padding-top: 0;
+    border: 0;
+  }
+
+  .printout .table-container {
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .printout table {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .printout thead {
+    display: table-header-group;
+  }
+
+  .printout tr,
+  .printout__entry header {
+    break-inside: avoid;
+  }
+
+  .printout h2,
+  .printout h3 {
+    break-after: avoid;
+  }
+
+  .printout p {
+    orphans: 3;
+    widows: 3;
+  }
+}

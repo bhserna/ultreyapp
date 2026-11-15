@@ -1,0 +1,90 @@
+<% content_for :title, "Programa para imprimir" %>
+<% content_for :head do %>
+  <%= stylesheet_link_tag "printout", media: "all" %>
+<% end %>
+
+<main class="page page--wide printout" data-controller="printout">
+  <div class="printout__controls">
+    <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @selected_day || @days.first, row_type: @selected_row_type), class: "page__back" %>
+    <%= form_with url: spreadsheet_copy_printout_path(@spreadsheet_copy), method: :get, class: "filter printout__settings" do %>
+      <div class="printout__settings-heading">
+        <h2>Preparar impresión</h2>
+        <p>Elige qué incluir y actualiza la vista antes de imprimir.</p>
+      </div>
+      <div class="printout__field">
+        <%= label_tag :day, "Días" %>
+        <%= select_tag :day, options_for_select([["Todo el programa", ""]] + @days.map { |day| [day, day] }, @selected_day) %>
+      </div>
+      <div class="printout__field">
+        <%= label_tag :row_type, "Tipo de actividad" %>
+        <%= select_tag :row_type, options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"], ["Actividades previas", "prior_activities"]], @selected_row_type) %>
+      </div>
+      <div class="printout__checkbox">
+        <%= hidden_field_tag :include_details, "0", id: nil %>
+        <%= check_box_tag :include_details, "1", @include_details %>
+        <%= label_tag :include_details, "Incluir detalles" %>
+      </div>
+      <div class="printout__actions">
+        <%= submit_tag "Actualizar vista" %>
+        <button type="button" class="button" data-action="printout#print">Imprimir / Guardar PDF</button>
+      </div>
+    <% end %>
+  </div>
+
+  <header class="page__header">
+    <h1>Programa para imprimir</h1>
+    <p><%= @selected_day || "Todo el programa" %> · <%= { "acts" => "Actos", "preparations" => "Preparaciones", "prior_activities" => "Actividades previas" }.fetch(@selected_row_type, "Todas las actividades") %></p>
+    <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+    <p>Generado el <%= time_tag Time.current, l(Time.current, format: :spreadsheet_copy, locale: :es) %>.</p>
+  </header>
+
+  <% @entries_by_day.each do |day, entries| %>
+    <section class="printout__day" aria-label="<%= day %>">
+      <h2><%= day %></h2>
+      <div class="table-container">
+      <table class="table">
+        <caption class="visually-hidden">Programa de actividades para <%= day %></caption>
+        <thead>
+          <tr><th scope="col">Horario</th><th scope="col">Tipo</th><th scope="col">Acto</th><th scope="col">Actividad</th></tr>
+        </thead>
+        <tbody>
+          <% entries.each do |entry| %>
+            <tr>
+              <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
+              <td><%= printout_entry_type(entry) %></td>
+              <td><%= printout_entry_number(entry).presence || "—" %></td>
+              <td><%= entry.title %></td>
+            </tr>
+          <% end %>
+          <% if entries.empty? %>
+            <tr><td colspan="4">No hay actividades de este tipo para este día.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+      </div>
+
+      <% if @include_details %>
+        <% entries.each do |entry| %>
+          <article class="printout__entry" aria-label="<%= entry.title %>">
+            <header>
+              <p class="page__eyebrow"><%= day %> · <%= printout_entry_type(entry) %></p>
+              <h2><%= entry.title %></h2>
+              <dl class="page__details">
+                <% if printout_entry_number(entry).present? %>
+                  <div><dt>Acto</dt><dd><%= printout_entry_number(entry) %></dd></div>
+                <% end %>
+                <div><dt>Horario</dt><dd><%= entry.schedule.to_s.presence || "—" %></dd></div>
+              </dl>
+            </header>
+            <% printout_detail_fields(entry).each do |attribute, label| %>
+              <% if entry.public_send(attribute).present? %>
+                <h3><%= label %></h3>
+                <%= simple_format(h(entry.public_send(attribute))) %>
+              <% end %>
+            <% end %>
+          </article>
+        <% end %>
+      <% end %>
+    </section>
+  <% end %>
+</main>

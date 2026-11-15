@@ -4,7 +4,10 @@
   <header class="page__header page__header--flush">
     <h1>Programa actualizado</h1>
     <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
-    <%= link_to "Ver copias del spreadsheet", spreadsheet_copies_path, class: "link" %>
+    <div class="page__links">
+      <%= link_to "Ver copias del spreadsheet", spreadsheet_copies_path, class: "link" %>
+      <%= link_to "Versión para imprimir", spreadsheet_copy_printout_path(@spreadsheet_copy, day: @selected_day, row_type: @selected_row_type), class: "link" %>
+    </div>
   </header>
 
   <div class="toolbar">
