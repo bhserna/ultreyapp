@@ -1,0 +1,25 @@
+<% content_for :title, @prior_activity.title %>
+
+<main class="page">
+  <%= link_to "← Volver al programa", spreadsheet_copy_day_path(@spreadsheet_copy, @prior_activity.day, row_type: @selected_row_type), class: "page__back" %>
+
+  <header class="page__header">
+    <p class="page__eyebrow"><%= @prior_activity.day %> · Actividad previa</p>
+    <h1><%= @prior_activity.title %></h1>
+    <dl class="page__details">
+      <div><dt>Horario</dt><dd><%= @prior_activity.schedule.to_s.presence || "—" %></dd></div>
+    </dl>
+    <p>Copia descargada el <%= time_tag @spreadsheet_copy.created_at, l(@spreadsheet_copy.created_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+  </header>
+
+  <% details = spreadsheet_prior_activity_detail_fields.select { |attribute, label| @prior_activity.public_send(attribute).present? } %>
+  <% if details.any? %>
+    <section class="page__section" aria-label="Detalles de la actividad previa">
+      <h2>Detalles de la actividad previa</h2>
+      <% details.each do |attribute, label| %>
+        <h3><%= label %></h3>
+        <%= simple_format(h(@prior_activity.public_send(attribute))) %>
+      <% end %>
+    </section>
+  <% end %>
+</main>

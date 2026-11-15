@@ -1,7 +1,7 @@
 class SpreadsheetCopy::Program
   class ReadError < StandardError; end
 
-  ROW_TYPES = %w[acts preparations].freeze
+  ROW_TYPES = %w[acts preparations prior_activities].freeze
 
   def initialize(sheets)
     @sheets = sheets
@@ -35,7 +35,7 @@ class SpreadsheetCopy::Program
   end
 
   def days
-    acts.map(&:day).uniq
+    (prior_activities + acts).map(&:day).uniq
   end
 
   def acts_for(preparation)
@@ -58,11 +58,17 @@ class SpreadsheetCopy::Program
     candidates = case row_type
     when "acts" then acts
     when "preparations" then preparations
-    else acts + preparations
+    when "prior_activities" then prior_activities
+    else prior_activities + preparations + acts
     end
 
     candidates.select { |entry| entry.day == day }.each_with_index.sort_by do |entry, index|
-      [ entry.schedule.start_minutes || -1, entry.is_a?(SpreadsheetCopy::Preparation) ? 0 : 1, index ]
+      type_order = case entry
+      when SpreadsheetCopy::PriorActivity then 0
+      when SpreadsheetCopy::Preparation then 1
+      else 2
+      end
+      [ entry.schedule.start_minutes || -1, type_order, index ]
     end.map(&:first)
   end
 

@@ -20,7 +20,7 @@
           class: "filter", data: { controller: "schedule-filter" } do %>
       <%= label_tag :row_type, "Tipo de actividad", class: "visually-hidden" %>
       <%= select_tag :row_type,
-            options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"]], @selected_row_type),
+            options_for_select([["Todo", ""], ["Actos", "acts"], ["Preparaciones", "preparations"], ["Actividades previas", "prior_activities"]], @selected_row_type),
             data: { action: "change->schedule-filter#submit" } %>
       <%= submit_tag "Filtrar", data: { schedule_filter_target: "submit" } %>
     <% end %>
@@ -39,7 +39,14 @@
       </thead>
       <tbody>
         <% @entries.each do |entry| %>
-          <% if entry.is_a?(SpreadsheetCopy::Preparation) %>
+          <% if entry.is_a?(SpreadsheetCopy::PriorActivity) %>
+            <tr class="schedule__prior-activity">
+              <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
+              <td class="text-nowrap">—</td>
+              <td class="schedule__activity"><strong>Actividad previa</strong> · <%= entry.title %></td>
+              <td><%= link_to "Ver detalle", spreadsheet_copy_day_prior_activity_path(@spreadsheet_copy, entry.day, entry, row_type: @selected_row_type), class: "schedule__resources-link" %></td>
+            </tr>
+          <% elsif entry.is_a?(SpreadsheetCopy::Preparation) %>
             <tr class="schedule__preparation">
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
               <td class="text-nowrap"><%= entry.act_number.presence || "—" %></td>

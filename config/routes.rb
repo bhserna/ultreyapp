@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           resources :documents, only: %i[index create destroy]
         end
         resources :preparations, only: :show
+        resources :prior_activities, only: :show
       end
     end
   end

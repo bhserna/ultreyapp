@@ -12,13 +12,15 @@
     color: #284c70;
   }
 
-  .schedule__operation {
+  .schedule__operation,
+  .schedule__prior-activity {
     background: #fff4dc;
     color: #655227;
   }
 
   .schedule__preparation td:first-child,
-  .schedule__operation td:first-child {
+  .schedule__operation td:first-child,
+  .schedule__prior-activity td:first-child {
     font-weight: 600;
   }
 

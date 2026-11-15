@@ -232,6 +232,36 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_same program.prior_activities[1], program.find_prior_activity!(day: "Sábado 14", id: "3")
     assert_same program.prior_activities[2], program.find_prior_activity!(day: "Domingo 15", id: "1")
     assert_equal [ 360, 240 ], program.prior_activities.last(2).map { |activity| activity.schedule.start_minutes }
+    assert_equal [ "Sábado 14", "Domingo 15" ], program.days
+    assert_equal [ "Recepción", "Entrega de kits" ], program.entries(day: "Sábado 14").map(&:title)
+    assert_equal [ "Preparación de chisperos", "Prueba de sonido" ],
+      program.entries(day: "Domingo 15", row_type: "prior_activities").map(&:title)
+  end
+
+  test "mix prior activities with preparations and acts with stable type ordering on time ties" do
+    program = SpreadsheetCopy::Program.new(
+      "Actos Domingo 15" => [ { "Horario" => "7:00 am", "# Acto" => 1, "Actividad" => "Apertura" } ],
+      "Actos Lunes 16" => [ { "Horario" => "8:00 am", "# Acto" => 17, "Actividad" => "Apertura del lunes" } ],
+      "Preparaciones Dom 15" => [
+        { "Horario de Preparación" => "7:00 am", "Previo al Acto #" => 1, "Nombre del Acto" => "Montaje" }
+      ],
+      "Actividades previas Sábado 14" => [ { "Horario" => nil, "Actividad" => "Recepción" } ],
+      "Actividades previas Domingo 15" => [
+        { "Horario" => "7:00 am", "Actividad" => "Animación" },
+        { "Horario" => "7:00 am", "Actividad" => "Transmisión" },
+        { "Horario" => "6:00 am", "Actividad" => "Prueba de sonido" },
+        { "Horario" => nil, "Actividad" => "Recibir fotógrafo" }
+      ]
+    )
+
+    assert_equal [ "Sábado 14", "Domingo 15", "Lunes 16" ], program.days
+    assert_equal [ "Recibir fotógrafo", "Prueba de sonido", "Animación", "Transmisión", "Montaje", "Apertura" ],
+      program.entries(day: "Domingo 15").map(&:title)
+    assert_equal program.entries(day: "Domingo 15"), program.entries(day: "Domingo 15", row_type: "unknown")
+    assert_equal [ "Apertura" ], program.entries(day: "Domingo 15", row_type: "acts").map(&:title)
+    assert_equal [ "Montaje" ], program.entries(day: "Domingo 15", row_type: "preparations").map(&:title)
+    assert_empty program.entries(day: "Sábado 14", row_type: "acts")
+    assert_empty program.entries(day: "Lunes 16", row_type: "prior_activities")
   end
 
   test "find prior activities by exact day and position rather than coercing parameters" do
