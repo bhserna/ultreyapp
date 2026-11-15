@@ -38,11 +38,15 @@ class SpreadsheetCopy::ScheduleTimeTest < ActiveSupport::TestCase
   end
 
   test "interpret ambiguous hours as afternoon when the sheet has passed noon" do
-    { "1:09–1:19" => 789, "2:00–3:50" => 840, 7200 => 840 }.each do |value, expected|
+    {
+      "1:09–1:19" => [ "13:09–13:19", 789 ],
+      "2:00–3:50" => [ "14:00–15:50", 840 ],
+      7200 => [ "14:00", 840 ]
+    }.each do |value, (text, minutes)|
       schedule = SpreadsheetCopy::ScheduleTime.new(value, after_noon: true)
 
-      assert_equal expected, schedule.start_minutes
-      assert_equal({ "1:09–1:19" => "13:09–13:19", "2:00–3:50" => "14:00–15:50", 7200 => "14:00" }.fetch(value), schedule.to_s)
+      assert_equal minutes, schedule.start_minutes
+      assert_equal text, schedule.to_s
     end
   end
 
@@ -73,6 +77,19 @@ class SpreadsheetCopy::ScheduleTimeTest < ActiveSupport::TestCase
     }.each do |value, expected|
       assert_equal expected, SpreadsheetCopy::ScheduleTime.new(value).to_s
     end
+  end
+
+  test "explicit morning ranges override the afternoon context" do
+    schedule = SpreadsheetCopy::ScheduleTime.new("3:00–08:00 am", after_noon: true)
+
+    assert_equal "03:00–08:00", schedule.to_s
+  end
+
+  test "invalid range endpoints preserve the entire text without preventing start time ordering" do
+    schedule = SpreadsheetCopy::ScheduleTime.new("9:00–25:00 (por confirmar)")
+
+    assert_equal "9:00–25:00 (por confirmar)", schedule.to_s
+    assert_equal 540, schedule.start_minutes
   end
 
   test "invalid times are preserved but not used for ordering" do
