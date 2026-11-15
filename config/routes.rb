@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :topics, only: %i[index create edit update destroy]
   get "spreadsheet_program", to: redirect("/current_program", status: 302)
   resource :current_program, only: :show
+  resources :general_documents, only: %i[index create destroy]
   resources :spreadsheet_documents, only: :index
   resources :spreadsheet_copies, only: %i[index create] do
     scope module: :spreadsheet_copies do

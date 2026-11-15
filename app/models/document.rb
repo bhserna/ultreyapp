@@ -1,14 +1,17 @@
 class Document < ApplicationRecord
   has_one_attached :file
 
+  enum :scope, { act: "act", general: "general" }, prefix: true, validate: true
+
   scope :for_legacy_act, ->(id) { id.present? ? where(act_id: id) : none }
   scope :for_spreadsheet_act, ->(key) { key.present? ? where(spreadsheet_act_key: key) : none }
   scope :from_spreadsheet, -> { where.not(spreadsheet_act_key: nil) }
   scope :without_spreadsheet_acts, ->(keys) { from_spreadsheet.where.not(spreadsheet_act_key: keys) }
   scope :newest_first, -> { order(created_at: :desc, id: :desc) }
 
-  validates :act_id, presence: true, unless: -> { spreadsheet_act_key.present? }
-  validates :spreadsheet_act_key, absence: true, if: -> { act_id.present? }
+  validates :act_id, presence: true, if: -> { scope_act? && spreadsheet_act_key.blank? }
+  validates :act_id, absence: true, if: :scope_general?
+  validates :spreadsheet_act_key, absence: true, if: -> { scope_general? || act_id.present? }
   validate :file_attached
 
   def format_label

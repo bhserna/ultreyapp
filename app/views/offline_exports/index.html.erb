@@ -3,6 +3,7 @@
     <h1>Programa sin conexión</h1>
     <p>Elige un día para consultar el programa y sus documentos. Esta copia incluye todo el programa, sin filtros.</p>
   </header>
+  <p><%= link_to "Documentos generales", "general-documents.html" %></p>
   <ul class="related-links">
     <% export.program.days.each do |day| %>
       <li><%= link_to day, export.day_path(day) %></li>

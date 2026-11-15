@@ -1,0 +1,19 @@
+<main class="page">
+  <%= link_to "← Volver al programa", "index.html", class: "page__back" %>
+  <header class="page__header">
+    <h1>Documentos generales</h1>
+    <p>Material de consulta independiente de los actos del programa.</p>
+  </header>
+
+  <% if export.general_documents.any? %>
+    <ul class="documents__list">
+      <% export.general_documents.each do |document| %>
+        <li class="documents__item">
+          <%= render "documents/file", document: document, file_path: export.document_path(document) %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="documents__empty">No hay documentos generales disponibles en esta copia.</p>
+  <% end %>
+</main>

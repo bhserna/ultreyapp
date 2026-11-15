@@ -4,7 +4,7 @@ class SpreadsheetCopy::OfflineExport
   STYLESHEETS = %w[application base page link tabs toolbar table_container table schedule
     text_nowrap related_links documents site_nav offline utilities].freeze
 
-  attr_reader :spreadsheet_copy, :program, :generated_at
+  attr_reader :spreadsheet_copy, :program, :generated_at, :general_documents
 
   def initialize(spreadsheet_copy)
     @spreadsheet_copy = spreadsheet_copy
@@ -16,8 +16,11 @@ class SpreadsheetCopy::OfflineExport
     @documents = Document.for_spreadsheet_act(program.document_keys)
       .with_attached_file.newest_first.to_a.group_by(&:spreadsheet_act_key)
 
+    @general_documents = Document.scope_general.with_attached_file.newest_first.to_a
+
     Zip::OutputStream.open(path) do |zip|
       write_page(zip, "index.html", "index")
+      write_page(zip, "general-documents.html", "general_documents")
       program.days.each do |day|
         entries = program.entries(day: day)
         write_page(zip, day_path(day), "day", day: day, entries: entries)
@@ -73,11 +76,9 @@ class SpreadsheetCopy::OfflineExport
   end
 
   def write_documents(zip)
-    @documents.each_value do |documents|
-      documents.each do |document|
-        zip.put_next_entry(document_path(document))
-        document.file.blob.download { |chunk| zip.write(chunk) }
-      end
+    (@documents.values.flatten + general_documents).each do |document|
+      zip.put_next_entry(document_path(document))
+      document.file.blob.download { |chunk| zip.write(chunk) }
     end
   end
 end

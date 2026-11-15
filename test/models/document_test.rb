@@ -43,6 +43,56 @@ class DocumentTest < ActiveSupport::TestCase
     assert_equal [ newest, newer, older ], Document.for_spreadsheet_act("act-001").newest_first.to_a
   end
 
+  test "general documents are explicitly separate from act documents" do
+    general = create_document(scope: "general")
+    act = create_document(spreadsheet_act_key: "removed-act")
+
+    assert general.scope_general?
+    assert_nil general.act_id
+    assert_nil general.spreadsheet_act_key
+    assert act.scope_act?
+    assert_equal [ general ], Document.scope_general.to_a
+    assert_equal [ act ], Document.without_spreadsheet_acts([]).to_a
+  end
+
+  test "general documents reject either act reference" do
+    [ { act_id: activities(:opening_act).id }, { spreadsheet_act_key: "act-001" } ].each do |reference|
+      document = Document.new(scope: "general", **reference,
+        file: { io: StringIO.new("Instructions"), filename: "instructions.txt" })
+
+      assert_not document.valid?
+      assert document.errors[reference.keys.first].present?
+    end
+  end
+
+  test "enforce general document scope and references in the database" do
+    [
+      { scope: "general", act_id: activities(:opening_act).id },
+      { scope: "general", spreadsheet_act_key: "act-001" },
+      { scope: "general", spreadsheet_act_key: "" },
+      { scope: "unknown", act_id: activities(:opening_act).id }
+    ].each do |attributes|
+      assert_raises ActiveRecord::StatementInvalid do
+        Document.insert_all!([ attributes ])
+      end
+    end
+  end
+
+  test "general documents require a file" do
+    document = Document.new(scope: "general")
+
+    assert_not document.valid?
+    assert document.errors[:file].present?
+    assert_empty document.errors[:act_id]
+  end
+
+  test "reject unknown scopes" do
+    document = Document.new(scope: "unknown")
+
+    assert_not document.valid?
+    assert document.errors[:scope].present?
+  end
+
   test "require an act reference" do
     document = Document.new(file: { io: StringIO.new("Instructions"), filename: "instructions.txt" })
 

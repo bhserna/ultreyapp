@@ -28,7 +28,7 @@
           <% end %>
         </ul>
       <% else %>
-        <p class="documents__empty">Todavía no hay documentos para esta actividad.</p>
+        <p class="documents__empty"><%= local_assigns.fetch(:empty_message, "Todavía no hay documentos para esta actividad.") %></p>
       <% end %>
     <% end %>
   </section>

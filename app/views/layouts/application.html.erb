@@ -28,6 +28,7 @@
     <nav class="site-nav" aria-label="Navegación principal">
       <%= link_to "Programa actualizado", current_program_path, aria: { current: ("page" if spreadsheet_program_page) } %>
       <%= link_to "Copias del spreadsheet", spreadsheet_copies_path, aria: { current: ("page" if spreadsheet_copies_page) } %>
+      <%= link_to "Documentos generales", general_documents_path, aria: { current: ("page" if controller_name == "general_documents") } %>
     </nav>
 
     <% flash.each do |type, message| %>

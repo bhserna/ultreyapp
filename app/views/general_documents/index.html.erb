@@ -1,0 +1,13 @@
+<% content_for :title, "Documentos generales" %>
+
+<main class="page">
+  <header class="page__header">
+    <h1>Documentos generales</h1>
+    <p>Material de consulta independiente de los actos del programa.</p>
+  </header>
+
+  <%= render "documents/collection", documents: @documents, unavailable_message: nil,
+        empty_message: "Todavía no hay documentos generales.",
+        upload_path: general_documents_path,
+        destroy_path: ->(document) { general_document_path(document) } %>
+</main>

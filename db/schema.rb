@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_14_010000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_15_000000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -88,9 +88,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_14_010000) do
     t.datetime "updated_at", null: false
     t.string "spreadsheet_act_key"
     t.string "spreadsheet_act_title"
+    t.string "scope", default: "act", null: false
     t.index ["act_id"], name: "index_documents_on_act_id"
     t.index ["spreadsheet_act_key"], name: "index_documents_on_spreadsheet_act_key"
-    t.check_constraint "(act_id IS NOT NULL AND spreadsheet_act_key IS NULL) OR (act_id IS NULL AND spreadsheet_act_key IS NOT NULL AND length(trim(spreadsheet_act_key)) > 0)", name: "documents_exactly_one_act_reference"
+    t.check_constraint "(scope = 'general' AND act_id IS NULL AND spreadsheet_act_key IS NULL) OR (scope = 'act' AND ((act_id IS NOT NULL AND spreadsheet_act_key IS NULL) OR (act_id IS NULL AND spreadsheet_act_key IS NOT NULL AND length(trim(spreadsheet_act_key)) > 0)))", name: "documents_scope_matches_act_reference"
   end
 
   create_table "preparations", force: :cascade do |t|

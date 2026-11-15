@@ -27,6 +27,26 @@ class SpreadsheetCopy::OfflineExportTest < ActiveSupport::TestCase
     end
   end
 
+  test "general documents have their own page and local files without appearing under acts" do
+    copy = create_copy("program_renamed_sheets.xlsx")
+    document = Document.create!(scope: "general", file: fixture_file_upload("participants.csv", "text/csv"))
+
+    with_export(copy) do |zip|
+      export = copy.offline_export
+      index = Nokogiri::HTML(zip.read("index.html"))
+      assert_equal "Documentos generales", index.at_css('a[href="general-documents.html"]').text
+      html = zip.read("general-documents.html").force_encoding(Encoding::UTF_8)
+      assert_includes html, "participants.csv"
+      assert_equal file_fixture("participants.csv").binread, zip.read(export.document_path(document))
+      copy.program.days.each do |day|
+        copy.program.entries(day: day).each do |entry|
+          assert_not_includes zip.read(export.entry_path(entry)), "participants.csv"
+        end
+      end
+      assert_local_links(zip)
+    end
+  end
+
   test "document filenames are safe local paths and cannot collide" do
     copy = create_copy("program_renamed_sheets.xlsx")
     first = Document.create!(spreadsheet_act_key: "act-002", file: {
