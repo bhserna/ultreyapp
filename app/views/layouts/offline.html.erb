@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title><%= content_for(:title) || "Ultreyapp sin conexión" %></title>
+    <link rel="stylesheet" href="assets/application.css">
+  </head>
+  <body>
+    <nav class="site-nav" aria-label="Navegación principal">
+      <a href="index.html">Programa sin conexión</a>
+      <aside class="offline-copy-info" aria-label="Información de la copia">
+        <p>Copia sin conexión · Generada el <%= l(export.generated_at, format: :spreadsheet_copy, locale: :es) %>.</p>
+      </aside>
+    </nav>
+    <%= yield %>
+  </body>
+</html>

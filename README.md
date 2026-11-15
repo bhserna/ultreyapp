@@ -2,6 +2,8 @@
 
 Production database backups: [setup and recovery verification](docs/backups.md).
 
+Offline ZIP downloads: [usage, implementation, and verification](docs/offline-downloads.md).
+
 This README would normally document whatever steps are necessary to get the
 application up and running.
 

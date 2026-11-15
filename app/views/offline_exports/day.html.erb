@@ -1,0 +1,13 @@
+<% content_for :title, day %>
+<main class="page page--wide">
+  <header class="page__header page__header--flush"><h1><%= day %></h1></header>
+  <div class="toolbar">
+    <nav class="tabs" aria-label="Días del programa">
+      <% export.program.days.each do |candidate| %>
+        <%= link_to candidate, export.day_path(candidate), class: "tabs__item#{' tabs__item--active' if candidate == day}", aria: { current: ("page" if candidate == day) } %>
+      <% end %>
+    </nav>
+  </div>
+  <%= render "shared/spreadsheet_program_table", day: day, entries: entries,
+        entry_path: export.method(:entry_path), document_count: ->(entry) { export.documents_for(entry).size } %>
+</main>

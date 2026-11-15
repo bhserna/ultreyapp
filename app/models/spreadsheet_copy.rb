@@ -33,6 +33,10 @@ class SpreadsheetCopy < ApplicationRecord
     raise DownloadError, error.message
   end
 
+  def offline_export
+    OfflineExport.new(self)
+  end
+
   def program
     @program ||= Program.new(Reader.new(self).read)
   end

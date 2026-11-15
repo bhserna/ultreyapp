@@ -1,0 +1,5 @@
+<span class="documents__format" data-format="<%= document.format_label.downcase %>"><%= document.format_label %></span>
+<div class="documents__file">
+  <%= link_to document.file.filename.to_s, file_path, class: "link", data: { turbo: false } %>
+  <span><%= number_to_human_size(document.file.blob.byte_size) %></span>
+</div>

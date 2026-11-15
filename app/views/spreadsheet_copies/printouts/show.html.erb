@@ -51,8 +51,8 @@
           <% entries.each do |entry| %>
             <tr>
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
-              <td><%= printout_entry_type(entry) %></td>
-              <td><%= printout_entry_number(entry).presence || "—" %></td>
+              <td><%= spreadsheet_entry_type(entry) %></td>
+              <td><%= spreadsheet_entry_number(entry).presence || "—" %></td>
               <td><%= entry.title %></td>
             </tr>
           <% end %>
@@ -67,16 +67,16 @@
         <% entries.each do |entry| %>
           <article class="printout__entry" aria-label="<%= entry.title %>">
             <header>
-              <p class="page__eyebrow"><%= day %> · <%= printout_entry_type(entry) %></p>
+              <p class="page__eyebrow"><%= day %> · <%= spreadsheet_entry_type(entry) %></p>
               <h2><%= entry.title %></h2>
               <dl class="page__details">
-                <% if printout_entry_number(entry).present? %>
-                  <div><dt>Acto</dt><dd><%= printout_entry_number(entry) %></dd></div>
+                <% if spreadsheet_entry_number(entry).present? %>
+                  <div><dt>Acto</dt><dd><%= spreadsheet_entry_number(entry) %></dd></div>
                 <% end %>
                 <div><dt>Horario</dt><dd><%= entry.schedule.to_s.presence || "—" %></dd></div>
               </dl>
             </header>
-            <%= render "shared/spreadsheet_entry_details", entry: entry, fields: printout_detail_fields(entry) %>
+            <%= render "shared/spreadsheet_entry_details", entry: entry, fields: spreadsheet_entry_detail_fields(entry) %>
           </article>
         <% end %>
       <% end %>

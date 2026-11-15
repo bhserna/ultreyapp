@@ -1,0 +1,44 @@
+<div class="table-container">
+  <table class="table">
+    <caption class="visually-hidden">Programa de actividades para <%= day %></caption>
+    <thead>
+      <tr>
+        <th scope="col">Horario</th>
+        <th scope="col">Acto</th>
+        <th scope="col">Actividad</th>
+        <th scope="col"><span class="visually-hidden">Detalle</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% entries.each do |entry| %>
+        <% row_class = case entry
+          when SpreadsheetCopy::PriorActivity then "schedule__prior-activity"
+          when SpreadsheetCopy::Preparation then "schedule__preparation"
+          end %>
+        <tr class="<%= row_class %>">
+          <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
+          <td class="text-nowrap"><%= spreadsheet_entry_number(entry).presence || "—" %></td>
+          <td class="schedule__activity">
+            <% unless entry.is_a?(SpreadsheetCopy::Act) %>
+              <strong><%= spreadsheet_entry_type(entry) %></strong> ·
+            <% end %>
+            <%= entry.title %>
+            <% if entry.is_a?(SpreadsheetCopy::Act) %>
+              <% count = document_count.call(entry) %>
+              <% if count.positive? %>
+                <span class="schedule__document-count" role="img" aria-label="<%= pluralize(count, "documento", "documentos") %>" title="<%= pluralize(count, "documento", "documentos") %>">
+                  <%= render "icons/attachment" %>
+                  <span aria-hidden="true"><%= count %></span>
+                </span>
+              <% end %>
+            <% end %>
+          </td>
+          <td><%= link_to "Ver detalle", entry_path.call(entry), class: "schedule__resources-link" %></td>
+        </tr>
+      <% end %>
+      <% if entries.empty? %>
+        <tr><td colspan="4">No hay actividades de este tipo para este día.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

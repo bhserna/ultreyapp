@@ -69,3 +69,4 @@ group :test do
 end
 
 gem "roo", "~> 3.0"
+gem "rubyzip", "~> 3.7", require: "zip"

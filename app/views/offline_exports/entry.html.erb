@@ -1,0 +1,45 @@
+<% content_for :title, entry.title %>
+<main class="page">
+  <%= link_to "← Volver al programa", export.day_path(entry.day), class: "page__back" %>
+  <header class="page__header">
+    <p class="page__eyebrow"><%= entry.day %> · <%= spreadsheet_entry_type(entry) %></p>
+    <h1><%= entry.title %></h1>
+    <dl class="page__details">
+      <% if spreadsheet_entry_number(entry).present? %>
+        <div><dt>Acto</dt><dd><%= spreadsheet_entry_number(entry) %></dd></div>
+      <% end %>
+      <div><dt>Horario</dt><dd><%= entry.schedule.to_s.presence || "—" %></dd></div>
+    </dl>
+  </header>
+  <section class="page__section" aria-label="Detalles de la actividad">
+    <%= render "shared/spreadsheet_entry_details", entry: entry, fields: spreadsheet_entry_detail_fields(entry) %>
+  </section>
+  <% if entry.is_a?(SpreadsheetCopy::Preparation) %>
+    <% related_acts = export.program.acts_for(entry) %>
+    <% if related_acts.any? %>
+      <h2>Actos relacionados</h2>
+      <ul class="related-links">
+        <% related_acts.each do |act| %>
+          <li><%= link_to "Acto #{act.number} · #{act.title}", export.entry_path(act) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+  <% if entry.is_a?(SpreadsheetCopy::Act) %>
+    <section class="page__section" aria-label="Documentos">
+      <h2>Documentos</h2>
+      <% documents = export.documents_for(entry) %>
+      <% if documents.any? %>
+        <ul class="documents__list">
+          <% documents.each do |document| %>
+            <li class="documents__item">
+              <%= render "documents/file", document: document, file_path: export.document_path(document) %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="documents__empty">No hay documentos disponibles para este acto en esta copia.</p>
+      <% end %>
+    </section>
+  <% end %>
+</main>

@@ -429,6 +429,7 @@ DEPENDENCIES
   rails (~> 8.1.4)
   roo (~> 3.0)
   rubocop-rails-omakase
+  rubyzip (~> 3.7)
   selenium-webdriver
   solid_cable
   solid_cache

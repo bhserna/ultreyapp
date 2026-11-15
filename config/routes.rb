@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   resources :spreadsheet_copies, only: %i[index create] do
     scope module: :spreadsheet_copies do
       resource :printout, only: :show
+      resource :offline_download, only: :show
       resource :program, only: :show
       resources :days, only: :show do
         resources :acts, only: :show do
