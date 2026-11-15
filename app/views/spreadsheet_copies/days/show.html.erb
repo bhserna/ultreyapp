@@ -50,7 +50,16 @@
             <tr>
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
               <td class="text-nowrap"><%= entry.number || "—" %></td>
-              <td class="schedule__activity"><%= entry.title %></td>
+              <td class="schedule__activity">
+                <%= entry.title %>
+                <% document_count = @document_counts.fetch(entry.source_key, 0) %>
+                <% if document_count.positive? %>
+                  <span class="schedule__document-count" role="img" aria-label="<%= pluralize(document_count, "documento", "documentos") %>" title="<%= pluralize(document_count, "documento", "documentos") %>">
+                    <%= render "icons/attachment" %>
+                    <span aria-hidden="true"><%= document_count %></span>
+                  </span>
+                <% end %>
+              </td>
               <td><%= link_to "Ver detalle", spreadsheet_copy_day_act_path(@spreadsheet_copy, entry.day, entry, row_type: @selected_row_type), class: "schedule__resources-link" %></td>
             </tr>
           <% end %>

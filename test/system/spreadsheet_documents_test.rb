@@ -13,6 +13,11 @@ class SpreadsheetDocumentsTest < ApplicationSystemTestCase
       assert_link "participants.csv"
     end
 
+    visit spreadsheet_copy_day_path(original, "Domingo 15", row_type: "acts")
+    within "tr", text: "Inicio / Video" do
+      assert_selector "[role=img][aria-label='2 documentos']", text: "2"
+    end
+
     updated = create_copy("program_document_updates.xlsx")
     visit current_program_path
     within "tr", text: "Inicio corregido" do
@@ -36,6 +41,9 @@ class SpreadsheetDocumentsTest < ApplicationSystemTestCase
     end
     click_link "← Volver al programa"
     assert_current_path spreadsheet_copy_day_path(original, "Domingo 15", row_type: "acts")
+    within "tr", text: "Inicio / Video" do
+      assert_selector "[role=img][aria-label='1 documento']", text: "1"
+    end
   end
 
   test "files from a removed act remain downloadable in documents without an act" do

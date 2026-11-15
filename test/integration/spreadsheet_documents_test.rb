@@ -1,6 +1,42 @@
 require "test_helper"
+require "active_record/testing/query_assertions"
 
 class SpreadsheetDocumentsIntegrationTest < ActionDispatch::IntegrationTest
+  include ActiveRecord::Assertions::QueryAssertions
+
+  test "render document indicators with one grouped query and only for acts with files" do
+    copy = create_copy("program_renamed_sheets.xlsx")
+    create_document("act-001", "agenda.txt")
+    create_document("act-002", "agenda.txt")
+    create_document("act-002", "participants.csv")
+    create_document("act-005", "participants.csv")
+    create_document("unknown-act", "agenda.txt")
+    Document.create!(act_id: activities(:opening_act).id, file: fixture_file_upload("agenda.txt", "text/plain"))
+
+    assert_queries_match(/FROM "documents"/, count: 1) do
+      get spreadsheet_copy_day_path(copy, "Domingo 15")
+    end
+    assert_response :success
+    assert_select "[role=img]", count: 2
+    assert_select "[role=img][aria-label='1 documento']", text: "1"
+    assert_select "[role=img][aria-label='2 documentos']", text: "2"
+    assert_select "a [role=img], button [role=img]", count: 0
+    assert_select "[role=img][aria-label='0 documentos']", count: 0
+    assert_select "tr", text: /Grupo Folklórico/ do
+      assert_select "[role=img]", count: 0
+    end
+
+    get spreadsheet_copy_day_path(copy, "Domingo 15", row_type: "preparations")
+    assert_select "td strong", text: "Preparación", minimum: 1
+    assert_select "[role=img]", count: 0
+
+    get spreadsheet_copy_day_path(copy, "Lunes 16", row_type: "acts")
+    assert_select "[role=img]", count: 1
+    assert_select "tr", text: /Bienvenida del lunes/ do
+      assert_select "[role=img][aria-label='1 documento']", text: "1"
+    end
+  end
+
   test "upload uses the act ID from the copy rather than submitted references" do
     copy = create_copy("program_renamed_sheets.xlsx")
     files = [ fixture_file_upload("agenda.txt", "text/plain"), fixture_file_upload("participants.csv", "text/csv") ]
@@ -60,6 +96,11 @@ class SpreadsheetDocumentsIntegrationTest < ActionDispatch::IntegrationTest
     document = create_document("act-002", "agenda.txt")
     [ [ "program.xlsx", "no tiene ID" ], [ "program_duplicate_ids.xlsx", "está duplicado" ] ].each do |filename, message|
       copy = create_copy(filename)
+      [ "Domingo 15", "Lunes 16" ].each do |day|
+        get spreadsheet_copy_day_path(copy, day)
+        assert_response :success
+        assert_select "[role=img]", count: 0
+      end
       path = spreadsheet_copy_day_act_documents_path(copy, "Domingo 15", 2)
       get path
       assert_select "[role=status]", text: /#{message}/

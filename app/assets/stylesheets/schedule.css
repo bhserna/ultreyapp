@@ -32,6 +32,21 @@
     min-width: 18rem;
   }
 
+  .schedule__document-count {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    margin-inline-start: 0.5rem;
+    color: #64748b;
+    font-size: 0.8rem;
+    vertical-align: middle;
+    white-space: nowrap;
+  }
+
+  .schedule__document-count svg {
+    flex-shrink: 0;
+  }
+
   .schedule__resources-link {
     display: inline-block;
     padding: 0.45rem 0.75rem;
