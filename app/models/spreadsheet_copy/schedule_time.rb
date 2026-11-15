@@ -9,7 +9,21 @@ class SpreadsheetCopy::ScheduleTime
   end
 
   def to_s
-    @text
+    time_pattern = /\d{1,2}:\d{2}(?![\d:])(?:\s*(?:am|pm)\b)?/i
+    match = @text.match(/\A(#{time_pattern})(?:\s*([-–])\s*(#{time_pattern}))?(.*)\z/)
+    return @text unless match
+
+    first, separator, last, annotation = match.captures
+    # A trailing meridiem applies to both endpoints of a range.
+    meridiem = last&.match(/\b(am|pm)\z/i)&.[](1)
+    first = "#{first} #{meridiem}" if meridiem && !first.match?(/\b(am|pm)\z/i)
+    start = self.class.new(first, after_noon: @after_noon).start_minutes
+    finish = self.class.new(last, after_noon: @after_noon).start_minutes if last
+    return @text unless start && (!last || finish)
+
+    text = format("%02d:%02d", start / 60, start % 60)
+    text += "#{separator}#{format('%02d:%02d', finish / 60, finish % 60)}" if last
+    text + annotation
   end
 
   def start_minutes

@@ -13,6 +13,13 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
     assert_selector "table", count: 1
     assert_selector "caption.visually-hidden", text: "Programa de actividades para Domingo 15"
     assert_selector "article", text: "Preparar instrumentos"
+    within "tr", text: "Preparar instrumentos" do
+      assert_selector "td", exact_text: "09:45"
+    end
+    within "article", text: "Preparar instrumentos" do
+      assert_selector "dd", exact_text: "09:45"
+    end
+    assert_no_text "09:45 am"
     assert_no_text "Entrada a la Arena"
     assert_no_text "Preparar apertura del lunes"
 

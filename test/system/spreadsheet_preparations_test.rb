@@ -3,7 +3,7 @@ require "application_system_test_case"
 class SpreadsheetPreparationsTest < ApplicationSystemTestCase
   include ActionDispatch::TestProcess::FixtureFile
 
-  test "keep afternoon preparations before their acts without changing the displayed times" do
+  test "keep afternoon preparations before their acts and display uniform 24 hour times" do
     SpreadsheetCopy.create!(file: fixture_file_upload("program_noon.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 
     visit current_program_path
@@ -13,12 +13,12 @@ class SpreadsheetPreparationsTest < ApplicationSystemTestCase
       "Preparación · Preparar animación", "Animación", "Saludos", "Preparación · Preparar eucaristía", "Eucaristía"
     ], all("tbody .schedule__activity").map(&:text)
     within "tr", text: "Preparar eucaristía" do
-      assert_text "1:30 pm"
+      assert_selector "td", exact_text: "13:30"
     end
     within "tr", text: "Eucaristía" do
       click_link "Ver detalle"
     end
-    assert_text "2:00–3:50"
+    assert_text "14:00–15:50"
     click_link "← Volver al programa"
     click_link "Lunes 16"
     assert_selector ".tabs a[aria-current=page]", text: "Lunes 16"
@@ -29,7 +29,7 @@ class SpreadsheetPreparationsTest < ApplicationSystemTestCase
       "Eucaristía de clausura", "Preparación · Preparar salida", "Entrega de comida y salida"
     ], all("tbody .schedule__activity").map(&:text)
     within "tr", text: "Preparar salida" do
-      assert_text "02:00"
+      assert_selector "td", exact_text: "14:00"
     end
   end
 
@@ -45,7 +45,7 @@ class SpreadsheetPreparationsTest < ApplicationSystemTestCase
       assert_link "Ver detalle"
     end
     within "tr", text: "Preparar instrumentos" do
-      assert_text "09:45 am"
+      assert_selector "td", exact_text: "09:45"
       assert_selector "td", exact_text: "2"
       assert_no_text "Previo"
       assert_no_text "10:05–10:20"

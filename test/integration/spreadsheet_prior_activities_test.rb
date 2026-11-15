@@ -34,7 +34,7 @@ class SpreadsheetPriorActivitiesIntegrationTest < ActionDispatch::IntegrationTes
 
     get spreadsheet_copy_day_prior_activity_path(copy, "Domingo 15", 1)
 
-    assert_select "dd", text: "6:00 am"
+    assert_select "dd", text: "06:00"
     assert_select "h3", text: "Contacto"
     assert_select "h3", text: "Responsables", count: 0
     assert_select "h3", text: "Notas", count: 0

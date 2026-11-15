@@ -16,7 +16,7 @@ class SpreadsheetCopy::PreparationTest < ActiveSupport::TestCase
     assert_equal 2, preparation.position
     assert_equal "Preparar instrumentos", preparation.title
     assert_instance_of SpreadsheetCopy::ScheduleTime, preparation.schedule
-    assert_equal "09:45 am", preparation.schedule.to_s
+    assert_equal "09:45", preparation.schedule.to_s
     assert_equal "2", preparation.act_number
   end
 

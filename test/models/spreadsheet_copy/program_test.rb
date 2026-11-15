@@ -112,7 +112,7 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal [
       "Preparar canto", "Canto", "Tema", "Preparar animación", "Animación", "Saludos", "Preparar eucaristía", "Eucaristía"
     ], program.entries(day: "Domingo 15").map(&:title)
-    assert_equal "2:00–3:50", program.acts.last.schedule.to_s
+    assert_equal "14:00–15:50", program.acts.last.schedule.to_s
   end
 
   test "reset noon context for every sheet and do not mistake morning reversals for afternoon" do
@@ -143,7 +143,7 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
 
     assert_equal [ 600, 595, 780, 840, 480, 776, 780 ], program.acts.map { |act| act.schedule.start_minutes }
     assert_equal [ 540, 780, 840, 450, 750, nil, 840 ], program.preparations.map { |preparation| preparation.schedule.start_minutes }
-    assert_equal "02:00", program.preparations.last.schedule.to_s
+    assert_equal "14:00", program.preparations.last.schedule.to_s
   end
 
   test "filter entries by type without mixing days and treat unknown filters as all" do

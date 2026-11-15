@@ -33,7 +33,7 @@ class SpreadsheetCopy::PriorActivityTest < ActiveSupport::TestCase
       day: "Domingo 15", position: 3
     )
 
-    assert_equal "3:00–08:00 am", activity.schedule.to_s
+    assert_equal "03:00–08:00", activity.schedule.to_s
     assert_equal "Lydia", activity.contact
     assert_nil activity.responsibles
     assert_nil activity.notes
