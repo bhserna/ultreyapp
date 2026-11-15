@@ -20,9 +20,10 @@ class SpreadsheetActsTest < ApplicationSystemTestCase
     within :activity_details do
       assert_selector "h3", text: "Audio"
       assert_text "Playlist instrumental"
-      assert_text "Bajar volumen al terminar <b>la entrada</b>."
+      assert_text "Bajar volumen al terminar la entrada."
       assert_selector "p br", visible: :all
-      assert_no_selector "b"
+      assert_selector "b", text: "la entrada"
+      assert_no_text "<b>"
       assert_text "Video de bienvenida"
       assert_text "BIENVENIDOS"
       assert_text "Sala al 60 %"

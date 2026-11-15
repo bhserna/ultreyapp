@@ -76,12 +76,7 @@
                 <div><dt>Horario</dt><dd><%= entry.schedule.to_s.presence || "—" %></dd></div>
               </dl>
             </header>
-            <% printout_detail_fields(entry).each do |attribute, label| %>
-              <% if entry.public_send(attribute).present? %>
-                <h3><%= label %></h3>
-                <%= simple_format(h(entry.public_send(attribute))) %>
-              <% end %>
-            <% end %>
+            <%= render "shared/spreadsheet_entry_details", entry: entry, fields: printout_detail_fields(entry) %>
           </article>
         <% end %>
       <% end %>

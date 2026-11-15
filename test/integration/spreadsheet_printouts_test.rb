@@ -27,13 +27,13 @@ class SpreadsheetPrintoutsIntegrationTest < ActionDispatch::IntegrationTest
     assert_select "a", text: "Ver detalle", count: 0
   end
 
-  test "prior activity details escape content and omit empty fields" do
+  test "prior activity details preserve basic formatting and omit empty fields" do
     get spreadsheet_copy_printout_path(@copy, day: "Sábado 14", row_type: "prior_activities")
     assert_response :success
     assert_select "article", count: @copy.program.entries(day: "Sábado 14", row_type: "prior_activities").size
     assert_select "article h3", text: "Responsables"
-    assert_select "article p", text: /Al menos uno por comisión <b>sin bloquear<\/b>\./
-    assert_select "article b", count: 0
+    assert_select "article p", text: /Al menos uno por comisión sin bloquear\./
+    assert_select "article b", text: "sin bloquear"
     assert_select "article p br"
   end
 

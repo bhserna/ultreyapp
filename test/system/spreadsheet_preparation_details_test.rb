@@ -18,9 +18,9 @@ class SpreadsheetPreparationDetailsTest < ApplicationSystemTestCase
     within "section[aria-label='Instrucciones de preparación']" do
       assert_selector "h3", text: "Actos previos"
       assert_text "Recibir invitados"
-      assert_text "Confirmar accesos <b>sin bloquear</b>."
+      assert_text "Confirmar accesos sin bloquear."
       assert_selector "p br", visible: :all
-      assert_no_selector "b"
+      assert_selector "b", text: "sin bloquear"
       assert_selector "h3", text: "Tramoya"
       assert_text "Colocar pódium"
       assert_selector "h3", text: "Ambientación / Coro Arcoiris"

@@ -30,10 +30,7 @@
   <% details = spreadsheet_preparation_detail_fields.select { |attribute, label| @preparation.public_send(attribute).present? } %>
   <% if details.any? %>
     <section class="page__section" aria-label="Instrucciones de preparación">
-      <% details.each do |attribute, label| %>
-        <h3><%= label %></h3>
-        <%= simple_format(h(@preparation.public_send(attribute))) %>
-      <% end %>
+      <%= render "shared/spreadsheet_entry_details", entry: @preparation, fields: details %>
     </section>
   <% end %>
 </main>

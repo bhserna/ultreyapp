@@ -16,7 +16,7 @@ class SpreadsheetPriorActivitiesIntegrationTest < ActionDispatch::IntegrationTes
     assert_response :not_found
   end
 
-  test "details escape spreadsheet text and do not offer documents or editing" do
+  test "details preserve basic formatting and do not offer documents or editing" do
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_prior_activities.xlsx", SpreadsheetCopy::CONTENT_TYPE))
 
     get spreadsheet_copy_day_prior_activity_path(copy, "Sábado 14", 1)
@@ -26,9 +26,9 @@ class SpreadsheetPriorActivitiesIntegrationTest < ActionDispatch::IntegrationTes
     assert_select "h3", text: "Responsables"
     assert_select "h3", text: "Notas"
     assert_select "h3", text: "Contacto", count: 0
-    assert_select "p", text: /Al menos uno por comisión <b>sin bloquear<\/b>\./
+    assert_select "p", text: /Al menos uno por comisión sin bloquear\./
     assert_select "p br"
-    assert_select "b", count: 0
+    assert_select "b", text: "sin bloquear"
     assert_select "turbo-frame#documents, input[type=file]", count: 0
     assert_select "a", text: "Editar detalles", count: 0
 

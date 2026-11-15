@@ -1,0 +1,6 @@
+<% fields.each do |attribute, label| %>
+  <% if entry.public_send(attribute).present? %>
+    <h3><%= label %></h3>
+    <%= simple_format(sanitize(entry.public_send(attribute), tags: %w[b strong i em br p], attributes: [])) %>
+  <% end %>
+<% end %>
