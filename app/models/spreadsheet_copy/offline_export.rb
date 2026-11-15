@@ -22,9 +22,11 @@ class SpreadsheetCopy::OfflineExport
       write_page(zip, "index.html", "index")
       write_page(zip, "general-documents.html", "general_documents")
       program.days.each do |day|
-        entries = program.entries(day: day)
-        write_page(zip, day_path(day), "day", day: day, entries: entries)
-        entries.each do |entry|
+        [ nil, *SpreadsheetCopy::Program::ROW_TYPES ].each do |row_type|
+          write_page(zip, day_path(day, row_type: row_type), "day",
+            day: day, entries: program.entries(day: day, row_type: row_type), row_type: row_type)
+        end
+        program.entries(day: day).each do |entry|
           write_page(zip, entry_path(entry), "entry", entry: entry)
         end
       end
@@ -33,8 +35,9 @@ class SpreadsheetCopy::OfflineExport
     end
   end
 
-  def day_path(day)
-    "day-#{program.days.index(day) + 1}.html"
+  def day_path(day, row_type: nil)
+    suffix = "-#{row_type}" if row_type.present?
+    "day-#{program.days.index(day) + 1}#{suffix}.html"
   end
 
   def entry_path(entry)

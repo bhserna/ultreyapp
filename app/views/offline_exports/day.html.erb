@@ -4,7 +4,14 @@
   <div class="toolbar">
     <nav class="tabs" aria-label="Días del programa">
       <% export.program.days.each do |candidate| %>
-        <%= link_to candidate, export.day_path(candidate), class: "tabs__item#{' tabs__item--active' if candidate == day}", aria: { current: ("page" if candidate == day) } %>
+        <%= link_to candidate, export.day_path(candidate, row_type: row_type), class: "tabs__item#{' tabs__item--active' if candidate == day}", aria: { current: ("page" if candidate == day) } %>
+      <% end %>
+    </nav>
+    <nav class="tabs" aria-label="Tipo de actividad">
+      <% [["Todo", nil], ["Actos", "acts"], ["Preparaciones", "preparations"], ["Actividades previas", "prior_activities"]].each do |label, type| %>
+        <%= link_to label, export.day_path(day, row_type: type),
+              class: "tabs__item#{' tabs__item--active' if type == row_type}",
+              aria: { current: ("page" if type == row_type) } %>
       <% end %>
     </nav>
   </div>

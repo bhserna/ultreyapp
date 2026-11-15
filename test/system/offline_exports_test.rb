@@ -32,9 +32,31 @@ class OfflineExportsTest < ApplicationSystemTestCase
       assert_equal "border-box", page.evaluate_script("getComputedStyle(document.body).boxSizing")
 
       click_link "Sábado 14"
+      within "nav[aria-label='Tipo de actividad']" do
+        click_link "Actividades previas"
+      end
+      assert_selector "tr.schedule__prior-activity", text: "Recepción de Diócesis"
+      click_link "Domingo 15"
+      assert_selector "nav[aria-label='Tipo de actividad'] a[aria-current='page']", text: "Actividades previas"
+      assert_no_selector "tr.schedule__preparation"
+      within "nav[aria-label='Tipo de actividad']" do
+        click_link "Preparaciones"
+      end
+      assert_selector "tr.schedule__preparation", text: "Preparar instrumentos"
+      assert_no_selector "tr", text: "Inicio / Video"
+      within "nav[aria-label='Tipo de actividad']" do
+        click_link "Actos"
+      end
+      assert_selector "tr", text: "Inicio / Video"
+      assert_no_selector "tr.schedule__preparation"
+      click_link "Sábado 14"
+      assert_text "No hay actividades de este tipo para este día."
+      within "nav[aria-label='Tipo de actividad']" do
+        click_link "Todo"
+      end
       assert_selector "thead th", count: 4
       assert_no_selector "thead th", text: "Tipo"
-      assert_operator find(".table-container").native.rect.y, :>, find(".tabs").native.rect.y + find(".tabs").native.rect.height
+      assert_operator find(".table-container").native.rect.y, :>, find(".toolbar").native.rect.y + find(".toolbar").native.rect.height
       within "tr.schedule__prior-activity", text: "Recepción de Diócesis" do
         assert_equal "rgb(255, 244, 220)", page.evaluate_script("getComputedStyle(document.querySelector('.schedule__prior-activity')).backgroundColor")
         click_link "Ver detalle"
