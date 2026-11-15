@@ -15,6 +15,10 @@ class SpreadsheetCopy::Program
     @preparations ||= build_preparations
   end
 
+  def prior_activities
+    @prior_activities ||= build_prior_activities
+  end
+
   def find_act!(day:, id:)
     acts.find { |act| act.day == day && act.to_param == id } ||
       raise(ActiveRecord::RecordNotFound)
@@ -22,6 +26,11 @@ class SpreadsheetCopy::Program
 
   def find_preparation!(day:, id:)
     preparations.find { |preparation| preparation.day == day && preparation.to_param == id } ||
+      raise(ActiveRecord::RecordNotFound)
+  end
+
+  def find_prior_activity!(day:, id:)
+    prior_activities.find { |activity| activity.day == day && activity.to_param == id } ||
       raise(ActiveRecord::RecordNotFound)
   end
 
@@ -78,8 +87,16 @@ class SpreadsheetCopy::Program
     end
   end
 
+  def build_prior_activities
+    sheets_with_columns(SpreadsheetCopy::PriorActivity::REQUIRED_COLUMNS).flat_map do |name, rows|
+      next [] unless name.strip.match?(/\AActividades previas\s+\S/i)
+
+      build_rows(rows, type: SpreadsheetCopy::PriorActivity, day: day_from_sheet_name(name))
+    end
+  end
+
   def day_from_sheet_name(name)
-    name.strip.sub(/\A(?:Actos|Preparaciones)\s+/i, "").sub(/\ADom(?=\s)/i, "Domingo")
+    name.strip.sub(/\A(?:Actos|Preparaciones|Actividades previas)\s+/i, "").sub(/\ADom(?=\s)/i, "Domingo")
   end
 
   def sheets_with_columns(columns)

@@ -210,6 +210,70 @@ class SpreadsheetCopy::ProgramTest < ActiveSupport::TestCase
     assert_equal [ "Inicio" ], program.acts_for(program.preparations.first).map(&:title)
   end
 
+  test "read prior activities only from named day sheets and keep their original positions" do
+    program = SpreadsheetCopy::Program.new(
+      "Actos Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ],
+      "Actividades previas Sábado 14" => [
+        { "Horario" => nil, "Actividad" => "Recepción" },
+        { "Actividad" => " ", "Notas" => "Pendiente" },
+        { "Actividad" => "Entrega de kits" }
+      ],
+      " Actividades previas Dom 15 " => [
+        { "Horario" => "6:00 am", "Actividad" => "Prueba de sonido" },
+        { "Horario" => "4:00 am", "Actividad" => "Preparación de chisperos" }
+      ],
+      "Otras actividades" => [ { "Horario" => "7:00 am", "Actividad" => "No incluir" } ],
+      "Actividades previas" => [ { "Horario" => nil, "Actividad" => "Sin día en la pestaña" } ]
+    )
+
+    assert_equal [ "Recepción", "Entrega de kits", "Prueba de sonido", "Preparación de chisperos" ], program.prior_activities.map(&:title)
+    assert_equal [ [ "Sábado 14", 1 ], [ "Sábado 14", 3 ], [ "Domingo 15", 1 ], [ "Domingo 15", 2 ] ],
+      program.prior_activities.map { |activity| [ activity.day, activity.position ] }
+    assert_same program.prior_activities[1], program.find_prior_activity!(day: "Sábado 14", id: "3")
+    assert_same program.prior_activities[2], program.find_prior_activity!(day: "Domingo 15", id: "1")
+    assert_equal [ 360, 240 ], program.prior_activities.last(2).map { |activity| activity.schedule.start_minutes }
+  end
+
+  test "find prior activities by exact day and position rather than coercing parameters" do
+    program = SpreadsheetCopy::Program.new(
+      "Actividades previas Sábado 14" => [
+        { "Horario" => nil, "Actividad" => "Recepción" },
+        { "Actividad" => " ", "Notas" => "Sin actividad" }
+      ]
+    )
+
+    [ [ "Lunes 16", "1" ], [ nil, "1" ], [ "Sábado 14", "2" ], [ "Sábado 14", "1junk" ],
+      [ "Sábado 14", "01" ], [ "Sábado 14", nil ] ].each do |day, id|
+      assert_raises ActiveRecord::RecordNotFound do
+        program.find_prior_activity!(day: day, id: id)
+      end
+    end
+  end
+
+  test "reset noon context for each prior activity sheet" do
+    program = SpreadsheetCopy::Program.new(
+      "Actividades previas Sábado 14" => [
+        { "Horario" => "12:00", "Actividad" => "Entrega de kits" },
+        { "Horario" => "1:00", "Actividad" => "Continuación" }
+      ],
+      "Actividades previas Domingo 15" => [
+        { "Horario" => "01:30–08:00", "Actividad" => "Instalación de cruz" },
+        { "Horario" => "6:00 am", "Actividad" => "Prueba de sonido" },
+        { "Horario" => "4:00 am", "Actividad" => "Preparación de chisperos" }
+      ]
+    )
+
+    assert_equal [ 720, 780, 90, 360, 240 ], program.prior_activities.map { |activity| activity.schedule.start_minutes }
+  end
+
+  test "copies without prior activity day sheets return no prior activities" do
+    program = SpreadsheetCopy::Program.new(
+      "Domingo 15" => [ { "Horario" => "10:00", "# Acto" => 1, "Actividad" => "Inicio" } ]
+    )
+
+    assert_empty program.prior_activities
+  end
+
   test "only unique nonblank IDs across all days can identify documents" do
     program = SpreadsheetCopy::Program.new(
       "Domingo 15" => [
