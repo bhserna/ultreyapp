@@ -15,7 +15,6 @@
   <% details = spreadsheet_prior_activity_detail_fields.select { |attribute, label| @prior_activity.public_send(attribute).present? } %>
   <% if details.any? %>
     <section class="page__section" aria-label="Detalles de la actividad previa">
-      <h2>Detalles de la actividad previa</h2>
       <% details.each do |attribute, label| %>
         <h3><%= label %></h3>
         <%= simple_format(h(@prior_activity.public_send(attribute))) %>

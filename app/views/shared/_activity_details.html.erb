@@ -1,6 +1,4 @@
 <section class="page__section" aria-label="Detalles de la actividad" data-activity-id="<%= activity.id %>">
-  <h2>Detalles de la actividad</h2>
-
   <% if (detail = activity.activity_detail) %>
     <% activity_detail_fields.each do |attribute, label| %>
       <% if detail.public_send(attribute).present? %>
