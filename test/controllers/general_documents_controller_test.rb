@@ -5,14 +5,13 @@ class GeneralDocumentsControllerTest < ActionDispatch::IntegrationTest
     assert_difference "Document.count", 2 do
       post general_documents_url, params: {
         files: [ fixture_file_upload("agenda.txt", "text/plain"), fixture_file_upload("participants.csv", "text/csv") ],
-        scope: "act", act_id: activities(:opening_act).id, spreadsheet_act_key: "act-001"
+        scope: "act", act_id: 123, spreadsheet_act_key: "act-001"
       }
     end
 
     assert_redirected_to general_documents_url
     Document.order(:id).last(2).each do |document|
       assert document.scope_general?
-      assert_nil document.act_id
       assert_nil document.spreadsheet_act_key
       assert document.file.attached?
     end
@@ -20,7 +19,6 @@ class GeneralDocumentsControllerTest < ActionDispatch::IntegrationTest
 
   test "list only general documents" do
     general = create_document(scope: "general", filename: "agenda.txt")
-    create_document(act_id: activities(:opening_act).id, filename: "participants.csv")
     create_document(spreadsheet_act_key: "removed-act", filename: "participants.csv")
 
     get general_documents_url
@@ -31,8 +29,8 @@ class GeneralDocumentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "cannot delete act documents through the general documents page" do
-    [ { act_id: activities(:opening_act).id }, { spreadsheet_act_key: "removed-act" } ].each do |reference|
-      document = create_document(**reference)
+    [ "act-001", "removed-act" ].each do |key|
+      document = create_document(spreadsheet_act_key: key)
       content = document.file.download
 
       assert_no_difference [ "Document.count", "ActiveStorage::Attachment.count", "ActiveStorage::Blob.count" ] do

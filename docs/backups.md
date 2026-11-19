@@ -90,6 +90,14 @@ bundle exec kamal-backup validate
 bin/kamal accessory reboot backup
 ```
 
+## Retired program removal
+
+Before deploying the migration that removes the retired program tables, follow
+[the removal checklist](retired-program-removal.md). It requires a verified
+pre-migration database backup, separate Active Storage object backups, and secure
+off-server retention of the migration's JSON export. The JSON archive directory
+is not covered by the current backup configuration.
+
 ## Recovery verification
 
 Download a database snapshot into ignored local storage and verify SQLite can

@@ -11,7 +11,7 @@ class SpreadsheetDocumentsIntegrationTest < ActionDispatch::IntegrationTest
     create_document("act-002", "participants.csv")
     create_document("act-005", "participants.csv")
     create_document("unknown-act", "agenda.txt")
-    Document.create!(act_id: activities(:opening_act).id, file: fixture_file_upload("agenda.txt", "text/plain"))
+    Document.create!(scope: "general", file: fixture_file_upload("agenda.txt", "text/plain"))
 
     assert_queries_match(/FROM "documents"/, count: 1) do
       get spreadsheet_copy_day_path(copy, "Domingo 15")
@@ -43,23 +43,22 @@ class SpreadsheetDocumentsIntegrationTest < ActionDispatch::IntegrationTest
 
     assert_difference "Document.count", 2 do
       post spreadsheet_copy_day_act_documents_path(copy, "Domingo 15", 2),
-        params: { files: files, spreadsheet_act_key: "act-999", act_id: activities(:opening_act).id }
+        params: { files: files, spreadsheet_act_key: "act-999", act_id: 123 }
     end
 
     documents = Document.order(:id).last(2)
     documents.each do |document|
       assert_equal "act-002", document.spreadsheet_act_key
       assert_equal "Inicio / Video", document.spreadsheet_act_title
-      assert_nil document.act_id
       assert_equal file_fixture(document.file.filename.to_s).binread, document.file.download
     end
   end
 
-  test "download delivers the saved file and does not mix other acts or legacy documents" do
+  test "download delivers the saved file and does not mix other acts or general documents" do
     copy = create_copy("program_renamed_sheets.xlsx")
     document = create_document("act-002", "agenda.txt")
     create_document("act-003", "participants.csv")
-    Document.create!(act_id: activities(:opening_act).id, file: fixture_file_upload("participants.csv", "text/plain"))
+    Document.create!(scope: "general", file: fixture_file_upload("participants.csv", "text/plain"))
 
     get spreadsheet_copy_day_act_documents_path(copy, "Domingo 15", 2)
     assert_select ".documents__file a", text: "agenda.txt"
@@ -117,11 +116,11 @@ class SpreadsheetDocumentsIntegrationTest < ActionDispatch::IntegrationTest
     assert_equal file_fixture("agenda.txt").binread, document.reload.file.download
   end
 
-  test "unassigned documents are compared against the latest copy without including legacy files" do
+  test "unassigned documents are compared against the latest copy without including general files" do
     create_copy("program_renamed_sheets.xlsx")
     create_document("act-003", "participants.csv")
     create_document("act-002", "agenda.txt")
-    Document.create!(act_id: activities(:opening_act).id, file: fixture_file_upload("agenda.txt", "text/plain"))
+    Document.create!(scope: "general", file: fixture_file_upload("agenda.txt", "text/plain"))
     create_copy("program_document_updates.xlsx")
 
     get spreadsheet_documents_path

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_15_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_15_010000) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -39,82 +39,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_000000) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
-  create_table "activities", force: :cascade do |t|
-    t.string "kind", null: false
-    t.string "title", null: false
-    t.string "day", null: false
-    t.string "phase", default: "program", null: false
-    t.string "start_time"
-    t.string "end_time"
-    t.string "duration"
-    t.json "act_number"
-    t.string "category"
-    t.json "commissions", default: [], null: false
-    t.integer "source_id", null: false
-    t.string "source_sheet"
-    t.integer "source_row"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "preparation_id"
-    t.integer "position"
-    t.index ["kind", "source_id"], name: "index_activities_on_kind_and_source_id", unique: true
-    t.index ["preparation_id", "position"], name: "index_activities_on_preparation_id_and_position", unique: true
-  end
-
-  create_table "activity_details", force: :cascade do |t|
-    t.integer "activity_id", null: false
-    t.text "description"
-    t.text "executors"
-    t.text "notes"
-    t.text "pending_confirmations"
-    t.text "screen"
-    t.text "audio"
-    t.text "room_lighting"
-    t.text "stage_lighting"
-    t.text "aisle_lighting"
-    t.text "requirements"
-    t.text "radios"
-    t.text "media_files"
-    t.text "arena_questions"
-    t.text "general_questions"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["activity_id"], name: "index_activity_details_on_activity_id", unique: true
-  end
-
   create_table "documents", force: :cascade do |t|
-    t.integer "act_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "spreadsheet_act_key"
     t.string "spreadsheet_act_title"
     t.string "scope", default: "act", null: false
-    t.index ["act_id"], name: "index_documents_on_act_id"
     t.index ["spreadsheet_act_key"], name: "index_documents_on_spreadsheet_act_key"
-    t.check_constraint "(scope = 'general' AND act_id IS NULL AND spreadsheet_act_key IS NULL) OR (scope = 'act' AND ((act_id IS NOT NULL AND spreadsheet_act_key IS NULL) OR (act_id IS NULL AND spreadsheet_act_key IS NOT NULL AND length(trim(spreadsheet_act_key)) > 0)))", name: "documents_scope_matches_act_reference"
-  end
-
-  create_table "preparations", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "day", null: false
-    t.string "phase", default: "program", null: false
-    t.string "start_time"
-    t.json "act_ids", default: [], null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "questions", force: :cascade do |t|
-    t.integer "act_id"
-    t.text "body", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.text "answer"
-    t.integer "topic_id"
-    t.string "source_key"
-    t.index ["act_id"], name: "index_questions_on_act_id"
-    t.index ["source_key"], name: "index_questions_on_source_key", unique: true
-    t.index ["topic_id"], name: "index_questions_on_topic_id"
+    t.check_constraint "(scope = 'general' AND spreadsheet_act_key IS NULL) OR (scope = 'act' AND spreadsheet_act_key IS NOT NULL AND length(trim(spreadsheet_act_key)) > 0)", name: "documents_scope_matches_act_reference"
   end
 
   create_table "spreadsheet_copies", force: :cascade do |t|
@@ -122,16 +54,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_15_000000) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "topics", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["name"], name: "index_topics_on_name", unique: true
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "activities", "preparations"
-  add_foreign_key "activity_details", "activities", on_delete: :cascade
-  add_foreign_key "questions", "topics"
 end

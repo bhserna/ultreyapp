@@ -1,31 +1,25 @@
 require "test_helper"
 
 class DocumentTest < ActiveSupport::TestCase
-  test "find documents by their legacy or spreadsheet act without mixing programs" do
-    legacy = create_document(act_id: activities(:opening_act).id)
-    create_document(act_id: activities(:closing_act).id)
+  test "find documents by their spreadsheet act" do
     spreadsheet = create_document(spreadsheet_act_key: "act-001")
-    other_spreadsheet = create_document(spreadsheet_act_key: "act-002")
+    other = create_document(spreadsheet_act_key: "act-002")
+    create_document(scope: "general")
 
-    assert_equal [ legacy ], Document.for_legacy_act(activities(:opening_act).id).to_a
     assert_equal [ spreadsheet ], Document.for_spreadsheet_act("act-001").to_a
-    assert_equal [ spreadsheet, other_spreadsheet ], Document.from_spreadsheet.order(:id).to_a
+    assert_equal [ spreadsheet, other ], Document.from_spreadsheet.order(:id).to_a
   end
 
   test "blank and unknown act references return empty chainable relations" do
-    create_document(act_id: activities(:opening_act).id)
     create_document(spreadsheet_act_key: "act-001")
 
-    [ nil, "", " " ].each do |reference|
-      assert_empty Document.for_legacy_act(reference).with_attached_file.newest_first
+    [ nil, "", " ", "unknown-act" ].each do |reference|
       assert_empty Document.for_spreadsheet_act(reference).with_attached_file.newest_first
     end
-    assert_empty Document.for_legacy_act(-1)
-    assert_empty Document.for_spreadsheet_act("unknown-act")
   end
 
-  test "find unassigned spreadsheet documents without including legacy documents" do
-    create_document(act_id: activities(:opening_act).id)
+  test "find unassigned spreadsheet documents without including general documents" do
+    create_document(scope: "general")
     assigned = create_document(spreadsheet_act_key: "act-001")
     unassigned = create_document(spreadsheet_act_key: "act-002")
 
@@ -48,29 +42,27 @@ class DocumentTest < ActiveSupport::TestCase
     act = create_document(spreadsheet_act_key: "removed-act")
 
     assert general.scope_general?
-    assert_nil general.act_id
     assert_nil general.spreadsheet_act_key
     assert act.scope_act?
     assert_equal [ general ], Document.scope_general.to_a
     assert_equal [ act ], Document.without_spreadsheet_acts([]).to_a
   end
 
-  test "general documents reject either act reference" do
-    [ { act_id: activities(:opening_act).id }, { spreadsheet_act_key: "act-001" } ].each do |reference|
-      document = Document.new(scope: "general", **reference,
-        file: { io: StringIO.new("Instructions"), filename: "instructions.txt" })
+  test "general documents reject an act reference" do
+    document = Document.new(scope: "general", spreadsheet_act_key: "act-001")
 
-      assert_not document.valid?
-      assert document.errors[reference.keys.first].present?
-    end
+    assert_not document.valid?
+    assert document.errors[:spreadsheet_act_key].present?
   end
 
-  test "enforce general document scope and references in the database" do
+  test "enforce scope and nonblank act references in the database" do
     [
-      { scope: "general", act_id: activities(:opening_act).id },
+      {},
+      { spreadsheet_act_key: "" },
+      { spreadsheet_act_key: " " },
       { scope: "general", spreadsheet_act_key: "act-001" },
       { scope: "general", spreadsheet_act_key: "" },
-      { scope: "unknown", act_id: activities(:opening_act).id }
+      { scope: "unknown", spreadsheet_act_key: "act-001" }
     ].each do |attributes|
       assert_raises ActiveRecord::StatementInvalid do
         Document.insert_all!([ attributes ])
@@ -78,12 +70,12 @@ class DocumentTest < ActiveSupport::TestCase
     end
   end
 
-  test "general documents require a file" do
+  test "general documents require a file but not an act reference" do
     document = Document.new(scope: "general")
 
     assert_not document.valid?
     assert document.errors[:file].present?
-    assert_empty document.errors[:act_id]
+    assert_empty document.errors[:spreadsheet_act_key]
   end
 
   test "reject unknown scopes" do
@@ -93,43 +85,20 @@ class DocumentTest < ActiveSupport::TestCase
     assert document.errors[:scope].present?
   end
 
-  test "require an act reference" do
+  test "act documents require an act reference" do
     document = Document.new(file: { io: StringIO.new("Instructions"), filename: "instructions.txt" })
 
     assert_not document.valid?
-    assert document.errors.of_kind?(:act_id, :blank)
+    assert document.errors.of_kind?(:spreadsheet_act_key, :blank)
     assert_empty document.errors[:file]
   end
 
-  test "require a file" do
-    document = Document.new(act_id: activities(:opening_act).id)
+  test "act documents require a file" do
+    document = Document.new(spreadsheet_act_key: "act-001")
 
     assert_not document.valid?
     assert document.errors[:file].present?
-    assert_empty document.errors[:act_id]
-  end
-
-  test "allow spreadsheet documents without a legacy act reference" do
-    document = Document.new(spreadsheet_act_key: "act-001", file: { io: StringIO.new("Layout"), filename: "layout.txt" })
-
-    assert document.valid?
-    assert_nil document.act_id
-  end
-
-  test "reject documents belonging to both programs" do
-    document = Document.new(act_id: activities(:opening_act).id, spreadsheet_act_key: "act-001",
-      file: { io: StringIO.new("Layout"), filename: "layout.txt" })
-
-    assert_not document.valid?
-    assert document.errors[:spreadsheet_act_key].present?
-  end
-
-  test "enforce exactly one nonblank reference in the database" do
-    [ {}, { spreadsheet_act_key: " " }, { act_id: activities(:opening_act).id, spreadsheet_act_key: "act-001" } ].each do |attributes|
-      assert_raises ActiveRecord::StatementInvalid do
-        Document.insert_all!([ attributes ])
-      end
-    end
+    assert_empty document.errors[:spreadsheet_act_key]
   end
 
   test "label the file format" do

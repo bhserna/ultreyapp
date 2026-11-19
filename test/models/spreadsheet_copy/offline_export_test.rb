@@ -9,7 +9,6 @@ class SpreadsheetCopy::OfflineExportTest < ActiveSupport::TestCase
     program = copy.program
     document = Document.create!(spreadsheet_act_key: "act-002", file: fixture_file_upload("agenda.txt", "text/plain"))
     Document.create!(spreadsheet_act_key: "removed-act", file: fixture_file_upload("participants.csv", "text/csv"))
-    Document.create!(act_id: 999, file: fixture_file_upload("agenda.txt", "text/plain"))
 
     with_export(copy) do |zip|
       assert zip.find_entry("index.html")
