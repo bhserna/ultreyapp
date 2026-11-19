@@ -18,8 +18,24 @@ class SpreadsheetPrintoutsIntegrationTest < ActionDispatch::IntegrationTest
         assert_select "article h2" do |headings|
           assert_equal entries.map(&:title), headings.map(&:text)
         end
-        assert_select "tbody tr td:last-child" do |cells|
-          assert_equal entries.map(&:title), cells.map(&:text)
+        assert_select "thead th" do |headers|
+          assert_equal [ "Horario", "Acto", "Actividad" ], headers.map(&:text)
+        end
+        assert_select "tbody tr" do |rows|
+          entries.zip(rows).each do |entry, row|
+            assert_select row, "td", count: 3
+            assert_select row, "td:last-child" do |cells|
+              cell = cells.sole
+              if entry.is_a?(SpreadsheetCopy::Act)
+                assert_select cell, "strong", count: 0
+                assert_equal entry.title, cell.text.squish
+              else
+                type = entry.is_a?(SpreadsheetCopy::Preparation) ? "Preparación" : "Actividad previa"
+                assert_select cell, "strong", text: type
+                assert_equal "#{type} · #{entry.title}", cell.text.squish
+              end
+            end
+          end
         end
       end
     end
@@ -46,7 +62,7 @@ class SpreadsheetPrintoutsIntegrationTest < ActionDispatch::IntegrationTest
 
     get spreadsheet_copy_printout_path(@copy, day: "Sábado 14", row_type: "acts")
     assert_response :success
-    assert_select "td", text: "No hay actividades de este tipo para este día."
+    assert_select "td[colspan='3']", text: "No hay actividades de este tipo para este día."
     assert_select "article", count: 0
   end
 

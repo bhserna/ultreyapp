@@ -52,19 +52,23 @@
       <table class="table">
         <caption class="visually-hidden">Programa de actividades para <%= day %></caption>
         <thead>
-          <tr><th scope="col">Horario</th><th scope="col">Tipo</th><th scope="col">Acto</th><th scope="col">Actividad</th></tr>
+          <tr><th scope="col">Horario</th><th scope="col">Acto</th><th scope="col">Actividad</th></tr>
         </thead>
         <tbody>
           <% entries.each do |entry| %>
             <tr>
               <td class="text-nowrap"><%= entry.schedule.to_s.presence || "—" %></td>
-              <td><%= spreadsheet_entry_type(entry) %></td>
               <td><%= spreadsheet_entry_number(entry).presence || "—" %></td>
-              <td><%= entry.title %></td>
+              <td>
+                <% unless entry.is_a?(SpreadsheetCopy::Act) %>
+                  <strong><%= spreadsheet_entry_type(entry) %></strong> ·
+                <% end %>
+                <%= entry.title %>
+              </td>
             </tr>
           <% end %>
           <% if entries.empty? %>
-            <tr><td colspan="4">No hay actividades de este tipo para este día.</td></tr>
+            <tr><td colspan="3">No hay actividades de este tipo para este día.</td></tr>
           <% end %>
         </tbody>
       </table>

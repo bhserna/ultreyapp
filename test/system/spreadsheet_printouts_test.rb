@@ -66,8 +66,15 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
     assert_selector "table", count: 1
     assert_selector "caption.visually-hidden", text: "Programa de actividades para Domingo 15"
     assert_selector "article", text: "Preparar instrumentos"
+    within "table" do
+      assert_selector "thead th", count: 3
+      assert_no_selector "th", exact_text: "Tipo"
+    end
     within "tr", text: "Preparar instrumentos" do
+      assert_selector "td", count: 3
       assert_selector "td", exact_text: "09:45"
+      assert_selector "td strong", exact_text: "Preparación"
+      assert_selector "td", exact_text: "Preparación · Preparar instrumentos"
     end
     within "article", text: "Preparar instrumentos" do
       assert_selector "dd", exact_text: "09:45"
@@ -98,6 +105,10 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
     assert_no_selector ".printout__controls"
     assert_no_selector ".site-nav"
     assert_selector "table", text: "Preparar instrumentos"
+    within "tr", text: "Preparar instrumentos" do
+      label = find("strong", text: "Preparación")
+      assert_operator label.evaluate_script("Number(getComputedStyle(this).fontWeight)"), :>=, 700
+    end
   ensure
     page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "")
     page.current_window.resize_to(1400, 900)
