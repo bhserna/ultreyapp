@@ -11,15 +11,12 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       "tr[data-operational-activity-id='7']" => :schedule_operation,
       "tr.schedule__phase th" => :schedule_phase,
       "tbody[data-phase='program']" => :schedule_phase,
-      ".questions__item" => :question,
-      ".topics__management-item" => :topic_item,
       "section[aria-label='Detalles de la actividad']" => :activity_details,
       ".page__details dd" => :activity_metadata,
       ".related-links a" => :related_act,
       ".related-links__label" => :related_act,
       ".related-links__title" => :related_act,
-      ".page__header .page__details a[href='/?commission=Programa']" => :activity_metadata,
-      ".topics__tab[aria-current='page']" => :selected_topic
+      ".page__header .page__details a" => :activity_metadata
     }
 
     examples.each do |css, selector|
@@ -50,17 +47,17 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
 
   test "checks each supported Capybara method including explicit CSS and page receivers" do
     %w[ within find all assert_selector assert_no_selector ].each do |method|
-      assert_equal 1, inspect_source("#{method} '.questions__item'").size, method
-      assert_equal 1, inspect_source("page.#{method} :css, '.questions__item'").size, method
+      assert_equal 1, inspect_source("#{method} '.page__details dd'").size, method
+      assert_equal 1, inspect_source("page.#{method} :css, '.page__details dd'").size, method
     end
   end
 
   test "checks Rails assert_select calls in controller tests" do
-    offenses = inspect_source('assert_select ".questions__item", count: 0', path: "test/controllers/questions_controller_test.rb")
+    offenses = inspect_source('assert_select ".page__details dd", count: 0', path: "test/controllers/general_documents_controller_test.rb")
 
     assert_equal 1, offenses.size
-    assert_includes offenses.first.message, ":question"
-    assert_empty inspect_source('assert_select "h1", text: "Programa"', path: "test/controllers/schedule_controller_test.rb")
+    assert_includes offenses.first.message, ":activity_metadata"
+    assert_empty inspect_source('assert_select "h1", text: "Programa"', path: "test/controllers/general_documents_controller_test.rb")
   end
 
   test "reports all registered alternatives in a combined selector" do
@@ -88,9 +85,9 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
 
   test "allows registered selectors and CSS that has no registered equivalent" do
     sources = [
-      'within(:question, "¿Quién coordina?") { click_link "Editar" }',
+      'within(:activity_metadata, "Inicio") { assert_text "07:00" }',
       "assert_selector :schedule_act, count: 19",
-      'assert_selector ".questions__answer"',
+      'assert_selector ".page__section"',
       'assert_selector ".page__header.page__header--flush"',
       'assert_selector ".schedule__activity"',
       "within(:activity_details) { assert_selector :detail_field, 'Notas' }",
@@ -99,15 +96,13 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
       "find(:related_act, 'Acto 1').click",
       'assert_selector ".related-links-extra"',
       'assert_selector "section[aria-label=\'Otra sección\']"',
-      'assert_selector ".topics__tab"',
-      'assert_selector ".questions__item-extra"',
       'assert_selector ".schedule__act-extra"',
       'within(".other-table") { assert_selector "td:nth-child(2)" }',
       'within(:schedule_unknown) { assert_selector "td:nth-child(2)" }',
       'within(".schedule__activity") { assert_selector "td:nth-child(2)" }',
       'evaluate_script("getComputedStyle(document.querySelector(\'.schedule__preparation\')).backgroundColor")',
       "assert_selector dynamic_selector",
-      'assert_selector ".questions__item[data-id=\'#{question.id}\']"'
+      'assert_selector ".page__details[data-id=\'#{entry.id}\']"'
     ]
 
     sources.each do |source|
@@ -116,10 +111,10 @@ class PreferRegisteredSelectorTest < ActiveSupport::TestCase
   end
 
   test "is enabled for system and controller tests but not other test files" do
-    assert cop.relevant_file?(Rails.root.join("test/system/general_questions_test.rb").to_s)
-    assert cop.relevant_file?(Rails.root.join("test/controllers/questions_controller_test.rb").to_s)
-    assert_not cop.relevant_file?(Rails.root.join("test/models/question_test.rb").to_s)
-    assert_not cop.relevant_file?(Rails.root.join("test/support/question_selectors.rb").to_s)
+    assert cop.relevant_file?(Rails.root.join("test/system/general_documents_test.rb").to_s)
+    assert cop.relevant_file?(Rails.root.join("test/controllers/general_documents_controller_test.rb").to_s)
+    assert_not cop.relevant_file?(Rails.root.join("test/models/document_test.rb").to_s)
+    assert_not cop.relevant_file?(Rails.root.join("test/support/activity_selectors.rb").to_s)
   end
 
   private

@@ -1,6 +1,8 @@
 require "application_system_test_case"
 
 class GeneralDocumentsTest < ApplicationSystemTestCase
+  include ActionDispatch::TestProcess::FixtureFile
+
   test "navigate to general documents, upload multiple files and delete one" do
     visit root_path
     click_link "Documentos generales"
@@ -25,7 +27,8 @@ class GeneralDocumentsTest < ApplicationSystemTestCase
       assert_text "participants.csv"
     end
 
-    visit schedule_entry_path(activities(:opening_act))
+    copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_renamed_sheets.xlsx", SpreadsheetCopy::CONTENT_TYPE))
+    visit spreadsheet_copy_day_act_path(copy, "Domingo 15", 2)
     within("turbo-frame#documents") do
       assert_no_text "participants.csv"
     end

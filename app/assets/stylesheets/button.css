@@ -1,7 +1,5 @@
 @layer components {
-  .button,
-  .questions__new-button,
-  .questions__form input[type="submit"] {
+  .button {
     display: inline-block;
     padding: 0.7rem 1rem;
     border: 0;

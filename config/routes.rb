@@ -10,10 +10,6 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   root to: redirect("/current_program", status: 302)
-  get "schedule", to: "schedule#index"
-
-  resources :questions, only: %i[index create]
-  resources :topics, only: %i[index create edit update destroy]
   get "spreadsheet_program", to: redirect("/current_program", status: 302)
   resource :current_program, only: :show
   resources :general_documents, only: %i[index create destroy]
@@ -30,19 +26,6 @@ Rails.application.routes.draw do
         resources :preparations, only: :show
         resources :prior_activities, only: :show
       end
-    end
-  end
-  resources :preparations, only: :show
-  resources :operational_activities, only: :show
-
-  resources :activities, only: [] do
-    resource :activity_detail, only: %i[new create edit update]
-  end
-
-  resources :schedule_entries, only: :show do
-    resources :documents, only: %i[index create destroy]
-    resources :questions, only: %i[index create edit update destroy], shallow: true do
-      resource :answer, only: %i[edit update]
     end
   end
 end
