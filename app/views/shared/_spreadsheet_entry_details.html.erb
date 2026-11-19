@@ -1,6 +1,20 @@
-<% fields.each do |attribute, label| %>
-  <% if entry.public_send(attribute).present? %>
-    <h3><%= label %></h3>
-    <%= simple_format(sanitize(entry.public_send(attribute), tags: %w[b strong i em br p], attributes: [])) %>
+<% if local_assigns.fetch(:compact, false) %>
+  <% populated_fields = fields.select { |attribute, label| entry.public_send(attribute).present? } %>
+  <% if populated_fields.any? %>
+    <dl class="printout__details">
+      <% populated_fields.each do |attribute, label| %>
+        <div>
+          <dt><%= label %>:</dt>
+          <dd><%= simple_format(sanitize(entry.public_send(attribute), tags: %w[b strong i em br p], attributes: [])) %></dd>
+        </div>
+      <% end %>
+    </dl>
+  <% end %>
+<% else %>
+  <% fields.each do |attribute, label| %>
+    <% if entry.public_send(attribute).present? %>
+      <h3><%= label %></h3>
+      <%= simple_format(sanitize(entry.public_send(attribute), tags: %w[b strong i em br p], attributes: [])) %>
+    <% end %>
   <% end %>
 <% end %>

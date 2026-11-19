@@ -84,15 +84,51 @@
   }
 }
 
-.printout__day + .printout__day,
-.printout__entry {
+.printout__day + .printout__day {
   margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid #dce3eb;
 }
 
+.printout table th:first-child {
+  width: 18%;
+}
+
+.printout table th:nth-child(2) {
+  width: 7%;
+}
+
 .printout__entry {
   overflow-wrap: anywhere;
+}
+
+.printout__title {
+  font-weight: 600;
+}
+
+.printout__details {
+  margin: 0.35rem 0 0;
+  font-size: 0.9em;
+  line-height: 1.35;
+}
+
+.printout__details > div + div {
+  margin-top: 0.25rem;
+}
+
+.printout__details dt,
+.printout__details dd,
+.printout__details dd > p:first-child {
+  display: inline;
+  margin: 0;
+}
+
+.printout__details dt {
+  font-weight: 700;
+}
+
+.printout__details dd > p {
+  margin: 0.25rem 0 0;
 }
 
 @media print {
@@ -119,20 +155,11 @@
     font-size: 10pt;
   }
 
-  .printout__day + .printout__day,
-  .printout__entry {
+  .printout__day + .printout__day {
     break-before: auto;
     margin-top: 5mm;
     padding-top: 3mm;
     border-top: 1px solid #dce3eb;
-  }
-
-  .printout--page-breaks .printout__day + .printout__day,
-  .printout--page-breaks .printout__entry {
-    break-before: page;
-    margin-top: 0;
-    padding-top: 0;
-    border: 0;
   }
 
   .printout .table-container {
@@ -151,9 +178,17 @@
     display: table-header-group;
   }
 
-  .printout tr,
-  .printout__entry header {
+  .printout__entry {
     break-inside: avoid;
+  }
+
+  .printout__entry > td {
+    vertical-align: top;
+    padding: 1.5mm 2mm;
+  }
+
+  .printout__title {
+    break-after: avoid;
   }
 
   .printout h2,

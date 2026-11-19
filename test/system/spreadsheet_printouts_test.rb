@@ -3,55 +3,31 @@ require "application_system_test_case"
 class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
   include ActionDispatch::TestProcess::FixtureFile
 
-  test "print days and activity details continuously with separator lines" do
+  test "print compact details inside the activity cells and keep each activity together on a page" do
     copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_preparations.xlsx", SpreadsheetCopy::CONTENT_TYPE))
     visit spreadsheet_copy_printout_path(copy)
 
     assert_selector ".printout__day + .printout__day"
-    assert_selector ".printout__entry"
+    assert_selector "td .printout__details"
+    assert_no_selector "article"
     page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "print")
 
-    [ ".printout__day + .printout__day", ".printout__entry" ].each do |selector|
-      styles = page.evaluate_script(<<~JS, selector)
-        Array.from(document.querySelectorAll(arguments[0]), element => {
-          const style = getComputedStyle(element);
-          return [style.breakBefore, style.borderTopStyle, style.borderTopWidth];
-        })
-      JS
-      styles.each do |break_before, border_style, border_width|
-        assert_equal "auto", break_before
-        assert_equal "solid", border_style
-        assert_equal "1px", border_width
-      end
+    day = find(".printout__day + .printout__day", match: :first)
+    assert_equal "auto", day.evaluate_script("getComputedStyle(this).breakBefore")
+    assert_equal "solid", day.evaluate_script("getComputedStyle(this).borderTopStyle")
+    all(".printout__entry").each do |row|
+      assert_equal "auto", row.evaluate_script("getComputedStyle(this).breakBefore")
+      assert_equal "avoid", row.evaluate_script("getComputedStyle(this).breakInside")
     end
-  ensure
-    page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "")
-  end
-
-  test "optionally start each day and activity on a new page" do
-    copy = SpreadsheetCopy.create!(file: fixture_file_upload("program_preparations.xlsx", SpreadsheetCopy::CONTENT_TYPE))
-    visit spreadsheet_copy_printout_path(copy)
-
-    assert_unchecked_field "Empezar cada actividad y día en una hoja nueva"
-    check "Empezar cada actividad y día en una hoja nueva"
-    click_button "Actualizar vista"
-    assert_checked_field "Empezar cada actividad y día en una hoja nueva"
-    assert_selector ".printout--page-breaks"
-
-    page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "print")
-    [ ".printout__day + .printout__day", ".printout__entry" ].each do |selector|
-      element = find(selector, match: :first)
-      assert_equal "page", element.evaluate_script("getComputedStyle(this).breakBefore")
-      assert_equal "0px", element.evaluate_script("getComputedStyle(this).borderTopWidth")
+    within "tr", text: "Preparar instrumentos" do
+      label = find("dt", text: "Tramoya:")
+      assert_operator label.evaluate_script("Number(getComputedStyle(this).fontWeight)"), :>=, 700
+      assert_equal "inline", label.evaluate_script("getComputedStyle(this).display")
+      details = find(".printout__details")
+      title = find(".printout__title")
+      assert_operator details.evaluate_script("parseFloat(getComputedStyle(this).fontSize)"), :<,
+        title.evaluate_script("parseFloat(getComputedStyle(this).fontSize)")
     end
-
-    page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "")
-    uncheck "Empezar cada actividad y día en una hoja nueva"
-    click_button "Actualizar vista"
-    assert_unchecked_field "Empezar cada actividad y día en una hoja nueva"
-    assert_no_selector ".printout--page-breaks"
-    page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "print")
-    assert_equal "auto", find(".printout__entry", match: :first).evaluate_script("getComputedStyle(this).breakBefore")
   ensure
     page.driver.browser.execute_cdp("Emulation.setEmulatedMedia", media: "")
   end
@@ -61,11 +37,11 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
     visit spreadsheet_copy_day_path(copy, "Domingo 15", row_type: "preparations")
     click_link "Versión para imprimir"
 
+    assert_no_field "Empezar cada actividad y día en una hoja nueva"
     assert_select "Días", selected: "Domingo 15"
     assert_select "Tipo de actividad", selected: "Preparaciones"
     assert_selector "table", count: 1
     assert_selector "caption.visually-hidden", text: "Programa de actividades para Domingo 15"
-    assert_selector "article", text: "Preparar instrumentos"
     within "table" do
       assert_selector "thead th", count: 3
       assert_no_selector "th", exact_text: "Tipo"
@@ -73,11 +49,9 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
     within "tr", text: "Preparar instrumentos" do
       assert_selector "td", count: 3
       assert_selector "td", exact_text: "09:45"
-      assert_selector "td strong", exact_text: "Preparación"
-      assert_selector "td", exact_text: "Preparación · Preparar instrumentos"
-    end
-    within "article", text: "Preparar instrumentos" do
-      assert_selector "dd", exact_text: "09:45"
+      assert_selector ".printout__title strong", exact_text: "Preparación"
+      assert_selector ".printout__title", exact_text: "Preparación · Preparar instrumentos"
+      assert_selector ".printout__details dt", text: "Tramoya:"
     end
     assert_no_text "09:45 am"
     assert_no_text "Entrada a la Arena"
@@ -85,12 +59,12 @@ class SpreadsheetPrintoutsTest < ApplicationSystemTestCase
 
     select "Todo el programa", from: "Días"
     click_button "Actualizar vista"
-    assert_selector "article", text: "Preparar apertura del lunes"
-    assert_selector "article", text: "Preparar instrumentos"
+    assert_selector "td .printout__title", text: "Preparar apertura del lunes"
+    assert_selector "td .printout__title", text: "Preparar instrumentos"
 
     uncheck "Incluir detalles"
     click_button "Actualizar vista"
-    assert_no_selector "article"
+    assert_no_selector ".printout__details"
     assert_selector "table", text: "Preparar instrumentos"
 
     page.current_window.resize_to(390, 844)
