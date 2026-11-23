@@ -38,17 +38,17 @@ class OfflineExportsTest < ApplicationSystemTestCase
       assert_selector "tr.schedule__prior-activity", text: "Recepción de Diócesis"
       click_link "Domingo 15"
       assert_selector "nav[aria-label='Tipo de actividad'] a[aria-current='page']", text: "Actividades previas"
-      assert_no_selector "tr.schedule__preparation"
+      assert_no_selector :schedule_preparation
       within "nav[aria-label='Tipo de actividad']" do
         click_link "Preparaciones"
       end
-      assert_selector "tr.schedule__preparation", text: "Preparar instrumentos"
+      assert_selector :schedule_preparation, text: "Preparar instrumentos"
       assert_no_selector "tr", text: "Inicio / Video"
       within "nav[aria-label='Tipo de actividad']" do
         click_link "Actos"
       end
       assert_selector "tr", text: "Inicio / Video"
-      assert_no_selector "tr.schedule__preparation"
+      assert_no_selector :schedule_preparation
       click_link "Sábado 14"
       assert_text "No hay actividades de este tipo para este día."
       within "nav[aria-label='Tipo de actividad']" do
