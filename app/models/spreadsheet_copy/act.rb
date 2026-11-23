@@ -1,4 +1,5 @@
-class SpreadsheetCopy::Act
+class SpreadsheetCopy::Act < Data.define(:day, :position, :schedule, :number, :title, :source_key,
+  :audio, :screen, :ring, :lighting, :special_effects, :pending_files, :ready_files)
   COLUMNS = { schedule: "Horario", number: "# Acto", title: "Actividad" }.freeze
   DETAIL_COLUMNS = {
     audio: "Audio",
@@ -26,24 +27,14 @@ class SpreadsheetCopy::Act
     )
   end
 
-  attr_reader :day, :position, :schedule, :number, :title, :source_key,
-    :audio, :screen, :ring, :lighting, :special_effects, :pending_files, :ready_files
-
-  def initialize(day:, position:, schedule:, number:, title:, audio: nil, screen: nil, ring: nil,
-    lighting: nil, special_effects: nil, pending_files: nil, ready_files: nil, after_noon: false, source_key: nil)
-    @day = day
-    @position = position
-    @schedule = SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon)
-    @number = number.is_a?(Numeric) && number == number.to_i ? number.to_i.to_s : number.to_s.presence
-    @title = title
-    @source_key = source_key
-    @audio = audio
-    @screen = screen
-    @ring = ring
-    @lighting = lighting
-    @special_effects = special_effects
-    @pending_files = pending_files
-    @ready_files = ready_files
+  def initialize(schedule:, number:, after_noon: false, source_key: nil, **fields)
+    super(
+      schedule: SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon),
+      number: number.is_a?(Numeric) && number == number.to_i ? number.to_i.to_s : number.to_s.presence,
+      source_key: source_key,
+      **DETAIL_COLUMNS.transform_values { nil },
+      **fields
+    )
   end
 
   def to_param

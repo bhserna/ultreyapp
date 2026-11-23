@@ -1,4 +1,4 @@
-class SpreadsheetCopy::PriorActivity
+class SpreadsheetCopy::PriorActivity < Data.define(:day, :position, :schedule, :title, :responsibles, :contact, :notes)
   REQUIRED_COLUMNS = [ "Horario", "Actividad" ].freeze
   DETAIL_COLUMNS = {
     responsibles: "Responsables",
@@ -20,16 +20,12 @@ class SpreadsheetCopy::PriorActivity
     )
   end
 
-  attr_reader :day, :position, :schedule, :title, :responsibles, :contact, :notes
-
-  def initialize(day:, position:, schedule:, title:, responsibles: nil, contact: nil, notes: nil, after_noon: false)
-    @day = day
-    @position = position
-    @schedule = SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon)
-    @title = title
-    @responsibles = responsibles
-    @contact = contact
-    @notes = notes
+  def initialize(schedule:, after_noon: false, **fields)
+    super(
+      schedule: SpreadsheetCopy::ScheduleTime.new(schedule, after_noon: after_noon),
+      **DETAIL_COLUMNS.transform_values { nil },
+      **fields
+    )
   end
 
   def to_param
