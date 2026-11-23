@@ -68,5 +68,5 @@ group :test do
   gem "selenium-webdriver"
 end
 
-gem "roo", "~> 3.0"
+gem "roo", "~> 4.0"
 gem "rubyzip", "~> 3.7", require: "zip"
